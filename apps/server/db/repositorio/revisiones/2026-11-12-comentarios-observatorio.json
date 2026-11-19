@@ -1,0 +1,4769 @@
+{
+ "titulo": "Comentarios del Observatorio sobre el repositorio (12 de noviembre de 2026)",
+ "documentos": [
+  {
+   "id": "boletin-29-resultados-preliminares-estudios-educacion-postsecundaria-2024",
+   "descripcion": "El boletín presenta resultados preliminares de los estudios de seguimiento a bachilleres y expectativas de grado 11° en Medellín; destaca altas expectativas de continuar estudiando y la necesidad de orientación.",
+   "claves": [
+    "Seguimiento a bachilleres",
+    "Expectativas",
+    "Estudiantes de grado 11",
+    "Tasa de continuidad",
+    "Comunas",
+    "Corregimientos"
+   ]
+  },
+  {
+   "id": "estudio-expectativas-estudiantes-grado-11-medellin-continuidad-2024",
+   "descripcion": "El estudio presenta resultados parciales sobre las expectativas de 1.839 estudiantes de grado 11 de Medellín frente a la educación postsecundaria; propone continuar y fortalecer su acompañamiento en orientación académica.",
+   "claves": [
+    "Expectativas",
+    "Estudiantes de grado 11",
+    "Acceso",
+    "Financiación",
+    "Orientación vocacional",
+    "Brechas de género"
+   ]
+  },
+  {
+   "id": "estudio-seguimiento-continuidad-educacion-postsecundaria-bachilleres-medellin-2024",
+   "descripcion": "El estudio presenta avances del seguimiento a bachilleres de Medellín de 2023: destaca la alta expectativa de continuar estudiando, reconoce el reto económico y propone brindar orientación para decisiones informadas.",
+   "claves": [
+    "Seguimiento a bachilleres",
+    "Tasa de continuidad",
+    "Acceso",
+    "Financiación",
+    "Sostenimiento",
+    "Orientación vocacional"
+   ]
+  },
+  {
+   "id": "estudio-seguimiento-continuidad-educacion-postsecundaria-bachilleres-medellin",
+   "publicado": false,
+   "descripcion": "El tablero presenta el seguimiento de la continuidad a la educación postsecundaria de bachilleres en Medellín: tasa de continuidad y condiciones de acceso, según estudios publicados entre 2021 y 2024.",
+   "claves": [
+    "Seguimiento a bachilleres",
+    "Tasa de continuidad",
+    "Acceso",
+    "Educación postsecundaria",
+    "Educación media",
+    "Jóvenes"
+   ],
+   "anio": 2024,
+   "mes": null
+  },
+  {
+   "id": "boletin-28-politica-publica-postsecundaria",
+   "descripcion": "El boletín presenta la Política Pública de Educación Postsecundaria de Medellín, sus ejes y avances, y propone rutas formativas sucesivas, flexibles y articuladas entre educación media, superior, ETDH y continua.",
+   "claves": [
+    "Educación postsecundaria",
+    "Acceso",
+    "Permanencia",
+    "ETDH",
+    "Educación continua",
+    "Políticas públicas"
+   ],
+   "anio": 2023,
+   "mes": 12
+  },
+  {
+   "id": "boletin-27-educacion-continua",
+   "descripcion": "El boletín examina la educación continua, su pertinencia y demanda en el Valle de Aburrá en 2021 y 2022; plantea que complementa la educación superior, más que competir con ella.",
+   "claves": [
+    "Educación continua",
+    "Pertinencia",
+    "Mercado laboral",
+    "Habilidades",
+    "Marco normativo",
+    "Tendencias"
+   ],
+   "anio": 2023,
+   "mes": 12
+  },
+  {
+   "id": "infografia-desigualdad-genero-inteligencia-artificial",
+   "descripcion": "La infografía examina la desigualdad de género en la inteligencia artificial y en áreas STEAM; plantea que incluir activamente a las mujeres genera soluciones tecnológicas más adaptables, justas e inclusivas.",
+   "claves": [
+    "Brechas de género",
+    "Inteligencia artificial",
+    "Mujeres",
+    "STEM",
+    "Talento Especializado",
+    "Mercado laboral"
+   ],
+   "anio": 2023,
+   "mes": null
+  },
+  {
+   "id": "otros-productos-notas-redes-2023",
+   "publicado": false,
+   "descripcion": "El tablero reúne en un solo lugar las notas sobre educación postsecundaria que el Observatorio de Sapiencia publicó en sus redes sociales. Corresponde a la versión de diciembre de 2023.",
+   "claves": [
+    "Redes sociales",
+    "Publicaciones",
+    "Divulgación",
+    "Divulgación científica",
+    "Educación postsecundaria",
+    "Educación superior"
+   ]
+  },
+  {
+   "id": "otros-productos-repositorio-publicaciones-observatorio-2023",
+   "publicado": false,
+   "descripcion": "El tablero interactivo reúne las publicaciones del Observatorio de Sapiencia hasta el 1 de diciembre de 2023: sus boletines, estudios, infografías y demás productos sobre la educación postsecundaria de Medellín.",
+   "claves": [
+    "Publicaciones",
+    "Repositorio",
+    "Divulgación",
+    "Divulgación científica",
+    "Educación postsecundaria",
+    "Investigación"
+   ]
+  },
+  {
+   "id": "infografia-fomento-estimulos-investigacion-medellin",
+   "descripcion": "La infografía resume la evolución de los premios Medellín Investiga desde 2006 y presenta el Acuerdo 081 de 2023, que amplía estímulos a estudiantes, docentes, jóvenes talento y mujeres investigadoras.",
+   "claves": [
+    "Investigación",
+    "Ciencia, tecnología e innovación",
+    "Premios Medellín Investiga",
+    "Políticas públicas",
+    "Marco normativo",
+    "Inversión"
+   ],
+   "anio": 2023,
+   "mes": 11
+  },
+  {
+   "id": "infografia-brecha-digital-estudiantes-educacion-postsecundaria-distrito",
+   "descripcion": "La infografía presenta el primer estudio de brecha digital de género en 1.269 estudiantes de Medellín; sin grandes diferencias en habilidades, propone fortalecer las competencias digitales de todas las personas.",
+   "claves": [
+    "Brecha digital",
+    "Competencias digitales",
+    "Brechas de género",
+    "Conectividad",
+    "Violencia digital",
+    "Educación postsecundaria"
+   ],
+   "anio": 2023,
+   "mes": null
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-septiembre-2023",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe recopila noticias internacionales sobre habilidades, formación postsecundaria pertinente, inteligencia artificial y futuro del trabajo, rastreadas con Inteligencia Estratégica del Foro Económico Mundial, para identificar oportunidades educativas en Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Inteligencia artificial",
+    "Mercado laboral",
+    "Brecha digital",
+    "Mujeres"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-demanda-matricula-2023-2-3-ies-2023",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta la demanda y la matrícula del semestre 2023-2 en Colegio Mayor de Antioquia, Pascual Bravo e ITM, instituciones de educación superior adscritas al Distrito de Medellín.",
+   "claves": [
+    "IES adscritas al Distrito",
+    "Inscripciones",
+    "Admisiones",
+    "Matrícula",
+    "Cupos",
+    "Formación técnica y tecnológica"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-linea-creditos-condonables-pregrado-recurso-presupuesto-20",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta, por comuna de Medellín, los inscritos y beneficiarios de la convocatoria 2023-2 de la línea de créditos condonables de pregrado de Sapiencia financiada con Presupuesto Participativo.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Créditos condonables",
+    "Pregrado",
+    "Inscripciones",
+    "Beneficiarios",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-linea-creditos-condonables-pregrado-recurso-ordinario-2023",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta, por comuna, las inscripciones y las personas beneficiarias de la convocatoria 2023-2 de la línea de créditos condonables de pregrado de Sapiencia financiada con recurso ordinario.",
+   "claves": [
+    "Créditos condonables",
+    "Pregrado",
+    "Convocatorias",
+    "Inscripciones",
+    "Beneficiarios",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-agosto-2023",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe dinámico recopila noticias educativas internacionales de la Inteligencia Estratégica del Foro Económico Mundial en siete ejes, para aprender e identificar oportunidades que fortalezcan la educación postsecundaria en Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Inteligencia artificial",
+    "Mercado laboral",
+    "Habilidades",
+    "Inclusión"
+   ]
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-julio-2023",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe dinámico recopila noticias internacionales de la Inteligencia Estratégica del Foro Económico Mundial sobre habilidades, sostenibilidad y futuro del trabajo, para fortalecer la educación postsecundaria del Distrito de Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Transformación digital",
+    "Inclusión",
+    "Cambio climático",
+    "Financiación",
+    "Mercado laboral"
+   ]
+  },
+  {
+   "id": "infografia-en-first-study-expectations-clei-5-6",
+   "descripcion": "The infographic presents the first study of expectations of CLEI 5 and 6 students: most want to keep studying; the challenge is bringing Sapiencia closer to institutions offering CLEI programs.",
+   "claves": [
+    "Expectativas",
+    "CLEI",
+    "Acceso",
+    "Financiación",
+    "Formación técnica y tecnológica",
+    "Educación de adultos"
+   ],
+   "anio": 2022,
+   "mes": null
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-junio-2023",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe recopila noticias internacionales sobre habilidades, educación STEM, innovación y futuro del trabajo, rastreadas con Inteligencia Estratégica del Foro Económico Mundial, para identificar oportunidades para la educación en Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Mercado laboral",
+    "Habilidades",
+    "Mujeres",
+    "Inclusión",
+    "Transformación digital"
+   ]
+  },
+  {
+   "id": "infografia-en-characterization-research-groups-seedbeds-higher-education",
+   "descripcion": "The infographic summarizes Sapiencia's first study on research groups and seedbeds of HEIs affiliated with the District; it shows their potentialities and challenges in collaboration, gender equity and scientific production.",
+   "claves": [
+    "Grupos de investigación",
+    "Semilleros de investigación",
+    "Caracterización",
+    "Producción científica",
+    "Ciencia, tecnología e innovación",
+    "IES adscritas al Distrito"
+   ],
+   "anio": 2022,
+   "mes": null
+  },
+  {
+   "id": "infografia-en-financing-studies-people-enrolled-education-work",
+   "descripcion": "The infographic summarizes the first survey on financing among 298 ETDH students in Medellín and proposes strengthening this training, which facilitates socio-occupational incorporation, by articulating education, business and the State.",
+   "claves": [
+    "ETDH",
+    "Financiación",
+    "Sostenimiento",
+    "Becas",
+    "Crédito educativo",
+    "Pertinencia"
+   ],
+   "anio": 2022,
+   "mes": null
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-mayo-2023",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe reúne noticias internacionales sobre educación y habilidades, rastreadas con Inteligencia Estratégica del Foro Económico Mundial, para aportar al fortalecimiento de la educación postsecundaria de Medellín e identificar oportunidades.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Mercado laboral",
+    "Habilidades",
+    "Educación continua",
+    "Inteligencia artificial"
+   ]
+  },
+  {
+   "id": "informe-dinamico-en-dynamic-report-strategic-intelligence-may-2023",
+   "categoria": "Informe de tendencias",
+   "descripcion": "The report gathers international news on education and skills, tracked with the World Economic Forum's Strategic Intelligence tool, to contribute to strengthening post-secondary education in Medellín and to identify opportunities.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Mercado laboral",
+    "Habilidades",
+    "Educación continua",
+    "Inteligencia artificial"
+   ]
+  },
+  {
+   "id": "nota-tematica-25-habilidades-blandas-importancia-ambitos-academico-laboral-2023",
+   "descripcion": "La nota temática analiza las habilidades blandas en lo académico y laboral y concluye que desarrollarlas forma profesionales competentes y ciudadanos críticos, comprometidos y empáticos que aportan a la sociedad.",
+   "claves": [
+    "Habilidades blandas",
+    "Empleabilidad",
+    "Futuro del empleo",
+    "Inteligencia emocional",
+    "Trabajo en equipo",
+    "Talento Especializado"
+   ]
+  },
+  {
+   "id": "infografia-financiacion-estudios-personas-matriculadas-educacion-trabajo",
+   "descripcion": "La infografía resume el primer sondeo sobre la financiación de 298 estudiantes de ETDH en Medellín; propone fortalecer esta formación, que facilita la incorporación socio-ocupacional, articulando educación, empresa y Estado.",
+   "claves": [
+    "ETDH",
+    "Financiación",
+    "Sostenimiento",
+    "Becas",
+    "Crédito educativo",
+    "Pertinencia"
+   ],
+   "anio": 2022,
+   "mes": null
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-abril-2023",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe dinámico recopila noticias educativas internacionales de la Inteligencia Estratégica del Foro Económico Mundial sobre habilidades e inteligencia artificial, para identificar oportunidades que fortalezcan la educación postsecundaria de Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Inteligencia artificial",
+    "Habilidades blandas",
+    "Mercado laboral",
+    "Brechas de género"
+   ]
+  },
+  {
+   "id": "informe-dinamico-en-dynamic-report-strategic-intelligence-april-2023",
+   "categoria": "Informe de tendencias",
+   "descripcion": "The dynamic report gathers international education news items on skills and artificial intelligence from the World Economic Forum's Strategic Intelligence tool, to identify opportunities that strengthen post-secondary education in Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Inteligencia artificial",
+    "Habilidades blandas",
+    "Mercado laboral",
+    "Brechas de género"
+   ]
+  },
+  {
+   "id": "nota-tematica-24-ciberseguridad-implicaciones-retos-sociedad-conocimiento-2023",
+   "descripcion": "La nota temática examina la ciberseguridad en Colombia y recomienda buenas prácticas de protección; concluye que educación, inversión en tecnologías de seguridad y colaboración son claves para afrontar sus retos.",
+   "claves": [
+    "Ciberseguridad",
+    "Ciberacoso",
+    "Noticias falsas",
+    "Protección de datos",
+    "Sociedad del conocimiento",
+    "Talento Especializado"
+   ]
+  },
+  {
+   "id": "infografia-en-changes-generated-people-s-lives-after",
+   "descripcion": "The infographic summarizes the study on social, academic and labor mobility of 264 beneficiaries of the Participatory Budget Fund; most work, almost none informally, and positively value their higher education.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Créditos condonables",
+    "Evaluación de resultados",
+    "Movilidad social",
+    "Empleabilidad",
+    "Graduados"
+   ],
+   "anio": 2022,
+   "mes": null
+  },
+  {
+   "id": "educacion-superior-en-cifras-inversion-beneficiarios-historicos-fondo-recursos-presupue",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta, por comuna, la inversión y los beneficiarios históricos del Fondo de Sapiencia con recursos de Presupuesto Participativo para el acceso y la permanencia en educación superior.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Inversión",
+    "Beneficiarios",
+    "Acceso",
+    "Permanencia",
+    "Comunas"
+   ],
+   "anio": 2023,
+   "mes": null
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-marzo-2023",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe recopila noticias internacionales sobre habilidades blandas, educación de calidad, fluidez digital, STEM, innovación educativa y futuro del trabajo, para identificar oportunidades de proyección para procesos educativos de Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Brecha digital",
+    "Competencias digitales",
+    "Inclusión",
+    "Discapacidad"
+   ]
+  },
+  {
+   "id": "informe-dinamico-en-dynamic-report-strategic-intelligence-march-2023",
+   "categoria": "Informe de tendencias",
+   "descripcion": "The report gathers international news on soft skills, quality education, digital fluency, STEM, educational innovation and the future of work, to identify projection opportunities for the educational processes of Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Brecha digital",
+    "Competencias digitales",
+    "Inclusión",
+    "Discapacidad"
+   ]
+  },
+  {
+   "id": "nota-tematica-23-principales-inteligencias-artificiales-generativas-iag-oportunidades-2",
+   "descripcion": "La nota temática explica qué es la inteligencia artificial generativa y reseña herramientas usadas en educación; destaca la necesidad de dialogar sobre sus implicaciones y desarrollar habilidades socioemocionales para usarlas.",
+   "claves": [
+    "Inteligencia artificial",
+    "ChatGPT",
+    "Tecnologías de frontera",
+    "Innovación educativa",
+    "Habilidades blandas",
+    "Modelos de lenguaje"
+   ]
+  },
+  {
+   "id": "nota-tematica-23-en-main-generative-artificial-intelligences-gai-their-2023",
+   "descripcion": "The issues note explains what generative artificial intelligence is and reviews tools used in education; it highlights the need to discuss their implications and develop socio-emotional skills to use them.",
+   "claves": [
+    "Inteligencia artificial",
+    "ChatGPT",
+    "Tecnologías de frontera",
+    "Innovación educativa",
+    "Habilidades blandas",
+    "Modelos de lenguaje"
+   ]
+  },
+  {
+   "id": "infografia-cambios-generados-vida-personas-despues-realizar",
+   "descripcion": "La infografía resume el estudio sobre movilidad social, académica y laboral de 264 personas beneficiarias del Fondo Presupuesto Participativo; la mayoría trabaja, casi sin informalidad, y valora positivamente su formación.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Créditos condonables",
+    "Evaluación de resultados",
+    "Movilidad social",
+    "Empleabilidad",
+    "Graduados"
+   ],
+   "anio": 2022,
+   "mes": null
+  },
+  {
+   "id": "educacion-superior-en-cifras-demanda-matricula-2023-1-3-ies-2023",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta la demanda y la matrícula del semestre 2023-1 en Colegio Mayor de Antioquia, Pascual Bravo e ITM, instituciones de educación superior adscritas al Distrito de Medellín.",
+   "claves": [
+    "IES adscritas al Distrito",
+    "Inscripciones",
+    "Admisiones",
+    "Matrícula",
+    "Cupos",
+    "Formación técnica y tecnológica"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-epm-universidades",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta, por comuna de Medellín, los inscritos y beneficiarios de la convocatoria 2023-1 del Fondo Sapiencia EPM y Universidades, que otorga créditos condonables para estudios de pregrado.",
+   "claves": [
+    "Fondo EPM",
+    "Fondos Sapiencia",
+    "Inscripciones",
+    "Beneficiarios",
+    "Pregrado",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-recursos-presupues",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta, por comuna de Medellín, los inscritos y beneficiarios de la convocatoria 2023-1 del Fondo Sapiencia con recursos de Presupuesto Participativo, que otorga créditos condonables de pregrado.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Fondos Sapiencia",
+    "Convocatorias",
+    "Inscripciones",
+    "Beneficiarios",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-febrero-2023",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe dinámico reúne noticias internacionales sobre habilidades blandas, educación de calidad, STEM, innovación y futuro del trabajo, como insumo para identificar oportunidades que fortalezcan la educación postsecundaria de Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Inteligencia artificial",
+    "Habilidades blandas",
+    "Brecha digital",
+    "Brechas de género",
+    "Cambio climático"
+   ]
+  },
+  {
+   "id": "informe-dinamico-en-dynamic-report-strategic-intelligence-february-2023",
+   "categoria": "Informe de tendencias",
+   "descripcion": "The dynamic report gathers international news on soft skills, quality education, STEM, innovation and the future of work, as an input to identify opportunities to strengthen post-secondary education in Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Inteligencia artificial",
+    "Habilidades blandas",
+    "Brecha digital",
+    "Brechas de género",
+    "Cambio climático"
+   ]
+  },
+  {
+   "id": "nota-tematica-22-comunidad-maker-distrito-2023",
+   "descripcion": "La nota temática presenta la comunidad maker y el LabMaker de Sapiencia en la Ciudadela C4TA, que con enfoque STEAM forma habilidades del siglo XXI y abre semilleros para estudiantes.",
+   "claves": [
+    "Movimiento maker",
+    "STEAM",
+    "Habilidades del siglo XXI",
+    "Robótica",
+    "Agricultura de precisión",
+    "Ciudadela C4TA"
+   ]
+  },
+  {
+   "id": "nota-tematica-22-en-district-s-maker-s-community-2023",
+   "descripcion": "The issues note presents the maker community and Sapiencia's LabMaker in the C4TA Citadel, which uses a STEAM approach to build 21st century skills and opens seedbeds for HEI students.",
+   "claves": [
+    "Movimiento maker",
+    "STEAM",
+    "Habilidades del siglo XXI",
+    "Robótica",
+    "Agricultura de precisión",
+    "Ciudadela C4TA"
+   ]
+  },
+  {
+   "id": "infografia-en-continuity-rate-from-high-school-higher",
+   "descripcion": "The infographic presents the continuity rate of high school graduates from Medellín to higher education, which grew between 2011 and 2019 to 61.4%, and the increasing choice of technological programs.",
+   "claves": [
+    "Tasa de continuidad",
+    "Seguimiento a bachilleres",
+    "Acceso",
+    "Brechas de género",
+    "Formación técnica y tecnológica",
+    "Instituciones de educación superior"
+   ],
+   "anio": 2019,
+   "mes": null
+  },
+  {
+   "id": "infografia-en-women-higher-education",
+   "descripcion": "The infographic presents an outlook of women in Medellín's higher education: they are the majority and have lower dropout rates, although their participation is lower in doctoral programs and research.",
+   "claves": [
+    "Mujeres",
+    "Brechas de género",
+    "Deserción",
+    "Inserción laboral",
+    "Grupos de investigación",
+    "Fondos Sapiencia"
+   ],
+   "anio": 2020,
+   "mes": 3
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-enero-2023",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe dinámico recopila noticias internacionales de la Inteligencia Estratégica del Foro Económico Mundial sobre habilidades, educación STEM y futuro del trabajo, para identificar oportunidades para la educación de Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Alfabetización digital",
+    "Mercado laboral",
+    "Mujeres",
+    "Inclusión"
+   ]
+  },
+  {
+   "id": "informe-dinamico-en-dynamic-report-strategic-intelligence-january-2023",
+   "categoria": "Informe de tendencias",
+   "descripcion": "The dynamic report gathers international news from the World Economic Forum's Strategic Intelligence tool on skills, STEM education and the future of work, to identify opportunities for education in Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Alfabetización digital",
+    "Mercado laboral",
+    "Mujeres",
+    "Inclusión"
+   ]
+  },
+  {
+   "id": "nota-tematica-21-tendencias-manana-empleo-2023",
+   "descripcion": "La nota temática explora las tendencias del mercado laboral y los sectores de los empleos del futuro, y concluye que incorporar habilidades técnicas y socioemocionales favorece una mejor inserción laboral.",
+   "claves": [
+    "Mercado laboral",
+    "Futuro del empleo",
+    "Jóvenes",
+    "Economía verde",
+    "Economía digital",
+    "Economía del cuidado"
+   ]
+  },
+  {
+   "id": "nota-tematica-21-en-trends-tomorrow-s-labor-market-2023",
+   "descripcion": "The issues note explores labor market trends and sectors of the jobs of the future, and concludes that incorporating technical and socio-emotional skills enables better incorporation into the labor sector.",
+   "claves": [
+    "Mercado laboral",
+    "Futuro del empleo",
+    "Jóvenes",
+    "Economía verde",
+    "Economía digital",
+    "Economía del cuidado"
+   ]
+  },
+  {
+   "id": "estudio-asistencia-educacion-postsecundaria-distrito-medellin-2023",
+   "descripcion": "El estudio estima en 40,48% la asistencia a la educación postsecundaria en Medellín y plantea abordar integralmente las barreras económicas para garantizar que este nivel educativo sea accesible a todos.",
+   "claves": [
+    "Tasa de asistencia",
+    "Jóvenes",
+    "Comunas",
+    "Corregimientos",
+    "Acceso",
+    "Financiación"
+   ]
+  },
+  {
+   "id": "estudio-tasa-asistencia-educacion-postsecundaria-comunas-medellin",
+   "publicado": false,
+   "descripcion": "El tablero compara entre las comunas de Medellín la tasa de asistencia de los jóvenes a la educación postsecundaria y sus condiciones de acceso, según estudios de 2021 a 2023.",
+   "claves": [
+    "Tasa de asistencia",
+    "Comunas",
+    "Jóvenes",
+    "Acceso",
+    "Educación postsecundaria",
+    "Cobertura"
+   ],
+   "anio": 2023,
+   "mes": null
+  },
+  {
+   "id": "estudio-brecha-digital-medellin-2023",
+   "descripcion": "El estudio analiza la brecha digital entre hombres y mujeres estudiantes de Medellín; sin disparidades marcadas en habilidades, plantea mejorar el acceso a internet de calidad y las competencias digitales.",
+   "claves": [
+    "Brecha digital",
+    "Brechas de género",
+    "Competencias digitales",
+    "Conectividad",
+    "Mujeres",
+    "Educación media"
+   ]
+  },
+  {
+   "id": "estudio-brecha-digital-estudiantes-educacion-postsecundaria-distrito",
+   "publicado": false,
+   "descripcion": "El tablero presenta los resultados del estudio de 2023 sobre la brecha digital entre hombres y mujeres que cursan educación postsecundaria en el Distrito de Medellín: conectividad y competencias digitales.",
+   "claves": [
+    "Brecha digital",
+    "Conectividad",
+    "Competencias digitales",
+    "Brechas de género",
+    "Educación postsecundaria",
+    "Mujeres"
+   ],
+   "anio": 2023,
+   "mes": null
+  },
+  {
+   "id": "estudio-expectativas-estudiantes-clei-5-6-distrito-2023",
+   "descripcion": "El estudio indaga las expectativas de educación postsecundaria de 363 estudiantes de CLEI 5 y 6 de Medellín; plantea construir propuestas curriculares que fomenten su permanencia, graduación e inserción laboral.",
+   "claves": [
+    "CLEI",
+    "Expectativas",
+    "Acceso",
+    "Educación de adultos",
+    "Inclusión",
+    "Brechas de género"
+   ]
+  },
+  {
+   "id": "estudio-expectativas-continuidad-educacion-postsecundaria-estudiantes-clei",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta las expectativas de continuidad a la educación postsecundaria de los estudiantes de ciclos lectivos especiales integrados (CLEI) de Medellín, según los estudios de 2022 y 2023.",
+   "claves": [
+    "Expectativas",
+    "CLEI",
+    "Acceso",
+    "Educación postsecundaria",
+    "Educación de adultos",
+    "Educación media"
+   ],
+   "anio": 2023,
+   "mes": null
+  },
+  {
+   "id": "estudio-expectativas-estudiantes-grado-11-distrito-medellin-2023",
+   "descripcion": "El estudio presenta las expectativas de educación postsecundaria de 3.335 estudiantes de grado 11 de Medellín; propone acompañarlos con créditos, becas y orientación para que decidan y continúen sus estudios.",
+   "claves": [
+    "Expectativas",
+    "Estudiantes de grado 11",
+    "Acceso",
+    "Financiación",
+    "Brechas de género",
+    "Educación virtual"
+   ]
+  },
+  {
+   "id": "estudio-expectativas-continuidad-educacion-postsecundaria-jovenes-grado",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta las expectativas de continuidad a la educación postsecundaria de los jóvenes de grado 11 del Distrito de Medellín, según los estudios publicados entre 2020 y 2024.",
+   "claves": [
+    "Expectativas",
+    "Estudiantes de grado 11",
+    "Acceso",
+    "Educación postsecundaria",
+    "Jóvenes",
+    "Educación media"
+   ],
+   "anio": 2024,
+   "mes": null
+  },
+  {
+   "id": "estudio-matricula-cero-2023",
+   "descripcion": "El estudio consulta a 2.517 personas beneficiarias de Matrícula Cero y concluye que favorece la dedicación plena al estudio y aporta a la equidad social en el Distrito de Medellín.",
+   "claves": [
+    "Matrícula Cero",
+    "Acceso",
+    "Permanencia",
+    "Sostenimiento",
+    "Inclusión",
+    "Políticas públicas"
+   ]
+  },
+  {
+   "id": "estudio-matricula-cero-3-ies-distrito",
+   "publicado": false,
+   "descripcion": "El tablero muestra cómo Matrícula Cero, la gratuidad en pregrado, contribuye al acceso y la permanencia en las tres IES del Distrito de Medellín, según estudios de 2021 a 2023.",
+   "claves": [
+    "Matrícula Cero",
+    "Acceso",
+    "Permanencia",
+    "IES adscritas al Distrito",
+    "Pregrado",
+    "Educación superior"
+   ],
+   "anio": 2023,
+   "mes": null
+  },
+  {
+   "id": "estudio-panorama-desercion-personas-beneficiarias-programas-sapiencia-2023",
+   "descripcion": "El estudio analiza por qué 433 personas desertaron de becas y créditos condonables de Sapiencia y sugiere acompañamiento y seguimiento con el bienestar de las IES para prevenir la deserción.",
+   "claves": [
+    "Deserción",
+    "Permanencia",
+    "Becas",
+    "Créditos condonables",
+    "Fondos Sapiencia",
+    "Presupuesto Participativo"
+   ]
+  },
+  {
+   "id": "estudio-panorama-desercion-participantes-proyectos-acceso-educacion",
+   "publicado": false,
+   "descripcion": "El tablero presenta el panorama de la deserción y permanencia de las personas beneficiarias de los proyectos de acceso a la educación postsecundaria de Sapiencia, como becas y créditos condonables.",
+   "claves": [
+    "Deserción",
+    "Permanencia",
+    "Acceso",
+    "Becas",
+    "Créditos condonables",
+    "Fondos Sapiencia"
+   ],
+   "anio": 2023,
+   "mes": null
+  },
+  {
+   "id": "estudio-satisfaccion-medellin-como-destino-universitario-2023",
+   "descripcion": "El estudio consulta a 2.364 personas sobre Medellín como destino universitario; concluye que la percepción es positiva, destaca la calidad educativa y señala retos en costo de vida y accesibilidad.",
+   "claves": [
+    "Satisfacción",
+    "Destino universitario",
+    "Calidad educativa",
+    "Calidad de vida",
+    "Empleabilidad",
+    "Comunidad académica"
+   ]
+  },
+  {
+   "id": "estudio-satisfaccion-comunidad-academica-medellin-como-destino",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta la satisfacción de estudiantes, egresados y docentes con Medellín como destino universitario: calidad educativa, calidad de vida y empleabilidad, según los estudios de 2020 a 2023.",
+   "claves": [
+    "Satisfacción",
+    "Destino universitario",
+    "Comunidad académica",
+    "Calidad educativa",
+    "Calidad de vida",
+    "Empleabilidad"
+   ],
+   "anio": 2023,
+   "mes": null
+  },
+  {
+   "id": "estudio-seguimiento-continuidad-educacion-postsecundaria-bachilleres-medellin-2023",
+   "descripcion": "El estudio sigue la continuidad a la educación postsecundaria de bachilleres de Medellín; destaca su alta expectativa de estudiar y propone fortalecer la orientación vocacional y mejorar la educación virtual.",
+   "claves": [
+    "Seguimiento a bachilleres",
+    "Tasa de continuidad",
+    "Acceso",
+    "Financiación",
+    "Orientación vocacional",
+    "Matrícula Cero"
+   ]
+  },
+  {
+   "id": "informe-de-tendencias-5-computacion-nube-2023",
+   "descripcion": "El informe analiza la computación en la nube en la educación postsecundaria y concluye que democratiza el acceso a educación especializada y flexible, aunque la conectividad sigue siendo un desafío.",
+   "claves": [
+    "Computación en la nube",
+    "Educación virtual",
+    "Transformación digital",
+    "Brecha digital",
+    "Talento Especializado",
+    "Tendencias"
+   ]
+  },
+  {
+   "id": "informe-de-tendencias-4-explorando-futuro-educacion-postsecundaria-traves-metaverso-202",
+   "descripcion": "El informe explora cómo el metaverso puede transformar la educación postsecundaria y concluye que educadores y responsables de políticas deben aprovechar sus oportunidades garantizando acceso equitativo en todas las instituciones.",
+   "claves": [
+    "Metaverso",
+    "Realidad virtual",
+    "Educación virtual",
+    "Brecha digital",
+    "Talento Especializado",
+    "Tendencias"
+   ]
+  },
+  {
+   "id": "informe-de-tendencias-3-brechas-genero-inteligencia-artificial-2023",
+   "descripcion": "El informe analiza los sesgos de género en la inteligencia artificial; propone fomentar la participación de mujeres en áreas STEAM, diversificar los equipos y evaluar los modelos para detectar sesgos.",
+   "claves": [
+    "Brechas de género",
+    "Mujeres",
+    "Inteligencia artificial",
+    "Sesgos algorítmicos",
+    "STEM",
+    "Talento Especializado"
+   ]
+  },
+  {
+   "id": "informe-de-tendencias-2-desafios-enfoques-proteger-informacion-entornos-sector-2023",
+   "descripcion": "El informe analiza los desafíos de ciberseguridad del sector educativo y de Medellín; propone crear programas de pregrado y fortalecer la formación en ciberseguridad desde etapas tempranas de la educación.",
+   "claves": [
+    "Ciberseguridad",
+    "Ciberataques",
+    "Inteligencia artificial",
+    "Talento Especializado",
+    "Tendencias",
+    "Protección de datos"
+   ]
+  },
+  {
+   "id": "informe-de-tendencias-1-aprendizaje-maquina-2023",
+   "descripcion": "El informe examina si el aprendizaje de máquina puede contrarrestar la crisis del aprendizaje; propone integrarlo a la educación tradicional de Medellín para personalizar la formación, con un marco ético.",
+   "claves": [
+    "Inteligencia artificial",
+    "Aprendizaje de máquina",
+    "Modelos de lenguaje",
+    "Crisis del aprendizaje",
+    "Cuarta revolución industrial",
+    "Tendencias"
+   ]
+  },
+  {
+   "id": "informe-de-tendencias-3-en-gender-gaps-artificial-intelligence-2023",
+   "descripcion": "The report analyzes gender biases in artificial intelligence; it proposes encouraging the participation of women in STEAM areas, diversifying the teams that create algorithms and evaluating models to detect bias.",
+   "claves": [
+    "Brechas de género",
+    "Mujeres",
+    "Inteligencia artificial",
+    "Sesgos algorítmicos",
+    "STEM",
+    "Talento Especializado"
+   ]
+  },
+  {
+   "id": "informe-de-tendencias-2-en-challenges-approaches-protecting-information-educational-sec",
+   "descripcion": "The report analyzes the cybersecurity challenges facing the educational sector and Medellín; it proposes promoting the creation of undergraduate programs and strengthening cybersecurity education from the early stages of education.",
+   "claves": [
+    "Ciberseguridad",
+    "Ciberataques",
+    "Inteligencia artificial",
+    "Talento Especializado",
+    "Tendencias",
+    "Protección de datos"
+   ]
+  },
+  {
+   "id": "informe-de-tendencias-1-en-machine-learning-2023",
+   "descripcion": "The trends report examines whether machine learning can counteract the human learning crisis; it proposes integrating it into traditional education in Medellín to personalize learning strategies, within an ethical framework.",
+   "claves": [
+    "Inteligencia artificial",
+    "Aprendizaje de máquina",
+    "Modelos de lenguaje",
+    "Crisis del aprendizaje",
+    "Cuarta revolución industrial",
+    "Tendencias"
+   ]
+  },
+  {
+   "id": "infografia-asistencia-educacion-postsecundaria-distrito-medellin-2023",
+   "descripcion": "La infografía presenta el estudio de asistencia a la educación postsecundaria en Medellín, con 2.643 participantes; concluye que las dinámicas económicas del país y la ciudad posiblemente afectaron la asistencia.",
+   "claves": [
+    "Tasa de asistencia",
+    "Educación postsecundaria",
+    "Acceso",
+    "Jóvenes",
+    "Comunas",
+    "Corregimientos"
+   ]
+  },
+  {
+   "id": "infografia-expectativas-estudiantes-clei-5-6-distrito-2023",
+   "descripcion": "La infografía resume las expectativas de educación postsecundaria de 363 estudiantes de CLEI 5 y 6 en Medellín; predomina el interés por continuar, y plantea acercar Sapiencia a sus instituciones.",
+   "claves": [
+    "Expectativas",
+    "CLEI",
+    "Acceso",
+    "Financiación",
+    "Formación técnica y tecnológica",
+    "Educación de adultos"
+   ]
+  },
+  {
+   "id": "infografia-expectativas-estudiantes-grado-11-distrito-medellin-2023",
+   "descripcion": "La infografía resume las expectativas de educación postsecundaria de 3.335 estudiantes de grado 11 de Medellín; ante la falta de recursos, destaca Matrícula Cero como vía para ampliar el acceso.",
+   "claves": [
+    "Expectativas",
+    "Estudiantes de grado 11",
+    "Acceso",
+    "Financiación",
+    "Brechas de género",
+    "Brecha digital"
+   ]
+  },
+  {
+   "id": "infografia-matricula-cero-contribucion-acceso-permanencia-educacion-2023",
+   "descripcion": "La infografía presenta la percepción de 2.517 personas beneficiadas de Matrícula Cero en Medellín; las mediciones desde 2021 reflejan la contribución del programa a que las personas continúen sus estudios.",
+   "claves": [
+    "Matrícula Cero",
+    "Acceso",
+    "Permanencia",
+    "Sostenimiento",
+    "Inclusión",
+    "Políticas públicas"
+   ]
+  },
+  {
+   "id": "infografia-panorama-desercion-personas-beneficiarias-programas-sapiencia-2023",
+   "descripcion": "La infografía resume el estudio sobre deserción de personas beneficiarias de becas y créditos condonables de Sapiencia; presenta sus razones de abandono y destaca que el 47% retomaría el beneficio.",
+   "claves": [
+    "Deserción",
+    "Fondos Sapiencia",
+    "Becas",
+    "Créditos condonables",
+    "Presupuesto Participativo",
+    "Permanencia"
+   ]
+  },
+  {
+   "id": "infografia-satisfaccion-medellin-como-destino-universitario-2023",
+   "descripcion": "La infografía resume la satisfacción de la comunidad académica con Medellín como destino universitario: el indicador llega a 65,63% y la calidad de la educación es la dimensión mejor valorada.",
+   "claves": [
+    "Satisfacción",
+    "Destino universitario",
+    "Calidad educativa",
+    "Costo de vida",
+    "Empleabilidad",
+    "Movilidad académica"
+   ]
+  },
+  {
+   "id": "infografia-seguimiento-continuidad-educacion-postsecundaria-bachilleres-medellin-2023",
+   "descripcion": "La infografía presenta la continuidad a la educación postsecundaria de 1.774 bachilleres de Medellín graduados en 2022; concluye que estudiar es su prioridad y abre camino hacia la movilidad social.",
+   "claves": [
+    "Seguimiento a bachilleres",
+    "Tasa de continuidad",
+    "Acceso",
+    "Expectativas",
+    "Movilidad social",
+    "Orientación vocacional"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-linea-creditos-condonables-posgrados-nacionales-convocator",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta los resultados de la convocatoria 2023 de la línea de créditos condonables de Sapiencia para posgrados nacionales, con datos de las inscripciones y las personas beneficiarias.",
+   "claves": [
+    "Posgrados",
+    "Créditos condonables",
+    "Fondos Sapiencia",
+    "Convocatorias",
+    "Inscripciones",
+    "Beneficiarios"
+   ]
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-diciembre-2022",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe dinámico reseña noticias internacionales de la Inteligencia Estratégica del Foro Económico Mundial sobre habilidades blandas, educación STEM y formación continua, para identificar oportunidades que fortalezcan la educación postsecundaria.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Habilidades blandas",
+    "Educación continua",
+    "COVID-19",
+    "Educación virtual"
+   ]
+  },
+  {
+   "id": "informe-dinamico-en-dynamic-report-strategic-intelligence-december-2022",
+   "categoria": "Informe de tendencias",
+   "descripcion": "The dynamic report reviews international news from the Strategic Intelligence tool of the World Economic Forum on soft skills, STEM and continuing education, to identify opportunities that strengthen post-secondary education.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Habilidades blandas",
+    "Educación continua",
+    "COVID-19",
+    "Educación virtual"
+   ]
+  },
+  {
+   "id": "nota-tematica-20-alfabetizacion-digital-necesidad-tiempos-presentes-2022",
+   "descripcion": "La nota temática describe la alfabetización digital y sus beneficios, plantea la necesidad de mejorarla y presenta la Ciudadela Arroba Medellín, de Sapiencia, cuyos cursos virtuales beneficiaron a 30.046 personas.",
+   "claves": [
+    "Alfabetización digital",
+    "Brecha digital",
+    "Pensamiento crítico",
+    "Creación de contenidos digitales",
+    "Arroba Medellín",
+    "Educación virtual"
+   ]
+  },
+  {
+   "id": "nota-tematica-20-en-literacy-digital-need-present-times-2022",
+   "descripcion": "The issues note describes digital literacy and its benefits, raises the need to improve it and presents the Ciudadela Arroba Medellín program of Sapiencia, whose virtual courses benefited 30,046 people.",
+   "claves": [
+    "Alfabetización digital",
+    "Brecha digital",
+    "Pensamiento crítico",
+    "Creación de contenidos digitales",
+    "Arroba Medellín",
+    "Educación virtual"
+   ]
+  },
+  {
+   "id": "infografia-primer-estudio-expectativas-estudiantes-clei-5",
+   "descripcion": "La infografía presenta el primer estudio de expectativas de estudiantes de CLEI 5 y 6: la mayoría quiere seguir estudiando; el reto es acercar Sapiencia a las instituciones con CLEI.",
+   "claves": [
+    "Expectativas",
+    "CLEI",
+    "Acceso",
+    "Financiación",
+    "Formación técnica y tecnológica",
+    "Educación de adultos"
+   ],
+   "anio": 2022,
+   "mes": null
+  },
+  {
+   "id": "infografia-en-data-science",
+   "descripcion": "The infographic presents data science as an interdisciplinary field of the Fourth Industrial Revolution, in which data provides inputs for decision making; it also gathers tools, methodologies and curious facts.",
+   "claves": [
+    "Ciencia de datos",
+    "Cuarta revolución industrial",
+    "Transformación digital",
+    "Big data",
+    "Toma de decisiones",
+    "Economía digital"
+   ],
+   "anio": 2020,
+   "mes": 10
+  },
+  {
+   "id": "infografia-en-female-leadership-higher-education-institutions-colombia",
+   "descripcion": "The infographic examines the participation of women in Colombian higher education institutions as presidents, professors, researchers and enrolled students, and locates the 71 female university presidents by region and department.",
+   "claves": [
+    "Mujeres",
+    "Liderazgo femenino",
+    "Brechas de género",
+    "Educación superior",
+    "Acreditación",
+    "Instituciones de educación superior"
+   ],
+   "anio": 2020,
+   "mes": 11
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-noviembre-2022",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe reúne noticias internacionales sobre habilidades blandas, formación continua y educación STEM, rastreadas con Inteligencia Estratégica del Foro Económico Mundial, para identificar oportunidades para los procesos educativos de Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Inclusión",
+    "COVID-19",
+    "Cambio climático",
+    "Empleabilidad"
+   ]
+  },
+  {
+   "id": "informe-dinamico-en-dynamic-report-strategic-intelligence-november-2022",
+   "categoria": "Informe de tendencias",
+   "descripcion": "The report gathers international news stories on soft skills, continuing education and STEM education, tracked with the World Economic Forum's Strategic Intelligence tool, to identify opportunities for Medellín's educational processes.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Inclusión",
+    "COVID-19",
+    "Cambio climático",
+    "Empleabilidad"
+   ]
+  },
+  {
+   "id": "nota-tematica-19-gobernanza-agil-medellin-apuesta-articulacion-empoderamiento-2022",
+   "descripcion": "La nota temática explica la gobernanza ágil con experiencias internacionales y muestra la apuesta de Medellín por ser territorio inteligente, con MEData y los estudios de Sapiencia sobre educación postsecundaria.",
+   "claves": [
+    "Gobernanza ágil",
+    "Gobierno digital",
+    "Gestión pública",
+    "Datos abiertos",
+    "Transformación digital",
+    "Territorio inteligente"
+   ]
+  },
+  {
+   "id": "nota-tematica-19-en-agile-governance-medellin-commitment-articulation-empowerment-2022",
+   "descripcion": "The issues note explains agile governance through international experiences and shows Medellín's commitment to becoming an intelligent territory, with the MEData platform and the studies by Sapiencia on post-secondary education.",
+   "claves": [
+    "Gobernanza ágil",
+    "Gobierno digital",
+    "Gestión pública",
+    "Datos abiertos",
+    "Transformación digital",
+    "Territorio inteligente"
+   ]
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-octubre-2022",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe recopila noticias internacionales sobre habilidades blandas, educación básica, formación continua, formación postsecundaria pertinente, STEM e innovación educativa, para identificar oportunidades de proyección para los procesos educativos de Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Transformación digital",
+    "Calidad educativa",
+    "Educación virtual",
+    "Mercado laboral"
+   ]
+  },
+  {
+   "id": "informe-dinamico-en-dynamic-report-strategic-intelligence-october-2022",
+   "categoria": "Informe de tendencias",
+   "descripcion": "The report compiles international news on soft skills, quality basic education, continuing education, pertinent post-secondary education, STEM and educational innovation, to identify projection opportunities for the educational processes of Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Transformación digital",
+    "Calidad educativa",
+    "Educación virtual",
+    "Mercado laboral"
+   ]
+  },
+  {
+   "id": "nota-tematica-18-mercado-laboral-fuerza-trabajo-perfiles-ocupacionales-2022",
+   "descripcion": "La nota temática caracteriza los perfiles tecnológicos más demandados en Medellín, con sus funciones y habilidades; identifica como recurrentes el trabajo en equipo, la comunicación efectiva y el aprendizaje constante.",
+   "claves": [
+    "Mercado laboral",
+    "Perfiles ocupacionales",
+    "Desarrollo de software",
+    "Ciencia de datos",
+    "Habilidades blandas",
+    "Talento Especializado"
+   ]
+  },
+  {
+   "id": "nota-tematica-18-en-labor-market-workforce-occupational-profiles-with-2022",
+   "descripcion": "The issues note characterizes the most demanded technological profiles in Medellín, with their functions and skills; it identifies teamwork, effective communication and constant learning as recurring across all the profiles.",
+   "claves": [
+    "Mercado laboral",
+    "Perfiles ocupacionales",
+    "Desarrollo de software",
+    "Ciencia de datos",
+    "Habilidades blandas",
+    "Talento Especializado"
+   ]
+  },
+  {
+   "id": "boletin-26-acreditacion-alta-calidad",
+   "descripcion": "El boletín presenta la acreditación de alta calidad como medio, y no solo como fin, para fortalecer la educación superior, y revisa el modelo colombiano y la acreditación en Medellín.",
+   "claves": [
+    "Acreditación educativa",
+    "Calidad",
+    "Ministerio de Educación",
+    "Consejo Nacional de Educación Superior",
+    "Consejo Nacional de Acreditación",
+    "Evaluación"
+   ],
+   "anio": 2022,
+   "mes": 9
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-septiembre-2022",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe recopila noticias internacionales sobre habilidades blandas, formación continua y educación STEM, rastreadas con Inteligencia Estratégica del Foro Económico Mundial, para identificar oportunidades en la educación postsecundaria de Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Brechas de género",
+    "Inclusión",
+    "Calidad educativa",
+    "Deserción"
+   ]
+  },
+  {
+   "id": "informe-dinamico-en-dynamic-report-strategic-intelligence-september-2022",
+   "categoria": "Informe de tendencias",
+   "descripcion": "The report gathers international news on soft skills, continuing education and STEM education, tracked with the World Economic Forum's Strategic Intelligence tool, to identify opportunities for post-secondary education in Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Brechas de género",
+    "Inclusión",
+    "Calidad educativa",
+    "Deserción"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-demanda-matricula-2022-2-3-ies-2022",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta la demanda y la matrícula del semestre 2022-2 en Colegio Mayor de Antioquia, Pascual Bravo e ITM, instituciones de educación superior adscritas al Distrito de Medellín.",
+   "claves": [
+    "IES adscritas al Distrito",
+    "Inscripciones",
+    "Admisiones",
+    "Matrícula",
+    "Cupos",
+    "Formación técnica y tecnológica"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-epm-universidades-2",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta, por comuna de Medellín, los inscritos y beneficiarios de la convocatoria 2022-2 del Fondo Sapiencia EPM y Universidades, que otorga créditos condonables para estudios de pregrado.",
+   "claves": [
+    "Fondo EPM",
+    "Fondos Sapiencia",
+    "Inscripciones",
+    "Beneficiarios",
+    "Pregrado",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-recursos-presupues-2",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta, por comuna de Medellín, los inscritos y beneficiarios de la convocatoria 2022-2 del Fondo Sapiencia con recursos de Presupuesto Participativo, que otorga créditos condonables de pregrado.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Fondos Sapiencia",
+    "Convocatorias",
+    "Inscripciones",
+    "Beneficiarios",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "estudio-matricula-cero-2022",
+   "descripcion": "El estudio consulta a 1.958 estudiantes beneficiarios de Matrícula Cero en Medellín; concluye que aporta al acceso, la permanencia y el desempeño académico, y es preciso seguir mejorando la inclusión.",
+   "claves": [
+    "Matrícula Cero",
+    "Acceso",
+    "Permanencia",
+    "Inclusión",
+    "Brechas de género",
+    "Brecha digital"
+   ]
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-agosto-2022",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe dinámico recopila noticias educativas internacionales de la Inteligencia Estratégica del Foro Económico Mundial en seis ejes, para aprender e identificar oportunidades que fortalezcan la educación postsecundaria en Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Calidad educativa",
+    "Brecha digital",
+    "COVID-19",
+    "Habilidades blandas"
+   ]
+  },
+  {
+   "id": "informe-dinamico-en-dynamic-report-strategic-intelligence-august-2022",
+   "categoria": "Informe de tendencias",
+   "descripcion": "The dynamic report compiles international education news from the World Economic Forum's Strategic Intelligence tool across six axes, to learn and identify opportunities that will strengthen post-secondary education in Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Calidad educativa",
+    "Brecha digital",
+    "COVID-19",
+    "Habilidades blandas"
+   ]
+  },
+  {
+   "id": "nota-tematica-17-videojuegos-educacion-escenarios-laborales-2022",
+   "descripcion": "La nota temática analiza cómo los videojuegos pasan del entretenimiento a la educación y la formación laboral, y presenta experiencias de Medellín que fortalecen su vocación como Valle del Software.",
+   "claves": [
+    "Videojuegos",
+    "Juegos serios",
+    "Gamificación",
+    "Innovación educativa",
+    "Talento Especializado",
+    "Valle del Software"
+   ]
+  },
+  {
+   "id": "nota-tematica-17-en-videogames-education-work-scenarios-2022",
+   "descripcion": "The issues note analyzes how videogames have moved from entertainment to education and job training, and presents practical cases from Medellín that strengthen the city's vocation as a Software Valley.",
+   "claves": [
+    "Videojuegos",
+    "Juegos serios",
+    "Gamificación",
+    "Innovación educativa",
+    "Talento Especializado",
+    "Valle del Software"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-bateria-indicadores",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo reúne la batería de indicadores sobre la educación postsecundaria de Medellín, los programas de Sapiencia y las tres IES del Distrito, entre ellos matrícula, deserción y graduación.",
+   "claves": [
+    "Matrícula",
+    "Deserción",
+    "Graduación",
+    "Saber Pro",
+    "Fondos Sapiencia",
+    "IES adscritas al Distrito"
+   ],
+   "anio": 2022,
+   "mes": null
+  },
+  {
+   "id": "estudio-satisfaccion-medellin-como-destino-universitario-2022",
+   "descripcion": "El estudio mide la satisfacción de 2.146 personas con Medellín como destino universitario: crece la valoración de la calidad educativa, mejora la percepción de seguridad; queda camino en infraestructura inclusiva.",
+   "claves": [
+    "Satisfacción",
+    "Destino universitario",
+    "Calidad educativa",
+    "Calidad de vida",
+    "Empleabilidad",
+    "Comunidad académica"
+   ]
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-julio-2022",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe dinámico recopila noticias internacionales de la Inteligencia Estratégica del Foro Económico Mundial sobre habilidades, educación STEM e innovación, para aportar al fortalecimiento de la educación postsecundaria de Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Brecha digital",
+    "Competencias digitales",
+    "Inclusión",
+    "COVID-19"
+   ]
+  },
+  {
+   "id": "informe-dinamico-en-dynamic-report-strategic-intelligence-july-2022",
+   "categoria": "Informe de tendencias",
+   "descripcion": "The dynamic report gathers international news items identified through the World Economic Forum's Strategic Intelligence tool, on skills, STEM education and innovation, to contribute to strengthening post-secondary education in Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Brecha digital",
+    "Competencias digitales",
+    "Inclusión",
+    "COVID-19"
+   ]
+  },
+  {
+   "id": "nota-tematica-16-reconversion-talentos-2022",
+   "descripcion": "La nota temática, elaborada con Ruta N, presenta conceptos, datos y casos de éxito de reconversión del talento, y plantea la formación permanente ante la digitalización acelerada por la pandemia.",
+   "claves": [
+    "Reconversión laboral",
+    "Upskilling",
+    "Reskilling",
+    "Bootcamps",
+    "Talento Especializado",
+    "Ruta N"
+   ]
+  },
+  {
+   "id": "nota-tematica-16-en-reconversion-talents-2022",
+   "descripcion": "The issues note, prepared with Ruta N, presents concepts, data and success stories on talent reconversion, and proposes permanent training in the face of the digitization accelerated by the pandemic.",
+   "claves": [
+    "Reconversión laboral",
+    "Upskilling",
+    "Reskilling",
+    "Bootcamps",
+    "Talento Especializado",
+    "Ruta N"
+   ]
+  },
+  {
+   "id": "boletin-25-desafios-educacion-superior-2022",
+   "descripcion": "El boletín reflexiona sobre la educación superior colombiana ante las demandas laborales y concluye que su mayor desafío es formar el ser desde la ética, para contribuir al desarrollo social.",
+   "claves": [
+    "Educación superior",
+    "Mercado laboral",
+    "Habilidades",
+    "Pertinencia",
+    "Talento humano",
+    "Desarrollo social"
+   ]
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-junio-2022",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe recopila noticias internacionales sobre habilidades blandas, educación STEM, formación continua e innovación, rastreadas con Inteligencia Estratégica del Foro Económico Mundial, para identificar oportunidades para la educación en Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "COVID-19",
+    "Brechas de género",
+    "Transformación digital",
+    "Becas",
+    "STEM"
+   ]
+  },
+  {
+   "id": "informe-dinamico-en-dynamic-report-strategic-intelligence-june-2022",
+   "categoria": "Informe de tendencias",
+   "descripcion": "The report gathers international news on soft skills, STEM education, continuing education and innovation, tracked with the World Economic Forum's Strategic Intelligence tool, to identify opportunities for education in Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "COVID-19",
+    "Brechas de género",
+    "Transformación digital",
+    "Becas",
+    "STEM"
+   ]
+  },
+  {
+   "id": "nota-tematica-15-universidades-medellin-impacto-ods-2022",
+   "descripcion": "La nota temática resume el ranking de impacto en los ODS de cinco universidades de Medellín, que visibiliza su esfuerzo por el bienestar comunitario, y destaca al ITM, única pública.",
+   "claves": [
+    "Objetivos de Desarrollo Sostenible",
+    "Rankings universitarios",
+    "Times Higher Education",
+    "Universidades",
+    "Impacto social",
+    "Educación superior"
+   ]
+  },
+  {
+   "id": "nota-tematica-15-en-universities-medellin-their-impact-on-sdg-2022",
+   "descripcion": "The issues note summarizes the SDG impact ranking of five universities in Medellín, which makes visible their effort toward community well-being, and highlights the ITM, the only public institution ranked.",
+   "claves": [
+    "Objetivos de Desarrollo Sostenible",
+    "Rankings universitarios",
+    "Times Higher Education",
+    "Universidades",
+    "Impacto social",
+    "Educación superior"
+   ]
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-mayo-2022",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe recopila noticias internacionales sobre educación y habilidades, rastreadas con Inteligencia Estratégica del Foro Económico Mundial, para aprender e identificar oportunidades que fortalezcan la educación postsecundaria de la ciudad.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Calidad educativa",
+    "Pertinencia",
+    "Mercado laboral",
+    "Educación virtual"
+   ]
+  },
+  {
+   "id": "informe-dinamico-en-dynamic-report-strategic-intelligence-may-2022",
+   "categoria": "Informe de tendencias",
+   "descripcion": "The report gathers international news on education and skills, tracked with the World Economic Forum's Strategic Intelligence tool, to learn and identify opportunities that strengthen post-secondary education in the city.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Calidad educativa",
+    "Pertinencia",
+    "Mercado laboral",
+    "Educación virtual"
+   ]
+  },
+  {
+   "id": "nota-tematica-14-revoluciones-industriales-educacion-2022",
+   "descripcion": "La nota temática 14 recorre las revoluciones industriales y su impacto en la educación, destaca a Medellín, Centro 4RI-Med del Foro Económico Mundial, y concluye que el aprendizaje será permanente.",
+   "claves": [
+    "Revoluciones industriales",
+    "Cuarta revolución industrial",
+    "Historia de la educación",
+    "Aprendizaje permanente",
+    "Ciudadela C4TA",
+    "Arroba Medellín"
+   ]
+  },
+  {
+   "id": "nota-tematica-14-en-industrial-revolutions-education-2022",
+   "descripcion": "Issues Note 14 reviews the industrial revolutions and their impact on education, highlights Medellín as a 4RI-Med Center of the World Economic Forum, and concludes that learning will be permanent.",
+   "claves": [
+    "Revoluciones industriales",
+    "Cuarta revolución industrial",
+    "Historia de la educación",
+    "Aprendizaje permanente",
+    "Ciudadela C4TA",
+    "Arroba Medellín"
+   ]
+  },
+  {
+   "id": "infografia-en-general-landscape-labor-market-medellin",
+   "descripcion": "The infographic analyzes human talent gaps in Medellín through surveys of graduates and companies; it highlights soft skills as the top factor for recruitment and outlines two scenarios for 2030.",
+   "claves": [
+    "Mercado laboral",
+    "Perfiles ocupacionales",
+    "Empleabilidad",
+    "Habilidades blandas",
+    "Cuarta revolución industrial",
+    "Prospectiva"
+   ],
+   "anio": 2022,
+   "mes": null
+  },
+  {
+   "id": "infografia-en-higher-education-coverage-medellin",
+   "descripcion": "The infographic presents the evolution of higher education coverage in Medellín and enrollment by training level; it shows how many residents study in higher education institutions located in the city.",
+   "claves": [
+    "Cobertura",
+    "Educación superior",
+    "Matrícula",
+    "ETDH",
+    "Formación técnica y tecnológica",
+    "Acceso"
+   ],
+   "anio": 2021,
+   "mes": 3
+  },
+  {
+   "id": "infografia-en-sapiencia-registrations",
+   "descripcion": "The infographic characterizes Sapiencia's 220.383 registrations for forgivable loans and scholarships by sex, socioeconomic status, territory and chosen program, and shows that overcoming and the future motivate people to register.",
+   "claves": [
+    "Inscripciones",
+    "Acceso",
+    "Becas",
+    "Créditos condonables",
+    "Presupuesto Participativo",
+    "Sostenimiento"
+   ],
+   "anio": 2021,
+   "mes": null
+  },
+  {
+   "id": "infografia-en-women-education-colombia",
+   "descripcion": "The infographic gathers indicators on women's education in Colombia, Antioquia and Medellín; it highlights that 9 out of 10 women in high school wish to continue on to post-secondary education.",
+   "claves": [
+    "Mujeres",
+    "Brechas de género",
+    "Educación postsecundaria",
+    "Deserción",
+    "Corregimientos",
+    "Mercado laboral"
+   ],
+   "anio": 2021,
+   "mes": 2
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-abril-2022",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe recopila noticias internacionales de la Inteligencia Estratégica del Foro Económico Mundial sobre habilidades blandas, educación continua y STEM, para identificar oportunidades que fortalezcan la educación postsecundaria en Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Calidad educativa",
+    "Habilidades blandas",
+    "Educación continua",
+    "Permanencia"
+   ]
+  },
+  {
+   "id": "informe-dinamico-en-dynamic-report-strategic-intelligence-april-2022",
+   "categoria": "Informe de tendencias",
+   "descripcion": "The report gathers international news items from the World Economic Forum's Strategic Intelligence tool on soft skills, continuing education and STEM, to identify opportunities that strengthen post-secondary education in Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Calidad educativa",
+    "Habilidades blandas",
+    "Educación continua",
+    "Permanencia"
+   ]
+  },
+  {
+   "id": "nota-tematica-13-laboratorio-davos-perspectiva-mundial-personas-jovenes-2022",
+   "descripcion": "La nota temática resume el sondeo juvenil del Davos Lab; concluye que la consigna del cambio une a las personas jóvenes, conscientes de la necesidad de revisar producción y consumo.",
+   "claves": [
+    "Jóvenes",
+    "Salud mental",
+    "Brecha digital",
+    "Alfabetización digital",
+    "Inclusión laboral",
+    "Cambio climático"
+   ]
+  },
+  {
+   "id": "nota-tematica-13-en-davos-laboratory-global-perspectives-young-people-2022",
+   "descripcion": "The issues note summarizes the Davos Lab youth survey and concludes that the call for change unites young people, who are aware of the need to review production and consumption.",
+   "claves": [
+    "Jóvenes",
+    "Salud mental",
+    "Brecha digital",
+    "Alfabetización digital",
+    "Inclusión laboral",
+    "Cambio climático"
+   ]
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-marzo-2022",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe recopila noticias internacionales de marzo sobre habilidades blandas, educación básica de calidad, formación continua, STEM e innovación educativa, para identificar oportunidades de proyección para procesos educativos de Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Inclusión",
+    "Discapacidad",
+    "Mujeres",
+    "Calidad educativa"
+   ]
+  },
+  {
+   "id": "informe-dinamico-en-dynamic-report-strategic-intelligence-march-2022",
+   "categoria": "Informe de tendencias",
+   "descripcion": "The report gathers international education news from March on soft skills, quality basic education, continuing education, STEM and educational innovation, to identify projection opportunities for the educational processes of Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Inclusión",
+    "Discapacidad",
+    "Mujeres",
+    "Calidad educativa"
+   ]
+  },
+  {
+   "id": "nota-tematica-12-autismo-2022-ano-educacion-inclusiva-2022",
+   "descripcion": "La nota temática resume la conferencia de Naciones Unidas sobre educación inclusiva y autismo; propone investigar para crear estrategias eficaces que permitan a personas autistas acceder a cada nivel educativo.",
+   "claves": [
+    "Autismo",
+    "Inclusión",
+    "Neurodiversidad",
+    "Acceso",
+    "Inserción laboral",
+    "Objetivos de Desarrollo Sostenible"
+   ]
+  },
+  {
+   "id": "nota-tematica-12-en-autism-2022-year-inclusive-education-2022",
+   "descripcion": "The issues note summarizes the United Nations conference on inclusive education and autism; it proposes research to create effective strategies that enable access for autistic people to every educational level.",
+   "claves": [
+    "Autismo",
+    "Inclusión",
+    "Neurodiversidad",
+    "Acceso",
+    "Inserción laboral",
+    "Objetivos de Desarrollo Sostenible"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-demanda-matricula-2022-1-3-ies-2022",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta la demanda y la matrícula del semestre 2022-1 en Colegio Mayor de Antioquia, Pascual Bravo e ITM, instituciones de educación superior adscritas al Distrito de Medellín.",
+   "claves": [
+    "IES adscritas al Distrito",
+    "Inscripciones",
+    "Admisiones",
+    "Matrícula",
+    "Cupos",
+    "Formación técnica y tecnológica"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-epm-universidades-3",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta, por comuna de Medellín, los inscritos y beneficiarios de la convocatoria 2022-1 del Fondo Sapiencia EPM y Universidades, que otorga créditos condonables para estudios de pregrado.",
+   "claves": [
+    "Fondo EPM",
+    "Fondos Sapiencia",
+    "Inscripciones",
+    "Beneficiarios",
+    "Pregrado",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-recursos-presupues-3",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero, de la serie Educación superior en cifras, muestra inscripciones y personas beneficiarias de la convocatoria 2022-1 del Fondo Sapiencia con recursos de Presupuesto Participativo, por comuna de Medellín.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Fondos Sapiencia",
+    "Convocatorias",
+    "Inscripciones",
+    "Beneficiarios",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-febrero-2022",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe dinámico recopila noticias internacionales de la Inteligencia Estratégica del Foro Económico Mundial sobre habilidades, educación STEM e innovación educativa, para transferir conocimiento a expertos y tomadores de decisiones.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "STEM",
+    "Inclusión",
+    "Educación virtual",
+    "Habilidades blandas"
+   ]
+  },
+  {
+   "id": "informe-dinamico-en-dynamic-report-strategic-intelligence-february-2022",
+   "categoria": "Informe de tendencias",
+   "descripcion": "The dynamic report gathers international news from the World Economic Forum's Strategic Intelligence tool on skills, STEM education and educational innovation, aiming to transfer knowledge to experts and decision makers.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "STEM",
+    "Inclusión",
+    "Educación virtual",
+    "Habilidades blandas"
+   ]
+  },
+  {
+   "id": "nota-tematica-11-iniciativas-educacion-steam-mujeres-2022",
+   "descripcion": "La nota temática reseña iniciativas internacionales, nacionales y locales para impulsar a las mujeres en campos STEAM y destaca que incluirlas en Talento Especializado aumenta sus posibilidades de inserción laboral.",
+   "claves": [
+    "Mujeres",
+    "Brechas de género",
+    "STEAM",
+    "Cuarta revolución industrial",
+    "Talento Especializado",
+    "Competencias digitales"
+   ]
+  },
+  {
+   "id": "nota-tematica-11-en-educational-steam-initiatives-women-2022",
+   "descripcion": "The issues note reviews international, national and local initiatives promoting women in STEAM and highlights that including them in Talento Especializado increases their possibilities of entering the world of work.",
+   "claves": [
+    "Mujeres",
+    "Brechas de género",
+    "STEAM",
+    "Cuarta revolución industrial",
+    "Talento Especializado",
+    "Competencias digitales"
+   ]
+  },
+  {
+   "id": "infografia-panorama-general-mercado-laboral-medellin",
+   "descripcion": "La infografía analiza brechas de talento humano en Medellín mediante encuestas a graduados y empresas; destaca las habilidades blandas como primer factor de contratación y plantea dos escenarios a 2030.",
+   "claves": [
+    "Mercado laboral",
+    "Perfiles ocupacionales",
+    "Empleabilidad",
+    "Habilidades blandas",
+    "Cuarta revolución industrial",
+    "Prospectiva"
+   ],
+   "anio": 2022,
+   "mes": null
+  },
+  {
+   "id": "boletin-24-panorama-general-mercado-laboral-medellin-2022",
+   "descripcion": "El boletín analiza el mercado laboral de Medellín con personas graduadas, empresas y vacantes; concluye que es necesario incluir habilidades blandas en los currículos y formar docentes en habilidades digitales.",
+   "claves": [
+    "Mercado laboral",
+    "Empleabilidad",
+    "Graduados",
+    "Empresas",
+    "Prospectiva",
+    "COVID-19"
+   ]
+  },
+  {
+   "id": "boletin-24-en-general-landscape-labor-market-medellin-2022",
+   "descripcion": "The bulletin analyzes Medellín's labor market with graduates, companies and vacancies; it concludes that there is a need to include soft skills in curricula and train teachers in digital skills.",
+   "claves": [
+    "Mercado laboral",
+    "Empleabilidad",
+    "Graduados",
+    "Empresas",
+    "Prospectiva",
+    "COVID-19"
+   ]
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-enero-2022",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe dinámico recoge noticias internacionales de la Inteligencia Estratégica del Foro Económico Mundial sobre educación y COVID-19, STEM e inclusión digital, para transferir conocimiento útil a tomadores de decisiones.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "COVID-19",
+    "Brechas de género",
+    "Educación virtual",
+    "Brecha digital"
+   ]
+  },
+  {
+   "id": "informe-dinamico-en-dynamic-report-strategic-intelligence-january-2022",
+   "categoria": "Informe de tendencias",
+   "descripcion": "The dynamic report gathers international news from the World Economic Forum's Strategic Intelligence tool on education and COVID-19, STEM and digital inclusion, in order to transfer knowledge useful to decision-makers.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "COVID-19",
+    "Brechas de género",
+    "Educación virtual",
+    "Brecha digital"
+   ]
+  },
+  {
+   "id": "estudio-acoso-sexual-instituciones-educacion-superior-ies-2022",
+   "descripcion": "El estudio analiza el acoso sexual en las IES adscritas al Distrito de Medellín con 691 participantes; propone visibilizarlo, desnaturalizarlo y erradicarlo mediante pedagogía, protocolos efectivos y cultura de respeto.",
+   "claves": [
+    "Acoso sexual",
+    "Violencias basadas en género",
+    "Prevención",
+    "Rutas de atención",
+    "Mujeres",
+    "Comunidad académica"
+   ]
+  },
+  {
+   "id": "estudio-acoso-sexual-universitario-3-ies-adscritas",
+   "publicado": false,
+   "descripcion": "El tablero presenta los resultados del sondeo web sobre acoso sexual en las tres IES del Distrito de Medellín: percepción de la comunidad académica y conocimiento de rutas de atención.",
+   "claves": [
+    "Acoso sexual",
+    "IES adscritas al Distrito",
+    "Comunidad académica",
+    "Rutas de atención",
+    "Violencias basadas en género",
+    "Educación superior"
+   ],
+   "anio": 2022,
+   "mes": null
+  },
+  {
+   "id": "estudio-asistencia-educacion-postsecundaria-distrito-medellin-2022",
+   "descripcion": "El estudio estima en 43,21% la asistencia a la educación postsecundaria en Medellín; como las razones para no estudiar son principalmente económicas, propone acompañar proyectos de vida y generar ingresos.",
+   "claves": [
+    "Tasa de asistencia",
+    "Jóvenes",
+    "Comunas",
+    "Corregimientos",
+    "Acceso",
+    "Financiación"
+   ]
+  },
+  {
+   "id": "estudio-cambios-generados-vida-personas-despues-realizar-2022",
+   "descripcion": "El estudio analiza cambios en la vida de 264 personas graduadas con el Fondo Presupuesto Participativo; identifica interés por el posgrado, más posibilidades laborales y aportes a la movilidad social.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Créditos condonables",
+    "Evaluación de resultados",
+    "Movilidad social",
+    "Empleabilidad",
+    "Graduados"
+   ]
+  },
+  {
+   "id": "estudio-cambios-generados-vida-personas-despues-realizar",
+   "publicado": false,
+   "descripcion": "El tablero muestra los cambios en movilidad social y empleabilidad de quienes cursaron educación superior con créditos condonables del Fondo con recursos de Presupuesto Participativo, según el estudio de 2022.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Créditos condonables",
+    "Evaluación de resultados",
+    "Movilidad social",
+    "Empleabilidad",
+    "Fondos Sapiencia"
+   ],
+   "anio": 2022,
+   "mes": null
+  },
+  {
+   "id": "estudio-caracterizacion-grupos-semilleros-investigacion-instituciones-educacion-2022",
+   "descripcion": "El estudio caracteriza los grupos y semilleros de investigación de las IES del Distrito entre 2012 y 2022; propone fortalecer la investigación, la articulación interinstitucional y la equidad de género.",
+   "claves": [
+    "Grupos de investigación",
+    "Semilleros de investigación",
+    "Producción científica",
+    "Ciencia, tecnología e innovación",
+    "Brechas de género",
+    "Caracterización"
+   ]
+  },
+  {
+   "id": "estudio-expectativas-estudiantes-clei-5-6-distrito-2022",
+   "descripcion": "El estudio indaga las expectativas de educación postsecundaria de 1019 estudiantes de CLEI 5 y 6 de Medellín; invita a construir propuestas curriculares para personas adultas y acercarles la oferta.",
+   "claves": [
+    "CLEI",
+    "Expectativas",
+    "Acceso",
+    "Educación de adultos",
+    "Financiación",
+    "Educación postsecundaria"
+   ]
+  },
+  {
+   "id": "estudio-expectativas-estudiantes-grado-11-distrito-medellin-2022",
+   "descripcion": "El estudio presenta las expectativas de educación postsecundaria de 4.127 estudiantes de grado 11 de Medellín, insumo para políticas públicas que construyan puentes entre la oferta formativa y sus sueños.",
+   "claves": [
+    "Expectativas",
+    "Estudiantes de grado 11",
+    "Acceso",
+    "Financiación",
+    "Brecha digital",
+    "Políticas públicas"
+   ]
+  },
+  {
+   "id": "estudio-financiacion-estudiantes-etdh-2022",
+   "descripcion": "El estudio presenta el primer sondeo a 298 estudiantes de Educación para el Trabajo y el Desarrollo Humano de Medellín sobre su financiación y propone acercarles la oferta de becas.",
+   "claves": [
+    "ETDH",
+    "Financiación",
+    "Sostenimiento",
+    "Becas",
+    "Crédito educativo",
+    "Pertinencia"
+   ]
+  },
+  {
+   "id": "estudio-fuentes-financiacion-matricula-sostenimiento-estudiantes-etdh",
+   "publicado": false,
+   "descripcion": "El tablero presenta las fuentes de financiación de matrícula y sostenimiento de estudiantes de Educación para el Trabajo y el Desarrollo Humano (ETDH) de Medellín, como becas y créditos blandos.",
+   "claves": [
+    "ETDH",
+    "Financiación",
+    "Sostenimiento",
+    "Becas",
+    "Créditos blandos",
+    "Crédito educativo"
+   ],
+   "anio": 2022,
+   "mes": null
+  },
+  {
+   "id": "estudio-potencialidades-saberes-previos-estudiantes-educacion-media-2022",
+   "descripcion": "El estudio identifica con el videojuego Ulúmina potencialidades de 8.355 estudiantes de educación media de Medellín, predominantemente creativos y analíticos, y las plantea como insumo para decisiones sobre educación postsecundaria.",
+   "claves": [
+    "Potencialidades",
+    "Habilidades",
+    "Educación media",
+    "Estilos de pensamiento",
+    "Videojuegos",
+    "Saberes previos"
+   ]
+  },
+  {
+   "id": "estudio-potencialidades-saberes-previos-estudiantes-educacion-media",
+   "publicado": false,
+   "descripcion": "El tablero presenta el estudio de 2022 sobre potencialidades y saberes previos de estudiantes de grados 10 y 11 del Distrito de Medellín: estilos de pensamiento identificados mediante un videojuego.",
+   "claves": [
+    "Potencialidades",
+    "Saberes previos",
+    "Educación media",
+    "Estilos de pensamiento",
+    "Videojuegos",
+    "Caracterización"
+   ],
+   "anio": 2022,
+   "mes": null
+  },
+  {
+   "id": "estudio-ranking-ciudades-2022",
+   "categoria": "Infografía",
+   "descripcion": "La infografía compara 14 ciudades capitales colombianas en indicadores de educación superior; destaca que Bogotá, Medellín y Cali tienen los mejores Saber Pro y más IES certificadas en alta calidad.",
+   "claves": [
+    "Saber Pro",
+    "Matrícula",
+    "Deserción",
+    "Graduación",
+    "Grupos de investigación",
+    "Ranking de ciudades"
+   ]
+  },
+  {
+   "id": "estudio-ranking-ciudades-variables-educacion-postsecundaria",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta el ranking de ciudades, que compara a Medellín con otras ciudades capitales colombianas en educación postsecundaria: resultados de Saber Pro, matrícula y graduación, entre otros indicadores.",
+   "claves": [
+    "Ranking de ciudades",
+    "Educación postsecundaria",
+    "Saber Pro",
+    "Matrícula",
+    "Graduación",
+    "Ciudades capitales"
+   ],
+   "anio": 2022,
+   "mes": null
+  },
+  {
+   "id": "estudio-seguimiento-continuidad-educacion-postsecundaria-bachilleres-medellin-2022",
+   "descripcion": "El estudio estima en 72,71% la continuidad a la educación postsecundaria de bachilleres de Medellín, la más alta en cuatro años, y propone fortalecer fondos de sostenimiento y Matrícula Cero.",
+   "claves": [
+    "Seguimiento a bachilleres",
+    "Tasa de continuidad",
+    "Acceso",
+    "Financiación",
+    "Permanencia",
+    "Brechas de género"
+   ]
+  },
+  {
+   "id": "estudio-vinculacion-laboral-personas-beneficiarias-fondos-pregrado-2022",
+   "descripcion": "El estudio analiza la inserción laboral y condiciones de trabajo de 301 personas beneficiarias graduadas con los fondos de pregrado de Sapiencia y concluye que estos amplían sus oportunidades laborales.",
+   "claves": [
+    "Vinculación laboral",
+    "Fondos Sapiencia",
+    "Créditos condonables",
+    "Pregrado",
+    "Brechas de género",
+    "Emprendimiento"
+   ]
+  },
+  {
+   "id": "estudio-vinculacion-laboral",
+   "publicado": false,
+   "descripcion": "El tablero presenta la vinculación laboral de quienes se graduaron con fondos de créditos condonables de pregrado de Sapiencia: inserción, condiciones de trabajo y emprendimiento, según el estudio de 2022.",
+   "claves": [
+    "Vinculación laboral",
+    "Fondos Sapiencia",
+    "Pregrado",
+    "Condiciones laborales",
+    "Emprendimiento",
+    "Inserción laboral"
+   ],
+   "anio": 2022,
+   "mes": null
+  },
+  {
+   "id": "estudio-vinculacion-laboral-personas-beneficiarias-programa-talento-2022",
+   "descripcion": "El estudio analiza la inserción laboral de 675 personas certificadas en Talento Especializado; concluye que el programa amplía opciones laborales o de ingresos, y propone fortalecerlo según las competencias demandadas.",
+   "claves": [
+    "Talento Especializado",
+    "Vinculación laboral",
+    "Empleabilidad",
+    "Cuarta revolución industrial",
+    "Emprendimiento",
+    "Habilidades"
+   ]
+  },
+  {
+   "id": "estudio-vinculacion-laboral-participantes-cursos-talento-especializado",
+   "publicado": false,
+   "descripcion": "El tablero presenta la vinculación laboral de los participantes de los cursos de Talento Especializado de Sapiencia, en competencias digitales: condiciones de trabajo y emprendimiento, según el estudio de 2022.",
+   "claves": [
+    "Vinculación laboral",
+    "Talento Especializado",
+    "Condiciones laborales",
+    "Emprendimiento",
+    "Inserción laboral",
+    "Mercado laboral"
+   ],
+   "anio": 2022,
+   "mes": null
+  },
+  {
+   "id": "infografia-asistencia-educacion-postsecundaria-distrito-medellin-2022",
+   "descripcion": "La infografía presenta el estudio de asistencia a la educación postsecundaria en Medellín; concluye que las dinámicas económicas posiblemente afectaron la asistencia, sin una brecha importante entre hombres y mujeres.",
+   "claves": [
+    "Tasa de asistencia",
+    "Educación postsecundaria",
+    "Acceso",
+    "Jóvenes",
+    "Comunas",
+    "Corregimientos"
+   ]
+  },
+  {
+   "id": "infografia-caracterizacion-grupos-semilleros-investigacion-instituciones-educacion-2022",
+   "descripcion": "La infografía resume el primer estudio de Sapiencia sobre grupos y semilleros de investigación de las IES distritales; muestra potencialidades y desafíos en colaboración, equidad de género y producción científica.",
+   "claves": [
+    "Grupos de investigación",
+    "Semilleros de investigación",
+    "Caracterización",
+    "Producción científica",
+    "Ciencia, tecnología e innovación",
+    "IES adscritas al Distrito"
+   ]
+  },
+  {
+   "id": "infografia-expectativas-estudiantes-grado-11-distrito-medellin-2022",
+   "descripcion": "La infografía resume las expectativas de educación postsecundaria de 4.127 estudiantes de grado 11 de Medellín; ante la falta de recursos, destaca Matrícula Cero como vía para ampliar el acceso.",
+   "claves": [
+    "Expectativas",
+    "Estudiantes de grado 11",
+    "Acceso",
+    "Financiación",
+    "Brechas de género",
+    "Brecha digital"
+   ]
+  },
+  {
+   "id": "infografia-matricula-cero-contribucion-acceso-permanencia-educacion-2022",
+   "descripcion": "La infografía presenta la percepción de 1.958 personas beneficiadas de Matrícula Cero en las tres IES adscritas al Distrito de Medellín; destaca que el beneficio aporta a su permanencia académica.",
+   "claves": [
+    "Matrícula Cero",
+    "Acceso",
+    "Permanencia",
+    "Sostenimiento",
+    "Inclusión",
+    "IES adscritas al Distrito"
+   ]
+  },
+  {
+   "id": "infografia-mujeres-talento-especializado-2020-2022",
+   "descripcion": "La infografía describe la participación de mujeres en Talento Especializado, proyecto de cursos cortos modulares en industrias 4.0, en sus cinco convocatorias de 2020 a 2022, con 4.988 mujeres certificadas.",
+   "claves": [
+    "Talento Especializado",
+    "Mujeres",
+    "Brechas de género",
+    "Inclusión",
+    "Competencias digitales",
+    "Cuarta revolución industrial"
+   ]
+  },
+  {
+   "id": "infografia-potencialidades-saberes-previos-estudiantes-educacion-media-2022",
+   "descripcion": "La infografía presenta el estudio que, con el videojuego Ulúmina, identifica potencialidades y saberes previos de 8.355 estudiantes de educación media de Medellín para su paso a la educación postsecundaria.",
+   "claves": [
+    "Potencialidades",
+    "Saberes previos",
+    "Habilidades",
+    "Educación media",
+    "Comunas",
+    "Videojuegos"
+   ]
+  },
+  {
+   "id": "infografia-satisfaccion-medellin-como-destino-universitario-2022",
+   "descripcion": "La infografía resume la satisfacción de la comunidad académica con Medellín como destino universitario: el indicador llega a 63,23% y la calidad de la educación es la dimensión mejor valorada.",
+   "claves": [
+    "Satisfacción",
+    "Destino universitario",
+    "Calidad educativa",
+    "Costo de vida",
+    "Empleabilidad",
+    "Movilidad académica"
+   ]
+  },
+  {
+   "id": "infografia-seguimiento-continuidad-educacion-postsecundaria-bachilleres-medellin-2022",
+   "descripcion": "La infografía resume el seguimiento a bachilleres de Medellín: su continuidad a la educación postsecundaria es la más alta en cuatro años y muestra un camino hacia la movilidad social.",
+   "claves": [
+    "Seguimiento a bachilleres",
+    "Tasa de continuidad",
+    "Acceso",
+    "Expectativas",
+    "Movilidad social",
+    "Educación postsecundaria"
+   ]
+  },
+  {
+   "id": "infografia-talento-especializado-analisis-inscripciones-convocatoria-2020-2022",
+   "descripcion": "La infografía analiza a las más de 28.000 personas inscritas en Talento Especializado, cursos cortos modulares que permiten adquirir nuevos conocimientos, formarse en competencias específicas y cerrar brechas de acceso.",
+   "claves": [
+    "Talento Especializado",
+    "Inscripciones",
+    "Acceso",
+    "Inclusión",
+    "Competencias digitales",
+    "Convocatorias"
+   ]
+  },
+  {
+   "id": "infografia-vinculacion-laboral-personas-beneficiarias-fondos-pregrado-2022",
+   "descripcion": "La infografía resume el estudio de vinculación laboral de 301 personas beneficiarias de los fondos de pregrado de Sapiencia; la mayoría tiene empleos relacionados con sus estudios, con poca informalidad.",
+   "claves": [
+    "Vinculación laboral",
+    "Fondos Sapiencia",
+    "Pregrado",
+    "Emprendimiento",
+    "Brechas de género",
+    "Condiciones laborales"
+   ]
+  },
+  {
+   "id": "infografia-vinculacion-laboral-personas-beneficiarias-programa-talento-2022",
+   "descripcion": "La infografía resume el estudio sobre vinculación laboral de 675 personas certificadas en Talento Especializado: el programa es oportunidad formativa para bachilleres, con el reto de llegar a la ruralidad.",
+   "claves": [
+    "Talento Especializado",
+    "Vinculación laboral",
+    "Habilidades",
+    "Emprendimiento",
+    "Cuarta revolución industrial",
+    "Empleabilidad"
+   ]
+  },
+  {
+   "id": "infografia-en-assistance-postsecondary-education-medellin-district-2022",
+   "descripcion": "The infographic presents the study on attendance to post-secondary education in Medellín; it concludes that the economic dynamics possibly affected attendance, with no important gap found between men and women.",
+   "claves": [
+    "Tasa de asistencia",
+    "Educación postsecundaria",
+    "Acceso",
+    "Jóvenes",
+    "Comunas",
+    "Corregimientos"
+   ]
+  },
+  {
+   "id": "infografia-en-job-placement-beneficiaries-sapiencia-undergraduate-funds-2022",
+   "descripcion": "The infographic summarizes the study on the job placement of 301 beneficiaries of Sapiencia's undergraduate funds; most have jobs related to their studies, and few work in the informal sector.",
+   "claves": [
+    "Vinculación laboral",
+    "Fondos Sapiencia",
+    "Pregrado",
+    "Emprendimiento",
+    "Brechas de género",
+    "Condiciones laborales"
+   ]
+  },
+  {
+   "id": "infografia-en-matricula-cero-contribution-access-permanence-higher-2022",
+   "descripcion": "The infographic presents the perception of 1,958 beneficiaries of Matrícula Cero at the three HEIs attached to the District of Medellín; it highlights that the benefit contributes to their permanence.",
+   "claves": [
+    "Matrícula Cero",
+    "Acceso",
+    "Permanencia",
+    "Sostenimiento",
+    "Inclusión",
+    "IES adscritas al Distrito"
+   ]
+  },
+  {
+   "id": "infografia-en-satisfaction-with-medellin-as-college-destination-2022",
+   "descripcion": "The infographic summarizes the satisfaction of the academic community with Medellín as a college destination: the indicator reaches 63.23% and the quality of higher education is the highest rated dimension.",
+   "claves": [
+    "Satisfacción",
+    "Destino universitario",
+    "Calidad educativa",
+    "Costo de vida",
+    "Empleabilidad",
+    "Movilidad académica"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-primera-convocatoria-talento-especializado-2022",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero, de la serie Educación superior en cifras, muestra inscripciones y personas beneficiarias de la primera convocatoria de 2022 de Talento Especializado, los cursos de Sapiencia en competencias digitales.",
+   "claves": [
+    "Talento Especializado",
+    "Convocatorias",
+    "Inscripciones",
+    "Beneficiarios",
+    "Competencias digitales",
+    "Acceso"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-segunda-convocatoria-talento-especializado-2022",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero, de la serie Educación superior en cifras, muestra inscripciones y personas beneficiarias de la segunda convocatoria de 2022 de Talento Especializado, los cursos de Sapiencia en competencias digitales.",
+   "claves": [
+    "Talento Especializado",
+    "Convocatorias",
+    "Inscripciones",
+    "Beneficiarios",
+    "Competencias digitales",
+    "Acceso"
+   ]
+  },
+  {
+   "id": "boletin-23-realidades-educacion-postsecundaria-medellin-2021",
+   "descripcion": "El boletín resume estudios sobre satisfacción, expectativas, continuidad y financiación en la educación postsecundaria de Medellín; plantea el reto de aumentar la matrícula en programas no tradicionales de corta duración.",
+   "claves": [
+    "Educación postsecundaria",
+    "Acceso",
+    "Expectativas",
+    "Permanencia",
+    "Oportunidades",
+    "Matrícula Cero"
+   ]
+  },
+  {
+   "id": "boletin-22-politica-publica-educacion-postsecundaria-medellin-fase-2021",
+   "descripcion": "El boletín describe la fase de agenda pública participativa de la política de educación postsecundaria de Medellín y concluye que la pluralidad de actores y voces dio legitimidad al proceso.",
+   "claves": [
+    "Políticas públicas",
+    "Agenda pública",
+    "Participación ciudadana",
+    "Comunas",
+    "Corregimientos",
+    "Educación postsecundaria"
+   ]
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-diciembre-2021",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe dinámico organiza en seis ejes noticias educativas internacionales de la Inteligencia Estratégica del Foro Económico Mundial, y destaca la necesidad de habilidades blandas, aprendizaje permanente e innovación educativa.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Habilidades blandas",
+    "Educación continua",
+    "Calidad educativa",
+    "STEM"
+   ]
+  },
+  {
+   "id": "informe-dinamico-en-dynamic-report-strategic-intelligence-december-2021",
+   "categoria": "Informe de tendencias",
+   "descripcion": "The dynamic report organizes international education news from the World Economic Forum's Strategic Intelligence tool into six axes, and highlights the need for soft skills, lifelong learning and educational innovation.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Habilidades blandas",
+    "Educación continua",
+    "Calidad educativa",
+    "STEM"
+   ]
+  },
+  {
+   "id": "nota-tematica-10-cursos-linea-algunas-oportunidades-desafios-2021",
+   "descripcion": "La nota temática analiza oportunidades y desafíos de los cursos en línea y, ante su crecimiento, plantea que expertos en educación analicen plataformas propias, formación docente y mecanismos de reconocimiento.",
+   "claves": [
+    "Educación virtual",
+    "MOOC",
+    "Educación continua",
+    "Calidad educativa",
+    "Acceso",
+    "Plataformas académicas"
+   ]
+  },
+  {
+   "id": "nota-tematica-10-en-online-courses-some-challenges-opportunities-2021",
+   "descripcion": "The issues note examines some opportunities and challenges of online courses and, given their expected growth, proposes that education experts analyze national or local platforms, teacher training and recognition mechanisms.",
+   "claves": [
+    "Educación virtual",
+    "MOOC",
+    "Educación continua",
+    "Calidad educativa",
+    "Acceso",
+    "Plataformas académicas"
+   ]
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-noviembre-2021",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe reúne noticias internacionales rastreadas con Inteligencia Estratégica del Foro Económico Mundial en seis ejes educativos y plantea la necesidad de planes flexibles, aprendizaje permanente y colaboración entre sectores.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Educación virtual",
+    "Educación continua",
+    "Inclusión",
+    "STEM"
+   ]
+  },
+  {
+   "id": "informe-dinamico-en-dynamic-report-strategic-intelligence-november-2021",
+   "categoria": "Informe de tendencias",
+   "descripcion": "The report gathers international news tracked with the World Economic Forum's Strategic Intelligence tool in six areas and highlights the need for flexible educational plans, lifelong learning and cross-sector collaboration.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Educación virtual",
+    "Educación continua",
+    "Inclusión",
+    "STEM"
+   ]
+  },
+  {
+   "id": "nota-tematica-9-sistema-nacional-cualificaciones-snc-2021",
+   "descripcion": "La nota temática explica el Sistema Nacional de Cualificaciones, que busca alinear la educación y la formación con las necesidades sociales y productivas, y detalla el Marco Nacional de Cualificaciones.",
+   "claves": [
+    "Sistema Nacional de Cualificaciones",
+    "Marco Nacional de Cualificaciones",
+    "Reconocimiento de aprendizajes previos",
+    "ETDH",
+    "Pertinencia",
+    "Movilidad educativa"
+   ]
+  },
+  {
+   "id": "nota-tematica-9-en-national-qualifications-system-snc-2021",
+   "descripcion": "The issues note explains the National Qualifications System, which seeks to align education and training with the social and productive needs of the country, and details the National Qualifications Framework.",
+   "claves": [
+    "Sistema Nacional de Cualificaciones",
+    "Marco Nacional de Cualificaciones",
+    "Reconocimiento de aprendizajes previos",
+    "ETDH",
+    "Pertinencia",
+    "Movilidad educativa"
+   ]
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-octubre-2021",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe reúne noticias internacionales sobre habilidades blandas, educación básica, formación continua, educación STEM e innovación educativa, y plantea que los planes educativos deben adaptarse a las nuevas dinámicas laborales.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Educación continua",
+    "Calidad educativa",
+    "Educación virtual",
+    "Discapacidad"
+   ]
+  },
+  {
+   "id": "informe-dinamico-en-dynamic-report-strategic-intelligence-october-2021",
+   "categoria": "Informe de tendencias",
+   "descripcion": "The report gathers international news stories on soft skills, basic education, continuing education, STEM education and educational innovation, and argues that educational plans must adapt to the new work dynamics.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Educación continua",
+    "Calidad educativa",
+    "Educación virtual",
+    "Discapacidad"
+   ]
+  },
+  {
+   "id": "nota-tematica-8-tic-tac-2021",
+   "descripcion": "La nota temática 8, de octubre de 2021, diferencia las TIC de las TAC, orientadas a fines pedagógicos, describe cuatro tendencias educativas y plantea aumentar la formación tecnológica de docentes.",
+   "claves": [
+    "TIC",
+    "TAC",
+    "Innovación educativa",
+    "Realidad virtual",
+    "Inteligencia artificial",
+    "Gamificación"
+   ]
+  },
+  {
+   "id": "nota-tematica-8-en-from-ict-lkt-2021",
+   "descripcion": "Issues note number 8, published in October 2021, distinguishes ICT from LKT, which are oriented to pedagogical purposes, describes four educational trends and calls for more technological training for teachers.",
+   "claves": [
+    "TIC",
+    "TAC",
+    "Innovación educativa",
+    "Realidad virtual",
+    "Inteligencia artificial",
+    "Gamificación"
+   ]
+  },
+  {
+   "id": "boletin-21-avances-retos-metas-objetivo-desarrollo-sostenible-2021",
+   "descripcion": "El boletín examina avances y retos del ODS 4 en Colombia, Antioquia y Medellín; reconoce progresos en acceso y cobertura y plantea articular sociedad, Estado y academia para reducir desigualdades.",
+   "claves": [
+    "Objetivos de Desarrollo Sostenible",
+    "Educación de calidad",
+    "Derechos humanos",
+    "UNESCO",
+    "Acceso",
+    "Conectividad"
+   ]
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-septiembre-2021",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe recorre noticias y tendencias educativas internacionales sobre habilidades blandas, educación básica, formación continua, formación postsecundaria pertinente, STEM e innovación, y destaca la preparación para un mercado laboral cambiante.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Educación virtual",
+    "COVID-19",
+    "Brechas de género",
+    "Graduación"
+   ]
+  },
+  {
+   "id": "informe-dinamico-en-dynamic-report-strategic-intelligence-september-2021",
+   "categoria": "Informe de tendencias",
+   "descripcion": "The report reviews international educational news and trends on soft skills, basic education, continuing education, pertinent post-secondary education, STEM and innovation, and highlights preparing people for a changing job market.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Educación virtual",
+    "COVID-19",
+    "Brechas de género",
+    "Graduación"
+   ]
+  },
+  {
+   "id": "nota-tematica-7-empleo-dinamicas-laborales-actuales-2021",
+   "descripcion": "La nota temática expone seis dinámicas laborales en transformación, como el trabajo remoto y la protección social; plantea diseñar nuevos modelos de empleo para mercados laborales más fuertes y justos.",
+   "claves": [
+    "Mercado laboral",
+    "Reskilling",
+    "Inclusión laboral",
+    "Emprendimiento",
+    "Trabajo remoto",
+    "Protección social"
+   ]
+  },
+  {
+   "id": "nota-tematica-7-en-employment-current-labor-dynamics-2021",
+   "descripcion": "The issues note sets out six labor dynamics undergoing transformation, such as remote work and social protection, and calls for new employment models to create stronger and fairer labor markets.",
+   "claves": [
+    "Mercado laboral",
+    "Reskilling",
+    "Inclusión laboral",
+    "Emprendimiento",
+    "Trabajo remoto",
+    "Protección social"
+   ]
+  },
+  {
+   "id": "infografia-inscripciones-sapiencia",
+   "descripcion": "La infografía caracteriza las 220.383 inscripciones a créditos condonables y becas de Sapiencia según sexo, estrato, territorio y programa, y muestra que la superación y el futuro motivan a inscribirse.",
+   "claves": [
+    "Inscripciones",
+    "Acceso",
+    "Becas",
+    "Créditos condonables",
+    "Presupuesto Participativo",
+    "Sostenimiento"
+   ],
+   "anio": 2021,
+   "mes": null
+  },
+  {
+   "id": "educacion-superior-en-cifras-demanda-matricula-2021-2-3-ies-2021",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta la demanda y la matrícula del semestre 2021-2 en Colegio Mayor de Antioquia, Pascual Bravo e ITM, instituciones de educación superior adscritas al Municipio de Medellín.",
+   "claves": [
+    "IES adscritas al Distrito",
+    "Inscripciones",
+    "Admisiones",
+    "Matrícula",
+    "Cupos",
+    "Formación técnica y tecnológica"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-becas-tecnologias-2021-2-2021",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta, por comuna, los inscritos y beneficiarios de la convocatoria 2021-2 de Becas Tecnologías, programa de Sapiencia para programas tecnológicos en las tres IES adscritas a Medellín.",
+   "claves": [
+    "Becas Tecnologías",
+    "Inscripciones",
+    "Beneficiarios",
+    "IES adscritas al Distrito",
+    "Formación técnica y tecnológica",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-epm-universidades-4",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta, por comuna de Medellín, los inscritos y beneficiarios de la convocatoria 2021-2 del Fondo Sapiencia EPM y Universidades, que otorga créditos condonables para estudios de pregrado.",
+   "claves": [
+    "Fondo EPM",
+    "Fondos Sapiencia",
+    "Inscripciones",
+    "Beneficiarios",
+    "Pregrado",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-recursos-presupues-4",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero, de la serie Educación superior en cifras, muestra inscripciones y personas beneficiarias de la convocatoria 2021-2 del Fondo Sapiencia con recursos de Presupuesto Participativo, por comuna de Medellín.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Fondos Sapiencia",
+    "Convocatorias",
+    "Inscripciones",
+    "Beneficiarios",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-talento-especializado-2021-2-2021",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero, de la serie Educación superior en cifras, muestra inscripciones y personas beneficiarias de la convocatoria 2021-2 de Talento Especializado, los cursos de Sapiencia orientados a las competencias digitales.",
+   "claves": [
+    "Talento Especializado",
+    "Convocatorias",
+    "Inscripciones",
+    "Beneficiarios",
+    "Competencias digitales",
+    "Acceso"
+   ]
+  },
+  {
+   "id": "boletin-19-fe-erratas-boletin-n-19-2021",
+   "descripcion": "La fe de erratas, de agosto de 2021, actualiza la normatividad sobre educación postsecundaria del boletín 19 con la Ley 1955 de 2019, que creó el Sistema Nacional de Cualificaciones.",
+   "claves": [
+    "Marco normativo",
+    "Educación postsecundaria",
+    "ETDH",
+    "Sistema Nacional de Cualificaciones",
+    "Políticas públicas",
+    "Planes de desarrollo"
+   ]
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-agosto-2021",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe dinámico recorre en seis ejes noticias educativas internacionales y destaca que las habilidades blandas, STEM y la formación continua serán claves para adaptarse a la cuarta revolución industrial.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "STEM",
+    "Inclusión",
+    "Habilidades",
+    "Calidad educativa"
+   ]
+  },
+  {
+   "id": "informe-dinamico-en-dynamic-report-strategic-intelligence-august-2021",
+   "categoria": "Informe de tendencias",
+   "descripcion": "The dynamic report reviews, in six areas, international education news items and highlights that soft skills, STEM and continuing education will be key to adapting to the fourth industrial revolution.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "STEM",
+    "Inclusión",
+    "Habilidades",
+    "Calidad educativa"
+   ]
+  },
+  {
+   "id": "nota-tematica-6-retos-oportunidades-4ta-revolucion-industrial-2021",
+   "descripcion": "La nota temática explora retos y oportunidades de la cuarta revolución industrial en siete frentes, como empleo y gobernanza; plantea un desarrollo tecnológico inclusivo y centrado en el ser humano.",
+   "claves": [
+    "Cuarta revolución industrial",
+    "Mercado laboral",
+    "Habilidades",
+    "Gobernanza ágil",
+    "Brecha digital",
+    "Ética de la tecnología"
+   ]
+  },
+  {
+   "id": "nota-tematica-6-en-challenges-opportunities-4th-industrial-revolution-2021",
+   "descripcion": "The issues note explores challenges and opportunities of the fourth industrial revolution in seven areas, such as jobs and governance, and calls for technological development that is inclusive and human-centered.",
+   "claves": [
+    "Cuarta revolución industrial",
+    "Mercado laboral",
+    "Habilidades",
+    "Gobernanza ágil",
+    "Brecha digital",
+    "Ética de la tecnología"
+   ]
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-julio-2021",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe dinámico recopila noticias educativas del monitoreo internacional del Foro Económico Mundial; permite conocer tendencias para adaptar la educación y las habilidades a las necesidades cambiantes del mercado laboral.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Habilidades",
+    "Mercado laboral",
+    "Brechas de género",
+    "Inclusión"
+   ]
+  },
+  {
+   "id": "informe-dinamico-en-dynamic-report-strategic-intelligence-july-2021",
+   "categoria": "Informe de tendencias",
+   "descripcion": "The dynamic report compiles educational news from the World Economic Forum's international monitoring; it shows the trends for adapting education and skills to the changing needs of the labor market.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Habilidades",
+    "Mercado laboral",
+    "Brechas de género",
+    "Inclusión"
+   ]
+  },
+  {
+   "id": "nota-tematica-5-perspectiva-poblacion-joven-mundo-actual-2021",
+   "descripcion": "La nota temática examina, con la encuesta del Foro Económico Mundial a jóvenes de 180 países, sus criterios laborales, valores y preocupaciones, y concluye que tienen una profunda conciencia social.",
+   "claves": [
+    "Jóvenes",
+    "Millennials",
+    "Empleabilidad",
+    "Emprendimiento",
+    "Cambio climático",
+    "Igualdad de oportunidades"
+   ]
+  },
+  {
+   "id": "nota-tematica-5-en-perspective-young-population-today-s-world-2021",
+   "descripcion": "The issues note examines, through a World Economic Forum survey of young people in 180 countries, their job criteria, values and concerns, concluding that they have a deep social conscience.",
+   "claves": [
+    "Jóvenes",
+    "Millennials",
+    "Empleabilidad",
+    "Emprendimiento",
+    "Cambio climático",
+    "Igualdad de oportunidades"
+   ]
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-junio-2021",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe dinámico recorre noticias educativas internacionales de Inteligencia Estratégica sobre formación continua, habilidades del siglo XXI y STEM, y plantea alinear la formación con las necesidades del mercado laboral.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Habilidades",
+    "Educación continua",
+    "Mercado laboral",
+    "COVID-19"
+   ]
+  },
+  {
+   "id": "informe-dinamico-en-dynamic-report-strategic-intelligence-june-2021",
+   "categoria": "Informe de tendencias",
+   "descripcion": "The dynamic report goes over international education news from Strategic Intelligence on continuing education, 21st century skills and STEM, and proposes aligning training with the needs of the labor market.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Tendencias",
+    "Habilidades",
+    "Educación continua",
+    "Mercado laboral",
+    "COVID-19"
+   ]
+  },
+  {
+   "id": "nota-tematica-4-ciencia-educacion-2021",
+   "descripcion": "La nota temática examina el vínculo entre ciencia y educación; plantea que los programas educativos deben adaptarse al futuro con divulgación científica, colaboración multidisciplinar y enseñanza creativa de la ciencia.",
+   "claves": [
+    "Ciencia, tecnología e innovación",
+    "STEM",
+    "Divulgación científica",
+    "Investigación",
+    "Pensamiento crítico",
+    "Creatividad"
+   ]
+  },
+  {
+   "id": "nota-tematica-4-en-science-education-2021",
+   "descripcion": "The issues note examines the link between science and education; it states that educational programs must adapt to the future through science dissemination, multidisciplinary collaboration and more creative science teaching.",
+   "claves": [
+    "Ciencia, tecnología e innovación",
+    "STEM",
+    "Divulgación científica",
+    "Investigación",
+    "Pensamiento crítico",
+    "Creatividad"
+   ]
+  },
+  {
+   "id": "infografia-fuentes-financiacion-educacion-postsecundaria-medellin",
+   "descripcion": "La infografía resume un sondeo del Observatorio con más de 900 participantes sobre la financiación de la educación postsecundaria en Medellín: predominan los recursos propios y las becas o subsidios.",
+   "claves": [
+    "Financiación",
+    "Sostenimiento",
+    "Becas",
+    "Créditos condonables",
+    "Crédito educativo",
+    "Créditos blandos"
+   ],
+   "anio": 2021,
+   "mes": null
+  },
+  {
+   "id": "informe-dinamico-informe-dinamico-inteligencia-estrategica-mayo-2021",
+   "categoria": "Informe de tendencias",
+   "descripcion": "El informe recopila noticias educativas internacionales rastreadas con Inteligencia Estratégica del Foro Económico Mundial, que permiten conocer tendencias en formación continua y postsecundaria, habilidades del siglo XXI, STEM e innovación.",
+   "claves": [
+    "Inteligencia estratégica",
+    "COVID-19",
+    "Educación virtual",
+    "Inteligencia artificial",
+    "Habilidades",
+    "Financiación"
+   ]
+  },
+  {
+   "id": "informe-dinamico-en-dynamic-report-strategic-intelligence-may-2021",
+   "categoria": "Informe de tendencias",
+   "descripcion": "The report gathers international education news tracked with the World Economic Forum's Strategic Intelligence tool, which helps identify trends in continuing and post-secondary education, 21st century skills, STEM and innovation.",
+   "claves": [
+    "Inteligencia estratégica",
+    "COVID-19",
+    "Educación virtual",
+    "Inteligencia artificial",
+    "Habilidades",
+    "Financiación"
+   ]
+  },
+  {
+   "id": "nota-tematica-3-inteligencia-estrategica-sector-educativo-2021",
+   "descripcion": "La nota temática presenta los asuntos clave en educación según el Foro Económico Mundial y otros identificados por Sapiencia para Medellín; monitorearlos permite reconocer los retos de la transformación educativa.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Educación continua",
+    "Innovación educativa",
+    "STEM",
+    "Pertinencia",
+    "Habilidades del siglo XXI"
+   ]
+  },
+  {
+   "id": "nota-tematica-3-en-strategic-intelligence-educational-sector-2021",
+   "descripcion": "The issues note presents the key issues in education from the World Economic Forum and others identified by Sapiencia for Medellín; monitoring them helps recognize the challenges of educational transformation.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Educación continua",
+    "Innovación educativa",
+    "STEM",
+    "Pertinencia",
+    "Habilidades del siglo XXI"
+   ]
+  },
+  {
+   "id": "boletin-20-acceso-educacion-superior-posibilidad-narrar-reparacion-2021",
+   "descripcion": "El boletín examina el acceso a la educación superior como reparación integral para víctimas del conflicto armado en Medellín; concluye que reduce brechas y fortalece proyectos de vida y resiliencia.",
+   "claves": [
+    "Víctimas del conflicto armado",
+    "Reparación integral",
+    "Acceso",
+    "Fondos Sapiencia",
+    "Brechas de género",
+    "Inclusión"
+   ]
+  },
+  {
+   "id": "nota-tematica-2-inteligencia-estrategica-toma-decisiones-2021",
+   "descripcion": "La nota temática explica cómo la inteligencia estratégica apoya decisiones oportunas y contextualizadas bajo alta incertidumbre; el Observatorio de Sapiencia creó un sistema para aportar al futuro educativo de Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Toma de decisiones",
+    "Vigilancia tecnológica",
+    "Inteligencia competitiva",
+    "Planeación estratégica",
+    "Tendencias"
+   ]
+  },
+  {
+   "id": "nota-tematica-2-en-strategic-intelligence-decision-making-2021",
+   "descripcion": "The issues note explains how strategic intelligence supports appropriate and contextualized decisions under high uncertainty; the Observatorio de Sapiencia created a system to contribute to the educational future of Medellín.",
+   "claves": [
+    "Inteligencia estratégica",
+    "Toma de decisiones",
+    "Vigilancia tecnológica",
+    "Inteligencia competitiva",
+    "Planeación estratégica",
+    "Tendencias"
+   ]
+  },
+  {
+   "id": "infografia-cobertura-educacion-superior-medellin",
+   "descripcion": "La infografía presenta la evolución de la cobertura en educación superior en Medellín y la matrícula por nivel formativo; permite conocer cuántas personas residentes estudian en instituciones de la ciudad.",
+   "claves": [
+    "Cobertura",
+    "Educación superior",
+    "Matrícula",
+    "ETDH",
+    "Formación técnica y tecnológica",
+    "Acceso"
+   ],
+   "anio": 2021,
+   "mes": 3
+  },
+  {
+   "id": "nota-tematica-1-cobertura-educacion-superior-medellin-2021",
+   "descripcion": "La nota temática estima en 66,2% la cobertura en educación superior de Medellín en 2020 y señala que las realidades socioeconómicas demandan una transformación educativa con nuevas formas de aprender.",
+   "claves": [
+    "Cobertura",
+    "Educación superior",
+    "Matrícula",
+    "Formación técnica y tecnológica",
+    "ETDH",
+    "Acceso"
+   ]
+  },
+  {
+   "id": "nota-tematica-1-en-higher-education-coverage-medellin-2021",
+   "descripcion": "The issues note estimates higher education coverage in Medellín at 66.2% in 2020 and notes that the world's socioeconomic realities demand an educational transformation with new ways of acquiring knowledge.",
+   "claves": [
+    "Cobertura",
+    "Educación superior",
+    "Matrícula",
+    "Formación técnica y tecnológica",
+    "ETDH",
+    "Acceso"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-demanda-matricula-2021-1-3-ies-2021",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta la demanda y la matrícula del semestre 2021-1 en Colegio Mayor de Antioquia, Pascual Bravo e ITM, instituciones de educación superior adscritas al Municipio de Medellín.",
+   "claves": [
+    "IES adscritas al Distrito",
+    "Inscripciones",
+    "Admisiones",
+    "Matrícula",
+    "Cupos",
+    "Formación técnica y tecnológica"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-becas-tecnologias-2021-1-2021",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta, por comuna, los inscritos y beneficiarios de la convocatoria 2021-1 de Becas Tecnologías, programa de Sapiencia para programas tecnológicos en las tres IES adscritas a Medellín.",
+   "claves": [
+    "Becas Tecnologías",
+    "Inscripciones",
+    "Beneficiarios",
+    "IES adscritas al Distrito",
+    "Formación técnica y tecnológica",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-epm-universidades-5",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta, por comuna de Medellín, los inscritos y beneficiarios de la convocatoria 2021-1 del Fondo Sapiencia EPM y Universidades, que otorga créditos condonables para estudios de pregrado.",
+   "claves": [
+    "Fondo EPM",
+    "Fondos Sapiencia",
+    "Inscripciones",
+    "Beneficiarios",
+    "Pregrado",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-talento-especializado-2021-1-2021",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero, de la serie Educación superior en cifras, muestra inscripciones y personas beneficiarias de la convocatoria 2021-1 de Talento Especializado, los cursos de Sapiencia orientados a las competencias digitales.",
+   "claves": [
+    "Talento Especializado",
+    "Convocatorias",
+    "Inscripciones",
+    "Beneficiarios",
+    "Competencias digitales",
+    "Acceso"
+   ]
+  },
+  {
+   "id": "infografia-educacion-mujeres-colombia",
+   "descripcion": "La infografía reúne indicadores de la educación de las mujeres en Colombia, Antioquia y Medellín; destaca que 9 de cada 10 mujeres en educación media desean continuar a educación postsecundaria.",
+   "claves": [
+    "Mujeres",
+    "Brechas de género",
+    "Educación postsecundaria",
+    "Deserción",
+    "Corregimientos",
+    "Mercado laboral"
+   ],
+   "anio": 2021,
+   "mes": 2
+  },
+  {
+   "id": "estudio-asistencia-educacion-postsecundaria-municipio-medellin-2021",
+   "descripcion": "El estudio inicia la medición anual de asistencia a la educación postsecundaria en Medellín, urbana y rural; plantea retos en cobertura, educación rural y estereotipos de género al elegir carrera.",
+   "claves": [
+    "Tasa de asistencia",
+    "Jóvenes",
+    "Comunas",
+    "Corregimientos",
+    "Acceso",
+    "Cobertura"
+   ]
+  },
+  {
+   "id": "estudio-evaluacion-resultados-oportunidades-entregadas-sapiencia-2021",
+   "descripcion": "El estudio evalúa los créditos condonables de los fondos de posgrado de Sapiencia (Enlaza Mundos, Formación Avanzada y Extendiendo Fronteras Educativas) con 309 encuestas de 2021 y evidencia movilidad intergeneracional.",
+   "claves": [
+    "Posgrados",
+    "Créditos condonables",
+    "Evaluación de resultados",
+    "Movilidad social",
+    "Mercado laboral",
+    "Fondos Sapiencia"
+   ]
+  },
+  {
+   "id": "estudio-evaluacion-resultados-oportunidades-entregadas-sapiencia",
+   "publicado": false,
+   "descripcion": "El tablero presenta la evaluación de los fondos de posgrado de Sapiencia, Enlaza Mundos, Formación Avanzada y Extendiendo Fronteras Educativas: efectos en movilidad social, académica y laboral de sus beneficiarios.",
+   "claves": [
+    "Evaluación de resultados",
+    "Posgrados",
+    "Fondos Sapiencia",
+    "Créditos condonables",
+    "Movilidad social",
+    "Movilidad académica"
+   ],
+   "anio": 2021,
+   "mes": null
+  },
+  {
+   "id": "estudio-expectativas-estudiantes-grado-11-municipio-medellin-2021",
+   "descripcion": "El estudio analiza las expectativas de 8.747 estudiantes de grado 11 de Medellín frente a la educación postsecundaria; propone un trabajo cooperativo e interdisciplinar y visibilizar las oportunidades de Sapiencia.",
+   "claves": [
+    "Expectativas",
+    "Estudiantes de grado 11",
+    "Acceso",
+    "Brechas de género",
+    "Brecha digital",
+    "Financiación"
+   ]
+  },
+  {
+   "id": "estudio-fuentes-financiacion-matricula-sostenimiento-educacion-postsecundaria-2021",
+   "descripcion": "El estudio presenta un sondeo a 999 personas sobre financiación de la educación postsecundaria en Medellín; predominan recursos propios y becas, y señala la necesidad de divulgar los créditos blandos.",
+   "claves": [
+    "Financiación",
+    "Sostenimiento",
+    "Becas",
+    "Créditos condonables",
+    "Créditos blandos",
+    "Acceso"
+   ]
+  },
+  {
+   "id": "estudio-fuentes-financiacion-matricula-sostenimiento-educacion-superior",
+   "publicado": false,
+   "descripcion": "El tablero presenta las fuentes de financiación de matrícula y sostenimiento de estudiantes de educación superior de Medellín, como becas, créditos condonables y créditos blandos, según el estudio de 2021.",
+   "claves": [
+    "Financiación",
+    "Sostenimiento",
+    "Becas",
+    "Créditos condonables",
+    "Créditos blandos",
+    "Educación superior"
+   ],
+   "anio": 2021,
+   "mes": null
+  },
+  {
+   "id": "estudio-matricula-cero-2021",
+   "descripcion": "El estudio examina la contribución de Matrícula Cero al acceso y la permanencia en educación superior en Medellín; según 3.164 personas beneficiarias consultadas, la estrategia los facilitó durante la pandemia.",
+   "claves": [
+    "Matrícula Cero",
+    "Acceso",
+    "Permanencia",
+    "Inclusión",
+    "Brechas de género",
+    "Brecha digital"
+   ]
+  },
+  {
+   "id": "estudio-satisfaccion-medellin-como-destino-universitario-2021",
+   "descripcion": "El estudio consulta a 3.274 personas de la comunidad académica sobre Medellín como destino universitario; destaca la calidad de la educación y recomienda políticas de infraestructura para personas con discapacidades.",
+   "claves": [
+    "Satisfacción",
+    "Destino universitario",
+    "Calidad educativa",
+    "Calidad de vida",
+    "Costo de vida",
+    "Empleabilidad"
+   ]
+  },
+  {
+   "id": "estudio-seguimiento-continuidad-educacion-postsecundaria-bachilleres-2020-2021",
+   "descripcion": "El estudio estima en 66,5% la continuidad a la educación postsecundaria de bachilleres de 2020 de Medellín, destacada nacionalmente, y pide más esfuerzos públicos en estratos y comunas más pobres.",
+   "claves": [
+    "Seguimiento a bachilleres",
+    "Tasa de continuidad",
+    "Acceso",
+    "Financiación",
+    "Comunas",
+    "Brechas de género"
+   ]
+  },
+  {
+   "id": "infografia-evaluacion-resultados-oportunidades-entregadas-sapiencia-2021",
+   "descripcion": "La infografía resume la evaluación de créditos condonables de posgrado de Sapiencia con 309 personas encuestadas; concluye que la generación beneficiaria representa una movilidad intergeneracional muy positiva para la ciudad.",
+   "claves": [
+    "Evaluación de resultados",
+    "Posgrados",
+    "Fondos Sapiencia",
+    "Créditos condonables",
+    "Movilidad social",
+    "Mercado laboral"
+   ]
+  },
+  {
+   "id": "infografia-expectativas-estudiantes-grado-11-municipio-medellin-2021",
+   "descripcion": "La infografía resume las expectativas de educación postsecundaria de 8.747 estudiantes de grado 11 de Medellín y lleva a la agenda pública las diferencias de género en los programas preferidos.",
+   "claves": [
+    "Expectativas",
+    "Estudiantes de grado 11",
+    "Acceso",
+    "Financiación",
+    "Brechas de género",
+    "Brecha digital"
+   ]
+  },
+  {
+   "id": "infografia-matricula-cero-2021",
+   "descripcion": "La infografía recoge la percepción de 3.164 personas beneficiarias de Matrícula Cero; sus narrativas muestran que facilitó el acceso y la permanencia en educación superior en Medellín durante la pandemia.",
+   "claves": [
+    "Matrícula Cero",
+    "Acceso",
+    "Permanencia",
+    "Sostenimiento",
+    "COVID-19",
+    "IES adscritas al Distrito"
+   ]
+  },
+  {
+   "id": "infografia-satisfaccion-medellin-como-destino-universitario-2021",
+   "descripcion": "La infografía resume la satisfacción de estudiantes, egresados y docentes con Medellín como destino universitario y propone diagnósticos, políticas y planes de acción sobre la infraestructura para personas con discapacidades.",
+   "claves": [
+    "Satisfacción",
+    "Destino universitario",
+    "Calidad educativa",
+    "Costo de vida",
+    "Empleabilidad",
+    "Comunidad académica"
+   ]
+  },
+  {
+   "id": "infografia-seguimiento-continuidad-educacion-postsecundaria-bachilleres-2020-2021",
+   "descripcion": "La infografía presenta el seguimiento a bachilleres de 2020 de Medellín: el 66,5% continuó estudios postsecundarios, y se sigue optando por programas tradicionales pese a la visibilidad de programas TIC.",
+   "claves": [
+    "Seguimiento a bachilleres",
+    "Tasa de continuidad",
+    "Acceso",
+    "Brechas de género",
+    "ETDH",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "infografia-talento-especializado-analisis-inscripciones-convocatoria-2021",
+   "descripcion": "La infografía analiza a más de 10.500 personas inscritas en 2021 en Talento Especializado, cursos cortos modulares para adquirir nuevos conocimientos, formarse en competencias específicas y cerrar brechas de acceso.",
+   "claves": [
+    "Talento Especializado",
+    "Inscripciones",
+    "Acceso",
+    "Inclusión",
+    "Competencias digitales",
+    "Convocatorias"
+   ]
+  },
+  {
+   "id": "infografia-tasa-asistencia-educacion-postsecundaria-municipio-medellin-2021",
+   "descripcion": "La infografía resume el estudio de 2021 sobre asistencia a la educación postsecundaria de jóvenes de 16 a 28 años en Medellín: una tasa de 65,19%, por comunas y corregimientos.",
+   "claves": [
+    "Tasa de asistencia",
+    "Educación postsecundaria",
+    "Acceso",
+    "Jóvenes",
+    "Comunas",
+    "Corregimientos"
+   ]
+  },
+  {
+   "id": "infografia-en-evaluation-results-sapiencia-s-delivered-opportunities-2021",
+   "descripcion": "The infographic summarizes the evaluation of Sapiencia's postgraduate forgivable credits based on 309 polled people; it concludes that the beneficiary generation represents a very positive intergenerational mobility for the city.",
+   "claves": [
+    "Evaluación de resultados",
+    "Posgrados",
+    "Fondos Sapiencia",
+    "Créditos condonables",
+    "Movilidad social",
+    "Mercado laboral"
+   ]
+  },
+  {
+   "id": "infografia-en-expectations-continuity-post-secondary-education-11th-2021",
+   "descripcion": "The infographic summarizes the post-secondary education expectations of 8,747 Medellín students in 11th grade and brings to the public agenda the gender differences in the programs they prefer the most.",
+   "claves": [
+    "Expectativas",
+    "Estudiantes de grado 11",
+    "Acceso",
+    "Financiación",
+    "Brechas de género",
+    "Brecha digital"
+   ]
+  },
+  {
+   "id": "infografia-en-matricula-cero-2021",
+   "descripcion": "The infographic gathers the perceptions of 3,164 beneficiaries of Matrícula Cero; their statements show that the strategy facilitated access to and permanence in higher education in Medellín during the pandemic.",
+   "claves": [
+    "Matrícula Cero",
+    "Acceso",
+    "Permanencia",
+    "Sostenimiento",
+    "COVID-19",
+    "IES adscritas al Distrito"
+   ]
+  },
+  {
+   "id": "infografia-en-monitoring-continuation-post-secondary-education-2020-2021",
+   "descripcion": "The infographic presents the follow-up of 2020 high school graduates from Medellín: 66.5% continued post-secondary studies, and graduates still opt for more traditional programs despite the visibility of ICT programs.",
+   "claves": [
+    "Seguimiento a bachilleres",
+    "Tasa de continuidad",
+    "Acceso",
+    "Brechas de género",
+    "ETDH",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "infografia-en-rate-attendance-post-secondary-education-municipality-2021",
+   "descripcion": "The infographic summarizes the 2021 study on attendance to post-secondary education of young people aged 16 to 28 in Medellín: a rate of 65.19%, broken down by commune and village.",
+   "claves": [
+    "Tasa de asistencia",
+    "Educación postsecundaria",
+    "Acceso",
+    "Jóvenes",
+    "Comunas",
+    "Corregimientos"
+   ]
+  },
+  {
+   "id": "infografia-en-satisfaction-with-medellin-as-college-destination-2021",
+   "descripcion": "The infographic summarizes the satisfaction of students, graduates and teachers with Medellín as a college destination and calls for diagnoses, policies and action plans on infrastructure for people with disabilities.",
+   "claves": [
+    "Satisfacción",
+    "Destino universitario",
+    "Calidad educativa",
+    "Costo de vida",
+    "Empleabilidad",
+    "Comunidad académica"
+   ]
+  },
+  {
+   "id": "infografia-en-talento-especializado-analysis-registrations-2021-call-2021",
+   "descripcion": "The infographic analyzes more than 10,500 people who registered in the 2021 call of Talento Especializado, short modular courses for acquiring new knowledge, developing specific skills and closing access gaps.",
+   "claves": [
+    "Talento Especializado",
+    "Inscripciones",
+    "Acceso",
+    "Inclusión",
+    "Competencias digitales",
+    "Convocatorias"
+   ]
+  },
+  {
+   "id": "boletin-19-educacion-postsecundaria-camino-transformacion-educativa-2020",
+   "descripcion": "El boletín define la educación postsecundaria, recorre su normativa y plantea retos para Medellín; concluye que esa normativa debe integrarse en la política pública, con una discusión amplia entre actores.",
+   "claves": [
+    "Educación postsecundaria",
+    "Transformación educativa",
+    "Marco normativo",
+    "Cuarta revolución industrial",
+    "ETDH",
+    "Políticas públicas"
+   ]
+  },
+  {
+   "id": "boletin-18-resultados-estudios-temas-estrategicos-educacion-postsecundaria-2020",
+   "descripcion": "El boletín sintetiza cinco estudios sobre educación postsecundaria en Medellín; concluye que crece la asistencia rural, la mayoría de jóvenes espera continuar estudiando y la comunidad académica está mayoritariamente satisfecha.",
+   "claves": [
+    "Tasa de asistencia",
+    "Corregimientos",
+    "Expectativas",
+    "Seguimiento a bachilleres",
+    "Destino universitario",
+    "Deserción"
+   ]
+  },
+  {
+   "id": "infografia-liderazgo-femenino-instituciones-educacion-superior-colombia",
+   "descripcion": "La infografía examina la participación de mujeres en las instituciones de educación superior colombianas como rectoras, profesoras, investigadoras y estudiantes, y ubica a las 71 rectoras por región y departamento.",
+   "claves": [
+    "Mujeres",
+    "Liderazgo femenino",
+    "Brechas de género",
+    "Educación superior",
+    "Acreditación",
+    "Instituciones de educación superior"
+   ],
+   "anio": 2020,
+   "mes": 11
+  },
+  {
+   "id": "infografia-ciencia-datos",
+   "descripcion": "La infografía presenta la ciencia de datos como campo interdisciplinario de la cuarta revolución industrial, en el que los datos aportan insumos para decidir; reúne herramientas, metodologías y datos curiosos.",
+   "claves": [
+    "Ciencia de datos",
+    "Cuarta revolución industrial",
+    "Transformación digital",
+    "Big data",
+    "Toma de decisiones",
+    "Economía digital"
+   ],
+   "anio": 2020,
+   "mes": 10
+  },
+  {
+   "id": "boletin-17-covid-19-efecto-catalizador-educacion-2020",
+   "descripcion": "El boletín analiza el efecto catalizador del COVID-19 en la educación superior de Medellín; concluye que la adaptación y flexibilidad al cambio mitigan los efectos de las brechas estructurales crecientes.",
+   "claves": [
+    "COVID-19",
+    "Educación virtual",
+    "Brecha digital",
+    "Plataformas académicas",
+    "Aspectos socioemocionales",
+    "Permanencia"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-2020-2-ies-adscritas-2020",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta los resultados de la convocatoria de admisión 2020-2 en Colegio Mayor de Antioquia, Pascual Bravo e ITM, instituciones de educación superior adscritas al Municipio de Medellín.",
+   "claves": [
+    "IES adscritas al Distrito",
+    "Inscripciones",
+    "Admisiones",
+    "Matrícula",
+    "Cupos",
+    "Formación técnica y tecnológica"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-becas-tecnologias-2020-2-2020",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta, por comuna, los inscritos y beneficiarios de la convocatoria 2020-2 de Becas Tecnologías, programa de Sapiencia para programas tecnológicos en las tres IES adscritas a Medellín.",
+   "claves": [
+    "Becas Tecnologías",
+    "Inscripciones",
+    "Beneficiarios",
+    "IES adscritas al Distrito",
+    "Formación técnica y tecnológica",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-epm-universidades-6",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta, por comuna de Medellín, los inscritos y beneficiarios de la convocatoria 2020-2 del Fondo Sapiencia EPM y Universidades, que otorga créditos condonables para estudios de pregrado.",
+   "claves": [
+    "Fondo EPM",
+    "Fondos Sapiencia",
+    "Inscripciones",
+    "Beneficiarios",
+    "Pregrado",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-recursos-presupues-5",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero, de la serie Educación superior en cifras, muestra inscripciones y personas beneficiarias de la convocatoria 2020-2 del Fondo Sapiencia con recursos de Presupuesto Participativo, por comuna de Medellín.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Fondos Sapiencia",
+    "Convocatorias",
+    "Inscripciones",
+    "Beneficiarios",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "infografia-efectos-asociados-pandemia-global-covid-19",
+   "publicado": false,
+   "descripcion": "La infografía interactiva resume el estudio de 2020 sobre los efectos de la pandemia de COVID-19 en estudiantes de educación superior de Medellín: aspectos socioemocionales, conectividad, educación virtual y permanencia.",
+   "claves": [
+    "COVID-19",
+    "Educación virtual",
+    "Conectividad",
+    "Aspectos socioemocionales",
+    "Permanencia",
+    "Educación superior"
+   ],
+   "anio": 2020,
+   "mes": null
+  },
+  {
+   "id": "infografia-tasa-continuidad-educacion-media-educacion-superior",
+   "descripcion": "La infografía presenta la tasa de continuidad de bachilleres de Medellín a la educación superior, que creció entre 2011 y 2019 hasta 61,4%, y la creciente elección de programas tecnológicos.",
+   "claves": [
+    "Tasa de continuidad",
+    "Seguimiento a bachilleres",
+    "Acceso",
+    "Brechas de género",
+    "Formación técnica y tecnológica",
+    "Instituciones de educación superior"
+   ],
+   "anio": 2019,
+   "mes": null
+  },
+  {
+   "id": "boletin-16-habilidades-como-factor-diferencial-talento-4ta-2020",
+   "descripcion": "El boletín identifica las habilidades y talentos diferenciales en la cuarta revolución industrial y concluye que fortalecer habilidades digitales y cerrar brechas de conectividad impulsaría la inserción equitativa de Medellín.",
+   "claves": [
+    "Habilidades",
+    "Talento",
+    "Cuarta revolución industrial",
+    "Competencias digitales",
+    "Habilidades blandas",
+    "Mercado laboral"
+   ]
+  },
+  {
+   "id": "infografia-mujeres-educacion-superior-2020",
+   "descripcion": "La infografía presenta un panorama de las mujeres en la educación superior de Medellín: son la mayoría y tienen menor deserción, aunque su participación es menor en doctorados e investigación.",
+   "claves": [
+    "Mujeres",
+    "Brechas de género",
+    "Deserción",
+    "Inserción laboral",
+    "Grupos de investigación",
+    "Fondos Sapiencia"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-educacion-superior-municipal-cifras-2020-1-2020",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta las cifras del primer semestre de 2020 de las tres instituciones de educación superior del Municipio de Medellín, con sus inscripciones, admisiones y matrícula por comuna.",
+   "claves": [
+    "IES adscritas al Distrito",
+    "Inscripciones",
+    "Admisiones",
+    "Matrícula",
+    "Formación técnica y tecnológica",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-becas-tecnologias-2020-1-2020",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta, por comuna, los inscritos y beneficiarios de la convocatoria 2020-1 de Becas Tecnologías, programa de Sapiencia para programas tecnológicos en las tres IES adscritas a Medellín.",
+   "claves": [
+    "Becas Tecnologías",
+    "Inscripciones",
+    "Beneficiarios",
+    "IES adscritas al Distrito",
+    "Formación técnica y tecnológica",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-epm-universidades-7",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta, por comuna de Medellín, los inscritos y beneficiarios de la convocatoria 2020-1 del Fondo Sapiencia EPM y Universidades, que otorga créditos condonables para estudios de pregrado.",
+   "claves": [
+    "Fondo EPM",
+    "Fondos Sapiencia",
+    "Inscripciones",
+    "Beneficiarios",
+    "Pregrado",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-recursos-presupues-6",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero, de la serie Educación superior en cifras, muestra inscripciones y personas beneficiarias de la convocatoria 2020-1 del Fondo Sapiencia con recursos de Presupuesto Participativo, por comuna de Medellín.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Fondos Sapiencia",
+    "Convocatorias",
+    "Inscripciones",
+    "Beneficiarios",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-talento-especializado-2020-1-2020",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero, de la serie Educación superior en cifras, muestra inscripciones y personas beneficiarias de la convocatoria 2020-1 de Talento Especializado, los cursos de Sapiencia orientados a las competencias digitales.",
+   "claves": [
+    "Talento Especializado",
+    "Convocatorias",
+    "Inscripciones",
+    "Beneficiarios",
+    "Competencias digitales",
+    "Acceso"
+   ]
+  },
+  {
+   "id": "estudio-asistencia-educacion-postsecundaria-bachilleres-corregimientos-medellin-2020",
+   "descripcion": "El estudio estima la asistencia a la educación postsecundaria de bachilleres de los corregimientos de Medellín en 55,34%, y encuentra que la mayoría de quienes estudian son beneficiarios de Sapiencia.",
+   "claves": [
+    "Tasa de asistencia",
+    "Corregimientos",
+    "Jóvenes",
+    "Acceso",
+    "Financiación",
+    "Educación postsecundaria"
+   ]
+  },
+  {
+   "id": "estudio-efectos-asociados-pandemia-global-covid-19-2020",
+   "descripcion": "El estudio examina efectos del COVID-19 en 2.169 estudiantes de educación superior de Medellín; identifica retos de conectividad y educación virtual, y amplia satisfacción con la gestión de su IES.",
+   "claves": [
+    "COVID-19",
+    "Educación virtual",
+    "Permanencia",
+    "Conectividad",
+    "Pregrado",
+    "Posgrados"
+   ]
+  },
+  {
+   "id": "estudio-efectos-asociados-pandemia-global-covid-19",
+   "publicado": false,
+   "descripcion": "El tablero permite explorar los efectos de la pandemia de COVID-19 en estudiantes de educación superior de Medellín, encuestados en junio de 2020: aspectos socioemocionales, conectividad, educación virtual y permanencia.",
+   "claves": [
+    "COVID-19",
+    "Educación virtual",
+    "Conectividad",
+    "Aspectos socioemocionales",
+    "Permanencia",
+    "Educación superior"
+   ],
+   "anio": 2020,
+   "mes": null
+  },
+  {
+   "id": "estudio-expectativas-estudiantes-grado-11-municipio-medellin-2020",
+   "descripcion": "El estudio caracteriza las expectativas académicas de 12.386 estudiantes de grado 11 de Medellín; la mayoría espera continuar a la educación postsecundaria y reconoce que estudiar es primero que todo.",
+   "claves": [
+    "Expectativas",
+    "Estudiantes de grado 11",
+    "Acceso",
+    "Brechas de género",
+    "Brecha digital",
+    "Financiación"
+   ]
+  },
+  {
+   "id": "estudio-panorama-desercion-beneficiarios-programas-sapiencia-2015-2020",
+   "descripcion": "El estudio identifica las principales razones de deserción en becas y créditos condonables de Sapiencia en 2015-2019, sus implicaciones en el proceso académico y a qué se dedican quienes desertaron.",
+   "claves": [
+    "Deserción",
+    "Permanencia",
+    "Becas",
+    "Créditos condonables",
+    "Fondos Sapiencia",
+    "Presupuesto Participativo"
+   ]
+  },
+  {
+   "id": "estudio-satisfaccion-medellin-como-destino-universitario-2020",
+   "descripcion": "El estudio mide en un indicador la satisfacción de la comunidad académica con Medellín como destino universitario; concluye que es generalizada y que la ciudad se proyecta nacional e internacionalmente.",
+   "claves": [
+    "Satisfacción",
+    "Destino universitario",
+    "Calidad educativa",
+    "Calidad de vida",
+    "Empleabilidad",
+    "Comunidad académica"
+   ]
+  },
+  {
+   "id": "estudio-seguimiento-continuidad-educacion-postsecundaria-bachilleres-2019-2020",
+   "descripcion": "El estudio mide la continuidad de bachilleres de 2019 de Medellín hacia la educación postsecundaria y encuentra que el 71,96% continuó sus estudios, con un incremento respecto al año anterior.",
+   "claves": [
+    "Seguimiento a bachilleres",
+    "Tasa de continuidad",
+    "Acceso",
+    "Financiación",
+    "Comunas",
+    "Brechas de género"
+   ]
+  },
+  {
+   "id": "infografia-asistencia-educacion-postsecundaria-bachilleres-corregimientos-medellin-2020",
+   "descripcion": "La infografía presenta el estudio sobre asistencia a la educación postsecundaria en los corregimientos de Medellín: asiste el 55,34% de los bachilleres, en su mayoría beneficiarios de oportunidades de Sapiencia.",
+   "claves": [
+    "Tasa de asistencia",
+    "Educación postsecundaria",
+    "Corregimientos",
+    "Jóvenes",
+    "Acceso",
+    "Financiación"
+   ]
+  },
+  {
+   "id": "infografia-efectos-asociados-pandemia-global-covid-19-2020",
+   "categoria": "Estudio",
+   "descripcion": "La presentación expone efectos del COVID-19 en 2.169 estudiantes de educación superior de Medellín; identifica retos de conectividad y educación virtual, y amplia satisfacción con la gestión de su IES.",
+   "claves": [
+    "COVID-19",
+    "Educación virtual",
+    "Brecha digital",
+    "Permanencia",
+    "Salud mental",
+    "Conectividad"
+   ]
+  },
+  {
+   "id": "infografia-expectativas-estudiantes-grado-11-municipio-medellin-2020",
+   "descripcion": "La infografía presenta las expectativas académicas de 12.386 estudiantes de grado 11 de Medellín; la mayoría espera continuar a la educación postsecundaria y reconoce que estudiar es primero que todo.",
+   "claves": [
+    "Expectativas",
+    "Estudiantes de grado 11",
+    "Acceso",
+    "Financiación",
+    "Brechas de género",
+    "Orientación vocacional"
+   ]
+  },
+  {
+   "id": "infografia-panorama-desercion-beneficiarios-fondos-sapiencia-2020",
+   "descripcion": "La infografía resume el estudio sobre deserción en becas y créditos condonables de Sapiencia en 2015-2019; permite conocer las principales razones de abandono y a qué se dedican quienes desertaron.",
+   "claves": [
+    "Deserción",
+    "Fondos Sapiencia",
+    "Becas",
+    "Créditos condonables",
+    "Presupuesto Participativo",
+    "Permanencia"
+   ]
+  },
+  {
+   "id": "infografia-satisfaccion-comunidad-academica-medellin-como-destino-2020",
+   "descripcion": "La infografía presenta la medición de satisfacción de la comunidad académica con Medellín como destino universitario; concluye que la satisfacción es generalizada y la ciudad se proyecta nacional e internacionalmente.",
+   "claves": [
+    "Satisfacción",
+    "Destino universitario",
+    "Calidad educativa",
+    "Costo de vida",
+    "Empleabilidad",
+    "Movilidad académica"
+   ]
+  },
+  {
+   "id": "infografia-seguimiento-continuidad-educacion-postsecundaria-bachilleres-2019-2020",
+   "descripcion": "La infografía resume el estudio sobre la continuidad de bachilleres de 2019 de Medellín a la educación postsecundaria: el 71,96% continuó sus estudios, con un incremento respecto al año anterior.",
+   "claves": [
+    "Seguimiento a bachilleres",
+    "Tasa de continuidad",
+    "Acceso",
+    "Financiación",
+    "Brechas de género",
+    "Educación postsecundaria"
+   ]
+  },
+  {
+   "id": "infografia-en-attendance-post-secondary-education-high-school-2020",
+   "descripcion": "The infographic presents the study on post-secondary education attendance in the villages of Medellín: 55.34% of the high school graduates attend, most of them beneficiaries of opportunities provided by Sapiencia.",
+   "claves": [
+    "Tasa de asistencia",
+    "Educación postsecundaria",
+    "Corregimientos",
+    "Jóvenes",
+    "Acceso",
+    "Financiación"
+   ]
+  },
+  {
+   "id": "infografia-en-expectations-continuity-post-secondary-education-11th-2020",
+   "descripcion": "The infographic presents the academic expectations of 12,386 Medellín students in 11th grade; most of them expect to continue to post-secondary education and recognize that studying comes first of all.",
+   "claves": [
+    "Expectativas",
+    "Estudiantes de grado 11",
+    "Acceso",
+    "Financiación",
+    "Brechas de género",
+    "Orientación vocacional"
+   ]
+  },
+  {
+   "id": "infografia-en-monitoring-continuation-post-secondary-education-2019-2020",
+   "descripcion": "The infographic summarizes the study on the continuation of 2019 high school graduates from Medellín to post-secondary education: 71.96% continued their studies, with an increase compared to the previous year.",
+   "claves": [
+    "Seguimiento a bachilleres",
+    "Tasa de continuidad",
+    "Acceso",
+    "Financiación",
+    "Brechas de género",
+    "Educación postsecundaria"
+   ]
+  },
+  {
+   "id": "infografia-en-outlook-desertion-sapiencia-funds-beneficiaries-2020",
+   "descripcion": "The infographic summarizes the study on desertion from Sapiencia scholarships and forgivable loans in 2015-2019; it presents the main reasons for abandoning the benefit and what deserters are currently doing.",
+   "claves": [
+    "Deserción",
+    "Fondos Sapiencia",
+    "Becas",
+    "Créditos condonables",
+    "Presupuesto Participativo",
+    "Permanencia"
+   ]
+  },
+  {
+   "id": "infografia-en-satisfaction-academic-community-with-medellin-as-2020",
+   "descripcion": "The infographic presents the measurement of the academic community's satisfaction with Medellín as a university destination; it concludes that satisfaction is generalized and the city is projected nationally and internationally.",
+   "claves": [
+    "Satisfacción",
+    "Destino universitario",
+    "Calidad educativa",
+    "Costo de vida",
+    "Empleabilidad",
+    "Movilidad académica"
+   ]
+  },
+  {
+   "id": "boletin-15-resultados-estudios-educacion-superior-asistencia-corregimientos-2019",
+   "descripcion": "El boletín reúne estudios sobre asistencia, expectativas, continuidad e impacto de los fondos; concluye que la educación superior de Medellín vive su mejor momento y pide reducir la brecha rural.",
+   "claves": [
+    "Tasa de asistencia",
+    "Corregimientos",
+    "Expectativas",
+    "Seguimiento a bachilleres",
+    "Fondos Sapiencia",
+    "Condiciones de vida"
+   ]
+  },
+  {
+   "id": "estudio-asistencia-educacion-superior-bachilleres-entre-16-2019",
+   "descripcion": "El estudio calcula por primera vez la tasa de asistencia a la educación superior de bachilleres en corregimientos de Medellín y permite conocer motivaciones, financiación, barreras y conocimiento de Sapiencia.",
+   "claves": [
+    "Tasa de asistencia",
+    "Corregimientos",
+    "Jóvenes",
+    "Acceso",
+    "Financiación",
+    "Fondos Sapiencia"
+   ]
+  },
+  {
+   "id": "estudio-expectativas-estudiantes-grado-11-ano-2019",
+   "descripcion": "El estudio indaga las aspiraciones tras graduarse de estudiantes de grado 11 de colegios oficiales, privados y de cobertura de Medellín; la mayoría considera que estudiar es primero que todo.",
+   "claves": [
+    "Expectativas",
+    "Estudiantes de grado 11",
+    "Acceso",
+    "Orientación vocacional",
+    "Financiación",
+    "Fondos Sapiencia"
+   ]
+  },
+  {
+   "id": "estudio-seguimiento-bachilleres-egresados-2018-instituciones-educativas-2019",
+   "descripcion": "El estudio sigue a bachilleres de 2018 de instituciones oficiales y de cobertura de Medellín: estima en 61,4% su continuidad a la educación superior, y casi todos consideran importante estudiar.",
+   "claves": [
+    "Seguimiento a bachilleres",
+    "Tasa de continuidad",
+    "Acceso",
+    "Financiación",
+    "Jóvenes",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "boletin-14-economia-creativa-2019",
+   "descripcion": "El boletín explica la economía creativa en el mundo, Colombia y Medellín, y concluye que la oferta académica creativa de la ciudad forma capital calificado y abre posibilidades a jóvenes.",
+   "claves": [
+    "Economía creativa",
+    "Industrias culturales y creativas",
+    "Mercado laboral",
+    "Oferta académica",
+    "Desarrollo económico",
+    "Políticas públicas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-educacion-superior-municipal-cifras-2019-2-2019",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta las cifras del segundo semestre de 2019 de las tres instituciones de educación superior del Municipio de Medellín, con sus inscripciones, admisiones y matrícula por comuna.",
+   "claves": [
+    "IES adscritas al Distrito",
+    "Inscripciones",
+    "Admisiones",
+    "Matrícula",
+    "Formación técnica y tecnológica",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-becas-tecnologias-2019-2-2019",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta, por comuna, los inscritos y beneficiarios de la convocatoria 2019-2 de Becas Tecnologías, programa de Sapiencia para programas tecnológicos en las tres IES adscritas a Medellín.",
+   "claves": [
+    "Becas Tecnologías",
+    "Inscripciones",
+    "Beneficiarios",
+    "IES adscritas al Distrito",
+    "Formación técnica y tecnológica",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-epm-universidades-8",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta, por comuna de Medellín, los inscritos y beneficiarios de la convocatoria 2019-2 del Fondo Sapiencia EPM y Universidades, que otorga créditos condonables para estudios de pregrado.",
+   "claves": [
+    "Fondo EPM",
+    "Fondos Sapiencia",
+    "Inscripciones",
+    "Beneficiarios",
+    "Pregrado",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-recursos-presupues-7",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero, de la serie Educación superior en cifras, muestra inscripciones y personas beneficiarias de la convocatoria 2019-2 del Fondo Sapiencia con recursos de Presupuesto Participativo, por comuna de Medellín.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Fondos Sapiencia",
+    "Convocatorias",
+    "Inscripciones",
+    "Beneficiarios",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "boletin-13-evolucion-proyeccion-matricula-programas-stem-2019",
+   "descripcion": "El boletín analiza y proyecta la matrícula en programas STEM de Medellín; ante el reto de la participación femenina, propone promoverlos desde la formación básica y media con referentes femeninos.",
+   "claves": [
+    "STEM",
+    "Matrícula",
+    "Brechas de género",
+    "Mujeres",
+    "Pregrado",
+    "Posgrados"
+   ]
+  },
+  {
+   "id": "boletin-12-que-expectativas-tienen-jovenes-medellin-frente-2019",
+   "descripcion": "El boletín analiza las expectativas de jóvenes de Medellín sobre la educación superior; ante barreras de costo y falta de información, propone estrategias que informen y promuevan la formación tecnológica.",
+   "claves": [
+    "Expectativas",
+    "Seguimiento a bachilleres",
+    "Estudiantes de grado 11",
+    "Tasa de continuidad",
+    "Acceso",
+    "Formación técnica y tecnológica"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-educacion-superior-municipal-cifras-2019-1-2019",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta las cifras del primer semestre de 2019 de las tres instituciones de educación superior del Municipio de Medellín, con sus inscripciones, admisiones y matrícula por comuna.",
+   "claves": [
+    "IES adscritas al Distrito",
+    "Inscripciones",
+    "Admisiones",
+    "Matrícula",
+    "Formación técnica y tecnológica",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-becas-tecnologias-2019-1-2019",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta, por comuna, los inscritos y beneficiarios de la convocatoria 2019-1 de Becas Tecnologías, programa de Sapiencia para programas tecnológicos en las tres IES adscritas a Medellín.",
+   "claves": [
+    "Becas Tecnologías",
+    "Inscripciones",
+    "Beneficiarios",
+    "IES adscritas al Distrito",
+    "Formación técnica y tecnológica",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-epm-universidades-9",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero interactivo presenta, por comuna de Medellín, los inscritos y beneficiarios de la convocatoria 2019-1 del Fondo Sapiencia EPM y Universidades, que otorga créditos condonables para estudios de pregrado.",
+   "claves": [
+    "Fondo EPM",
+    "Fondos Sapiencia",
+    "Inscripciones",
+    "Beneficiarios",
+    "Pregrado",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-recursos-presupues-8",
+   "categoria": "Otros productos",
+   "publicado": false,
+   "descripcion": "El tablero, de la serie Educación superior en cifras, muestra inscripciones y personas beneficiarias de la convocatoria 2019-1 del Fondo Sapiencia con recursos de Presupuesto Participativo, por comuna de Medellín.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Fondos Sapiencia",
+    "Convocatorias",
+    "Inscripciones",
+    "Beneficiarios",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "boletin-11-medellin-hacia-cuarta-revolucion-industrial-2019",
+   "descripcion": "El boletín examina las tendencias, oportunidades y desafíos de la cuarta revolución industrial para Medellín; concluye que Universidad, Empresa y Estado deben trabajar colaborativamente para capacitar a la fuerza laboral.",
+   "claves": [
+    "Cuarta revolución industrial",
+    "Mercado laboral",
+    "Habilidades",
+    "Tendencias",
+    "Desarrollo económico",
+    "Políticas públicas"
+   ]
+  },
+  {
+   "id": "estudio-evaluacion-resultados-fondos-epm-universidades-camino-2019",
+   "descripcion": "El estudio evalúa los créditos condonables de los fondos EPM y Presupuesto Participativo con 1394 personas beneficiarias encuestadas; concluye que su efecto es muy positivo en sus condiciones de vida.",
+   "claves": [
+    "Evaluación de resultados",
+    "Créditos condonables",
+    "Fondo EPM",
+    "Presupuesto Participativo",
+    "Empleabilidad",
+    "Emprendimiento"
+   ]
+  },
+  {
+   "id": "infografia-mejores-saber-pro-2019",
+   "descripcion": "La infografía presenta los mejores resultados de Saber Pro en programas de pregrado de Medellín por institución, programa académico y grupo de referencia; por competencias, sobresalieron inglés y lectura crítica.",
+   "claves": [
+    "Saber Pro",
+    "Calidad educativa",
+    "Pregrado",
+    "Ranking",
+    "Competencias genéricas",
+    "Instituciones de educación superior"
+   ]
+  },
+  {
+   "id": "infografia-mejores-saber-pro-programas-tecnicos-tecnologicos-2019",
+   "descripcion": "La infografía presenta los mejores resultados de Saber Pro en programas técnicos y tecnológicos de Medellín por institución, programa académico y grupo de referencia; inglés fue la competencia mejor puntuada.",
+   "claves": [
+    "Saber Pro",
+    "Calidad educativa",
+    "Formación técnica y tecnológica",
+    "Ranking",
+    "Competencias genéricas",
+    "Instituciones de educación superior"
+   ]
+  },
+  {
+   "id": "infografia-en-best-saber-pro-2019",
+   "descripcion": "The infographic presents the best Saber Pro results in undergraduate programs in Medellín by institution, academic program and reference group; by competency, English and critical reading were the highest scoring.",
+   "claves": [
+    "Saber Pro",
+    "Calidad educativa",
+    "Pregrado",
+    "Ranking",
+    "Competencias genéricas",
+    "Instituciones de educación superior"
+   ]
+  },
+  {
+   "id": "infografia-en-best-saber-pro-technical-technology-programs-2019",
+   "descripcion": "The infographic presents the best Saber Pro results in technical and technological programs in Medellín by institution, academic program and reference group; English obtained the highest score among the competencies.",
+   "claves": [
+    "Saber Pro",
+    "Calidad educativa",
+    "Formación técnica y tecnológica",
+    "Ranking",
+    "Competencias genéricas",
+    "Instituciones de educación superior"
+   ]
+  },
+  {
+   "id": "boletin-10-educacion-como-transformador-social-importancia-educacion-2018",
+   "descripcion": "El boletín explica la Agenda 2030 y el ODS 4, relaciona educación y desigualdad en Medellín y propone ampliar el acceso a educación superior pertinente para los sectores menos favorecidos.",
+   "claves": [
+    "Objetivos de Desarrollo Sostenible",
+    "Agenda 2030",
+    "Transformación social",
+    "Desigualdad",
+    "Calidad educativa",
+    "Acceso"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-becas-tecnologias-2018-2-2018",
+   "categoria": "Otros productos",
+   "descripcion": "La publicación presenta los resultados de la convocatoria 2018-2 de Becas Tecnologías en Medellín y la distribución de inscritos, preseleccionados y beneficiarios por comuna, estrato, género, institución y programa académico.",
+   "claves": [
+    "Becas Tecnologías",
+    "Inscripciones",
+    "Beneficiarios",
+    "IES adscritas al Distrito",
+    "Formación técnica y tecnológica",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-epm-universidades-10",
+   "categoria": "Otros productos",
+   "descripcion": "La publicación presenta los resultados de la convocatoria 2018-2 del Fondo Sapiencia EPM y Universidades: inscritos, preseleccionados y legalizados por comuna, corregimiento, sexo, estrato, institución, programa y tipo de beneficio.",
+   "claves": [
+    "Fondo EPM",
+    "Fondos Sapiencia",
+    "Inscripciones",
+    "Beneficiarios",
+    "Pregrado",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-recursos-presupues-9",
+   "categoria": "Otros productos",
+   "descripcion": "La publicación presenta los resultados de la convocatoria 2018-2 del Fondo Sapiencia con recursos de Presupuesto Participativo: inscritos, preseleccionados y legalizados por comuna, corregimiento, sexo, estrato, institución, programa y beneficio.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Fondos Sapiencia",
+    "Convocatorias",
+    "Inscripciones",
+    "Beneficiarios",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "boletin-9-impactos-cuarta-revolucion-industrial-trabajo-mercado-2018",
+   "descripcion": "El boletín examina cómo la cuarta revolución industrial cambia el mercado laboral y qué oferta académica de Medellín responde; considera neurálgico formar habilidades y propone articular Empresa, Estado y Academia.",
+   "claves": [
+    "Cuarta revolución industrial",
+    "Mercado laboral",
+    "Futuro del trabajo",
+    "Habilidades",
+    "Oferta académica",
+    "Educación continua"
+   ]
+  },
+  {
+   "id": "boletin-8-insercion-laboral-analisis-oferta-demanda-mercado-2018",
+   "descripcion": "El boletín analiza la oferta y la demanda laboral en Medellín entre 2010 y 2017; destaca la fortaleza del sector TIC y propone anticipar los programas y habilidades del futuro.",
+   "claves": [
+    "Inserción laboral",
+    "Mercado laboral",
+    "Graduados",
+    "Clústeres",
+    "TIC",
+    "Futuro del trabajo"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-educacion-superior-municipal-cifras-2018-1-2018",
+   "categoria": "Otros productos",
+   "descripcion": "El informe estadístico presenta inscritos y matriculados del primer semestre de 2018 en las instituciones de educación superior del municipio de Medellín: Colegio Mayor de Antioquia, Pascual Bravo e ITM.",
+   "claves": [
+    "IES adscritas al Distrito",
+    "Inscripciones",
+    "Matrícula",
+    "Formación técnica y tecnológica",
+    "Comunas",
+    "Estratos socioeconómicos"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-becas-tecnologias-2018-1-2018",
+   "categoria": "Otros productos",
+   "descripcion": "La publicación presenta los resultados de la convocatoria 2018-1 de Becas Tecnologías en Medellín y la distribución de inscritos, preseleccionados y matriculados por comuna, estrato, género, institución y programa académico.",
+   "claves": [
+    "Becas Tecnologías",
+    "Inscripciones",
+    "Beneficiarios",
+    "IES adscritas al Distrito",
+    "Formación técnica y tecnológica",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-epm-universidades-11",
+   "categoria": "Otros productos",
+   "descripcion": "La publicación presenta los resultados de la convocatoria 2018-1 del Fondo Sapiencia EPM y Universidades: inscritos, preseleccionados y legalizados por comuna, corregimiento, sexo, estrato, institución, programa y tipo de beneficio.",
+   "claves": [
+    "Fondo EPM",
+    "Fondos Sapiencia",
+    "Convocatorias",
+    "Inscripciones",
+    "Beneficiarios",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-recursos-presupues-10",
+   "categoria": "Otros productos",
+   "descripcion": "La publicación presenta los resultados de la convocatoria 2018-1 del Fondo Sapiencia con recursos de Presupuesto Participativo: inscritos, preseleccionados y legalizados por comuna, corregimiento, sexo, estrato, institución, programa y beneficio.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Fondos Sapiencia",
+    "Convocatorias",
+    "Inscripciones",
+    "Beneficiarios",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "estudio-resultados-encuesta-expectativas-estudiantes-grado-11-2018",
+   "descripcion": "El estudio analiza las expectativas de 12.887 estudiantes de grado 11 de Medellín frente a la educación postsecundaria; registra un aumento de inscripciones y recomienda una orientación vocacional y profesional.",
+   "claves": [
+    "Expectativas",
+    "Estudiantes de grado 11",
+    "Acceso",
+    "Orientación vocacional",
+    "STEM",
+    "Formación técnica y tecnológica"
+   ]
+  },
+  {
+   "id": "estudio-seguimiento-bachilleres-i-oficiales-cobertura-medellin-2018",
+   "descripcion": "El estudio sigue a bachilleres de instituciones oficiales y de cobertura de Medellín: la continuidad llega a su máximo histórico; propone divulgar la oferta tecnológica y reforzar la orientación vocacional.",
+   "claves": [
+    "Seguimiento a bachilleres",
+    "Tasa de continuidad",
+    "Acceso",
+    "Sostenimiento",
+    "STEM",
+    "Expectativas"
+   ]
+  },
+  {
+   "id": "boletin-7-caracterizacion-estado-patentes-ciudad-medellin-2017",
+   "descripcion": "El boletín caracteriza las solicitudes de patentes de las IES en Antioquia y Medellín; propone apostar por su comercialización, fortalecer grupos de investigación y la relación universidad, empresa y Estado.",
+   "claves": [
+    "Patentes",
+    "Propiedad intelectual",
+    "Investigación",
+    "IES",
+    "Transferencia de conocimiento",
+    "Ciencia, tecnología e innovación"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-becas-tecnologias-2017-2-2017",
+   "categoria": "Otros productos",
+   "descripcion": "La publicación presenta los inscritos y legalizados de la convocatoria 2017-2 de Becas Tecnologías por comuna y corregimiento de Medellín, y permite conocer su distribución por género, edad y programa.",
+   "claves": [
+    "Becas Tecnologías",
+    "Inscripciones",
+    "Beneficiarios",
+    "IES adscritas al Distrito",
+    "Formación técnica y tecnológica",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-epm-universidades-12",
+   "categoria": "Otros productos",
+   "descripcion": "La publicación presenta los resultados de la convocatoria 2017-2 del Fondo Sapiencia EPM y Universidades: 8.107 inscritos por comuna, corregimiento y otros municipios, caracterizados por sexo, institución, programa y beneficio.",
+   "claves": [
+    "Fondo EPM",
+    "Fondos Sapiencia",
+    "Convocatorias",
+    "Inscripciones",
+    "Beneficiarios",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-recursos-presupues-11",
+   "categoria": "Otros productos",
+   "descripcion": "La publicación presenta los resultados de la convocatoria 2017-2 del Fondo Sapiencia con recursos de Presupuesto Participativo: 4.163 inscritos por comuna y corregimiento, caracterizados por sexo, institución, programa y beneficio.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Fondos Sapiencia",
+    "Convocatorias",
+    "Inscripciones",
+    "Beneficiarios",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "boletin-6-educacion-superior-nivel-tecnologico-acceso-desercion-2017",
+   "descripcion": "El boletín analiza acceso, deserción e inserción laboral del nivel tecnológico en Medellín para Becas Tecnologías; plantea fortalecer las IES municipales y sus programas de retención junto con la financiación.",
+   "claves": [
+    "Nivel de formación",
+    "Acceso",
+    "Deserción",
+    "Inserción laboral",
+    "Becas Tecnologías",
+    "Formación técnica y tecnológica"
+   ]
+  },
+  {
+   "id": "boletin-5-desercion-educacion-superior-2017",
+   "descripcion": "El boletín analiza la deserción en educación superior internacional, latinoamericana, colombiana y local, propone una metodología para medirla en Medellín, donde disminuyó, y recomienda seguir fomentando becas y bienestar estudiantil.",
+   "claves": [
+    "Deserción",
+    "Permanencia",
+    "Educación superior",
+    "América Latina",
+    "SPADIES",
+    "Indicadores"
+   ]
+  },
+  {
+   "id": "boletin-4-caracterizacion-economia-conocimiento-ciudad-medellin-2017",
+   "descripcion": "El boletín caracteriza la economía del conocimiento en Medellín, concluye que la educación superior es vital para construir esa economía y recomienda trabajar en redes entre empresas, academia y sociedad.",
+   "claves": [
+    "Economía del conocimiento",
+    "Capital humano",
+    "Ciencia, tecnología e innovación",
+    "TIC",
+    "Régimen económico e institucional",
+    "Desarrollo económico"
+   ]
+  },
+  {
+   "id": "boletin-3-propuesta-metodologica-construccion-indicador-pertinencia-laboral-2017",
+   "descripcion": "El boletín 3, de mayo de 2017, propone un indicador de pertinencia laboral de programas ligados a clústeres de Antioquia: los técnicos y tecnológicos resultan más pertinentes que los universitarios.",
+   "claves": [
+    "Pertinencia",
+    "Clústeres",
+    "Indicadores",
+    "Mercado laboral",
+    "Empleabilidad",
+    "Formación técnica y tecnológica"
+   ]
+  },
+  {
+   "id": "infografia-ranking-ciudades-oferta-programas-tecnicos-tecnologicos",
+   "descripcion": "La infografía compara la oferta de programas técnicos profesionales y tecnológicos en diez ciudades colombianas, entre ellas Medellín: programas activos por nivel, posición de cada ciudad y proporción de acreditados.",
+   "claves": [
+    "Ranking de ciudades",
+    "Formación técnica y tecnológica",
+    "Oferta académica",
+    "Acreditación",
+    "Calidad educativa",
+    "Educación superior"
+   ],
+   "anio": 2017,
+   "mes": 5
+  },
+  {
+   "id": "boletin-2-estado-educacion-tecnica-profesional-tecnologica-ciudad-2017",
+   "descripcion": "El boletín analiza la oferta y demanda de formación técnica profesional y tecnológica en Medellín y plantea acercar estos programas a la vocación económica de la ciudad y sus clústeres.",
+   "claves": [
+    "Formación técnica y tecnológica",
+    "Oferta académica",
+    "Demanda de formación",
+    "Mercado laboral",
+    "Clústeres",
+    "Pertinencia"
+   ]
+  },
+  {
+   "id": "boletin-1-formacion-sin-distancias-educacion-digital-medellin-2017",
+   "descripcion": "El boletín caracteriza la educación superior digital en Colombia, Antioquia y Medellín; concluye que, pese a sus retos, la apuesta digital busca democratizar el acceso educativo y requiere monitoreo constante.",
+   "claves": [
+    "Educación virtual",
+    "Educación a distancia",
+    "Matrícula",
+    "Planes de desarrollo",
+    "Antioquia",
+    "Arroba Medellín"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-educacion-superior-municipal-cifras-2017-1-2017",
+   "categoria": "Otros productos",
+   "descripcion": "El informe presenta inscritos, admitidos y matriculados del primer semestre de 2017 en las instituciones de educación superior del municipio de Medellín: Colegio Mayor de Antioquia, Pascual Bravo e ITM.",
+   "claves": [
+    "IES adscritas al Distrito",
+    "Inscripciones",
+    "Admisiones",
+    "Matrícula",
+    "Formación técnica y tecnológica",
+    "Comunas"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-2017-1-presupuesto-participativo-2",
+   "categoria": "Otros productos",
+   "descripcion": "El informe presenta los resultados de la convocatoria 2017-1 de Presupuesto Participativo en la comuna 5, Castilla, con el perfil de aspirantes y legalizados, sus beneficiarios activos y recursos remanentes.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Convocatorias",
+    "Comunas",
+    "Inscripciones",
+    "Beneficiarios",
+    "Créditos condonables"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-2017-1-presupuesto-participativo-2-2",
+   "categoria": "Otros productos",
+   "descripcion": "El informe presenta los resultados de la convocatoria 2017-1 de Presupuesto Participativo en la comuna 15, Guayabal, con el perfil de aspirantes y legalizados, sus beneficiarios activos y recursos remanentes.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Convocatorias",
+    "Comunas",
+    "Inscripciones",
+    "Beneficiarios",
+    "Créditos condonables"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-2017-1-presupuesto-participativo-2-3",
+   "categoria": "Otros productos",
+   "descripcion": "El informe presenta los resultados de la convocatoria 2017-1 de Presupuesto Participativo en la comuna 3, Manrique, con el perfil de aspirantes y legalizados, sus beneficiarios activos y recursos remanentes.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Convocatorias",
+    "Comunas",
+    "Inscripciones",
+    "Beneficiarios",
+    "Créditos condonables"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-2017-1-presupuesto-participativo-2-4",
+   "categoria": "Otros productos",
+   "descripcion": "El informe presenta los resultados de la convocatoria 2017-1 de Presupuesto Participativo en la comuna 8, Villa Hermosa, con el perfil de aspirantes y legalizados, beneficiarios activos y recursos remanentes.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Comunas",
+    "Inscripciones",
+    "Beneficiarios",
+    "Créditos condonables",
+    "Inversión"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-2017-1-presupuesto-participativo-2-5",
+   "categoria": "Otros productos",
+   "descripcion": "El informe presenta la convocatoria 2017-1 de Presupuesto Participativo en la comuna 7, Robledo: permite conocer aspirantes, legalizados, beneficiarios activos, recursos invertidos y su perfil por género, estrato y programa.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Comunas",
+    "Inscripciones",
+    "Beneficiarios",
+    "Créditos condonables",
+    "Inversión"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-2017-1-presupuesto-participativo-2-6",
+   "categoria": "Otros productos",
+   "descripcion": "El informe presenta la convocatoria 2017-1 de Presupuesto Participativo en la comuna 2, Santa Cruz: permite conocer aspirantes, legalizados, beneficiarios activos, recursos y su perfil por género, estrato y programa.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Comunas",
+    "Inscripciones",
+    "Beneficiarios",
+    "Créditos condonables",
+    "Inversión"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-2017-1-presupuesto-participativo-2-7",
+   "categoria": "Otros productos",
+   "descripcion": "El informe presenta la convocatoria 2017-1 de Presupuesto Participativo en la comuna 6, Doce de Octubre: permite conocer aspirantes, legalizados, beneficiarios activos, recursos y perfil por género, estrato y programa.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Comunas",
+    "Inscripciones",
+    "Beneficiarios",
+    "Créditos condonables",
+    "Inversión"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-2017-1-presupuesto-participativo-2-8",
+   "categoria": "Otros productos",
+   "descripcion": "El informe presenta la convocatoria 2017-1 de Presupuesto Participativo en el corregimiento de Santa Elena: permite conocer aspirantes, legalizados, beneficiarios activos, recursos y su perfil por género, estrato y programa.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Corregimientos",
+    "Inscripciones",
+    "Beneficiarios",
+    "Créditos condonables",
+    "Inversión"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-2017-1-presupuesto-participativo-2-9",
+   "categoria": "Otros productos",
+   "descripcion": "El informe presenta la convocatoria 2017-1 de Presupuesto Participativo en el corregimiento de Altavista: permite conocer aspirantes, legalizados, beneficiarios activos, recursos invertidos y su perfil por género, estrato y programa.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Corregimientos",
+    "Inscripciones",
+    "Beneficiarios",
+    "Créditos condonables",
+    "Inversión"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-2017-1-presupuesto-participativo-2-10",
+   "categoria": "Otros productos",
+   "descripcion": "El informe presenta los resultados de la convocatoria 2017-1 de Presupuesto Participativo en el corregimiento de San Cristóbal, con el perfil de aspirantes y legalizados, beneficiarios activos y recursos remanentes.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Convocatorias",
+    "Corregimientos",
+    "Inscripciones",
+    "Beneficiarios",
+    "Créditos condonables"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-2017-1-presupuesto-participativo-2-11",
+   "categoria": "Otros productos",
+   "descripcion": "El informe presenta los resultados de la convocatoria 2017-1 de Presupuesto Participativo en la comuna 4, Aranjuez, con el perfil de aspirantes y legalizados, sus beneficiarios activos y recursos remanentes.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Convocatorias",
+    "Comunas",
+    "Inscripciones",
+    "Beneficiarios",
+    "Créditos condonables"
+   ]
+  },
+  {
+   "id": "educacion-superior-en-cifras-resultados-convocatoria-2017-1-presupuesto-participativo-2-12",
+   "categoria": "Otros productos",
+   "descripcion": "El informe presenta los resultados de la convocatoria 2017-1 de Presupuesto Participativo y Fondo EPM en San Sebastián de Palmitas, con el perfil de aspirantes y legalizados y beneficiarios activos.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Convocatorias",
+    "Corregimientos",
+    "Inscripciones",
+    "Beneficiarios",
+    "Créditos condonables"
+   ]
+  },
+  {
+   "id": "infografia-ranking-ciudades-grupos-investigacion",
+   "descripcion": "La infografía compara la distribución de los grupos de investigación entre ciudades colombianas, con el total y la participación porcentual de Medellín, Barranquilla, Manizales y Cartagena frente a las demás.",
+   "claves": [
+    "Ranking de ciudades",
+    "Grupos de investigación",
+    "Investigación",
+    "Ciencia, tecnología e innovación",
+    "Educación superior",
+    "Producción científica"
+   ],
+   "anio": 2017,
+   "mes": 1
+  },
+  {
+   "id": "boletin-avances-retos-estrategia-sinergia-entre-tres-2016",
+   "descripcion": "El boletín analiza la estrategia Sinergia entre el ITM, Pascual Bravo y Colegio Mayor; plantea continuar y crear proyectos que hagan más pertinente el sistema de educación pública de Medellín.",
+   "claves": [
+    "SINERGIA",
+    "IES públicas",
+    "Investigación",
+    "Movilidad educativa",
+    "Matrícula",
+    "Financiación"
+   ]
+  },
+  {
+   "id": "boletin-comparativo-convocatorias-fondo-epm-presupuesto-participativo-2016",
+   "descripcion": "El boletín compara los aspirantes de las convocatorias 2016-2 y 2017-1 del Fondo EPM y de Presupuesto Participativo y concluye que, en general, los resultados son consistentes, sin cambios abismales.",
+   "claves": [
+    "Fondo EPM",
+    "Presupuesto Participativo",
+    "Fondos Sapiencia",
+    "Comunas",
+    "Niveles de formación",
+    "Estratos socioeconómicos"
+   ]
+  },
+  {
+   "id": "boletin-estado-actual-educacion-superior-medellin-2016",
+   "publicado": false,
+   "descripcion": "La entrada del blog del Observatorio de Educación Postsecundaria de Medellín (ODES), publicada en diciembre de 2016, presenta el boletín sobre el estado actual de la educación superior en Medellín.",
+   "claves": [
+    "Educación superior",
+    "Diagnóstico",
+    "Sistema educativo",
+    "Instituciones de educación superior",
+    "Publicaciones",
+    "Divulgación"
+   ]
+  },
+  {
+   "id": "boletin-estado-investigacion-sistema-educacion-superior-medellin",
+   "descripcion": "El boletín analiza los grupos de investigación de la educación superior de Medellín según Colciencias en 2015; las Ciencias Sociales reúnen más grupos, pero Ingeniería y Tecnología lideran en calidad.",
+   "claves": [
+    "Grupos de investigación",
+    "Colciencias",
+    "Índice de calidad",
+    "Áreas del conocimiento",
+    "IES",
+    "Ciencia, tecnología e innovación"
+   ],
+   "anio": 2016,
+   "mes": 12
+  },
+  {
+   "id": "boletin-resultados-aspirantes-fondos-sapiencia-2016",
+   "descripcion": "El boletín caracteriza a los más de 14 mil aspirantes a créditos condonables de los Fondos EPM y Camino a la Educación Superior, convocatoria 2017-1; la mayoría eligió formación universitaria.",
+   "claves": [
+    "Fondos Sapiencia",
+    "Fondo EPM",
+    "Presupuesto Participativo",
+    "Créditos condonables",
+    "Comunas",
+    "Corregimientos"
+   ]
+  },
+  {
+   "id": "boletin-resultados-convocatoria-2016-2-fondos-sapiencia-2016",
+   "descripcion": "El boletín analiza la convocatoria 2016-2 de los Fondos Sapiencia Pregrado en Medellín, con 591 beneficiarios, y señala que contribuyen a cerrar la brecha de acceso a la educación superior.",
+   "claves": [
+    "Fondos Sapiencia",
+    "Presupuesto Participativo",
+    "Fondo EPM",
+    "Créditos condonables",
+    "Comunas",
+    "Corregimientos"
+   ]
+  },
+  {
+   "id": "boletin-calidad-educativa-analisis-estado-instituciones-educacion-2016",
+   "descripcion": "El boletín caracteriza la calidad de las instituciones de educación superior de Medellín; señala que es multidimensional y que la ciudad supera el nivel nacional en acreditación de alta calidad.",
+   "claves": [
+    "Calidad educativa",
+    "Acreditación",
+    "Rankings universitarios",
+    "MIDE",
+    "Grupos de investigación",
+    "IES"
+   ]
+  },
+  {
+   "id": "infografia-criterios-seleccion-2016",
+   "descripcion": "La infografía detalla los nueve criterios y puntajes de selección del Fondo Sapiencia Pregrados, financiado con Presupuesto Participativo, entre ellos Sisbén III, mérito académico, acreditación de la IES y discapacidad.",
+   "claves": [
+    "Presupuesto Participativo",
+    "Fondos Sapiencia",
+    "Criterios de selección",
+    "Sisbén",
+    "Mérito académico",
+    "Acreditación"
+   ]
+  },
+  {
+   "id": "infografia-ranking-ciudades-docentes-educacion-superior-2016",
+   "descripcion": "La infografía compara los docentes de educación superior de ciudades colombianas según nivel de formación y tipo de contrato; Medellín es cuarta en docentes con maestría y tercera en doctorado.",
+   "claves": [
+    "Ranking de ciudades",
+    "Docentes",
+    "Niveles de formación",
+    "Educación superior",
+    "Condiciones laborales",
+    "Posgrados"
+   ]
+  },
+  {
+   "id": "infografia-ranking-ciudades-matricula-educacion-superior-2016",
+   "descripcion": "La infografía compara la matrícula en educación superior de 2016-1 en diez ciudades colombianas por tipo de institución, sexo y nivel de formación; Medellín es cuarta en universidades públicas (55%).",
+   "claves": [
+    "Ranking de ciudades",
+    "Matrícula",
+    "Educación superior",
+    "Niveles de formación",
+    "Brechas de género",
+    "IES públicas"
+   ]
+  },
+  {
+   "id": "infografia-ranking-ciudades-posgrados-educacion-superior-2016",
+   "descripcion": "La infografía compara la oferta de posgrados de diez ciudades colombianas en 2016 por sector y programas más innovadores; en Medellín predomina el área de ingeniería, arquitectura, urbanismo y afines.",
+   "claves": [
+    "Ranking de ciudades",
+    "Posgrados",
+    "Oferta académica",
+    "Áreas del conocimiento",
+    "IES públicas",
+    "Ciencia, tecnología e innovación"
+   ]
+  },
+  {
+   "id": "infografia-ranking-ciudades-resultados-examen-estado-calidad-2016",
+   "descripcion": "La infografía compara los resultados de Saber Pro 2016 en diez ciudades colombianas, por programa académico y sector oficial y no oficial, y señala a Bogotá como la mejor ciudad.",
+   "claves": [
+    "Ranking de ciudades",
+    "Saber Pro",
+    "Calidad educativa",
+    "Programas académicos",
+    "IES públicas",
+    "Educación superior"
+   ]
+  },
+  {
+   "id": "boletin-simes-sistema-medicion-educacion-superior-2015",
+   "descripcion": "El boletín presenta SIMES, herramienta del Observatorio con estadísticas de oferta y matrícula de instituciones de educación superior de Medellín y Antioquia, para que cada institución construya sus propios indicadores.",
+   "claves": [
+    "Instituciones de educación superior",
+    "Oferta académica",
+    "Matrícula",
+    "Acreditación",
+    "Niveles de formación",
+    "Antioquia"
+   ]
+  },
+  {
+   "id": "boletin-buscando-carrera-sabes-que-donde-quieres-2015",
+   "descripcion": "El boletín de junio y julio de 2015 orienta la elección de carrera, presenta una herramienta en Excel para consultar la oferta de programas y explica los fondos de Sapiencia.",
+   "claves": [
+    "Orientación vocacional",
+    "Oferta académica",
+    "Niveles de formación",
+    "Registro calificado",
+    "Acreditación",
+    "Fondos Sapiencia"
+   ]
+  },
+  {
+   "id": "boletin-sistema-educativo-colombiano-2015",
+   "descripcion": "El boletín explica el sistema educativo colombiano y presenta la oferta de las tres instituciones de educación superior adscritas a Medellín, que entienden la educación como medio de transformación social.",
+   "claves": [
+    "Sistema educativo",
+    "Niveles de formación",
+    "Oferta académica",
+    "IES públicas",
+    "Acceso",
+    "Acreditación"
+   ]
+  },
+  {
+   "id": "boletin-financiacion-acceso-permanencia-educacion-superior-2015",
+   "descripcion": "El boletín, edición marzo-abril, presenta el presupuesto asignado entre 2012 y 2014 para acceso y permanencia en educación superior, y permite comparar su distribución entre comunas y corregimientos de Medellín.",
+   "claves": [
+    "Medellín a la U",
+    "Financiación",
+    "Permanencia",
+    "Fondos Sapiencia",
+    "Presupuesto Participativo",
+    "Créditos condonables"
+   ]
+  },
+  {
+   "id": "boletin-que-es-sinergia-2015",
+   "descripcion": "El boletín de febrero de 2015 explica SINERGIA, estrategia de Sapiencia que articula las tres IES adscritas a Medellín, y describe sus seis programas y la matrícula de esas instituciones.",
+   "claves": [
+    "SINERGIA",
+    "IES públicas",
+    "Matrícula",
+    "Ciudadelas universitarias",
+    "Ciencia, tecnología e innovación",
+    "Políticas públicas"
+   ]
+  },
+  {
+   "id": "infografia-ranking-ciudades-desercion-periodo-educacion-superior-2015",
+   "descripcion": "La infografía compara la deserción y la retención por periodo en educación superior de las ciudades colombianas y destaca que Medellín presenta una tasa de retención por periodo del 88,10%.",
+   "claves": [
+    "Ranking de ciudades",
+    "Deserción",
+    "Permanencia",
+    "Educación superior",
+    "Graduación",
+    "Ciudades capitales"
+   ]
+  },
+  {
+   "id": "infografia-ranking-ciudades-graduados-educacion-superior-2015",
+   "descripcion": "La infografía compara indicadores de 2015 sobre personas graduadas de la educación superior en diez ciudades colombianas: cantidad, ingresos y brecha salarial entre hombres y mujeres recién graduados de pregrado.",
+   "claves": [
+    "Ranking de ciudades",
+    "Graduación",
+    "Educación superior",
+    "Brechas de género",
+    "Inserción laboral",
+    "Mercado laboral"
+   ]
+  },
+  {
+   "id": "infografia-ranking-ciudades-instituciones-educacion-superior-alta-2015",
+   "descripcion": "La infografía compara nueve ciudades colombianas en instituciones de educación superior por millón de habitantes y acreditación de alta calidad; Medellín concentra el 19% de los estudiantes en instituciones acreditadas.",
+   "claves": [
+    "Ranking de ciudades",
+    "Instituciones de educación superior",
+    "Acreditación",
+    "Calidad educativa",
+    "Matrícula",
+    "Educación superior"
+   ]
+  },
+  {
+   "id": "estudio-prevencion-atencion-acoso-sexual-entornos-educativos",
+   "categoria": "Otros productos",
+   "descripcion": "La guía de Sapiencia y la Secretaría de las Mujeres orienta la prevención y atención del acoso sexual en entornos educativos con acciones que restablezcan derechos y eviten su repetición.",
+   "claves": [
+    "Acoso sexual",
+    "Violencias basadas en género",
+    "Prevención",
+    "Rutas de atención",
+    "Enfoque de género",
+    "Mujeres"
+   ],
+   "anio": 2022,
+   "mes": null
+  }
+ ],
+ "categoriasQuitar": [
+  "Educación superior en cifras",
+  "Informe dinámico"
+ ]
+}

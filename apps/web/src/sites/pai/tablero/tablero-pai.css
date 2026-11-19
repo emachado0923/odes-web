@@ -1,0 +1,604 @@
+/*
+ * Tablero del PAI (/pai): filtros, leyenda, lista por proceso -> acción,
+ * filas de indicadores y casillas por bimestre. También las clases que
+ * comparten los modales y la ficha (colores del avance, código, textos).
+ * Todo bajo .pai con clases pai-…; colores con los tokens del kit para que
+ * sigan funcionando el modo oscuro y los de contraste.
+ */
+
+/* ── Colores del avance (casillas, totales, leyenda) ── */
+
+.pai .pai-casilla-completo,
+.pai .pai-total-completo {
+  --pai-c-fondo: var(--bs-success-95, #e6f4ea);
+  --pai-c-acento: var(--bs-success-50, #268540);
+  --pai-c-texto: var(--bs-success-30, #174f26);
+}
+
+.pai .pai-casilla-parcial,
+.pai .pai-total-parcial {
+  --pai-c-fondo: var(--bs-warning-99, #fffbef);
+  --pai-c-acento: var(--bs-warning-50, #867227);
+  --pai-c-texto: var(--bs-warning-30, #504417);
+}
+
+.pai .pai-casilla-cero,
+.pai .pai-total-cero {
+  --pai-c-fondo: var(--bs-danger-99, #fff1f0);
+  --pai-c-acento: var(--bs-danger-40, #aa0c00);
+  --pai-c-texto: var(--bs-danger-40, #aa0c00);
+}
+
+.pai .pai-casilla-sin_meta,
+.pai .pai-total-sin_meta {
+  --pai-c-fondo: var(--bs-neutral-95, #f4f4f4);
+  --pai-c-acento: var(--bs-neutral-60, #7a7f81);
+  --pai-c-texto: var(--bs-neutral-40, #3d4041);
+}
+
+.pai .pai-casilla-futuro,
+.pai .pai-total-futuro {
+  --pai-c-fondo: transparent;
+  --pai-c-acento: var(--bs-neutral-70, #a3a7a9);
+  --pai-c-texto: var(--bs-neutral-50, #4e5254);
+}
+
+.pai .pai-texto-completo {
+  color: var(--bs-success-30, #174f26);
+  font-weight: 700;
+}
+
+.pai .pai-texto-parcial {
+  color: var(--bs-warning-30, #504417);
+  font-weight: 700;
+}
+
+.pai .pai-texto-cero {
+  color: var(--bs-danger-40, #aa0c00);
+  font-weight: 700;
+}
+
+.pai .pai-texto-sin_meta,
+.pai .pai-texto-futuro {
+  color: var(--pai-tenue);
+}
+
+/* ── Piezas compartidas ── */
+
+.pai .pai-subtitulo {
+  margin-bottom: 1rem;
+  color: var(--pai-tenue);
+}
+
+.pai .pai-codigo {
+  color: var(--pai-magenta-oscuro);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.pai[data-bs-theme='dark'] .pai-codigo {
+  color: var(--pai-foco);
+}
+
+.pai .pai-sin-dato {
+  color: var(--pai-tenue);
+  font-style: italic;
+}
+
+.pai .pai-texto-largo {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+/* Insignia de conteo (la .badge del kit es un punto flotante: aquí no se usa). */
+.pai .pai-insignia {
+  display: inline-block;
+  min-width: 1.6em;
+  padding: 0.1em 0.45em;
+  border-radius: 999px;
+  background: var(--bs-neutral-90, #dcdcdc);
+  color: var(--pai-texto);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.pai .pai-insignia-activa {
+  background: var(--pai-magenta);
+  color: #fff;
+}
+
+.pai .pai-etiqueta-meta {
+  display: inline-block;
+  margin-left: 0.4rem;
+  padding: 0 0.45em;
+  border: 1px solid var(--pai-borde-campo);
+  border-radius: 999px;
+  color: var(--pai-tenue);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+/* ── Aviso del bimestre y leyenda ── */
+
+.pai .pai-aviso-bimestre {
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  border-left: 4px solid var(--pai-magenta);
+  border-radius: 0.375rem;
+  background: var(--bs-neutral-95, #f4f4f4);
+}
+
+.pai .pai-leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1rem;
+  margin: 1rem 0;
+  font-size: 0.8125rem;
+}
+
+.pai .pai-leyenda-titulo {
+  margin: 0;
+  font-weight: 700;
+}
+
+.pai .pai-leyenda-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pai .pai-leyenda-muestra {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.35rem;
+  border: 1px solid var(--bs-neutral-80, #ccc);
+  border-top: 4px solid var(--pai-c-acento, transparent);
+  border-radius: 0.2rem;
+  background: var(--pai-c-fondo, transparent);
+  vertical-align: -0.15rem;
+}
+
+.pai .pai-leyenda-muestra.pai-casilla-futuro {
+  border-style: dashed;
+}
+
+.pai .pai-leyenda-muestra.pai-leyenda-abierta {
+  border-color: var(--pai-magenta);
+  border-width: 2px;
+}
+
+/* ── Filtros ── */
+
+.pai .pai-filtros {
+  margin-bottom: 0.5rem;
+}
+
+.pai .pai-filtros-pie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--bs-neutral-90, #dcdcdc);
+}
+
+.pai .pai-filtros-conteo {
+  margin: 0;
+  font-weight: 700;
+}
+
+.pai .pai-filtros-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.pai .pai-sin-resultados {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  border: 1px dashed var(--pai-borde-campo);
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+/* ── Lista: proceso -> acción -> indicador ── */
+
+.pai .pai-proceso {
+  margin-top: 2rem;
+}
+
+.pai .pai-proceso-cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid var(--pai-magenta);
+}
+
+.pai .pai-proceso-cabecera > :first-child,
+.pai .pai-proceso-cabecera > .pai-proceso-datos {
+  flex-basis: 100%;
+}
+
+.pai .pai-proceso-titulo {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.pai .pai-proceso-datos {
+  margin: 0;
+  color: var(--pai-tenue);
+  font-size: 0.875rem;
+}
+
+.pai .pai-proceso-resumen {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.5rem;
+}
+
+.pai .pai-proceso-cifras {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.pai .pai-proceso-cifras dt {
+  color: var(--pai-tenue);
+  font-weight: 400;
+}
+
+.pai .pai-proceso-cifras dd {
+  margin: 0;
+  font-weight: 700;
+}
+
+.pai .pai-proceso-barra {
+  --bs-progress-height: 0.4rem;
+  display: flex;
+  flex-direction: row;
+  width: 8rem;
+  max-width: 100%;
+  margin: 0.2rem 0 0;
+  border-radius: 999px;
+  background: var(--bs-neutral-90, #dcdcdc);
+  overflow: hidden;
+}
+
+/* El kit sube la barra (top: -altura) para dibujar su etiqueta encima: aquí va dentro del riel. */
+.pai .pai-proceso-barra .progress-bar {
+  display: block;
+  top: 0;
+  height: 100%;
+  padding: 0;
+  background: var(--pai-magenta);
+}
+
+.pai .pai-accion {
+  margin-top: 1rem;
+}
+
+.pai .pai-accion-titulo {
+  margin: 0 0 0.15rem;
+  color: var(--pai-tenue);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.pai .pai-accion-descripcion {
+  max-width: 80ch;
+  margin: 0 0 0.5rem;
+  font-size: 0.9375rem;
+  overflow-wrap: anywhere;
+}
+
+.pai .pai-indicadores {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/*
+ * Fila del indicador. Celular: botones, nombre, casillas (3 por fila) y
+ * total, uno debajo del otro. Tableta: botones a la izquierda. Pantalla
+ * ancha: botones | nombre | seis casillas | total, en una sola fila.
+ */
+.pai .pai-indicador {
+  display: grid;
+  grid-template-areas:
+    'botones'
+    'nombre'
+    'casillas'
+    'total';
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.625rem;
+  padding: 0.75rem;
+  border: 1px solid var(--bs-neutral-90, #dcdcdc);
+  border-radius: 0.5rem;
+  background: var(--bs-body-bg, #fff);
+}
+
+.pai .pai-indicador-botones {
+  display: flex;
+  flex-wrap: wrap;
+  grid-area: botones;
+  align-content: flex-start;
+  gap: 0.375rem;
+}
+
+.pai .pai-boton-conteo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+  padding: 0.3rem 0.55rem;
+  font-size: 0.8125rem;
+  white-space: nowrap;
+}
+
+.pai .pai-indicador-nombre {
+  grid-area: nombre;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.pai .pai-indicador-nombre .pai-codigo {
+  display: block;
+  font-size: 0.8125rem;
+}
+
+.pai .pai-indicador-enlace {
+  color: var(--pai-texto);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: var(--pai-borde-campo);
+  text-underline-offset: 0.15em;
+}
+
+.pai .pai-indicador-enlace:hover {
+  color: var(--pai-magenta-oscuro);
+  text-decoration-color: currentColor;
+}
+
+.pai .pai-casillas {
+  display: grid;
+  grid-area: casillas;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.375rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pai .pai-casillas > li {
+  display: flex;
+  min-width: 0;
+}
+
+.pai .pai-indicador-total {
+  display: flex;
+  flex-wrap: wrap;
+  grid-area: total;
+  align-items: baseline;
+  gap: 0.15rem 0.75rem;
+  padding: 0.4rem 0.6rem;
+  border-left: 4px solid var(--pai-c-acento);
+  border-radius: 0.375rem;
+  background: var(--pai-c-fondo);
+  font-size: 0.8125rem;
+}
+
+.pai .pai-total-etiqueta {
+  font-weight: 700;
+}
+
+.pai .pai-total-dato {
+  color: var(--pai-tenue);
+}
+
+.pai .pai-total-porcentaje {
+  color: var(--pai-c-texto);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+@media (min-width: 576px) {
+  .pai .pai-casillas {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .pai .pai-indicador {
+    grid-template-areas:
+      'botones nombre'
+      'botones casillas'
+      'botones total';
+    grid-template-columns: 10.5rem minmax(0, 1fr);
+  }
+
+  .pai .pai-indicador-botones {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+
+  .pai .pai-boton-conteo {
+    width: 100%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .pai .pai-indicador {
+    grid-template-areas: 'botones nombre casillas total';
+    grid-template-columns: 10rem minmax(11rem, 1fr) minmax(0, 2.6fr) 7.5rem;
+    align-items: start;
+  }
+
+  .pai .pai-indicador-total {
+    flex-direction: column;
+    gap: 0.1rem;
+    align-self: stretch;
+  }
+}
+
+/* ── Casilla de un bimestre ── */
+
+.pai .pai-casilla {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+  padding: 0.35rem 0.45rem 0.4rem;
+  border: 1px solid var(--bs-neutral-80, #ccc);
+  border-top: 4px solid var(--pai-c-acento);
+  border-radius: 0.375rem;
+  background: var(--pai-c-fondo);
+  font-size: 0.8125rem;
+  line-height: 1.25;
+}
+
+.pai .pai-casilla-contenido {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.pai .pai-casilla-futuro {
+  border-style: dashed;
+}
+
+.pai .pai-casilla-abierta {
+  box-shadow: 0 0 0 2px var(--pai-magenta);
+}
+
+.pai .pai-casilla-bimestre {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0 0.25rem;
+  color: var(--pai-tenue);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.pai .pai-casilla-marca {
+  color: var(--pai-magenta-oscuro);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.pai[data-bs-theme='dark'] .pai-casilla-marca {
+  color: var(--pai-foco);
+}
+
+.pai .pai-casilla-meta,
+.pai .pai-casilla-etiqueta {
+  margin: 0;
+  color: var(--pai-tenue);
+  font-size: 0.75rem;
+  overflow-wrap: anywhere;
+}
+
+/* Espacio para el anillo de foco del campo (3 px), que tapaba la etiqueta. */
+.pai .pai-casilla-etiqueta {
+  margin-bottom: 0.3rem;
+}
+
+.pai .pai-casilla-avance {
+  color: var(--pai-texto);
+  font-size: 1rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.pai .pai-casilla-porcentaje {
+  color: var(--pai-c-texto);
+  font-weight: 700;
+}
+
+.pai .pai-casilla-campo {
+  min-width: 0;
+  padding: 0.15rem 0.35rem;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  text-align: right;
+}
+
+.pai .pai-casilla-campo:focus-visible {
+  outline-offset: 0;
+}
+
+.pai .pai-casilla-campo[aria-invalid='true'] {
+  border-color: var(--bs-danger-40, #aa0c00);
+}
+
+/*
+ * Región aria-live: siempre presente en el árbol de accesibilidad (una región
+ * que pasa de display:none a tener texto no se anuncia de forma fiable);
+ * vacía, no ocupa lugar.
+ */
+.pai .pai-casilla-estado {
+  min-height: 0;
+  margin: 0;
+  font-size: 0.75rem;
+  overflow-wrap: anywhere;
+}
+
+.pai .pai-casilla-estado-guardando {
+  color: var(--pai-tenue);
+}
+
+.pai .pai-casilla-estado-guardado {
+  color: var(--bs-success-30, #174f26);
+  font-weight: 700;
+}
+
+.pai .pai-casilla-estado-error,
+.pai .pai-casilla-estado-conflicto {
+  color: var(--bs-danger-40, #aa0c00);
+  font-weight: 700;
+}
+
+/* Filas guardadas que ya no cumplen los filtros (siguen a la vista). */
+.pai .pai-fuera-filtro {
+  margin: 0 0 0.5rem;
+  color: var(--pai-tenue);
+  font-size: 0.875rem;
+}
+
+.pai .pai-proceso-nota {
+  flex-basis: 100%;
+  margin: 0;
+  color: var(--pai-tenue);
+  font-size: 0.8125rem;
+}
+
+.pai .pai-proceso-detalle {
+  color: var(--pai-tenue);
+  font-weight: 400;
+}

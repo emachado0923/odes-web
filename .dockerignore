@@ -1,0 +1,20 @@
+# Lo que NO entra al «contexto» de la construcción (la carpeta que se le manda a Docker).
+# Menos archivos = construcción más rápida, y sobre todo: nunca meter secretos en la imagen.
+
+# Secretos: claves de bases de datos y de Anthropic. Las variables se le pasan al contenedor al arrancar.
+**/.env
+**/.env.*
+!**/.env.example
+
+# Se reinstalan y se recompilan dentro de la imagen.
+**/node_modules
+**/dist
+.vercel
+# Caché de extracción del indexador ODES: el servidor solo lee indice.sqlite.
+apps/server/datos/odes/cache
+
+# Del repositorio y de las herramientas, no de la app.
+.git
+.claude
+**/.DS_Store
+**/*.log

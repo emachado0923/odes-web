@@ -1,0 +1,396 @@
+/*
+ * Páginas de administración del PAI (seguimiento, usuarios, bimestre,
+ * autorizaciones, registro). Todo bajo .pai con clases pai-…; colores con
+ * los tokens del kit (--bs-neutral-*, --bs-body-*) para que funcionen los
+ * modos oscuro y de contraste. Las correcciones generales del kit (botones
+ * en input-group y tablas, casilla parcial) están en pai.css.
+ */
+
+.pai .pai-admin-encabezado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.pai .pai-admin-intro {
+  max-width: 60rem;
+  margin-bottom: 1rem;
+  color: var(--pai-tenue);
+}
+
+.pai .pai-admin-filtro {
+  min-width: min(100%, 16rem);
+}
+
+.pai .pai-tenue {
+  color: var(--pai-tenue);
+}
+
+.pai .pai-codigo {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.pai .pai-requerido {
+  color: var(--pai-tenue);
+  font-size: 0.85em;
+  font-weight: 400;
+}
+
+/* ── Cifras y barras de avance ── */
+
+.pai .pai-cifras {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.pai .pai-cifra p {
+  margin: 0;
+}
+
+.pai .pai-cifra-titulo {
+  color: var(--pai-tenue);
+  font-size: 0.875rem;
+}
+
+.pai .pai-cifra-valor {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.pai .pai-cifra-detalle {
+  color: var(--pai-tenue);
+  font-size: 0.875rem;
+}
+
+.pai .pai-avance {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 4.5rem;
+  vertical-align: middle;
+}
+
+.pai .pai-avance-valor {
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.pai .pai-avance-vacio .pai-avance-valor {
+  color: var(--pai-tenue);
+}
+
+/* La barra del kit es una línea fina con la barra encima: aquí, una barra simple de 0,5 rem. */
+.pai .pai-avance .progress {
+  --bs-progress-height: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: var(--bs-progress-height);
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--bs-neutral-70, #a8adaf);
+}
+
+.pai .pai-avance .progress-bar {
+  top: 0;
+  height: 100%;
+  padding: 0;
+  border-radius: inherit;
+}
+
+/* Leyenda de los colores de las barras (seguimiento). */
+.pai .pai-leyenda-niveles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1rem;
+  margin-top: 1rem;
+  font-size: 0.8125rem;
+}
+
+.pai .pai-leyenda-niveles-titulo {
+  margin: 0;
+  font-weight: 700;
+}
+
+.pai .pai-leyenda-niveles ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pai .pai-leyenda-niveles li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.pai .pai-leyenda-barra {
+  --bs-progress-height: 0.5rem;
+  display: inline-flex;
+  width: 1.75rem;
+  margin: 0;
+  border: 1px solid var(--bs-neutral-70, #a8adaf);
+}
+
+.pai .pai-logros {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr));
+  gap: 0.75rem 1rem;
+  margin: 0;
+}
+
+.pai .pai-logro dt {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--pai-tenue);
+}
+
+.pai .pai-logro dd {
+  margin: 0;
+}
+
+.pai abbr[title] {
+  text-decoration: none;
+  cursor: help;
+}
+
+/* Bimestre abierto, resaltado en la tabla y en las tarjetas (además del texto de la barra). */
+.pai .pai-columna-abierta {
+  background: var(--bs-neutral-95, #f4f4f4);
+}
+
+.pai .pai-tarjeta-dependencia .card-title {
+  display: flex;
+  flex-direction: column;
+}
+
+.pai .pai-tarjeta-nombre {
+  color: var(--pai-tenue);
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.pai .pai-tabla-seguimiento thead th {
+  vertical-align: bottom;
+  white-space: nowrap;
+}
+
+.pai .pai-tabla-seguimiento .pai-celda-proceso {
+  min-width: 14rem;
+  font-weight: 400;
+}
+
+.pai .pai-conteo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  white-space: nowrap;
+}
+
+/* ── Tablas ── */
+
+.pai .pai-admin .table th[scope='row'] {
+  font-weight: 700;
+}
+
+.pai .pai-detalle-usuario {
+  display: block;
+  color: var(--pai-tenue);
+  font-size: 0.85rem;
+  font-weight: 400;
+  overflow-wrap: anywhere;
+}
+
+.pai .pai-fila-inactiva > * {
+  color: var(--pai-tenue);
+}
+
+.pai .pai-etiquetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.pai .pai-acciones-fila {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  justify-content: flex-end;
+}
+
+/* En pantallas anchas los botones de una fila van en un solo renglón. */
+@media (min-width: 992px) {
+  .pai .pai-acciones-fila {
+    flex-wrap: nowrap;
+  }
+}
+
+.pai .pai-celda-texto {
+  min-width: 12rem;
+  max-width: 28rem;
+  overflow-wrap: anywhere;
+}
+
+.pai .pai-detalle-registro {
+  margin: 0.375rem 0 0;
+  padding-left: 1rem;
+  font-size: 0.875rem;
+}
+
+.pai .pai-detalle-campo {
+  font-weight: 700;
+}
+
+.pai .pai-detalle-antes {
+  color: var(--pai-tenue);
+  text-decoration: line-through;
+}
+
+.pai .pai-paginacion {
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin: 0;
+}
+
+.pai .pai-paginacion .page-item.active .page-link {
+  max-height: none;
+  color: var(--pai-texto);
+  background: transparent;
+}
+
+/* ── Formularios ── */
+
+.pai .pai-contrasena-visible {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: 0.05em;
+}
+
+.pai .pai-contrasena-temporal legend {
+  float: none;
+  font-size: 1rem;
+}
+
+/* En pantallas angostas la contraseña ocupa toda la fila y Generar / Copiar pasan debajo. */
+.pai .pai-contrasena-temporal .input-group {
+  row-gap: 0.5rem;
+}
+
+.pai .pai-opciones-bimestre {
+  display: grid;
+  /* "Bimestre 5 (septiembre–octubre)" cabe en un renglón. */
+  grid-template-columns: repeat(auto-fill, minmax(17.5rem, 1fr));
+  gap: 0.5rem 1rem;
+}
+
+.pai .pai-campo-fecha {
+  max-width: 18rem;
+}
+
+.pai .pai-estado-bimestre {
+  margin-bottom: 1rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+/* ── Árbol de asignaciones ── */
+
+.pai .pai-arbol-resumen {
+  font-weight: 700;
+}
+
+.pai .pai-arbol-dependencia + .pai-arbol-dependencia {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--bs-neutral-80, #ccc);
+}
+
+.pai .pai-arbol-procesos {
+  margin: 0.375rem 0 0 1.5rem;
+}
+
+.pai .pai-arbol-fila {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.125rem 0;
+}
+
+.pai .pai-arbol-expandir {
+  flex: 0 0 auto;
+  min-width: 2rem;
+  padding: 0 0.4rem;
+  line-height: 1.4;
+}
+
+.pai .pai-arbol-cantidad {
+  color: var(--pai-tenue);
+  font-size: 0.875rem;
+}
+
+.pai .pai-arbol-indicadores {
+  margin: 0.25rem 0 0.5rem 3.5rem;
+}
+
+.pai .pai-arbol .form-check-label {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 575.98px) {
+  .pai .pai-contrasena-temporal .input-group > .form-control {
+    flex-basis: 100%;
+    width: 100%;
+  }
+
+  .pai .pai-arbol-procesos {
+    margin-left: 0.5rem;
+  }
+
+  .pai .pai-arbol-indicadores {
+    margin-left: 1.5rem;
+  }
+
+  .pai .pai-acciones-fila {
+    justify-content: flex-start;
+  }
+}
+
+/* Datos para entregar tras crear una cuenta o restablecer su contraseña (ModalUsuario). */
+.pai .pai-entrega {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 0.5rem 1rem;
+  align-items: center;
+  margin: 1rem 0 0;
+}
+
+.pai .pai-entrega dt {
+  font-weight: 700;
+}
+
+.pai .pai-entrega dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.pai .pai-entrega-contrasena {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pai .pai-entrega code {
+  font-size: 1rem;
+}

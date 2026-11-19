@@ -1,0 +1,3 @@
+/* Datos generados por etl/generar_vistas.py; no editar a mano. */
+window.ODES=window.ODES||{};window.ODES.datos=window.ODES.datos||{};
+window.ODES.datos["ep-cotizantes__tasa"]={"cols":[{"n":"Año de graduación","t":"c","vals":["2016","2017","2018","2019","2020"]},{"n":"Año de vinculación","t":"c","vals":["2017","2018","2019","2020","2021"]},{"n":"Tasa de cotización hombres","t":"n"},{"n":"Tasa de cotización mujeres","t":"n"},{"n":"Tasa de cotización sector oficial","t":"n"},{"n":"Tasa de cotización sector privado","t":"n"},{"n":"n","t":"n"}],"filas":[[0,0,0.778,0.759,0.708,0.819,1],[1,1,0.778,0.763,0.713,0.819,1],[2,2,0.776,0.763,0.719,0.809,1],[3,3,0.716,0.696,0.643,0.757,1],[4,4,0.761,0.744,0.693,0.791,1]],"nfuente":5};

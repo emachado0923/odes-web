@@ -1,0 +1,1551 @@
+/*
+ * Repositorio de productos (rama /repositorio). Todo va anidado bajo
+ * .repositorio para no filtrarse a otras ramas.
+ *
+ * El aspecto es el del bloque de WordPress v4.2
+ * (Septiembre/observatorio/repositorio/repositorio-bloque.html): mismos
+ * tokens de la Plantilla Sapiencia, mismas clases rp-* y mismas medidas.
+ * Cambios respecto al bloque: los tamaños de letra van directo en
+ * font-size (el bloque los pasaba por --rp-fs para la barra de
+ * accesibilidad de WordPress, que aquí no existe), y se agregan la cabecera
+ * y el pie del Observatorio, el contenedor de la página y los estados de
+ * carga, error y 404.
+ *
+ * Las animaciones llevan el prefijo rp- (los @keyframes son globales).
+ */
+
+/* ---------- Rubik (servida desde el propio sitio; variable, 300–900) ---------- */
+
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url('./recursos/fuentes/Rubik-latin-normal.woff2') format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC,
+    U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url('./recursos/fuentes/Rubik-latin-ext-normal.woff2') format('woff2');
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
+    U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ---------- Raíz de la rama ---------- */
+
+.repositorio {
+  --rp-morado: #9b48a4;
+  --rp-morado-30: #74367b;
+  --rp-morado-80: #dec2e1;
+  --rp-morado-90: #eee0f0;
+  --rp-morado-95: #f7f0f7;
+  --rp-azul: #0b3a56;
+  --rp-azul-95: #e9edf0;
+  --rp-texto: #151717;
+  --rp-texto-2: #4e5254;
+  --rp-borde: #787b7d;
+  --rp-gris-80: #ccc;
+  --rp-gris-90: #dcdcdc;
+  --rp-linea: #dcdcdc;
+  --rp-gris-95: #f4f4f4;
+  --rp-resaltado: #ffedaa;
+  --rp-error: #aa0c00;
+  --rp-radio: 0.75rem;
+  --rp-unal: 2.5rem;
+  --rp-sombra-1: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 3px 0 rgba(0, 0, 0, 0.15);
+  --rp-sombra-2: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 2px 6px 2px rgba(0, 0, 0, 0.15);
+  /* Cabecera y pie del Observatorio (los de la plantilla). */
+  --rp-odes-azul: #0e5074;
+  --rp-odes-naranja: #ed7203;
+  /* Magenta del logo del Observatorio: cabecera y pie (blanco encima: 5,5:1). */
+  --rp-odes-magenta: #a94091;
+  --rp-margen: clamp(1rem, 4vw, 3rem);
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  color-scheme: light;
+  background: #fff;
+  color: var(--rp-texto);
+  font-family: Rubik, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: left;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+.repositorio :is(h1, h2, p, ol, ul, li, figure, fieldset, legend) {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-family: inherit;
+  line-height: inherit;
+  letter-spacing: normal;
+  text-transform: none;
+  text-shadow: none;
+}
+
+/* Los controles no heredan la letra por defecto (13,3 px en los navegadores). */
+.repositorio :is(input, select, button, textarea) {
+  font-family: inherit;
+  font-size: 1em;
+}
+
+.repositorio fieldset {
+  min-width: 0;
+}
+
+.repositorio :is(ol, ul) {
+  list-style: none;
+}
+
+.repositorio abbr {
+  border: 0;
+  letter-spacing: normal;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.repositorio img {
+  max-width: 100%;
+  border: 0;
+}
+
+.repositorio svg {
+  flex: none;
+  fill: currentColor;
+}
+
+.repositorio [hidden] {
+  display: none !important;
+}
+
+.repositorio a {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.repositorio :focus {
+  outline: 0;
+}
+
+.repositorio :focus-visible {
+  outline: 2px solid var(--rp-texto);
+  outline-offset: 2px;
+}
+
+.repositorio .rp-oculto {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* ---------- Saltar al contenido ---------- */
+
+.repositorio .rp-saltar {
+  position: absolute;
+  z-index: 100;
+  top: 0.5rem;
+  left: 0.5rem;
+  padding: 0.6em 1em;
+  color: var(--rp-texto);
+  font-weight: 700;
+  background: #fff;
+  border-radius: 0.375rem;
+  box-shadow: var(--rp-sombra-2);
+  transform: translateY(calc(-100% - 1rem));
+}
+
+.repositorio .rp-saltar:focus {
+  transform: none;
+}
+
+/* ---------- Cabecera del Observatorio (la misma de /principal, /odes y /sivu): magenta, logo en blanco ---------- */
+
+.repositorio .rp-cabecera {
+  margin: 0;
+  background: var(--rp-odes-magenta);
+}
+
+.repositorio .rp-cabecera-interior {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 0.75rem var(--rp-margen);
+}
+
+.repositorio .rp-cabecera-logo {
+  display: block;
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+.repositorio .rp-cabecera-logo img {
+  width: auto;
+  height: clamp(40px, 7vw, 64px);
+}
+
+.repositorio .rp-cabecera-nombre {
+  margin: 0;
+  overflow: hidden;
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 899.98px) {
+  .repositorio .rp-cabecera-nombre {
+    font-size: 0.9rem;
+    white-space: normal;
+  }
+}
+
+/* ---------- Pie del Observatorio: magenta, con los logos de Sapiencia y la Alcaldía en blanco ---------- */
+
+.repositorio .rp-pie {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3rem;
+  padding: 2rem 1rem 2.25rem;
+  background: var(--rp-odes-magenta);
+}
+
+.repositorio .rp-pie-logo {
+  display: block;
+  line-height: 0;
+  text-align: center;
+}
+
+.repositorio .rp-pie-logo img {
+  width: clamp(230px, 24vw, 340px);
+  height: auto;
+}
+
+@media (max-width: 360px) {
+  .repositorio .rp-pie-logo img {
+    width: 180px;
+  }
+}
+
+/* Foco visible sobre el magenta. */
+.repositorio :is(.rp-cabecera, .rp-pie) :focus-visible {
+  outline-color: #fff;
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* ---------- Página ---------- */
+
+.repositorio .rp-principal {
+  flex: 1 0 auto;
+}
+
+/* El <main> recibe el foco del enlace "Saltar al contenido": sin anillo alrededor de toda la página. */
+.repositorio .rp-principal:focus-visible {
+  outline: 0;
+}
+
+/* Hasta 3 tarjetas por fila: 4 necesitarían 4 × 18em + 3 × 1,25em ≈ 1212 px de ancho útil. */
+.repositorio .rp-contenedor {
+  width: 100%;
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 2rem var(--rp-margen) 0;
+}
+
+/* ---------- Cabecera morada del repositorio ---------- */
+
+.repositorio .rp-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: 'logo' 'titulo' 'bajada' 'intro' 'ayuda';
+  margin: 0 0 1.25em;
+  padding: 2.25em;
+  color: #fff;
+  background: var(--rp-morado);
+  border-radius: 0.3rem var(--rp-unal);
+}
+
+.repositorio .rp-hero::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: -7em;
+  right: -5em;
+  width: 19em;
+  height: 19em;
+  border: 2.75em solid rgba(255, 255, 255, 0.09);
+  border-radius: 50%;
+}
+
+.repositorio .rp-hero::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 38%;
+  bottom: -6.5em;
+  width: 10em;
+  height: 10em;
+  background: rgba(11, 58, 86, 0.22);
+  border-radius: 50%;
+}
+
+.repositorio .rp-logo {
+  grid-area: logo;
+  justify-self: start;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  margin: 0 0 1.25em;
+  padding: 1em 1.25em;
+  background: #fff;
+  border-radius: 0.3rem var(--rp-unal);
+  box-shadow: var(--rp-sombra-2);
+}
+
+.repositorio .rp-logo img {
+  display: block;
+  width: 14em;
+  height: auto;
+}
+
+.repositorio .rp-titulo {
+  grid-area: titulo;
+  margin: 0 0 0.3em;
+  color: #fff;
+  font-size: 2.2em;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+/* Subtítulo: claramente menor que el título (2,2em, negrilla) para que se lea como subtítulo. Ya no es texto
+   grande (menos de 24 px), así que va en lila muy claro: #f7f0f7 sobre #9b48a4 = 4,9:1 (WCAG AA). */
+.repositorio .rp-bajada {
+  grid-area: bajada;
+  margin: 0 0 1em;
+  color: var(--rp-morado-95);
+  font-size: 1.1875em;
+  font-weight: 400;
+  line-height: 1.35;
+}
+
+.repositorio .rp-intro {
+  grid-area: intro;
+  max-width: 44em;
+  margin: 0;
+  color: #fff;
+  font-size: 1.0625em;
+  line-height: 1.55;
+}
+
+/* Ayuda de uso: aparte de la introducción, más pequeña y con una línea que la separa. */
+.repositorio .rp-ayuda {
+  grid-area: ayuda;
+  max-width: 50em;
+  margin: 1.1em 0 0;
+  padding-top: 0.85em;
+  color: #fff;
+  font-size: 0.875em;
+  line-height: 1.5;
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+@media (min-width: 800px) {
+  .repositorio .rp-hero {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: 'titulo logo' 'bajada logo' 'intro logo' 'ayuda logo';
+    column-gap: 2.5em;
+  }
+
+  .repositorio .rp-logo {
+    margin: 0;
+    padding: 1.5em 1.75em;
+  }
+
+  .repositorio .rp-logo img {
+    width: 17em;
+  }
+}
+
+/* ---------- Buscador y filtros ---------- */
+
+.repositorio .rp-filtros {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1em;
+  margin: 0 0 1.5em;
+  padding: 1.25em 1.5em 1.125em;
+  background: var(--rp-gris-95);
+  border-radius: 0.3rem var(--rp-unal);
+}
+
+.repositorio .rp-campo {
+  min-width: 0;
+}
+
+.repositorio .rp-etiqueta {
+  display: block;
+  margin: 0 0 0.375em;
+  padding: 0;
+  color: var(--rp-texto);
+  font-size: 0.875em;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.repositorio .rp-fila-buscar {
+  display: flex;
+  gap: 0.5em;
+}
+
+.repositorio .rp-fila-buscar .rp-buscar {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.repositorio .rp-extra {
+  display: contents;
+}
+
+.repositorio .rp-ver-filtros {
+  display: none;
+}
+
+.repositorio :is(.rp-buscar, .rp-select) {
+  position: relative;
+}
+
+.repositorio :is(.rp-buscar, .rp-select) svg {
+  position: absolute;
+  top: 50%;
+  width: 1.375em;
+  height: 1.375em;
+  margin-top: -0.6875em;
+  pointer-events: none;
+}
+
+.repositorio .rp-buscar svg {
+  left: 0.75em;
+  color: var(--rp-texto-2);
+}
+
+.repositorio .rp-select svg {
+  right: 0.625em;
+  color: var(--rp-texto);
+}
+
+/* Lista de selectores (no :is): cada uno conserva su especificidad, como en el bloque. */
+.repositorio .rp-entrada,
+.repositorio .rp-select select,
+.repositorio .rp-abrir {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  height: 2.75em;
+  min-height: 44px;
+  margin: 0;
+  padding: 0 0.875em;
+  color: var(--rp-texto);
+  font-family: inherit;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-transform: none;
+  background: #fff;
+  border: 1px solid var(--rp-borde);
+  border-radius: 0.375rem;
+  box-shadow: none;
+  outline: 0;
+}
+
+.repositorio .rp-entrada {
+  padding-left: 2.75em;
+  cursor: text;
+}
+
+.repositorio .rp-entrada::placeholder {
+  color: var(--rp-texto-2);
+  opacity: 1;
+}
+
+.repositorio .rp-select select {
+  padding-right: 2.5em;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.repositorio :is(.rp-entrada, .rp-select select, .rp-abrir):hover {
+  border-color: var(--rp-texto);
+}
+
+.repositorio :is(.rp-entrada, .rp-select select, .rp-abrir):focus-visible {
+  border-color: var(--rp-morado);
+  outline: 2px solid var(--rp-texto);
+  outline-offset: 2px;
+}
+
+/* Filtros de casillas: un botón que abre un panel con su propio buscador y la lista de opciones. */
+.repositorio .rp-desplegable {
+  position: relative;
+}
+
+.repositorio .rp-abrir {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  padding-right: 0.625em;
+  text-align: left;
+  cursor: pointer;
+}
+
+.repositorio .rp-valor {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.repositorio .rp-cuenta {
+  flex: none;
+  min-width: 1.75em;
+  padding: 0.2em 0.5em;
+  color: #fff;
+  font-size: 0.75em;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  background: var(--rp-morado);
+  border-radius: 50rem;
+}
+
+.repositorio .rp-abrir svg {
+  width: 1.375em;
+  height: 1.375em;
+  transition: transform 0.15s ease;
+}
+
+.repositorio .rp-abrir[aria-expanded='true'] {
+  border-color: var(--rp-morado);
+  box-shadow: inset 0 0 0 1px var(--rp-morado);
+}
+
+.repositorio .rp-abrir[aria-expanded='true'] svg {
+  transform: rotate(180deg);
+}
+
+.repositorio .rp-abrir.rp-activo {
+  font-weight: 500;
+  background: var(--rp-morado-95);
+  border-color: var(--rp-morado);
+}
+
+.repositorio .rp-panel {
+  position: absolute;
+  z-index: 30;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 0.375em;
+  padding: 0.75em 0.75em 0.625em;
+  background: #fff;
+  border: 1px solid var(--rp-gris-80);
+  border-radius: 0.5rem;
+  box-shadow: var(--rp-sombra-2);
+}
+
+.repositorio .rp-panel .rp-buscar {
+  margin: 0 0 0.5em;
+}
+
+.repositorio .rp-panel .rp-buscar svg {
+  left: 0.625em;
+  width: 1.25em;
+  height: 1.25em;
+  margin-top: -0.625em;
+}
+
+.repositorio .rp-panel .rp-entrada {
+  height: 2.5em;
+  min-height: 40px;
+  padding-left: 2.375em;
+}
+
+.repositorio .rp-opciones {
+  max-height: 16em;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  margin: 0 -0.25em;
+  padding: 0.125em 0.25em;
+}
+
+.repositorio .rp-opcion {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625em;
+  margin: 0;
+  padding: 0.5em;
+  color: var(--rp-texto);
+  font-size: 0.9375em;
+  line-height: 1.35;
+  border-radius: 0.375rem;
+  cursor: pointer;
+}
+
+.repositorio .rp-opcion:hover,
+.repositorio .rp-opcion:has(.rp-casilla:checked) {
+  background: var(--rp-morado-95);
+}
+
+.repositorio .rp-casilla {
+  flex: none;
+  width: 1.125em;
+  height: 1.125em;
+  margin: 0.1em 0 0;
+  padding: 0;
+  accent-color: var(--rp-morado);
+  cursor: pointer;
+}
+
+.repositorio .rp-opcion-texto {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.repositorio .rp-opcion:has(.rp-casilla:checked) .rp-opcion-texto {
+  font-weight: 500;
+}
+
+.repositorio .rp-opcion-total {
+  flex: none;
+  margin-top: 0.1em;
+  padding: 0.1em 0.55em;
+  color: var(--rp-texto-2);
+  font-size: 0.8125em;
+  font-weight: 500;
+  background: var(--rp-gris-95);
+  border-radius: 50rem;
+}
+
+.repositorio .rp-estado-opciones {
+  margin: 0.375em 0.5em;
+  color: var(--rp-texto-2);
+  font-size: 0.875em;
+  line-height: 1.4;
+}
+
+.repositorio .rp-panel-pie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5em;
+  margin: 0.5em 0 0;
+  padding: 0.5em 0 0;
+  border-top: 1px solid var(--rp-linea);
+}
+
+.repositorio .rp-desmarcar {
+  margin-right: auto;
+  font-size: 0.875em;
+}
+
+.repositorio .rp-listo {
+  min-height: 36px;
+  margin: 0;
+  padding: 0.4em 1.1em;
+  color: #fff;
+  font-size: 0.875em;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-transform: none;
+  background: var(--rp-morado);
+  border: 0;
+  border-radius: 0.25rem 0.5rem;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.repositorio .rp-listo:hover {
+  color: #fff;
+  background: var(--rp-morado-30);
+}
+
+/* Palabras clave seleccionadas: siempre a la vista (en su propia fila), cada una con su botón para quitarla. */
+.repositorio .rp-activas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5em 0.75em;
+  margin: 0;
+}
+
+.repositorio .rp-activas-titulo {
+  color: var(--rp-texto-2);
+  font-size: 0.875em;
+  font-weight: 600;
+}
+
+.repositorio .rp-activas-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375em;
+}
+
+.repositorio .rp-activa {
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  min-height: 32px;
+  margin: 0;
+  padding: 0.3em 0.55em 0.3em 0.85em;
+  color: #fff;
+  font-size: 0.9375em;
+  line-height: 1.2;
+  text-align: left;
+  background: var(--rp-morado);
+  border: 1px solid var(--rp-morado);
+  border-radius: 50rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.repositorio .rp-activa:hover {
+  background: var(--rp-morado-30);
+}
+
+.repositorio .rp-activa svg {
+  width: 1.1em;
+  height: 1.1em;
+}
+
+.repositorio .rp-estado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5em 1em;
+  min-height: 2.25em;
+  padding-top: 0.75em;
+  border-top: 1px solid var(--rp-linea);
+}
+
+.repositorio .rp-conteo {
+  margin: 0;
+  color: var(--rp-texto-2);
+  font-size: 0.9375em;
+  line-height: 1.4;
+}
+
+.repositorio .rp-num {
+  color: var(--rp-texto);
+  font-weight: 700;
+}
+
+.repositorio .rp-texto-boton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  min-height: 36px;
+  margin: 0;
+  padding: 0.35em 0.75em;
+  color: var(--rp-morado-30);
+  font-size: 0.9375em;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-transform: none;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  background: none;
+  border: 0;
+  border-radius: 0.25rem 0.5rem;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.repositorio .rp-texto-boton:hover {
+  color: var(--rp-morado-30);
+  background: var(--rp-morado-90);
+}
+
+.repositorio .rp-texto-boton svg {
+  width: 1.125em;
+  height: 1.125em;
+}
+
+/* Celular: el botón "Filtros" muestra u oculta los demás filtros. */
+@media (max-width: 639px) {
+  .repositorio .rp-ver-filtros {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: 0.4em;
+    min-height: 44px;
+    margin: 0;
+    padding: 0 0.9em;
+    color: var(--rp-morado-30);
+    font-size: 0.9375em;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: normal;
+    text-transform: none;
+    background: #fff;
+    border: 0;
+    border-radius: 0.375rem;
+    box-shadow: inset 0 0 0 1.5px var(--rp-morado);
+    cursor: pointer;
+  }
+
+  .repositorio .rp-fila-buscar {
+    flex-wrap: wrap;
+  }
+
+  .repositorio .rp-fila-buscar .rp-buscar {
+    flex: 1 1 100%;
+  }
+
+  .repositorio .rp-ver-filtros svg {
+    width: 1.25em;
+    height: 1.25em;
+  }
+
+  .repositorio .rp-ver-filtros .rp-flecha {
+    margin-left: 0.1em;
+    transition: transform 0.15s ease;
+  }
+
+  .repositorio .rp-ver-filtros[aria-expanded='true'] .rp-flecha {
+    transform: rotate(180deg);
+  }
+
+  .repositorio .rp-ver-filtros[aria-expanded='true'] {
+    background: var(--rp-morado-95);
+  }
+
+  .repositorio .rp-extra {
+    display: none;
+  }
+
+  .repositorio .rp-filtros.rp-abierto .rp-extra {
+    display: grid;
+    gap: 1em;
+  }
+
+  /* En celular el panel empuja el contenido en vez de quedar encima. */
+  .repositorio .rp-panel {
+    position: static;
+    margin-top: 0.5em;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 359px) {
+  .repositorio .rp-sufijo {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    white-space: nowrap !important;
+  }
+}
+
+/* Tableta: Categoría y Año en una fila; Palabra clave y Ordenar por en otra. PC: los cuatro en una fila
+   (sin el filtro de idioma desde el 12 de noviembre de 2026). Las palabras clave seleccionadas, el buscador y
+   el conteo ocupan todo el ancho. */
+@media (min-width: 640px) {
+  .repositorio .rp-filtros {
+    --rp-columnas: 4;
+    --rp-ocupa: 2;
+    grid-template-columns: repeat(var(--rp-columnas), minmax(0, 1fr));
+    gap: 1em 1.25em;
+  }
+
+  .repositorio :is(.rp-campo-buscar, .rp-activas, .rp-estado) {
+    grid-column: 1 / -1;
+  }
+
+  .repositorio .rp-extra > .rp-campo {
+    grid-column: span var(--rp-ocupa);
+  }
+
+  /* Los paneles de Categoría y Palabra clave miden al menos 18em: el de la primera columna se abre hacia
+     la derecha y el de Palabra clave hacia la izquierda, para no salirse del recuadro. */
+  .repositorio .rp-faceta[data-faceta='categoria'] .rp-panel {
+    right: auto;
+    width: max(100%, 18em);
+  }
+
+  .repositorio .rp-faceta[data-faceta='clave'] .rp-panel {
+    left: auto;
+    width: max(100%, 18em);
+  }
+}
+
+@media (min-width: 1000px) {
+  .repositorio .rp-filtros {
+    --rp-ocupa: 1;
+  }
+}
+
+/* ---------- Tarjetas ---------- */
+
+/* Rejilla: 3 tarjetas por fila en PC, 2 en tableta y 1 en celular (se acomoda sola al ancho disponible). */
+.repositorio .rp-lista {
+  --rp-tarjeta-margen: 1.25em;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18em), 1fr));
+  gap: 1.25em;
+  margin: 0;
+  padding: 0;
+}
+
+.repositorio .rp-item {
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.repositorio .rp-tarjeta {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--rp-gris-80);
+  border-radius: var(--rp-radio);
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.repositorio .rp-tarjeta:hover {
+  border-color: var(--rp-morado-80);
+  box-shadow: var(--rp-sombra-1);
+}
+
+/* Todas las portadas miden lo mismo: un cuadrado del ancho de la tarjeta, encuadrado desde arriba. */
+.repositorio .rp-portada {
+  position: relative;
+  display: block;
+  flex: none;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: var(--rp-gris-95);
+  border-bottom: 1px solid var(--rp-linea);
+  text-decoration: none;
+}
+
+.repositorio .rp-portada img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: 50% 0;
+  transition: transform 0.3s ease;
+}
+
+.repositorio .rp-portada:hover img {
+  transform: scale(1.03);
+}
+
+/* Sin portada: un ícono de documento en el cuadrado gris. */
+.repositorio .rp-portada .rp-portada-icono {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4em;
+  height: 4em;
+  color: var(--rp-borde);
+  transform: translate(-50%, -50%);
+}
+
+/* En el HTML el título va antes del tipo de producto y el año (para quien navega por encabezados);
+   en pantalla se ven arriba. */
+.repositorio .rp-contenido {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 0.5em;
+  min-width: 0;
+  padding: 1.25em 1.25em 1.375em;
+}
+
+.repositorio .rp-meta {
+  order: -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5em;
+  margin: 0 0 0.35em;
+  font-size: 0.8125em;
+  line-height: 1.2;
+}
+
+.repositorio :is(.rp-categoria, .rp-anio) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  max-width: 100%;
+  padding: 0.35em 0.75em;
+  border-radius: 50rem;
+}
+
+.repositorio .rp-categoria {
+  color: #fff;
+  font-weight: 700;
+  background: var(--rp-morado);
+}
+
+.repositorio .rp-anio {
+  color: var(--rp-azul);
+  font-weight: 500;
+  background: var(--rp-azul-95);
+}
+
+.repositorio .rp-anio svg {
+  width: 1.15em;
+  height: 1.15em;
+}
+
+.repositorio .rp-nombre {
+  margin: 0;
+  color: var(--rp-azul);
+  font-size: 1.125em;
+  font-weight: 700;
+  line-height: 1.28;
+}
+
+.repositorio .rp-subtitulo {
+  margin: 0;
+  color: var(--rp-texto-2);
+  font-size: 0.9375em;
+  line-height: 1.45;
+}
+
+/* Descripción (unas 30 palabras, en tercera persona): el cuerpo de la tarjeta, entre el título y las palabras clave. */
+.repositorio .rp-descripcion {
+  margin: 0.15em 0 0;
+  color: var(--rp-texto);
+  font-size: 0.9375em;
+  line-height: 1.55;
+}
+
+.repositorio .rp-claves-titulo {
+  margin: 0.6em 0 0;
+  color: var(--rp-texto-2);
+  font-size: 0.75em;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.repositorio .rp-claves {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375em;
+  margin: 0;
+  padding: 0;
+}
+
+.repositorio .rp-claves li {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  color: var(--rp-morado-30);
+  font-size: 0.8125em;
+  line-height: 1.2;
+}
+
+/* Sin botón (vista previa de la administración): la palabra clave es una etiqueta. */
+.repositorio .rp-claves li:not(:has(button)) {
+  padding: 0.35em 0.75em;
+  background: var(--rp-morado-95);
+  border: 1px solid var(--rp-morado-80);
+  border-radius: 50rem;
+}
+
+.repositorio .rp-clave {
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  min-height: 28px;
+  margin: 0;
+  padding: 0.3em 0.75em;
+  color: var(--rp-morado-30);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-align: left;
+  text-transform: none;
+  white-space: normal;
+  background: var(--rp-morado-95);
+  border: 1px solid var(--rp-morado-80);
+  border-radius: 50rem;
+  box-shadow: none;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.repositorio .rp-clave:hover {
+  color: var(--rp-morado-30);
+  background: var(--rp-morado-90);
+  border-color: var(--rp-morado);
+}
+
+.repositorio .rp-clave svg {
+  display: none;
+  width: 1.1em;
+  height: 1.1em;
+}
+
+.repositorio .rp-clave[aria-pressed='true'] {
+  color: #fff;
+  background: var(--rp-morado);
+  border-color: var(--rp-morado);
+}
+
+.repositorio .rp-clave[aria-pressed='true'] svg {
+  display: block;
+}
+
+/* Palabras que coinciden con la búsqueda. */
+.repositorio mark {
+  margin: 0;
+  padding: 0 0.1em;
+  color: inherit;
+  background: var(--rp-resaltado);
+  border-radius: 0.2em;
+}
+
+.repositorio .rp-clave[aria-pressed='true'] mark {
+  color: var(--rp-texto);
+}
+
+.repositorio .rp-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75em;
+  margin: auto 0 0;
+  padding-top: 1em;
+}
+
+.repositorio .rp-boton {
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  min-height: 44px;
+  margin: 0;
+  padding: 0.55em 1.1em;
+  color: #fff;
+  font-size: 0.9375em;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-decoration: none;
+  text-transform: none;
+  background: var(--rp-morado);
+  border: 0;
+  border-radius: 0.25rem 0.5rem;
+  box-shadow: none;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.repositorio .rp-boton:visited {
+  color: #fff;
+}
+
+.repositorio .rp-boton:hover {
+  color: #fff;
+  background: var(--rp-morado-30);
+}
+
+.repositorio .rp-boton svg {
+  width: 1.25em;
+  height: 1.25em;
+}
+
+.repositorio .rp-acciones .rp-boton {
+  flex: 1 1 auto;
+}
+
+.repositorio .rp-boton-borde,
+.repositorio .rp-boton-borde:visited {
+  color: var(--rp-morado-30);
+  background: #fff;
+  box-shadow: inset 0 0 0 2px var(--rp-morado);
+}
+
+.repositorio .rp-boton-borde:hover {
+  color: var(--rp-morado-30);
+  background: var(--rp-morado-95);
+}
+
+.repositorio .rp-nota {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4em;
+  margin: 0;
+  color: var(--rp-texto-2);
+  font-size: 0.875em;
+  line-height: 1.4;
+}
+
+.repositorio .rp-nota svg {
+  width: 1.25em;
+  height: 1.25em;
+  margin-top: -0.05em;
+  color: var(--rp-azul);
+}
+
+/* Tarjetas alineadas por fila (pedido del Observatorio, 14 de noviembre de 2026): cada tarjeta ocupa 8
+   pistas de la rejilla y las comparte con las demás de su fila (subgrid). Así la portada, las etiquetas,
+   el título, la descripción, la nota, «Palabras clave», las palabras y los botones empiezan a la misma
+   altura en todas, y las tarjetas de una fila miden lo mismo. Las pistas vacías (sin nota) no ocupan
+   espacio: el espacio entre partes va en cada parte, no en la rejilla. Sin subgrid (navegadores
+   anteriores a 2023) queda la columna flexible de arriba. La vista previa de la administración no está
+   dentro de .rp-lista y no cambia. */
+/* Registrada como longitud: se calcula una vez en .rp-lista (con su tamaño de letra) y las partes de la
+   tarjeta la heredan ya en píxeles. Sin registrar, cada parte la calcularía con su propio tamaño de
+   letra y el título, la descripción y las etiquetas no quedarían con el mismo margen. */
+@property --rp-tarjeta-margen {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 20px;
+}
+
+@supports (grid-template-rows: subgrid) {
+  .repositorio .rp-lista {
+    row-gap: 0;
+  }
+
+  .repositorio .rp-lista .rp-item {
+    display: grid;
+    grid-row: span 8;
+    grid-template-rows: subgrid;
+    margin-bottom: 1.25em;
+  }
+
+  .repositorio .rp-lista .rp-tarjeta {
+    display: grid;
+    grid-row: 1 / -1;
+    grid-template-rows: subgrid;
+  }
+
+  .repositorio .rp-lista .rp-contenido {
+    display: contents;
+  }
+
+  .repositorio .rp-lista .rp-contenido > * {
+    padding-right: var(--rp-tarjeta-margen);
+    padding-left: var(--rp-tarjeta-margen);
+  }
+
+  .repositorio .rp-lista .rp-portada {
+    grid-row: 1;
+  }
+
+  .repositorio .rp-lista .rp-meta {
+    grid-row: 2;
+    align-self: start;
+    margin: 0;
+    padding-top: var(--rp-tarjeta-margen);
+  }
+
+  .repositorio .rp-lista .rp-nombre {
+    grid-row: 3;
+    padding-top: 0.6em;
+  }
+
+  .repositorio .rp-lista .rp-descripcion {
+    grid-row: 4;
+    margin: 0;
+    padding-top: 0.5em;
+  }
+
+  .repositorio .rp-lista .rp-nota {
+    grid-row: 5;
+    padding-top: 0.5em;
+  }
+
+  .repositorio .rp-lista .rp-claves-titulo {
+    grid-row: 6;
+    margin: 0;
+    padding-top: 1em;
+  }
+
+  .repositorio .rp-lista .rp-claves {
+    grid-row: 7;
+    align-content: flex-start;
+    padding-top: 0.5em;
+  }
+
+  .repositorio .rp-lista .rp-acciones {
+    grid-row: 8;
+    align-self: end;
+    margin: 0;
+    padding-top: 1em;
+    padding-bottom: 1.375em;
+  }
+}
+
+/* ---------- Sin resultados, carga, error y 404 ---------- */
+
+.repositorio .rp-vacio {
+  margin: 0;
+  padding: 2.5em 1.5em;
+  text-align: center;
+  border: 1px dashed var(--rp-borde);
+  border-radius: var(--rp-radio);
+}
+
+.repositorio .rp-vacio > svg {
+  display: block;
+  width: 2.5em;
+  height: 2.5em;
+  margin: 0 auto 0.5em;
+  color: var(--rp-morado);
+}
+
+.repositorio .rp-vacio p {
+  margin: 0;
+  color: var(--rp-texto-2);
+}
+
+.repositorio .rp-vacio .rp-vacio-titulo {
+  margin: 0 0 0.25em;
+  color: var(--rp-azul);
+  font-size: 1.125em;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.repositorio .rp-vacio :is(.rp-texto-boton, .rp-boton) {
+  margin-top: 1em;
+}
+
+.repositorio .rp-vacio a:not([class]) {
+  color: var(--rp-morado-30);
+}
+
+.repositorio .rp-fallo > svg {
+  color: var(--rp-error);
+}
+
+.repositorio .rp-fallo .rp-fallo-contacto {
+  margin-top: 0.25em;
+}
+
+.repositorio .rp-cargando-listado:focus-visible {
+  outline-offset: 4px;
+}
+
+.repositorio .rp-indicador {
+  display: block;
+  width: 2.25em;
+  height: 2.25em;
+  margin: 0 auto 0.75em;
+  border: 3px solid var(--rp-morado-80);
+  border-top-color: var(--rp-morado);
+  border-radius: 50%;
+  animation: rp-girar 0.8s linear infinite;
+}
+
+@keyframes rp-girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.repositorio .rp-no-encontrado .rp-codigo {
+  color: var(--rp-texto-2);
+  font-size: 0.875em;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+
+.repositorio .rp-no-encontrado .rp-vacio-titulo {
+  font-size: 1.75em;
+}
+
+.repositorio .rp-acciones-centradas {
+  justify-content: center;
+}
+
+.repositorio .rp-acciones-centradas .rp-boton {
+  flex: 0 1 auto;
+}
+
+/* ---------- Paginación: "Mostrar más" debajo de las tarjetas ---------- */
+
+.repositorio .rp-mas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75em;
+  margin: 2em 0 0;
+  text-align: center;
+}
+
+.repositorio .rp-mas-texto {
+  margin: 0;
+  color: var(--rp-texto-2);
+  font-size: 0.9375em;
+  line-height: 1.4;
+}
+
+.repositorio .rp-mas .rp-boton {
+  min-width: 15em;
+}
+
+/* ---------- Pantallas ---------- */
+
+@media (max-width: 599px) {
+  .repositorio .rp-contenedor {
+    padding-top: 1.25rem;
+  }
+
+  .repositorio .rp-hero {
+    padding: 1.5em 1.25em;
+    border-radius: 0.3rem 1.75rem;
+  }
+
+  .repositorio .rp-logo {
+    margin-bottom: 1em;
+    padding: 0.75em 1em;
+  }
+
+  .repositorio .rp-logo img {
+    width: 12em;
+  }
+
+  .repositorio .rp-titulo {
+    font-size: 1.75em;
+  }
+
+  .repositorio .rp-bajada {
+    font-size: 1.0625em;
+  }
+
+  .repositorio .rp-intro {
+    font-size: 1em;
+  }
+
+  .repositorio .rp-filtros {
+    padding: 1em 1em 0.875em;
+    border-radius: 0.3rem 1.75rem;
+  }
+
+  .repositorio .rp-contenido {
+    padding: 1.125em 1.125em 1.25em;
+  }
+
+  .repositorio .rp-lista {
+    --rp-tarjeta-margen: 1.125em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .repositorio * {
+    transition: none !important;
+  }
+
+  .repositorio .rp-portada:hover img {
+    transform: none;
+  }
+
+  .repositorio .rp-indicador {
+    animation-duration: 2.4s;
+  }
+}
+
+@media (forced-colors: active) {
+  .repositorio .rp-hero::before,
+  .repositorio .rp-hero::after {
+    display: none;
+  }
+
+  .repositorio .rp-clave[aria-pressed='true'] {
+    outline: 2px solid CanvasText;
+  }
+
+  .repositorio :is(.rp-boton, .rp-listo) {
+    border: 2px solid ButtonText;
+  }
+
+  .repositorio :is(.rp-buscar svg, .rp-select svg, .rp-vacio > svg) {
+    color: CanvasText;
+  }
+
+  .repositorio mark {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
+}
+
+@media print {
+  .repositorio :is(.rp-filtros, .rp-mas, .rp-saltar),
+  .repositorio .rp-hero::before,
+  .repositorio .rp-hero::after {
+    display: none;
+  }
+
+  .repositorio .rp-tarjeta {
+    break-inside: avoid;
+    box-shadow: none;
+  }
+}

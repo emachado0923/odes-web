@@ -1,0 +1,1891 @@
+/*
+ * Administración del repositorio (/repositorio/admin). Va en el chunk de la
+ * administración y todo cuelga de .repositorio (los tokens --rp-* y las
+ * clases rp-* de repositorio.css: botones, campos, selects, tarjeta).
+ * Las clases propias llevan el prefijo ra-.
+ */
+
+.repositorio {
+  --ra-verde: #1d5e2f;
+  --ra-verde-95: #e5f2e8;
+  --ra-ambar: #7a4b00;
+  --ra-ambar-95: #fff4dc;
+  --ra-error-95: #fbeceb;
+}
+
+/* ---------- Barra "Administración" ---------- */
+
+.repositorio .ra-barra {
+  color: #fff;
+  background: var(--rp-morado-30);
+}
+
+.repositorio .ra-barra-interior {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.5rem;
+  max-width: 84rem;
+  margin: 0 auto;
+  padding: 0.6rem var(--rp-margen);
+}
+
+.repositorio .ra-barra-contexto {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0;
+  font-weight: 700;
+}
+
+.repositorio .ra-barra-etiqueta {
+  padding: 0.2em 0.6em;
+  color: var(--rp-morado-30);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: #fff;
+  border-radius: 50rem;
+}
+
+.repositorio .ra-barra-nombre {
+  font-size: 1rem;
+}
+
+.repositorio .ra-navegacion ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+}
+
+.repositorio .ra-navegacion a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0.35em 0.8em;
+  color: #fff;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 0.25rem 0.5rem;
+}
+
+.repositorio .ra-navegacion a:hover {
+  background: rgb(255 255 255 / 0.14);
+}
+
+.repositorio .ra-navegacion a[aria-current] {
+  font-weight: 700;
+  background: rgb(255 255 255 / 0.18);
+  box-shadow: inset 0 -3px 0 #fff;
+}
+
+.repositorio .ra-barra-usuario {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin-left: auto;
+  font-size: 0.9375rem;
+}
+
+.repositorio .ra-barra-enlace {
+  color: #fff;
+}
+
+.repositorio .ra-barra-quien {
+  font-weight: 500;
+}
+
+.repositorio .ra-barra-salir {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  min-height: 40px;
+  padding: 0.35em 0.8em;
+  color: #fff;
+  font-weight: 700;
+  background: transparent;
+  border: 1px solid rgb(255 255 255 / 0.7);
+  border-radius: 0.25rem 0.5rem;
+  cursor: pointer;
+}
+
+.repositorio .ra-barra-salir:hover {
+  background: rgb(255 255 255 / 0.14);
+}
+
+.repositorio .ra-barra svg {
+  width: 1.2em;
+  height: 1.2em;
+}
+
+.repositorio .ra-barra :focus-visible {
+  outline-color: #fff;
+}
+
+.repositorio .ra-barra-error {
+  margin: 0;
+  padding: 0.5rem var(--rp-margen);
+  color: var(--rp-texto);
+  font-weight: 500;
+  text-align: center;
+  background: var(--ra-error-95);
+}
+
+/* ---------- Página ---------- */
+
+.repositorio .ra-contenedor {
+  width: 100%;
+  max-width: 84rem;
+  margin: 0 auto;
+  padding: 1.75rem var(--rp-margen) 0;
+}
+
+.repositorio .ra-pagina-angosta {
+  max-width: 54rem;
+}
+
+.repositorio .ra-titulo {
+  margin: 0;
+  color: var(--rp-azul);
+  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.repositorio .ra-titulo:focus-visible {
+  outline-offset: 4px;
+}
+
+.repositorio .ra-encabezado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0 0 1.25rem;
+}
+
+.repositorio .ra-migas {
+  margin: 0 0 0.5rem;
+  font-size: 0.9375rem;
+}
+
+.repositorio .ra-migas a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  color: var(--rp-morado-30);
+  font-weight: 500;
+}
+
+.repositorio .ra-migas svg {
+  width: 1.1em;
+  height: 1.1em;
+}
+
+.repositorio .ra-girado {
+  transform: scaleX(-1);
+}
+
+.repositorio .ra-subtitulo-pagina {
+  margin: 0.35rem 0 1.25rem;
+  color: var(--rp-texto-2);
+  font-size: 1.05rem;
+}
+
+.repositorio .ra-introduccion {
+  margin: 0.5rem 0 1.25rem;
+  color: var(--rp-texto-2);
+}
+
+.repositorio .ra-introduccion a,
+.repositorio .ra-pagina a:not([class]) {
+  color: var(--rp-morado-30);
+}
+
+.repositorio .ra-tenue {
+  color: var(--rp-texto-2);
+}
+
+.repositorio .ra-bloque {
+  display: block;
+}
+
+.repositorio .ra-sin-salto {
+  white-space: nowrap;
+}
+
+.repositorio .ra-codigo {
+  padding: 0.05em 0.35em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  overflow-wrap: anywhere;
+  background: var(--rp-gris-95);
+  border: 1px solid var(--rp-gris-90);
+  border-radius: 0.25rem;
+}
+
+.repositorio .ra-cargando {
+  margin-top: 1rem;
+}
+
+.repositorio .ra-panel {
+  padding: 1.25rem;
+  background: #fff;
+  border: 1px solid var(--rp-gris-80);
+  border-radius: var(--rp-radio);
+}
+
+.repositorio .ra-panel-titulo {
+  margin: 0 0 0.75rem;
+  color: var(--rp-azul);
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+/* ---------- Botones ---------- */
+
+.repositorio .ra-admin .rp-boton svg {
+  width: 1.2em;
+  height: 1.2em;
+}
+
+.repositorio .ra-boton-chico {
+  min-height: 36px;
+  padding: 0.35em 0.8em;
+  font-size: 0.875em;
+}
+
+.repositorio .ra-boton-ancho {
+  width: 100%;
+}
+
+.repositorio .ra-boton-texto {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  min-height: 36px;
+  margin: 0;
+  padding: 0.25em 0.5em;
+  color: var(--rp-morado-30);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  background: transparent;
+  border: 0;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.repositorio .ra-boton-texto:hover {
+  background: var(--rp-morado-95);
+}
+
+.repositorio .ra-boton-texto svg {
+  width: 1.15em;
+  height: 1.15em;
+}
+
+.repositorio .ra-peligro,
+.repositorio .ra-peligro:hover {
+  color: var(--rp-error);
+}
+
+.repositorio .ra-peligro:hover {
+  background: var(--ra-error-95);
+}
+
+.repositorio .rp-boton.ra-boton-peligro {
+  background: var(--rp-error);
+}
+
+.repositorio .rp-boton.ra-boton-peligro:hover {
+  background: #860900;
+}
+
+.repositorio .rp-boton.ra-peligro-borde {
+  color: var(--rp-error);
+  box-shadow: inset 0 0 0 2px var(--rp-error);
+}
+
+.repositorio .ra-boton-icono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  color: var(--rp-texto);
+  background: #fff;
+  border: 1px solid var(--rp-borde);
+  border-radius: 0.375rem;
+  cursor: pointer;
+}
+
+.repositorio .ra-boton-icono:hover {
+  background: var(--rp-morado-95);
+  border-color: var(--rp-morado);
+}
+
+.repositorio .ra-boton-icono svg {
+  width: 1.25em;
+  height: 1.25em;
+}
+
+.repositorio .ra-admin :is(button, .rp-boton):disabled,
+.repositorio .ra-admin [aria-disabled='true'].rp-boton {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.repositorio .ra-dialogo [aria-disabled='true'].rp-boton {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* ---------- Avisos ---------- */
+
+.repositorio .ra-aviso {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  color: var(--rp-texto);
+  border-radius: 0.5rem;
+}
+
+.repositorio .ra-aviso p {
+  flex: 1 1 12rem;
+  margin: 0;
+}
+
+.repositorio .ra-aviso > svg {
+  width: 1.4em;
+  height: 1.4em;
+  margin-top: -0.05em;
+}
+
+.repositorio .ra-aviso-error {
+  background: var(--ra-error-95);
+  border: 1px solid #e5a9a4;
+}
+
+.repositorio .ra-aviso-error > svg {
+  color: var(--rp-error);
+}
+
+.repositorio .ra-aviso-atencion {
+  background: var(--ra-ambar-95);
+  border: 1px solid #e8c77d;
+}
+
+.repositorio .ra-aviso-atencion > svg {
+  color: var(--ra-ambar);
+}
+
+.repositorio .ra-aviso-ok {
+  background: var(--ra-verde-95);
+  border: 1px solid #9bc8a6;
+}
+
+.repositorio .ra-aviso-ok > svg {
+  color: var(--ra-verde);
+}
+
+.repositorio .ra-aviso:focus-visible {
+  outline-offset: 3px;
+}
+
+.repositorio .ra-avisos {
+  position: fixed;
+  z-index: 50;
+  right: 1rem;
+  bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: min(26rem, calc(100vw - 2rem));
+  pointer-events: none;
+}
+
+.repositorio .ra-aviso-flotante {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 0.5rem 0.75rem 1rem;
+  color: #fff;
+  background: var(--rp-azul);
+  border-radius: 0.5rem;
+  box-shadow: var(--rp-sombra-2);
+  pointer-events: auto;
+  animation: ra-entrar 0.2s ease-out;
+}
+
+.repositorio .ra-aviso-flotante p {
+  flex: 1;
+  margin: 0;
+}
+
+.repositorio .ra-aviso-flotante > svg {
+  width: 1.3em;
+  height: 1.3em;
+}
+
+.repositorio .ra-cerrar-aviso {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  color: #fff;
+  background: transparent;
+  border: 0;
+  border-radius: 0.375rem;
+  cursor: pointer;
+}
+
+.repositorio .ra-cerrar-aviso:hover {
+  background: rgb(255 255 255 / 0.15);
+}
+
+.repositorio .ra-cerrar-aviso svg {
+  width: 1.2em;
+  height: 1.2em;
+}
+
+.repositorio .ra-aviso-flotante :focus-visible {
+  outline-color: #fff;
+}
+
+@keyframes ra-entrar {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+}
+
+/* ---------- Campos ---------- */
+
+.repositorio .ra-campo {
+  min-width: 0;
+  margin: 0 0 1.1rem;
+}
+
+.repositorio .ra-etiqueta-fila {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.repositorio .ra-etiqueta {
+  display: block;
+  margin: 0 0 0.3rem;
+  padding: 0;
+  color: var(--rp-texto);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.repositorio .ra-obligatorio {
+  color: var(--rp-texto-2);
+  font-weight: 400;
+}
+
+.repositorio .ra-ayuda {
+  margin: 0 0 0.4rem;
+  color: var(--rp-texto-2);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.repositorio .ra-ayuda-atencion {
+  color: var(--ra-ambar);
+  font-weight: 500;
+}
+
+.repositorio .ra-control {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  margin: 0;
+  padding: 0.55em 0.8em;
+  color: var(--rp-texto);
+  font: inherit;
+  line-height: 1.4;
+  background: #fff;
+  border: 1px solid var(--rp-borde);
+  border-radius: 0.375rem;
+}
+
+.repositorio textarea.ra-control {
+  resize: vertical;
+}
+
+.repositorio .ra-control:hover {
+  border-color: var(--rp-texto);
+}
+
+.repositorio .ra-control:focus-visible {
+  border-color: var(--rp-morado);
+  outline: 2px solid var(--rp-texto);
+  outline-offset: 2px;
+}
+
+.repositorio .ra-control:disabled {
+  color: var(--rp-texto-2);
+  background: var(--rp-gris-95);
+}
+
+.repositorio .ra-control-titulo {
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.repositorio .ra-control-codigo {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.95em;
+}
+
+.repositorio .ra-control-corto {
+  max-width: 10rem;
+}
+
+.repositorio :is(.ra-control, .rp-select select)[aria-invalid='true'] {
+  border-color: var(--rp-error);
+  box-shadow: inset 0 0 0 1px var(--rp-error);
+}
+
+.repositorio .ra-admin .rp-select select:disabled {
+  color: var(--rp-texto-2);
+  background: var(--rp-gris-95);
+  cursor: not-allowed;
+}
+
+.repositorio .ra-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.35em;
+  margin: 0.35rem 0 0;
+  color: var(--rp-error);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.repositorio .ra-error svg {
+  width: 1.2em;
+  height: 1.2em;
+  margin-top: 0.05em;
+}
+
+.repositorio .ra-contador {
+  color: var(--rp-texto-2);
+  font-size: 0.8125rem;
+  white-space: nowrap;
+}
+
+.repositorio .ra-contador-excedido {
+  color: var(--rp-error);
+  font-weight: 700;
+}
+
+.repositorio .ra-fila-campos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+  gap: 0 1rem;
+}
+
+.repositorio .ra-campo-ancho {
+  grid-column: span 2;
+}
+
+@media (max-width: 499px) {
+  .repositorio .ra-campo-ancho {
+    grid-column: auto;
+  }
+}
+
+.repositorio .ra-grupo {
+  margin: 0 0 1.5rem;
+  padding: 1.25rem 1.25rem 0.4rem;
+  background: #fff;
+  border: 1px solid var(--rp-gris-80);
+  border-radius: var(--rp-radio);
+}
+
+.repositorio .ra-grupo > legend {
+  float: left;
+  width: 100%;
+  margin: 0 0 1rem;
+  padding: 0;
+  color: var(--rp-azul);
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.repositorio .ra-grupo > legend + * {
+  clear: left;
+}
+
+.repositorio .ra-opciones {
+  margin: 0 0 1.1rem;
+  padding: 0;
+  border: 0;
+}
+
+.repositorio .ra-radios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+}
+
+.repositorio .ra-radios-columna {
+  flex-direction: column;
+}
+
+.repositorio .ra-radio {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  min-height: 32px;
+  cursor: pointer;
+}
+
+.repositorio .ra-radio input {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0.15rem 0 0;
+  accent-color: var(--rp-morado);
+  cursor: pointer;
+}
+
+.repositorio .ra-radio-detalle > span {
+  display: flex;
+  flex-direction: column;
+}
+
+.repositorio .ra-radio-texto {
+  font-weight: 500;
+}
+
+.repositorio .ra-radio-detalle .ra-ayuda {
+  margin: 0;
+}
+
+.repositorio .ra-casilla .ra-ayuda {
+  margin: 0.25rem 0 0 1.75rem;
+}
+
+.repositorio .ra-campo-deshabilitado .ra-radio {
+  color: var(--rp-texto-2);
+  cursor: not-allowed;
+}
+
+/* ---------- Inicio de sesión ---------- */
+
+.repositorio .ra-ingreso {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0 2rem;
+}
+
+.repositorio .ra-ingreso-tarjeta {
+  width: 100%;
+  max-width: 28rem;
+  padding: 2rem clamp(1.25rem, 4vw, 2.25rem);
+  background: #fff;
+  border: 1px solid var(--rp-gris-80);
+  border-top: 6px solid var(--rp-morado);
+  border-radius: 0.3rem var(--rp-unal);
+  box-shadow: var(--rp-sombra-1);
+}
+
+.repositorio .ra-contexto-etiqueta {
+  margin: 0 0 0.35rem;
+  color: var(--rp-morado-30);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.repositorio .ra-ingreso-texto {
+  margin: 0.5rem 0 1.5rem;
+  color: var(--rp-texto-2);
+}
+
+.repositorio .ra-contrasena {
+  position: relative;
+}
+
+.repositorio .ra-contrasena .ra-control {
+  padding-right: 6.5rem;
+}
+
+.repositorio .ra-mostrar {
+  position: absolute;
+  top: 50%;
+  right: 0.25rem;
+  transform: translateY(-50%);
+}
+
+.repositorio .ra-formulario-ingreso .rp-boton {
+  margin-top: 0.5rem;
+}
+
+.repositorio .ra-ingreso-ayuda {
+  margin: 1.5rem 0 0;
+  color: var(--rp-texto-2);
+  font-size: 0.875rem;
+}
+
+.repositorio .ra-ingreso-ayuda a {
+  color: var(--rp-morado-30);
+}
+
+/* ---------- Listado de documentos ---------- */
+
+.repositorio .ra-resumen {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 1rem;
+  padding: 0;
+}
+
+.repositorio .ra-resumen > li:first-child {
+  margin-right: 0.5rem;
+  color: var(--rp-texto-2);
+}
+
+.repositorio .ra-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  min-height: 36px;
+  padding: 0.3em 0.85em;
+  color: var(--rp-texto);
+  font-size: 0.9rem;
+  background: #fff;
+  border: 1px solid var(--rp-borde);
+  border-radius: 50rem;
+  cursor: pointer;
+}
+
+.repositorio .ra-chip:hover {
+  border-color: var(--rp-morado);
+}
+
+.repositorio .ra-chip[aria-pressed='true'] {
+  color: var(--rp-morado-30);
+  font-weight: 500;
+  background: var(--rp-morado-95);
+  border-color: var(--rp-morado);
+  box-shadow: inset 0 0 0 1px var(--rp-morado);
+}
+
+.repositorio .ra-filtros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8.5rem), 1fr));
+  gap: 0.75rem 1rem;
+  align-items: end;
+  margin: 0 0 1rem;
+  padding: 1.1rem 1.25rem 0.3rem;
+  background: var(--rp-gris-95);
+  border-radius: 0.3rem var(--rp-unal);
+}
+
+.repositorio .ra-filtros .ra-campo {
+  margin-bottom: 0.8rem;
+}
+
+.repositorio .ra-campo-buscar {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 1100px) {
+  .repositorio .ra-filtros {
+    grid-template-columns: minmax(16rem, 2fr) repeat(5, minmax(0, 1fr));
+  }
+
+  .repositorio .ra-campo-buscar {
+    grid-column: auto;
+  }
+}
+
+.repositorio .ra-filtros-palabras,
+.repositorio .ra-filtros-cambios {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+}
+
+.repositorio .ra-filtros-palabras .ra-campo-buscar {
+  grid-column: auto;
+}
+
+.repositorio .ra-filtros-cambios {
+  grid-template-columns: minmax(0, 16rem) auto;
+  justify-content: start;
+}
+
+.repositorio .ra-filtros-cambios .rp-boton {
+  margin-bottom: 0.8rem;
+}
+
+/* Palabra clave exacta (desde Palabras clave): a la altura de los selectores. */
+.repositorio .ra-filtro-clave {
+  display: flex;
+  align-items: center;
+  min-height: 2.75rem;
+  margin: 0;
+}
+
+.repositorio .ra-casilla-filtro {
+  margin-bottom: 1rem;
+}
+
+.repositorio .ra-estado-listado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  min-height: 2.5rem;
+  margin: 0 0 0.75rem;
+}
+
+.repositorio .ra-conteo {
+  margin: 0;
+  color: var(--rp-texto);
+  font-weight: 500;
+}
+
+.repositorio .ra-tabla-marco {
+  overflow-x: auto;
+  border: 1px solid var(--rp-gris-80);
+  border-radius: var(--rp-radio);
+}
+
+.repositorio .ra-tabla-marco:focus-visible {
+  outline-offset: 2px;
+}
+
+.repositorio .ra-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.repositorio .ra-tabla caption {
+  padding: 0.75rem 1rem;
+  color: var(--rp-texto);
+  font-weight: 700;
+  text-align: left;
+  caption-side: top;
+}
+
+.repositorio .ra-tabla caption:focus-visible {
+  outline-offset: -2px;
+}
+
+.repositorio .ra-tabla :is(th, td) {
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  vertical-align: middle;
+  border-top: 1px solid var(--rp-gris-90);
+}
+
+.repositorio .ra-tabla thead th {
+  color: var(--rp-texto);
+  font-size: 0.875rem;
+  font-weight: 700;
+  white-space: nowrap;
+  background: var(--rp-gris-95);
+}
+
+.repositorio .ra-tabla tbody tr:hover {
+  background: #fbf8fb;
+}
+
+.repositorio .ra-ordenar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  min-height: 32px;
+  margin: -0.3rem -0.4rem;
+  padding: 0.2rem 0.4rem;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  background: transparent;
+  border: 0;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.repositorio .ra-ordenar:hover {
+  background: var(--rp-morado-95);
+}
+
+.repositorio .ra-ordenar svg {
+  width: 1.15em;
+  height: 1.15em;
+  color: var(--rp-texto-2);
+}
+
+.repositorio th[aria-sort] .ra-ordenar svg {
+  color: var(--rp-morado-30);
+}
+
+.repositorio .ra-col-portada {
+  width: 64px;
+  min-width: 64px;
+}
+
+.repositorio .ra-col-portada img,
+.repositorio .ra-sin-portada {
+  display: block;
+  max-width: none;
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  object-position: 50% 0;
+  background: var(--rp-gris-95);
+  border: 1px solid var(--rp-gris-90);
+  border-radius: 0.25rem;
+}
+
+.repositorio .ra-sin-portada {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--rp-borde);
+}
+
+.repositorio .ra-sin-portada svg {
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.repositorio .ra-col-posicion {
+  width: 4rem;
+  color: var(--rp-texto-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.repositorio .ra-col-titulo {
+  min-width: 14rem;
+}
+
+.repositorio .ra-enlace-titulo {
+  color: var(--rp-azul);
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.repositorio .ra-id {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--rp-texto-2);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.75rem;
+  overflow-wrap: anywhere;
+}
+
+.repositorio .ra-meta {
+  display: none;
+  margin-top: 0.2rem;
+  color: var(--rp-texto-2);
+  font-size: 0.8125rem;
+}
+
+.repositorio .ra-etiquetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+}
+
+.repositorio .ra-etiqueta-chica {
+  padding: 0.1em 0.55em;
+  color: var(--rp-azul);
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: var(--rp-azul-95);
+  border-radius: 50rem;
+}
+
+.repositorio .ra-numero {
+  color: var(--rp-texto-2);
+  white-space: nowrap;
+}
+
+.repositorio .ra-falta {
+  display: block;
+  color: var(--ra-ambar);
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.repositorio .ra-estado {
+  display: inline-block;
+  padding: 0.2em 0.65em;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  white-space: nowrap;
+  border-radius: 50rem;
+}
+
+.repositorio .ra-estado-chico {
+  padding: 0.05em 0.5em;
+  font-size: 0.75rem;
+}
+
+.repositorio .ra-estado-publicado {
+  color: var(--ra-verde);
+  background: var(--ra-verde-95);
+  box-shadow: inset 0 0 0 1px #9bc8a6;
+}
+
+.repositorio .ra-estado-despublicado {
+  color: var(--rp-texto-2);
+  background: var(--rp-gris-95);
+  box-shadow: inset 0 0 0 1px var(--rp-gris-80);
+}
+
+.repositorio .ra-fila-despublicada {
+  background: #fcfcfc;
+}
+
+.repositorio .ra-col-acciones {
+  width: 1%;
+}
+
+/* PC: "Editar" y "Publicar"/"Despublicar" en una sola línea. */
+@media (min-width: 1280px) {
+  .repositorio .ra-tabla-documentos .ra-col-acciones {
+    min-width: 14rem;
+  }
+}
+
+.repositorio .ra-acciones-fila {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.repositorio .ra-acciones-fila .rp-boton {
+  white-space: nowrap;
+}
+
+.repositorio .ra-ayuda-fila {
+  flex-basis: 100%;
+  color: var(--rp-texto-2);
+  font-size: 0.75rem;
+}
+
+.repositorio .ra-col-numero {
+  width: 7rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.repositorio .ra-paginacion {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem 1rem;
+  margin: 1.25rem 0 0;
+}
+
+.repositorio .ra-paginacion p {
+  margin: 0;
+  font-weight: 500;
+}
+
+.repositorio .ra-anio-en-categoria {
+  display: none;
+  color: var(--rp-texto-2);
+  white-space: nowrap;
+}
+
+/* PC angosto y tableta: sin "Pos.", "Archivo", "Modificado" ni "Año"; sus
+   datos pasan a una línea bajo el título y el año, junto a la categoría. */
+@media (max-width: 1279.98px) {
+  .repositorio .ra-col-ancha,
+  .repositorio .ra-col-ancha-flex,
+  .repositorio .ra-col-anio {
+    display: none;
+  }
+
+  .repositorio .ra-anio-en-categoria {
+    display: inline;
+  }
+
+  .repositorio .ra-meta-media {
+    display: block;
+  }
+}
+
+@media (max-width: 1099.98px) {
+  .repositorio .ra-tabla-documentos :is(th, td) {
+    padding: 0.55rem 0.6rem;
+  }
+
+  .repositorio .ra-tabla-documentos .ra-col-titulo {
+    min-width: 11rem;
+  }
+
+  .repositorio .ra-tabla-documentos .ra-col-portada {
+    width: 60px;
+    min-width: 60px;
+  }
+}
+
+/* Tableta angosta y celular: título y acciones (la categoría, el año y el
+   estado van bajo el título). */
+@media (max-width: 767.98px) {
+  .repositorio .ra-col-media,
+  .repositorio .ra-col-estado,
+  .repositorio .ra-tabla-documentos .ra-col-portada {
+    display: none;
+  }
+
+  .repositorio .ra-meta-angosta {
+    display: block;
+  }
+
+  .repositorio .ra-tabla-documentos .ra-col-titulo {
+    min-width: 0;
+  }
+}
+
+/* Celular. */
+@media (max-width: 639.98px) {
+  .repositorio .ra-tabla :is(th, td) {
+    padding: 0.55rem 0.6rem;
+  }
+
+  .repositorio .ra-col-titulo {
+    min-width: 0;
+  }
+
+  .repositorio .ra-acciones-fila {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .repositorio .ra-texto-largo {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .repositorio .ra-texto-corto {
+    display: inline;
+  }
+
+  .repositorio .ra-tabla .ra-col-numero {
+    width: 1%;
+  }
+
+  .repositorio .ra-tabla-cambios .ra-col-usuario {
+    display: none;
+  }
+
+  .repositorio .ra-tabla-cambios .ra-usuario-angosto {
+    display: block;
+  }
+
+  .repositorio .ra-tabla-cambios .ra-sin-salto {
+    white-space: normal;
+  }
+}
+
+.repositorio .ra-texto-corto,
+.repositorio .ra-usuario-angosto {
+  display: none;
+}
+
+/* ---------- Editor de un documento ---------- */
+
+.repositorio .ra-editor {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: 'estado' 'form' 'vista';
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.repositorio .ra-editor-estado {
+  grid-area: estado;
+}
+
+.repositorio .ra-editor-formulario {
+  grid-area: form;
+  min-width: 0;
+}
+
+.repositorio .ra-editor-vista {
+  grid-area: vista;
+}
+
+@media (min-width: 1100px) {
+  .repositorio .ra-editor {
+    grid-template-columns: minmax(0, 1fr) 22rem;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 'form estado' 'form vista';
+  }
+
+  .repositorio .ra-editor-vista {
+    position: sticky;
+    top: 1rem;
+  }
+}
+
+.repositorio .ra-datos-estado {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.3rem 0.75rem;
+  margin: 0.75rem 0;
+  font-size: 0.875rem;
+}
+
+.repositorio .ra-datos-estado dt {
+  color: var(--rp-texto-2);
+}
+
+.repositorio .ra-datos-estado dd {
+  margin: 0;
+}
+
+.repositorio .ra-acciones-estado {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.repositorio .ra-acciones-estado .ra-ayuda {
+  margin: 0;
+}
+
+.repositorio .ra-acciones-texto {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1rem;
+  margin: 0.25rem 0 0;
+  font-size: 0.9375rem;
+}
+
+.repositorio .ra-acciones-texto a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  color: var(--rp-morado-30);
+}
+
+.repositorio .ra-acciones-texto svg {
+  width: 1.15em;
+  height: 1.15em;
+}
+
+.repositorio .ra-zona-peligro {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--rp-gris-90);
+}
+
+.repositorio .ra-zona-peligro .ra-ayuda {
+  margin: 0;
+}
+
+.repositorio .ra-resumen-errores {
+  margin: 0 0 1.5rem;
+  padding: 1rem 1.25rem;
+  background: var(--ra-error-95);
+  border: 2px solid var(--rp-error);
+  border-radius: 0.5rem;
+}
+
+.repositorio .ra-resumen-errores:focus-visible {
+  outline-offset: 3px;
+}
+
+.repositorio .ra-resumen-titulo {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  margin: 0 0 0.5rem;
+  color: var(--rp-error);
+  font-weight: 700;
+}
+
+.repositorio .ra-resumen-titulo svg {
+  width: 1.3em;
+  height: 1.3em;
+}
+
+.repositorio .ra-resumen-errores p {
+  margin: 0 0 0.5rem;
+}
+
+.repositorio .ra-resumen-errores ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+
+.repositorio .ra-resumen-errores a {
+  color: var(--rp-error);
+}
+
+/* Al enfocar con el teclado (o desde el resumen de errores) un campo que quedó
+   detrás de la barra fija «Guardar cambios», el navegador lo desplaza por
+   encima de ella (WCAG 2.2, 2.4.11). PaginaDocumento mide la barra en
+   --ra-alto-barra (cambia cuando sus botones pasan a otra línea). */
+html:has(.repositorio .ra-barra-guardar) {
+  scroll-padding-bottom: calc(var(--ra-alto-barra, 4.5rem) + 1rem);
+}
+
+.repositorio .ra-barra-guardar {
+  position: sticky;
+  z-index: 5;
+  bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  margin: 0 -0.25rem;
+  padding: 0.85rem 0.25rem;
+  background: #fff;
+  border-top: 1px solid var(--rp-gris-80);
+  box-shadow: 0 -6px 12px -6px rgb(0 0 0 / 0.12);
+}
+
+.repositorio .ra-estado-guardado {
+  margin: 0;
+  color: var(--rp-texto-2);
+  font-size: 0.9375rem;
+}
+
+.repositorio .ra-vista-previa {
+  max-width: 22rem;
+  margin: 0.5rem auto 0;
+}
+
+/* ---------- Palabras clave del documento ---------- */
+
+.repositorio .ra-claves-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0 0 0.6rem;
+  padding: 0;
+}
+
+.repositorio .ra-clave {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.1rem;
+  padding: 0.15rem 0.2rem 0.15rem 0.75rem;
+  color: var(--rp-morado-30);
+  font-size: 0.9rem;
+  font-weight: 500;
+  background: var(--rp-morado-95);
+  border: 1px solid var(--rp-morado-80);
+  border-radius: 50rem;
+}
+
+.repositorio .ra-clave-texto {
+  margin-right: 0.2rem;
+}
+
+.repositorio .ra-clave-boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  color: var(--rp-morado-30);
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.repositorio .ra-clave-boton:hover:not(:disabled) {
+  background: #fff;
+}
+
+.repositorio .ra-clave-boton:disabled {
+  opacity: 0.35;
+}
+
+.repositorio .ra-clave-boton svg {
+  width: 1.1em;
+  height: 1.1em;
+}
+
+.repositorio .ra-combo {
+  position: relative;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.repositorio .ra-combo .ra-control {
+  flex: 1 1 auto;
+}
+
+.repositorio .ra-sugerencias {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  max-height: 18rem;
+  margin: 0;
+  padding: 0.3rem;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid var(--rp-borde);
+  border-radius: 0.5rem;
+  box-shadow: var(--rp-sombra-2);
+}
+
+.repositorio .ra-sugerencia {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+}
+
+.repositorio .ra-sugerencia:hover,
+.repositorio .ra-sugerencia[aria-selected='true'] {
+  background: var(--rp-morado-95);
+  box-shadow: inset 0 0 0 1px var(--rp-morado);
+}
+
+.repositorio .ra-claves .ra-contador {
+  margin: 0.35rem 0 0;
+}
+
+/* ---------- Archivo ---------- */
+
+.repositorio .ra-archivo-actual,
+.repositorio .ra-archivo-pendiente {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin: 0 0 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--rp-gris-95);
+  border-radius: 0.5rem;
+}
+
+.repositorio .ra-archivo-pendiente {
+  background: var(--rp-morado-95);
+  border: 1px solid var(--rp-morado-80);
+}
+
+.repositorio .ra-archivo-actual > div,
+.repositorio .ra-archivo-pendiente > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.repositorio .ra-archivo-actual > svg,
+.repositorio .ra-archivo-pendiente > svg {
+  width: 1.75em;
+  height: 1.75em;
+  color: var(--rp-morado);
+}
+
+.repositorio .ra-archivo-nombre {
+  margin: 0;
+  font-weight: 500;
+}
+
+.repositorio .ra-archivo-pendiente .ra-tenue {
+  margin: 0.1rem 0 0;
+  overflow-wrap: anywhere;
+}
+
+.repositorio .ra-progreso {
+  margin-top: 0.5rem;
+}
+
+.repositorio .ra-progreso label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.repositorio .ra-progreso progress {
+  width: 100%;
+  height: 0.75rem;
+  accent-color: var(--rp-morado);
+}
+
+.repositorio .ra-zona {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 1rem;
+  padding: 1.25rem 1rem;
+  text-align: center;
+  border: 2px dashed var(--rp-borde);
+  border-radius: 0.5rem;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.repositorio .ra-zona > svg {
+  width: 2em;
+  height: 2em;
+  color: var(--rp-morado);
+}
+
+.repositorio .ra-zona p {
+  margin: 0;
+}
+
+.repositorio .ra-zona .ra-ayuda {
+  max-width: 34rem;
+}
+
+.repositorio .ra-zona-encima {
+  background: var(--rp-morado-95);
+  border-color: var(--rp-morado);
+}
+
+.repositorio .ra-zona-deshabilitada {
+  opacity: 0.6;
+}
+
+/* ---------- Portada ---------- */
+
+.repositorio .ra-portadas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem;
+  margin: 0 0 0.75rem;
+}
+
+.repositorio .ra-portada-figura {
+  margin: 0;
+}
+
+.repositorio .ra-portada-figura img,
+.repositorio .ra-portada-vacia {
+  display: block;
+  width: 11rem;
+  height: 11rem;
+  object-fit: cover;
+  background: var(--rp-gris-95);
+  border: 1px solid var(--rp-gris-80);
+  border-radius: 0.5rem;
+}
+
+.repositorio .ra-portada-nueva img {
+  box-shadow: 0 0 0 3px var(--rp-morado);
+}
+
+.repositorio .ra-miniatura-figura img {
+  width: 4rem;
+  height: 4rem;
+}
+
+.repositorio .ra-portada-vacia {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--rp-borde);
+}
+
+.repositorio .ra-portada-vacia svg {
+  width: 3em;
+  height: 3em;
+}
+
+.repositorio .ra-portada-figura figcaption {
+  max-width: 11rem;
+  margin-top: 0.35rem;
+  color: var(--rp-texto-2);
+  font-size: 0.8125rem;
+}
+
+.repositorio .ra-portada-estado {
+  min-height: 1.5rem;
+}
+
+.repositorio .ra-generando {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 0.5rem;
+  font-weight: 500;
+}
+
+.repositorio .ra-generando .rp-indicador {
+  width: 1.4em;
+  height: 1.4em;
+  margin: 0;
+}
+
+.repositorio .ra-portada-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.6rem;
+}
+
+/* ---------- Diálogos ---------- */
+
+.repositorio .ra-dialogo {
+  width: min(34rem, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+  margin: auto;
+  padding: 0;
+  color: var(--rp-texto);
+  background: #fff;
+  border: 0;
+  border-radius: var(--rp-radio);
+  box-shadow: var(--rp-sombra-2);
+}
+
+.repositorio .ra-dialogo::backdrop {
+  background: rgb(21 23 23 / 0.55);
+}
+
+/* Sin showModal (navegadores muy antiguos): se centra a mano. */
+.repositorio .ra-dialogo[open]:not(:modal) {
+  position: fixed;
+  z-index: 60;
+  inset: 0;
+}
+
+.repositorio .ra-dialogo-caja {
+  padding: 1.5rem;
+}
+
+.repositorio .ra-dialogo-titulo {
+  margin: 0 0 0.75rem;
+  color: var(--rp-azul);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.repositorio .ra-dialogo p {
+  margin: 0 0 0.75rem;
+}
+
+.repositorio .ra-dialogo-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+/* ---------- Categorías y palabras clave ---------- */
+
+.repositorio .ra-form-linea {
+  margin: 0 0 1.5rem;
+}
+
+.repositorio .ra-form-linea .ra-campo {
+  margin: 0;
+}
+
+.repositorio .ra-linea {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.repositorio .ra-linea .ra-control {
+  flex: 1 1 14rem;
+  width: auto;
+}
+
+.repositorio .ra-lista-catalogo {
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--rp-gris-80);
+  border-radius: var(--rp-radio);
+}
+
+.repositorio .ra-item-catalogo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1rem;
+  padding: 0.75rem 1rem;
+}
+
+.repositorio .ra-item-catalogo + .ra-item-catalogo {
+  border-top: 1px solid var(--rp-gris-90);
+}
+
+.repositorio .ra-posicion {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  color: var(--rp-morado-30);
+  font-weight: 700;
+  background: var(--rp-morado-95);
+  border-radius: 50%;
+}
+
+.repositorio .ra-item-nombre {
+  display: flex;
+  flex: 1 1 12rem;
+  flex-direction: column;
+}
+
+.repositorio .ra-item-nombre a {
+  font-size: 0.875rem;
+}
+
+.repositorio .ra-item-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.repositorio .ra-item-error {
+  flex-basis: 100%;
+  margin: 0;
+}
+
+.repositorio .ra-renombrar {
+  flex: 1 1 100%;
+}
+
+.repositorio .ra-renombrar .ra-ayuda {
+  margin: 0.4rem 0 0;
+}
+
+/* ---------- Registro de cambios ---------- */
+
+.repositorio .ra-accion {
+  display: inline-block;
+  padding: 0.15em 0.6em;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  white-space: nowrap;
+  background: var(--rp-gris-95);
+  border-radius: 50rem;
+  box-shadow: inset 0 0 0 1px var(--rp-gris-80);
+}
+
+.repositorio .ra-accion-publicar {
+  color: var(--ra-verde);
+  background: var(--ra-verde-95);
+}
+
+.repositorio .ra-accion-borrar {
+  color: var(--rp-error);
+  background: var(--ra-error-95);
+}
+
+.repositorio .ra-enlace-chico {
+  color: var(--rp-morado-30);
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.repositorio .ra-tabla-cambios td {
+  vertical-align: top;
+}
+
+/* ---------- Movimiento reducido y colores forzados ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .repositorio .ra-aviso-flotante {
+    animation: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .repositorio :is(.ra-estado, .ra-chip, .ra-clave, .ra-accion, .ra-etiqueta-chica, .ra-barra-etiqueta) {
+    border: 1px solid CanvasText;
+  }
+
+  .repositorio .ra-navegacion a[aria-current] {
+    text-decoration: underline;
+  }
+}
+
+/* ---------- Asistente ODES (índice) ---------- */
+
+.repositorio .ra-asistente {
+  margin-bottom: 1.5rem;
+}
+
+.repositorio .ra-estado-reindexacion {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 500;
+}
+
+.repositorio .ra-estado-reindexacion .rp-indicador {
+  width: 1.2rem;
+  height: 1.2rem;
+  margin: 0;
+}
+
+.repositorio .ra-registro {
+  margin: 0 0 1rem;
+}
+
+.repositorio .ra-registro summary {
+  color: var(--rp-morado-30);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.repositorio .ra-registro pre {
+  max-height: 16rem;
+  margin: 0.5rem 0 0;
+  padding: 0.75rem 1rem;
+  overflow: auto;
+  color: #f3f3f3;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background: #1f2430;
+  border-radius: 0.4rem;
+}

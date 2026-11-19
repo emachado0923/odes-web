@@ -1,0 +1,104 @@
+/*
+ * Fondo de partículas de ODES (ingreso/CieloFondo.tsx), de la maqueta
+ * «Pregúntale a OdeS»: nebulosa que deriva y estrellas tenues (lienzo). Lo usan
+ * la pantalla de ingreso (cubre su <main>) y el chat (fijo detrás de la
+ * página). Aquí también va el botón de pausa (BotonPausa.tsx) de las dos.
+ */
+
+.odes .odes-cielo {
+  --cielo-fondo: #ffffff;
+  --cielo-neb-a: rgb(168 63 145 / 0.13);
+  --cielo-neb-b: rgb(150 120 225 / 0.14);
+  --cielo-neb-c: rgb(240 130 200 / 0.14);
+  /* «r, g, b» de las estrellas (lo lee CieloFondo.tsx). */
+  --cielo-estrella: 168, 63, 145;
+
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--cielo-fondo);
+}
+
+[data-bs-theme='dark'] .odes .odes-cielo {
+  --cielo-fondo: #17131a;
+  --cielo-neb-a: rgb(194 90 169 / 0.22);
+  --cielo-neb-b: rgb(110 90 210 / 0.2);
+  --cielo-neb-c: rgb(230 110 190 / 0.16);
+  --cielo-estrella: 255, 255, 255;
+}
+
+/* En el chat: fijo detrás de todo. Con z-index negativo queda en el contexto
+   raíz, debajo del contenido normal: la cabecera, el pie, las burbujas y el
+   campo de texto, que tienen fondo, se pintan encima. Para que se vea, .odes
+   no lleva fondo en esa página (.odes--cielo, odes.css) y el <main> no debe
+   crear un contexto de apilamiento (sin z-index, opacity ni isolation). */
+.odes .odes-cielo--fijo {
+  position: fixed;
+  z-index: -1;
+}
+
+.odes .odes-cielo__nebulosa {
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(circle at 15% 20%, var(--cielo-neb-a), transparent 40%),
+    radial-gradient(circle at 85% 30%, var(--cielo-neb-b), transparent 42%),
+    radial-gradient(circle at 60% 85%, var(--cielo-neb-c), transparent 45%),
+    radial-gradient(circle at 25% 80%, var(--cielo-neb-b), transparent 38%);
+  /* odes-deriva está en banda.css (la franja también la usa). */
+  animation: odes-deriva 50s ease-in-out infinite alternate;
+}
+
+/* Pausa o «reducir movimiento»: la nebulosa se queda donde va. */
+.odes .odes-cielo--quieto .odes-cielo__nebulosa {
+  animation-play-state: paused;
+}
+
+.odes .odes-cielo__estrellas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* ── Pausa de las animaciones (WCAG 2.2.2) ── */
+
+.odes .odes-pausa {
+  --pausa-acento: var(--odes-magenta);
+  --pausa-fondo: #ffffff;
+
+  position: absolute;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 2px solid var(--pausa-acento);
+  border-radius: 50%;
+  background: var(--pausa-fondo);
+  color: var(--pausa-acento);
+  cursor: pointer;
+}
+
+[data-bs-theme='dark'] .odes .odes-pausa {
+  --pausa-acento: #c25aa9;
+  --pausa-fondo: #17131a;
+}
+
+.odes .odes-pausa:hover {
+  background: var(--pausa-acento);
+  color: var(--pausa-fondo);
+}
+
+.odes .odes-pausa:focus-visible {
+  outline: 3px solid var(--pausa-acento);
+  outline-offset: 2px;
+}

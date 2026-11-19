@@ -1,0 +1,371 @@
+/*
+ * Rama /pai (Plan de Acción Institucional): el marco de la página (columna a
+ * todo el alto, cabecera y pie del Observatorio, foco visible) y lo que
+ * comparten sus páginas. Lo demás sale de la plantilla de Sapiencia (kit).
+ * Todo anidado bajo .pai, salvo el botón de accesibilidad del kit, que el kit
+ * agrega al final de <body>. Cada página puede tener su propia hoja junto a
+ * su componente (también bajo .pai, con clases pai-…).
+ */
+
+.pai {
+  /* Magenta del logo del Observatorio (blanco encima: 5,5:1). */
+  --pai-magenta: #a94091;
+  --pai-magenta-oscuro: #8a3577;
+  /* Morado oscuro del kit para el anillo de foco (8:1 sobre blanco). */
+  --pai-foco: #74367b;
+  --pai-texto: var(--bs-neutral-10, #151717);
+  --pai-tenue: var(--bs-neutral-50, #4e5254);
+  /* Bordes de los campos con contraste de 3:1 (los del kit no llegan). */
+  --pai-borde-campo: var(--bs-neutral-60, #7a7f81);
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: clip;
+  background: var(--bs-body-bg, #fff);
+  color: var(--pai-texto);
+}
+
+/*
+ * Modo oscuro: la rama fija el tema claro en su raíz (data-bs-theme="light",
+ * como /tableros), así que aunque el kit ponga <html data-bs-theme="dark">
+ * la página sigue clara y con sus tokens claros. Las reglas oscuras solo
+ * aplican si la propia raíz .pai declara el tema oscuro (nunca con la forma
+ * de ancestro "[data-bs-theme='dark'] .pai", que pintaba de rosa pálido
+ * sobre blanco el foco y los códigos).
+ */
+.pai[data-bs-theme='dark'] {
+  --pai-foco: #f0b8e3;
+}
+
+/* El <main> del kit tiene overflow: auto, que rompe position: sticky (barra de filtros). */
+.pai .pai-principal {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow: visible;
+}
+
+.pai .pai-principal:focus {
+  outline: 0;
+}
+
+/* ── Foco visible: anillo de 3 px (el del kit es una línea negra de 1 pt) ── */
+
+.pai :focus-visible,
+.pai .btn:focus-visible,
+.pai .form-control:focus-visible,
+.pai .form-select:focus-visible,
+.pai .form-check-input:focus-visible {
+  outline: 3px solid var(--pai-foco);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+.pai .form-control:focus-visible,
+.pai .form-select:focus-visible {
+  outline-offset: 1px;
+}
+
+.pai .form-control,
+.pai .form-select,
+.pai .form-check-input:not(:checked, :indeterminate) {
+  border-color: var(--pai-borde-campo);
+}
+
+/*
+ * Casillas y radios marcados: el kit los pinta #4fc5e9 sobre blanco (1,9:1,
+ * por debajo del 3:1 de WCAG 1.4.11). Aquí, el azul oscuro del kit
+ * (tertiary-blue-40, 8:1): casilla rellena con visto blanco y radio con borde
+ * y punto azul oscuro.
+ */
+.pai .form-check-input {
+  --bs-form-check-checked-bg-color: var(--bs-tertiary-blue-40, #00566f);
+  --bs-form-check-checked-border-color: var(--bs-tertiary-blue-40, #00566f);
+  --bs-form-check-checked-hover-bg-color: var(--bs-tertiary-blue-30, #02475b);
+  --bs-form-check-checked-hover-border-color: var(--bs-tertiary-blue-30, #02475b);
+}
+
+.pai .form-check-input[type='radio'] {
+  --bs-form-check-checked-border-color: var(--bs-tertiary-blue-40, #00566f);
+  --bs-form-check-checked-hover-border-color: var(--bs-tertiary-blue-30, #02475b);
+  --bs-form-check-checked-bg-color: var(--bs-neutral-100, #fff);
+  --bs-form-check-checked-hover-bg-color: var(--bs-neutral-100, #fff);
+  --bs-form-check-checked-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2.5' fill='%2300566f'/%3e%3c/svg%3e");
+}
+
+/* Textos de ayuda: el gris del kit (#787b7d, 12 px) da 4,26:1; aquí el tenue de la rama (7,9:1). */
+.pai .form-text {
+  color: var(--pai-tenue);
+}
+
+/* Enlaces del pie de las tarjetas (gris del kit sobre #fafafa: 4,08:1). */
+.pai .card-footer a {
+  color: var(--pai-magenta-oscuro);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.pai .card-footer a:hover {
+  color: var(--pai-texto);
+}
+
+/*
+ * Barras `progress` del kit dentro de la rama (seguimiento, resumen de cada
+ * proceso, subida de evidencias): el kit dibuja un punto (::before) que, en
+ * fila, empuja la barra y la deja ~12 % más corta, y sube la barra
+ * (top: -altura) para su etiqueta, con lo que tapaba el texto de encima.
+ * Aquí, una barra simple dentro de su riel: al 100 % llena el riel.
+ */
+.pai .progress {
+  flex-direction: row;
+  overflow: hidden;
+}
+
+.pai .progress::before {
+  content: none;
+  display: none;
+}
+
+.pai .progress .progress-bar {
+  top: 0;
+  height: 100%;
+  padding: 0;
+}
+
+/* ── Saltar al contenido ── */
+
+.pai .pai-saltar {
+  position: absolute;
+  z-index: 300;
+  top: 0.5rem;
+  left: 0.5rem;
+  padding: 0.6em 1em;
+  border-radius: 0.375rem;
+  background: #fff;
+  box-shadow:
+    0 1px 2px 0 rgba(0, 0, 0, 0.3),
+    0 2px 6px 2px rgba(0, 0, 0, 0.15);
+  color: #151717;
+  font-weight: 700;
+  transform: translateY(calc(-100% - 1rem));
+}
+
+.pai .pai-saltar:focus {
+  transform: none;
+}
+
+/* ── Cabecera del Observatorio (la misma de /principal, /odes, /repositorio, /sivu y /tableros) ── */
+
+.pai .pai-cabecera {
+  margin: 0;
+  background: var(--pai-magenta);
+}
+
+.pai .pai-cabecera-interior {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 0.75rem clamp(1rem, 4vw, 3rem);
+}
+
+.pai .pai-cabecera-logo {
+  display: block;
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+.pai .pai-cabecera-logo img {
+  width: auto;
+  height: clamp(40px, 7vw, 64px);
+}
+
+.pai .pai-cabecera .pai-cabecera-titulo {
+  margin: 0;
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: right;
+}
+
+/* ── Pie del Observatorio: magenta, con los logos de Sapiencia y la Alcaldía en blanco ── */
+
+/* El kit pone el pie en columna y estira sus hijos: aquí siempre es una fila centrada. */
+.pai footer.pai-pie {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  padding: 2rem 1rem 2.25rem;
+  background: var(--pai-magenta);
+}
+
+.pai footer.pai-pie > .pai-pie-logo {
+  display: block;
+  width: auto;
+  line-height: 0;
+}
+
+.pai .pai-pie-logo img {
+  width: clamp(230px, 24vw, 340px);
+  height: auto;
+}
+
+/* Foco visible sobre el magenta. */
+.pai :is(.pai-cabecera, .pai-pie) a:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* ── Barra de navegación (BarraPai), bajo la cabecera ── */
+
+.pai .pai-barra {
+  border-bottom: 1px solid var(--bs-neutral-80, #ccc);
+  background: var(--bs-neutral-95, #f4f4f4);
+}
+
+.pai .pai-barra-interior {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  padding: 0.5rem clamp(1rem, 4vw, 3rem);
+}
+
+/* ── Contenedor de las páginas ── */
+
+.pai .pai-pagina {
+  width: 100%;
+  max-width: 90rem;
+  margin: 0 auto;
+  padding: 1.5rem clamp(1rem, 4vw, 3rem) 0;
+}
+
+/*
+ * Las alertas del kit dejan 44 px a la izquierda para un icono (.alert-icon)
+ * que aquí no se usa: sin él, el texto quedaba corrido.
+ */
+.pai .alert:not(:has(.alert-body)) {
+  --bs-alert-padding-left: 1rem;
+}
+
+/* Las tarjetas del kit tienen max-width: 350px; card-lg las deja a todo el ancho. */
+.pai .card.card-lg {
+  max-width: none;
+}
+
+/*
+ * Correcciones generales del kit para todas las páginas del PAI:
+ * - el kit les pone min-width: 164px a todos los .btn, que aplasta los
+ *   campos de los input-group y ensancha las tablas;
+ * - el kit no dibuja el estado parcial (indeterminate) de las casillas: se
+ *   pinta como marcado, con una raya.
+ */
+.pai .input-group > .form-control {
+  min-width: 0;
+}
+
+.pai .input-group > .btn {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 0;
+}
+
+.pai .table .btn {
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.pai .form-check-input[type='checkbox']:indeterminate {
+  border-color: var(--bs-form-check-checked-border-color, var(--bs-tertiary-blue-40, #0b6e99));
+  background-color: var(--bs-form-check-checked-bg-color, var(--bs-tertiary-blue-40, #0b6e99));
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-width='3' d='M4 8h8'/%3e%3c/svg%3e");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 75%;
+}
+
+/* Texto solo para lectores de pantalla (aria-live de "Guardado", etc.). */
+.pai .pai-solo-lector {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Modal del kit dibujado por React (ModalPai) ── */
+
+.pai .pai-modal {
+  overflow-y: auto;
+}
+
+.pai .pai-modal .modal-dialog {
+  max-width: min(46rem, calc(100vw - 2rem));
+}
+
+/* El kit dibuja .modal-title a 32 px: demasiado para un modal (y en el celular). */
+.pai .pai-modal .modal-title {
+  font-size: 1.25rem;
+  overflow-wrap: anywhere;
+}
+
+.pai .pai-modal .modal-dialog.modal-lg {
+  max-width: min(60rem, calc(100vw - 2rem));
+}
+
+@media (max-width: 575.98px) {
+  /* En el celular el nombre de la aplicación pasa debajo del logo. */
+  .pai .pai-cabecera-interior {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .pai .pai-cabecera .pai-cabecera-titulo {
+    font-size: 0.95rem;
+    text-align: left;
+  }
+}
+
+@media (max-width: 360px) {
+  .pai .pai-pie-logo img {
+    width: 180px;
+  }
+}
+
+/* ── Botón y panel de accesibilidad del kit, en el magenta (como en /odes y /tableros) ── */
+
+#accessibilityFab,
+#accessibilityModal .btn-tertiary-blue {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #a94091;
+  --bs-btn-border-color: #a94091;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #8a3577;
+  --bs-btn-hover-border-color: #8a3577;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #8a3577;
+  --bs-btn-active-border-color: #8a3577;
+}
+
+#accessibilityModal .btn-outline-tertiary-blue {
+  --bs-btn-color: #a94091;
+  --bs-btn-border-color: #a94091;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #a94091;
+  --bs-btn-hover-border-color: #a94091;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #8a3577;
+  --bs-btn-active-border-color: #8a3577;
+}

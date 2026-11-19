@@ -1,0 +1,57 @@
+{
+  "intro": {
+    "etiqueta": "Sobre este informe",
+    "titulo": "Tablero beneficiarios de los fondos de Sapiencia (2026)",
+    "texto": "Este reporte presenta cifras agregadas de los beneficios otorgados por los fondos y becas de Sapiencia: cuántos están activos en cada periodo, en qué estado están, cuánto se ha girado, en qué instituciones estudian y de qué comunas vienen. Explore las secciones y segmente la información con los filtros.",
+    "subtitulo": "Cómo usar el tablero",
+    "pasos": [
+      {
+        "icono": "dashboard",
+        "titulo": "Secciones",
+        "texto": "Los botones de la parte superior permiten navegar entre las secciones sin perder los filtros aplicados."
+      },
+      {
+        "icono": "tune",
+        "titulo": "Filtros",
+        "texto": "Programa, línea y periodo se aplican a todo el tablero. La convocatoria se aplica a los estados y a las convocatorias; cada sección dice qué filtros usa."
+      },
+      {
+        "icono": "ads_click",
+        "titulo": "Clic en las visualizaciones",
+        "texto": "Un clic sobre una barra de programa, periodo o convocatoria aplica ese filtro y otro clic lo retira."
+      },
+      {
+        "icono": "bar_chart",
+        "titulo": "Lectura de las barras",
+        "texto": "Cada barra de color muestra el valor de una categoría y la franja gris detrás de ella llega hasta el de la categoría con mayor valor, para comparar."
+      },
+      {
+        "icono": "verified_user",
+        "titulo": "Datos agregados",
+        "texto": "El tablero no muestra datos de ninguna persona: solo totales. Sexo, comuna e institución se cuentan solo entre los beneficios activos y nunca se cruzan con un estado."
+      },
+      {
+        "icono": "download",
+        "titulo": "Descargas",
+        "texto": "Cada visualización permite descargar los datos en CSV o el gráfico como imagen, con título y fuente."
+      }
+    ],
+    "boton": "Ingresar al tablero"
+  },
+  "observatorio": "Observatorio de Sapiencia",
+  "fuente": "Fuente: bases de seguimiento de los fondos de Sapiencia",
+  "nota": "Fuente: bases de seguimiento de los fondos de Sapiencia (Power BI de seguimiento de fondos). Cifras agregadas.",
+  "beneficio": "Un beneficio es una persona en una convocatoria de un programa: quien tiene dos fondos, o volvió a ser seleccionado en otra convocatoria, cuenta una vez por cada uno.",
+  "estados": {
+    "Activo": "Renovó el beneficio y recibió giro en el periodo.",
+    "Suspensión": "Suspendió el beneficio en el periodo (temporal, especial o voluntaria).",
+    "Finalizó los giros": "Recibió todos los giros pactados.",
+    "Graduado": "Obtuvo el título.",
+    "Periodo de gracia": "Terminó los giros y está en el plazo para cumplir los requisitos de condonación.",
+    "Proceso de consolidación": "Su caso se está revisando para definir el paso al cobro o la condonación.",
+    "Cobro o condonación (PACC)": "Ya se le notificó el paso al cobro y/o la condonación del crédito.",
+    "Desertor": "Dejó de renovar el beneficio sin una causa aceptada.",
+    "Terminación o cancelación": "El beneficio terminó antes de tiempo: cancelación, renuncia o terminación por una causal del reglamento."
+  },
+  "privacidad": "Para proteger a las personas, el tablero solo publica totales: los estados se cuentan por programa, convocatoria y periodo, y el sexo, la comuna y la institución, solo entre los beneficios activos y cada uno por separado. No se publican montos por convocatoria ni por institución. El fondo del Consejo Distrital de Juventud no aparece porque tiene muy pocos beneficios."
+}

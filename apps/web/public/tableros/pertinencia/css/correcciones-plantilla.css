@@ -1,0 +1,173 @@
+/* Correcciones de la plantilla de Sapiencia
+   ==========================================
+   Se carga justo después de plantilla/styles.css. Si la plantilla se corrige,
+   este archivo puede borrarse.
+
+   1. Colores RGB. En styles.css las cinco familias adaptadas a Sapiencia
+      (primary, secondary, info, success y warning) tienen el color hexadecimal
+      de la marca, pero su versión en RGB (--bs-*-rgb) conserva el color
+      original de la librería. Las utilidades que usan la versión RGB
+      (bg-primary-95, text-info-40, etc.) pintaban entonces verdes y ocres en
+      lugar de los colores de Sapiencia. Abajo, generado a partir de los
+      valores hexadecimales del propio styles.css, cada --bs-*-rgb se iguala con
+      su hexadecimal en el tema claro y en el oscuro. Los modos de contraste no
+      se tocan: allí ya coinciden.
+
+   2. Temas anidados. styles.css calcula una sola vez, en :root, las variables
+      que dependen de la escala de grises (fondo y color del cuerpo, bordes...).
+      Un elemento con su propio data-bs-theme, como las tarjetas de gráficos
+      que siguen claras en el modo oscuro, heredaba esos valores ya calculados
+      con el tema de la página. Al final de este archivo se vuelven a calcular
+      en cada elemento que declara su tema. */
+
+:root,[data-bs-theme=light] {
+  --bs-primary-rgb: 155,72,164;  /* #9b48a4 */
+  --bs-primary-10-rgb: 45,21,47;  /* #2d152f */
+  --bs-primary-20-rgb: 79,37,84;  /* #4f2554 */
+  --bs-primary-30-rgb: 116,54,123;  /* #74367b */
+  --bs-primary-40-rgb: 155,72,164;  /* #9b48a4 */
+  --bs-primary-50-rgb: 172,103,180;  /* #ac67b4 */
+  --bs-primary-60-rgb: 189,134,195;  /* #bd86c3 */
+  --bs-primary-70-rgb: 205,164,210;  /* #cda4d2 */
+  --bs-primary-80-rgb: 222,194,225;  /* #dec2e1 */
+  --bs-primary-90-rgb: 238,224,240;  /* #eee0f0 */
+  --bs-primary-95-rgb: 247,240,247;  /* #f7f0f7 */
+  --bs-primary-99-rgb: 253,252,253;  /* #fdfcfd */
+  --bs-secondary-rgb: 11,58,86;  /* #0b3a56 */
+  --bs-secondary-10-rgb: 4,20,30;  /* #04141e */
+  --bs-secondary-20-rgb: 6,33,48;  /* #062130 */
+  --bs-secondary-30-rgb: 9,45,67;  /* #092d43 */
+  --bs-secondary-40-rgb: 11,58,86;  /* #0b3a56 */
+  --bs-secondary-50-rgb: 49,88,112;  /* #315870 */
+  --bs-secondary-60-rgb: 87,120,139;  /* #57788b */
+  --bs-secondary-70-rgb: 127,152,167;  /* #7f98a7 */
+  --bs-secondary-80-rgb: 169,185,195;  /* #a9b9c3 */
+  --bs-secondary-90-rgb: 211,220,225;  /* #d3dce1 */
+  --bs-secondary-95-rgb: 233,237,240;  /* #e9edf0 */
+  --bs-secondary-99-rgb: 251,251,252;  /* #fbfbfc */
+  --bs-success-rgb: 30,105,51;  /* #1e6933 */
+  --bs-success-10-rgb: 9,31,15;  /* #091f0f */
+  --bs-success-20-rgb: 16,55,26;  /* #10371a */
+  --bs-success-30-rgb: 23,79,38;  /* #174f26 */
+  --bs-success-40-rgb: 30,105,51;  /* #1e6933 */
+  --bs-success-50-rgb: 38,133,64;  /* #268540 */
+  --bs-success-60-rgb: 46,161,78;  /* #2ea14e */
+  --bs-success-70-rgb: 101,186,125;  /* #65ba7d */
+  --bs-success-80-rgb: 154,209,169;  /* #9ad1a9 */
+  --bs-success-90-rgb: 205,232,212;  /* #cde8d4 */
+  --bs-success-95-rgb: 230,244,234;  /* #e6f4ea */
+  --bs-success-99-rgb: 250,253,251;  /* #fafdfb */
+  --bs-warning-rgb: 107,90,31;  /* #6b5a1f */
+  --bs-warning-10-rgb: 32,27,9;  /* #201b09 */
+  --bs-warning-20-rgb: 55,47,16;  /* #372f10 */
+  --bs-warning-30-rgb: 80,68,23;  /* #504417 */
+  --bs-warning-40-rgb: 107,90,31;  /* #6b5a1f */
+  --bs-warning-50-rgb: 134,114,39;  /* #867227 */
+  --bs-warning-60-rgb: 163,138,47;  /* #a38a2f */
+  --bs-warning-70-rgb: 193,163,56;  /* #c1a338 */
+  --bs-warning-80-rgb: 224,189,65;  /* #e0bd41 */
+  --bs-warning-90-rgb: 255,216,74;  /* #ffd84a */
+  --bs-warning-95-rgb: 255,237,170;  /* #ffedaa */
+  --bs-warning-99-rgb: 255,251,239;  /* #fffbef */
+  --bs-info-rgb: 32,101,127;  /* #20657f */
+  --bs-info-10-rgb: 9,30,38;  /* #091e26 */
+  --bs-info-20-rgb: 17,52,66;  /* #113442 */
+  --bs-info-30-rgb: 24,76,96;  /* #184c60 */
+  --bs-info-40-rgb: 32,101,127;  /* #20657f */
+  --bs-info-50-rgb: 40,127,160;  /* #287fa0 */
+  --bs-info-60-rgb: 49,154,195;  /* #319ac3 */
+  --bs-info-70-rgb: 58,182,230;  /* #3ab6e6 */
+  --bs-info-80-rgb: 129,208,239;  /* #81d0ef */
+  --bs-info-90-rgb: 193,232,247;  /* #c1e8f7 */
+  --bs-info-95-rgb: 225,244,251;  /* #e1f4fb */
+  --bs-info-99-rgb: 249,253,254;  /* #f9fdfe */
+}
+
+[data-bs-theme=dark] {
+  --bs-primary-rgb: 155,72,164;  /* #9b48a4 */
+  --bs-primary-10-rgb: 253,252,253;  /* #fdfcfd */
+  --bs-primary-20-rgb: 247,240,247;  /* #f7f0f7 */
+  --bs-primary-30-rgb: 238,224,240;  /* #eee0f0 */
+  --bs-primary-40-rgb: 222,194,225;  /* #dec2e1 */
+  --bs-primary-50-rgb: 205,164,210;  /* #cda4d2 */
+  --bs-primary-60-rgb: 189,134,195;  /* #bd86c3 */
+  --bs-primary-70-rgb: 172,103,180;  /* #ac67b4 */
+  --bs-primary-80-rgb: 155,72,164;  /* #9b48a4 */
+  --bs-primary-90-rgb: 116,54,123;  /* #74367b */
+  --bs-primary-95-rgb: 79,37,84;  /* #4f2554 */
+  --bs-primary-99-rgb: 45,21,47;  /* #2d152f */
+  --bs-secondary-rgb: 11,58,86;  /* #0b3a56 */
+  --bs-secondary-10-rgb: 251,251,252;  /* #fbfbfc */
+  --bs-secondary-20-rgb: 233,237,240;  /* #e9edf0 */
+  --bs-secondary-30-rgb: 211,220,225;  /* #d3dce1 */
+  --bs-secondary-40-rgb: 169,185,195;  /* #a9b9c3 */
+  --bs-secondary-50-rgb: 127,152,167;  /* #7f98a7 */
+  --bs-secondary-60-rgb: 87,120,139;  /* #57788b */
+  --bs-secondary-70-rgb: 49,88,112;  /* #315870 */
+  --bs-secondary-80-rgb: 11,58,86;  /* #0b3a56 */
+  --bs-secondary-90-rgb: 9,45,67;  /* #092d43 */
+  --bs-secondary-95-rgb: 6,33,48;  /* #062130 */
+  --bs-secondary-99-rgb: 4,20,30;  /* #04141e */
+  --bs-success-rgb: 30,105,51;  /* #1e6933 */
+  --bs-success-10-rgb: 250,253,251;  /* #fafdfb */
+  --bs-success-20-rgb: 230,244,234;  /* #e6f4ea */
+  --bs-success-30-rgb: 205,232,212;  /* #cde8d4 */
+  --bs-success-40-rgb: 154,209,169;  /* #9ad1a9 */
+  --bs-success-50-rgb: 101,186,125;  /* #65ba7d */
+  --bs-success-60-rgb: 46,161,78;  /* #2ea14e */
+  --bs-success-70-rgb: 38,133,64;  /* #268540 */
+  --bs-success-80-rgb: 30,105,51;  /* #1e6933 */
+  --bs-success-90-rgb: 23,79,38;  /* #174f26 */
+  --bs-success-95-rgb: 16,55,26;  /* #10371a */
+  --bs-success-99-rgb: 9,31,15;  /* #091f0f */
+  --bs-warning-rgb: 107,90,31;  /* #6b5a1f */
+  --bs-warning-10-rgb: 255,251,239;  /* #fffbef */
+  --bs-warning-20-rgb: 255,237,170;  /* #ffedaa */
+  --bs-warning-30-rgb: 255,216,74;  /* #ffd84a */
+  --bs-warning-40-rgb: 224,189,65;  /* #e0bd41 */
+  --bs-warning-50-rgb: 193,163,56;  /* #c1a338 */
+  --bs-warning-60-rgb: 163,138,47;  /* #a38a2f */
+  --bs-warning-70-rgb: 134,114,39;  /* #867227 */
+  --bs-warning-80-rgb: 107,90,31;  /* #6b5a1f */
+  --bs-warning-90-rgb: 80,68,23;  /* #504417 */
+  --bs-warning-95-rgb: 55,47,16;  /* #372f10 */
+  --bs-warning-99-rgb: 32,27,9;  /* #201b09 */
+  --bs-info-rgb: 32,101,127;  /* #20657f */
+  --bs-info-10-rgb: 249,253,254;  /* #f9fdfe */
+  --bs-info-20-rgb: 225,244,251;  /* #e1f4fb */
+  --bs-info-30-rgb: 193,232,247;  /* #c1e8f7 */
+  --bs-info-40-rgb: 129,208,239;  /* #81d0ef */
+  --bs-info-50-rgb: 58,182,230;  /* #3ab6e6 */
+  --bs-info-60-rgb: 49,154,195;  /* #319ac3 */
+  --bs-info-70-rgb: 40,127,160;  /* #287fa0 */
+  --bs-info-80-rgb: 32,101,127;  /* #20657f */
+  --bs-info-90-rgb: 24,76,96;  /* #184c60 */
+  --bs-info-95-rgb: 17,52,66;  /* #113442 */
+  --bs-info-99-rgb: 9,30,38;  /* #091e26 */
+}
+
+/* 2. Temas anidados: las variables derivadas de :root, recalculadas en cada
+      elemento que declara su propio tema. */
+[data-bs-theme]:not(:root) {
+  --bs-component-active-bg: var(--bs-tertiary-blue-60);
+  --bs-body-bg: var(--bs-neutral-100);
+  --bs-body-color: var(--bs-neutral-10);
+  --bs-form-valid-color: var(--bs-success-40);
+  --bs-form-valid-border-color: var(--bs-success-40);
+  --bs-form-invalid-color: var(--bs-danger-40);
+  --bs-form-invalid-border-color: var(--bs-danger-40);
+  --bs-overflow-bg: var(--bs-neutral-100);
+  --bs-overflow-color: var(--bs-neutral-80);
+  --bs-overflow-color-hover: var(--bs-neutral-70);
+  --bs-tag-hover-color: var(--bs-neutral-60);
+  --bs-progress-font-color: var(--bs-neutral-40);
+  --bs-border-color: var(--bs-neutral-80);
+}
+
+[data-bs-theme=light]:not(:root) {
+  color-scheme: light;
+}
+
+[data-bs-theme=dark]:not(:root) {
+  color-scheme: dark;
+}

@@ -1,0 +1,172 @@
+/*
+ * Piezas compartidas por todas las ramas: barra de navegación pendiente y
+ * pantallas de estado (carga de una rama, error de una rama, 404 global).
+ * Todo va bajo .barra-navegacion o .pantalla-estado para no filtrarse a
+ * .inicio, .sivu ni .odes. Las animaciones llevan prefijo (pe-, bn-) porque
+ * los nombres de @keyframes son globales.
+ */
+
+/* ---------- Barra superior mientras se carga otra rama ---------- */
+
+.barra-navegacion {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 2147483000;
+  height: 3px;
+  overflow: hidden;
+  background: rgb(74 90 110 / 0.2);
+  pointer-events: none;
+  /* Aparece con un pequeño retraso para no parpadear en cargas rápidas. */
+  animation: pe-aparecer 0.2s ease 0.15s both;
+}
+
+.barra-navegacion::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: #4a5a6e;
+  animation: bn-deslizar 1.1s ease-in-out infinite;
+}
+
+@keyframes bn-deslizar {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(250%);
+  }
+}
+
+/* ---------- Pantallas de estado ---------- */
+
+.pantalla-estado {
+  --pe-fondo: #f6f7f9;
+  --pe-texto: #1f2933;
+  --pe-tenue: #52606d;
+  --pe-acento: #2b3440;
+  --pe-sobre-acento: #ffffff;
+  --pe-borde: #cfd6de;
+  --pe-foco: #3b6fd8;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 2rem 1rem;
+  background: var(--pe-fondo);
+  color: var(--pe-texto);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.5;
+  text-align: center;
+}
+
+@media (prefers-color-scheme: dark) {
+  .pantalla-estado {
+    --pe-fondo: #14181d;
+    --pe-texto: #e6e9ed;
+    --pe-tenue: #a7b1bc;
+    --pe-acento: #e6e9ed;
+    --pe-sobre-acento: #14181d;
+    --pe-borde: #3a434e;
+    --pe-foco: #7fa6f0;
+  }
+}
+
+.pantalla-estado--carga {
+  animation: pe-aparecer 0.2s ease 0.15s both;
+}
+
+.pantalla-estado__codigo {
+  margin: 0;
+  color: var(--pe-tenue);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.pantalla-estado__titulo {
+  margin: 0;
+  font-size: clamp(1.5rem, 1.2rem + 1.5vw, 2rem);
+  line-height: 1.2;
+}
+
+.pantalla-estado__texto {
+  max-width: 34rem;
+  margin: 0;
+  color: var(--pe-tenue);
+}
+
+.pantalla-estado__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.pantalla-estado__boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.5rem 1.125rem;
+  border: 1px solid var(--pe-acento);
+  border-radius: 0.5rem;
+  background: var(--pe-acento);
+  color: var(--pe-sobre-acento);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.pantalla-estado__boton--secundario {
+  border-color: var(--pe-borde);
+  background: transparent;
+  color: var(--pe-texto);
+}
+
+.pantalla-estado__boton:focus-visible {
+  outline: 3px solid var(--pe-foco);
+  outline-offset: 2px;
+}
+
+.pantalla-estado__indicador {
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 3px solid var(--pe-borde);
+  border-top-color: var(--pe-acento);
+  border-radius: 50%;
+  animation: pe-girar 0.8s linear infinite;
+}
+
+@keyframes pe-girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pe-aparecer {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pantalla-estado__indicador {
+    animation-duration: 2.4s;
+  }
+
+  .barra-navegacion::before {
+    animation-duration: 3s;
+  }
+}

@@ -1,0 +1,1969 @@
+<meta charset="utf-8"><!-- Solo sirve al abrir este archivo suelto en un navegador (evita tildes rotas). Dentro de WordPress se ignora. -->
+<!--
+  BLOQUE OBSERVATORIO SAPIENCIA (OdeS) · v2.36 · 2026-10-14
+
+  Parte superior reestructurada segun el documento "Reestructuracion parte
+  superior del micrositio del Observatorio":
+    1. Banner: lo pone la entidad en WordPress; NO va en este bloque
+    2. El Observatorio en cifras (fijas) 3. Explora el Observatorio (botones de acceso rapido)
+    4. Mapa georreferenciado
+    5. Botones flotantes: Repositorio y SIVU abajo a la izquierda (OCULTOS POR AHORA: estan comentados, ver
+       EDITAR FLOTANTES), y el robot ODES abajo a la derecha (OCULTO POR AHORA: esta comentado, ver EDITAR
+       ROBOT; mira de lado a lado en bucle; el robot y su boton "Consultale a ODES" llevan a ODES). Aparecen
+       desde el mapa. En celular no hay robot: ODES es un boton redondo abajo a la izquierda (encima de
+       Repositorio y SIVU cuando se vuelvan a mostrar).
+  Debajo siguen "Quienes somos" y el contacto.
+
+  Donde va: pegar COMPLETO en un elemento "Raw HTML" de WPBakery, en la fila
+  que sigue al banner. Incluye estilos, contenido y script. Usa la fuente
+  Rubik del tema. Lo unico externo son los videos y las imagenes del robot
+  (ver EDITAR ROBOT); mientras el robot este oculto, no se carga nada externo.
+
+  Que editar (busca estos textos):
+    EDITAR CIFRAS       las 5 tarjetas de "El Observatorio en cifras" (valor y texto), en orden
+    EDITAR ACCESOS      enlaces de los 6 botones de acceso rapido
+    EDITAR FLOTANTES    enlaces de los botones flotantes (Repositorio, SIVU y, en celular, ODES)
+    EDITAR ROBOT        direcciones de los videos y las imagenes del robot ODES, y su enlace a ODES
+    EDITAR MAPA         datos del mapa en formato JSON (al final de la seccion del
+                        mapa). Cada indicador del JSON es una opcion de la lista
+                        "Indicador"; el mapa, la tabla, la leyenda, el total y las
+                        descargas salen de ahi.
+  Un enlace con href="#" se muestra con la etiqueta "Proximamente" y no se
+  puede pulsar. Cambia el # por la direccion real cuando exista.
+
+  Todos los estilos llevan el prefijo #odes-observatorio para no tocar el tema.
+-->
+<style>
+#odes-observatorio{
+  --odes-morado-95:#f7f0f7;--odes-morado-80:#dec2e1;--odes-morado-60:#bd86c3;--odes-morado-50:#ac67b4;--odes-morado-40:#9b48a4;--odes-morado-30:#74367b;
+  --odes-morado-20:#4f2554;
+  --odes-marino-95:#e9edf0;--odes-marino-40:#0b3a56;--odes-marino-30:#092d43;--odes-marino-20:#062130;
+  --odes-celeste-70:#3ab6e6;--odes-celeste-40:#20657f;
+  --odes-verde-60:#2ea14e;--odes-verde-40:#1e6933;
+  --odes-amarillo-90:#ffd84a;--odes-naranja:#ff732c;
+  --odes-neutro-10:#151717;--odes-neutro-30:#2f3233;--odes-neutro-50:#4e5254;--odes-neutro-60:#787b7d;--odes-neutro-80:#cccccc;--odes-neutro-90:#dcdcdc;--odes-neutro-95:#f4f4f4;--odes-neutro-99:#fafafa;
+  --odes-fuente:"Rubik",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --odes-radio:.375rem;--odes-radio-lg:.5rem;--odes-radio-xl:.625rem;--odes-radio-xxl:.75rem;--odes-radio-unal:2.5rem;
+  --odes-esquina:var(--odes-radio-xxl) var(--odes-radio-xxl) var(--odes-radio-unal) var(--odes-radio-xxl);
+  /* Forma de los botones del kit (.btn): esquinas alternas de 4 y 8 px */
+  --odes-radio-boton:.25rem .5rem .25rem .5rem;
+  --odes-sombra-1:0 1px 2px 0 rgba(0,0,0,.3),0 1px 3px 0 rgba(0,0,0,.15);
+  --odes-sombra-2:0 1px 2px 0 rgba(0,0,0,.3),0 2px 6px 2px rgba(0,0,0,.15);
+  --odes-sombra-3:0 4px 8px 3px rgba(0,0,0,.15),0 1px 3px 0 rgba(0,0,0,.3);
+  /* Ancho de la grilla del sitio. Si la fila de WPBakery va a ancho completo, pon --odes-margen:1rem */
+  --odes-ancho:1140px;--odes-margen:0px;
+  /* Aire a los lados de la franja mas ancha (las cifras): 7,5 % de la ventana menos 10 px (98 px a 1440), entre
+     20 y 134 px, sin pasar del margen que deja la columna del tema (asi nunca queda mas angosta que la columna) */
+  --odes-aire:min(clamp(20px,7.5vw - 10px,134px),max(20px,-1 * var(--odes-franja-izquierda,-20px)));
+  display:block;position:relative;font-family:var(--odes-fuente);font-size:1rem;font-weight:400;line-height:1.5;color:var(--odes-neutro-10);text-align:left;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+}
+/* Reinicio local: neutraliza los estilos del tema solo dentro del bloque */
+#odes-observatorio *,#odes-observatorio *::before,#odes-observatorio *::after{box-sizing:border-box}
+#odes-observatorio h1,#odes-observatorio h2,#odes-observatorio h3,#odes-observatorio p,#odes-observatorio ul,#odes-observatorio li,#odes-observatorio figure,#odes-observatorio figcaption,#odes-observatorio table,#odes-observatorio caption,#odes-observatorio th,#odes-observatorio td,#odes-observatorio details,#odes-observatorio summary,#odes-observatorio label{margin:0;padding:0;border:0;font:inherit;color:inherit;line-height:inherit;letter-spacing:normal;text-transform:none;background:none}
+#odes-observatorio ul,#odes-observatorio li{list-style:none}
+/* El CSS personalizado del sitio agranda y sombrea todos los enlaces de esta pagina: aqui se anula */
+#odes-observatorio a,#odes-observatorio a:hover,#odes-observatorio a:focus,#odes-observatorio a:active,#odes-observatorio a:visited{color:inherit;text-decoration:none;border:0;border-radius:0;background:none;box-shadow:none;transform:none}
+#odes-observatorio button,#odes-observatorio select{margin:0;font:inherit;color:inherit;line-height:inherit;letter-spacing:normal;text-transform:none}
+#odes-observatorio svg{display:inline-block;vertical-align:middle}
+#odes-observatorio [*|hidden]{display:none!important}
+#odes-observatorio :focus-visible{outline:3px solid var(--odes-neutro-10);outline-offset:2px}
+#odes-observatorio .odes-sr{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+#odes-observatorio .odes-i{flex:none;width:1.5rem;height:1.5rem;fill:currentColor}
+
+/* Estructura y tipografia (escala de la plantilla) */
+#odes-observatorio .odes-contenedor{width:100%;max-width:var(--odes-ancho);margin:0 auto;padding:0 var(--odes-margen)}
+#odes-observatorio .odes-seccion{padding-top:3rem}
+#odes-observatorio .odes-seccion:last-child{padding-bottom:3rem}
+/* Secciones separadas solo por espacio (sin raya encima del titulo) */
+#odes-observatorio .odes-seccion.odes-seccion--separada{padding-top:3.5rem}
+#odes-observatorio .odes-h2{font-size:min(calc(1.2rem + .8vw),1.75rem);font-weight:700;line-height:1.2;color:var(--odes-neutro-10)}
+#odes-observatorio .odes-h3{font-size:1.25rem;font-weight:700;line-height:1.2}
+/* Jerarquia por niveles, como una piramide invertida: arriba lo mas importante, lo mas ancho y lo mas fuerte;
+   cada nivel siguiente es mas angosto, mas pequeno y mas sobrio.
+     nivel 1  El Observatorio en cifras: todo el ancho de la ventana, el titulo y las cifras mas grandes; el
+              titulo arranca encima de la primera tarjeta
+     nivel 2  Explora el Observatorio: a medio camino entre la ventana y la columna, botones mas compactos; el
+              titulo, a medio camino entre la franja de las cifras y la de los botones
+     nivel 3  Informacion georreferenciada: el ancho de la columna del tema; el titulo, a medio camino entre los
+              botones de Explora y la columna
+     nivel 4  Quienes somos y contacto: mas angosto que la columna (en escritorio), el titulo mas pequeno */
+#odes-observatorio .odes-nivel-1 .odes-h2{font-size:min(calc(1.3rem + 1.3vw),2.25rem)}
+#odes-observatorio .odes-nivel-1 .odes-cabecera__texto p{font-size:1.0625rem}
+#odes-observatorio .odes-nivel-3 .odes-h2{font-size:min(calc(1.15rem + .5vw),1.5rem)}
+#odes-observatorio .odes-nivel-4 .odes-h2{font-size:min(calc(1.1rem + .3vw),1.375rem)}
+#odes-observatorio .odes-nivel-4 .odes-cabecera__texto p{font-size:.9375rem}
+#odes-observatorio .odes-nivel-4 .odes-h3{font-size:1.0625rem}
+#odes-observatorio .odes-suave{color:var(--odes-neutro-50)}
+#odes-observatorio .odes-cabecera{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1rem 2rem;margin-bottom:1.25rem}
+#odes-observatorio .odes-cabecera__texto{max-width:46rem}
+#odes-observatorio .odes-cabecera__texto p{margin-top:.5rem}
+
+/* 2. El Observatorio en cifras: las 5 tarjetas, todas del mismo tamaño, en una franja con el ancho de la ventana.
+   Sale de la columna del tema: el script pone --odes-ventana (el ancho sin la barra de desplazamiento) y
+   --odes-franja-izquierda (cuanto correrla a la izquierda: en el tema la columna no queda centrada del todo).
+   5 por fila en escritorio; 3 + 2 en tableta y 2 + 2 + 1 en pantallas medianas (la ultima fila, centrada); 1 en
+   celular. Es una grilla con filas de igual alto: todas las tarjetas miden lo mismo. Colores, iconos y textos
+   como el ejemplo de la entidad: texto blanco, cifra muy gruesa, titulo en negrilla y el periodo debajo */
+#odes-observatorio .odes-seccion--cifras{padding-top:2rem}
+#odes-observatorio .odes-cifras{position:relative;display:grid;grid-template-columns:minmax(0,1fr);grid-auto-rows:1fr;gap:1rem;width:var(--odes-ventana,100vw);margin-left:var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2));padding:0 var(--odes-aire)}
+#odes-observatorio .odes-cifra{position:relative;display:flex;flex-direction:column;gap:.375rem;padding:1.25rem;overflow:hidden;border-radius:var(--odes-esquina);background:#163854;color:#fff}
+#odes-observatorio .odes-cifra::after{content:"";position:absolute;top:-3.25rem;right:-3.25rem;width:10rem;height:10rem;border:1.5rem solid rgba(255,255,255,.1);border-radius:50%;pointer-events:none}
+#odes-observatorio .odes-cifra--marino{background:#163854;color:#fff}
+#odes-observatorio .odes-cifra--celeste{background:#51ade5;color:#fff}
+#odes-observatorio .odes-cifra--morado{background:#9f339e;color:#fff}
+#odes-observatorio .odes-cifra--verde{background:#2e9e49;color:#fff}
+#odes-observatorio .odes-cifra--naranja{background:#d94c19;color:#fff}
+#odes-observatorio .odes-cifra__icono{display:block;flex:none;width:3rem;height:3rem;margin-bottom:.375rem;line-height:0}
+#odes-observatorio .odes-cifra__icono svg{display:block;width:100%;height:100%}
+/* La cifra va justo debajo del icono y el periodo al pie: en una misma fila las cifras quedan a la misma
+   altura aunque un titulo ocupe una linea y otro dos */
+#odes-observatorio .odes-cifra__valor{font-size:min(calc(1.6rem + 3.1vw),3.125rem);font-weight:900;line-height:1.05;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+#odes-observatorio .odes-cifra__unidad{display:block;margin-top:.125rem;font-size:1.125rem;font-weight:400;line-height:1.2}
+#odes-observatorio .odes-cifra__texto{font-size:1.0625rem;font-weight:700;line-height:1.25}
+#odes-observatorio .odes-cifra__periodo{margin-top:auto;font-size:.8125rem;font-weight:400;line-height:1.3}
+#odes-observatorio .odes-cifra__fuente{font-size:.75rem;line-height:1.4}
+@media (min-width:576px){
+  #odes-observatorio .odes-cifras{grid-template-columns:repeat(4,minmax(0,1fr))}
+  #odes-observatorio .odes-cifra{grid-column:span 2}
+  #odes-observatorio .odes-cifra:nth-child(5){grid-column:2 / span 2}
+}
+@media (min-width:768px){
+  #odes-observatorio .odes-cifras{grid-template-columns:repeat(6,minmax(0,1fr))}
+  #odes-observatorio .odes-cifra:nth-child(4){grid-column:2 / span 2}
+  #odes-observatorio .odes-cifra:nth-child(5){grid-column:span 2}
+  #odes-observatorio .odes-cifra__valor{font-size:min(calc(6.2vw - .85rem),3.125rem)}
+}
+@media (min-width:1200px){
+  #odes-observatorio .odes-cifras{grid-template-columns:repeat(5,minmax(0,1fr))}
+  #odes-observatorio .odes-cifra,#odes-observatorio .odes-cifra:nth-child(4),#odes-observatorio .odes-cifra:nth-child(5){grid-column:auto}
+  #odes-observatorio .odes-cifra{padding:1.125rem}
+  #odes-observatorio .odes-cifra__icono{width:2.75rem;height:2.75rem}
+  #odes-observatorio .odes-cifra__valor{font-size:min(calc(3.7vw - .75rem),3.125rem)}
+  #odes-observatorio .odes-cifra__texto{font-size:1rem}
+}
+
+/* 3. Explora el Observatorio: botones numerados en una franja con el ancho de la ventana, como las cifras (usa las
+   mismas --odes-ventana y --odes-franja-izquierda). Cada boton: numero grande, una linea, el titulo (y el periodo,
+   si lo tiene) y la flecha en un circulo blanco. 3 por fila en escritorio, 2 en tableta y 1 en celular; todos del
+   mismo tamano. Texto azul oscuro sobre los colores claros: los titulos van grandes y en negrilla (WCAG AA) */
+/* Nivel 2: la franja va a medio camino entre la de las cifras (borde de la ventana menos --odes-aire) y la columna.
+   Cuando la columna llena la ventana (celular y tableta) coincide con ella. */
+#odes-observatorio .odes-accesos{position:relative;display:grid;grid-template-columns:minmax(0,1fr);grid-auto-rows:1fr;gap:1rem;width:calc((var(--odes-ventana,100vw) + 100% - 2 * var(--odes-aire)) / 2);margin-left:calc((var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2)) + var(--odes-aire)) / 2);padding:0}
+/* Titulos de los niveles 1 a 3, escalonados como sus franjas (A = --odes-aire). El de las cifras usa la franja
+   de las cifras (arranca encima de la primera tarjeta). El de Explora va a medio camino entre la franja de las
+   cifras (borde de la ventana menos A) y la de los botones: a la izquierda, 3 x (franja-izquierda + A) / 4 desde
+   la columna; de ancho, (3 x ventana + columna - 6 A) / 4. El del mapa, a medio camino entre la franja de los
+   botones de Explora y la columna (donde van el mapa y la tabla): a la izquierda, (franja-izquierda + A) / 4;
+   de ancho, (ventana + 3 x columna - 2 A) / 4. En celular y tableta todo coincide con la columna. */
+#odes-observatorio .odes-nivel-1 .odes-cabecera{width:var(--odes-ventana,100vw);margin-left:var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2));padding:0 var(--odes-aire)}
+#odes-observatorio .odes-nivel-2 .odes-cabecera{width:calc((3 * var(--odes-ventana,100vw) + 100% - 6 * var(--odes-aire)) / 4);margin-left:calc(3 * (var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2)) + var(--odes-aire)) / 4)}
+#odes-observatorio .odes-nivel-3>.odes-contenedor>.odes-cabecera{width:calc((var(--odes-ventana,100vw) + 3 * 100% - 2 * var(--odes-aire)) / 4);margin-left:calc((var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2)) + var(--odes-aire)) / 4)}
+#odes-observatorio .odes-accesos li{display:flex}
+#odes-observatorio .odes-acceso{--odes-acento:#163854;--odes-acento-texto:#fff}
+#odes-observatorio .odes-acceso--celeste{--odes-acento:#51ade5;--odes-acento-texto:#163854}
+#odes-observatorio .odes-acceso--morado{--odes-acento:#9f339e;--odes-acento-texto:#fff}
+#odes-observatorio .odes-acceso--verde{--odes-acento:#2e9e49;--odes-acento-texto:#163854}
+#odes-observatorio .odes-acceso--amarillo{--odes-acento:#f8db1b;--odes-acento-texto:#163854}
+#odes-observatorio .odes-acceso--naranja{--odes-acento:#f26623;--odes-acento-texto:#163854}
+#odes-observatorio a.odes-acceso,#odes-observatorio a.odes-acceso:focus{position:relative;display:flex;align-items:center;gap:.875rem;width:100%;min-height:5.25rem;padding:.875rem .875rem .875rem 1.125rem;border-radius:var(--odes-esquina);background:var(--odes-acento);color:var(--odes-acento-texto);overflow-wrap:break-word;transition:box-shadow .2s ease}
+#odes-observatorio a.odes-acceso:hover{background:var(--odes-acento);color:var(--odes-acento-texto);box-shadow:var(--odes-sombra-3)}
+#odes-observatorio a.odes-acceso.odes-pendiente{box-shadow:none;cursor:default}
+#odes-observatorio .odes-acceso__numero{flex:none;min-width:2rem;font-size:min(calc(1.125rem + .9vw),2rem);font-weight:900;line-height:1;text-align:center;font-variant-numeric:tabular-nums}
+#odes-observatorio .odes-acceso__separador{flex:none;align-self:stretch;width:2px;margin:.375rem 0;background:currentColor;opacity:.4}
+#odes-observatorio .odes-acceso__texto{display:flex;flex:1 1 auto;flex-direction:column;align-items:flex-start;gap:.125rem;min-width:0}
+#odes-observatorio .odes-acceso__titulo{font-size:1.1875rem;font-weight:700;line-height:1.25}
+#odes-observatorio .odes-acceso__periodo{font-size:1rem;font-weight:400;line-height:1.3}
+#odes-observatorio .odes-acceso__flecha{flex:none;display:inline-flex;align-items:center;justify-content:center;width:2.25rem;height:2.25rem;border-radius:50%;background:#fff;color:#163854}
+#odes-observatorio .odes-acceso__flecha .odes-i{width:1.375rem;height:1.375rem}
+#odes-observatorio .odes-pendiente .odes-acceso__flecha{display:none}
+#odes-observatorio .odes-acceso .odes-pronto{margin-top:.25rem}
+@media (min-width:768px){#odes-observatorio .odes-accesos{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1200px){#odes-observatorio .odes-accesos{grid-template-columns:repeat(3,minmax(0,1fr))}}
+/* Nivel 4 en escritorio: Quienes somos y el contacto, mas angostos que la columna y centrados */
+@media (min-width:1200px){#odes-observatorio .odes-nivel-4 .odes-pilares,#odes-observatorio .odes-nivel-4 .odes-contacto{max-width:56rem;margin-left:auto;margin-right:auto}}
+#odes-observatorio .odes-pronto{display:inline-flex;align-items:center;padding:.125rem .5rem;border-radius:50rem;background:#fff;color:var(--odes-neutro-10);font-size:.75rem;font-weight:700;line-height:1.4;letter-spacing:0;text-transform:none}
+
+/* 5. Botones flotantes: Repositorio (arriba) y SIVU (abajo) van junto al mapa, ver .odes-lateral. A ODES se
+   llega desde el robot y su boton "Consultale a ODES" (ver .odes-robot) */
+#odes-observatorio a.odes-flotante,#odes-observatorio a.odes-flotante:focus{position:fixed;z-index:290;display:inline-flex;align-items:center;justify-content:center;width:4rem;height:4rem;padding:.25rem;border:2px solid var(--odes-morado-40);border-radius:50%;background:var(--odes-morado-40);color:#fff;box-shadow:var(--odes-sombra-3);transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out}
+#odes-observatorio a.odes-flotante:hover{background:var(--odes-morado-20);border-color:var(--odes-morado-20);color:#fff;box-shadow:var(--odes-sombra-3)}
+#odes-observatorio a.odes-flotante.odes-pendiente{cursor:default}
+#odes-observatorio .odes-flotante__icono{display:inline-flex;align-items:center;justify-content:center;width:100%;height:100%;border:2px solid #fff;border-radius:50%}
+#odes-observatorio .odes-flotante__icono .odes-i{width:2rem;height:2rem}
+#odes-observatorio .odes-flotante__sigla{font-size:.875rem;font-weight:700;line-height:1}
+/* El nombre se ve al pasar el mouse o al llegar con el teclado; los lectores de pantalla lo leen siempre */
+#odes-observatorio .odes-flotante__texto{position:absolute;top:50%;right:calc(100% + .625rem);display:flex;flex-direction:column;align-items:flex-start;gap:.25rem;padding:.5rem .75rem;border-radius:var(--odes-radio-lg);background:var(--odes-neutro-10);color:#fff;font-size:.875rem;font-weight:700;line-height:1.3;white-space:nowrap;box-shadow:var(--odes-sombra-2);opacity:0;pointer-events:none;transform:translateY(-50%);transition:opacity .15s ease}
+#odes-observatorio .odes-flotante--odes .odes-flotante__texto,#odes-observatorio .odes-flotante--repositorio .odes-flotante__texto,#odes-observatorio .odes-flotante--sivu .odes-flotante__texto{right:auto;left:calc(100% + .625rem)}
+#odes-observatorio a.odes-flotante:hover .odes-flotante__texto,#odes-observatorio a.odes-flotante:focus-visible .odes-flotante__texto{opacity:1}
+#odes-observatorio .odes-flotante:focus-visible{outline-color:var(--odes-neutro-10);outline-offset:3px}
+/* Repositorio y SIVU empiezan junto al mapa y bajan con la pagina (sticky) hasta el final del bloque.
+   .odes-lateral va antes del mapa y no ocupa espacio: la seccion del mapa sube lo mismo que ella mide. No recibe
+   clics; sus botones si. --odes-lateral-inicio (lo pone el script) es lo que hay del inicio del tramo al mapa.
+   Hasta 1359px quedan en la esquina inferior izquierda, desde el mapa hasta el final; desde 1360px van en el
+   margen izquierdo, al lado del mapa, mas grandes y centrados en la altura de la ventana. */
+#odes-observatorio .odes-tramo{--odes-lateral-alto:8.75rem;display:flow-root}
+#odes-observatorio .odes-lateral{position:sticky;z-index:290;top:calc(100vh - var(--odes-lateral-alto) - 16px);height:var(--odes-lateral-alto);margin-top:var(--odes-lateral-inicio,0px);pointer-events:none}
+@supports (height:100svh){#odes-observatorio .odes-lateral{top:calc(100svh - var(--odes-lateral-alto) - 16px)}}
+#odes-observatorio .odes-lateral+.odes-seccion{margin-top:calc(-1 * (var(--odes-lateral-alto) + var(--odes-lateral-inicio,0px)))}
+#odes-observatorio .odes-lateral__botones{position:absolute;top:0;left:calc(var(--odes-franja-izquierda,-20px) + 16px);display:flex;flex-direction:column;gap:.75rem}
+#odes-observatorio .odes-lateral a.odes-flotante,#odes-observatorio .odes-lateral a.odes-flotante:focus{position:relative;pointer-events:auto}
+/* El boton ODES solo existe en celular (ahi no se muestra el robot): ver la regla de max-width 575.98px */
+#odes-observatorio .odes-lateral a.odes-flotante--odes{display:none}
+@media (min-width:1360px){
+  #odes-observatorio .odes-tramo{--odes-lateral-alto:11rem}
+  #odes-observatorio .odes-lateral{top:calc(50vh - var(--odes-lateral-alto) / 2)}
+  #odes-observatorio .odes-lateral__botones{left:auto;right:calc(100% + 1.5rem);gap:1rem}
+  #odes-observatorio .odes-lateral a.odes-flotante,#odes-observatorio .odes-lateral a.odes-flotante:focus{width:5rem;height:5rem}
+  #odes-observatorio .odes-lateral .odes-flotante__icono .odes-i{width:2.5rem;height:2.5rem}
+  #odes-observatorio .odes-lateral .odes-flotante__sigla{font-size:1rem}
+}
+/* Robot ODES flotante: abajo a la derecha, desde el mapa hasta el final del bloque. .odes-asistente va antes de
+   .odes-lateral y no ocupa espacio (alto 0): empieza a la altura del mapa (--odes-lateral-inicio) y se pega a
+   --odes-asistente-abajo del borde inferior de la ventana; el robot y su boton cuelgan hacia arriba desde ahi,
+   a --odes-asistente-derecha del borde derecho de la ventana (35 px mas que el boton "Volver arriba"). Queda justo encima del boton "Volver arriba" del tema (45 px, a 15 px
+   del borde; hasta 1140 px, a 72 px), para no taparlo. */
+#odes-observatorio .odes-tramo{--odes-asistente-abajo:72px;--odes-asistente-derecha:50px}
+#odes-observatorio .odes-asistente{position:sticky;z-index:290;top:calc(100vh - var(--odes-asistente-abajo));height:0;margin-top:var(--odes-lateral-inicio,0px);pointer-events:none}
+@supports (height:100svh){#odes-observatorio .odes-asistente{top:calc(100svh - var(--odes-asistente-abajo))}}
+#odes-observatorio .odes-asistente+.odes-lateral{margin-top:0}
+#odes-observatorio .odes-asistente .odes-robot{position:absolute;bottom:0;right:calc(100% - var(--odes-ventana,100vw) - var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2)) + var(--odes-asistente-derecha));pointer-events:auto}
+@media (max-width:1140px){#odes-observatorio .odes-tramo{--odes-asistente-abajo:129px;--odes-asistente-derecha:57px}}
+/* Si un contenedor del tema recorta el contenido, sticky no funciona: quedan fijos en la esquina, como antes */
+#odes-observatorio .odes-tramo--fijo .odes-lateral{position:static;height:0;margin-top:0}
+#odes-observatorio .odes-tramo--fijo .odes-lateral+.odes-seccion{margin-top:0}
+#odes-observatorio .odes-tramo--fijo .odes-lateral__botones{position:fixed;top:auto;right:auto;bottom:16px;left:16px}
+#odes-observatorio .odes-tramo--fijo .odes-asistente{position:static;margin-top:0}
+#odes-observatorio .odes-tramo--fijo .odes-asistente .odes-robot{position:fixed;right:var(--odes-asistente-derecha);bottom:var(--odes-asistente-abajo)}
+
+/* 4. Mapa georreferenciado */
+#odes-observatorio .odes-mapa__barra{display:flex;flex-wrap:wrap;align-items:flex-end;gap:1rem 1.25rem;margin-bottom:1.5rem}
+#odes-observatorio .odes-mapa__barra .odes-campo{flex:1 1 16rem;min-width:0;max-width:28rem}
+#odes-observatorio .odes-mapa{display:grid;gap:1.5rem}
+#odes-observatorio .odes-mapa__lienzo{position:relative;padding:0;border:1px solid var(--odes-neutro-90);border-radius:var(--odes-esquina);background:var(--odes-neutro-99)}
+#odes-observatorio .odes-mapa__marco{position:relative;overflow:hidden;--odes-zoom:1;--odes-et:20px;--odes-et-nombre:12px}
+#odes-observatorio .odes-mapa__svg{display:block;width:100%;height:auto;overflow:hidden}
+#odes-observatorio .odes-mapa__capa{position:absolute;top:0;left:0;height:100%;pointer-events:none}
+/* La capa de fondo sobresale 24px por cada lado y se recorta con las esquinas de arriba del lienzo (abajo va la leyenda):
+   asi el difuminado llega parejo hasta el borde */
+#odes-observatorio svg.odes-mapa__fondo{position:absolute;top:-24px;left:-24px;width:calc(100% + 48px);height:calc(100% + 48px);clip-path:inset(24px round calc(var(--odes-radio-xxl) - 1px) calc(var(--odes-radio-xxl) - 1px) 0 0)}
+/* Capa de fondo: todas las zonas. La sombra deja ver el contorno blanco de la ciudad */
+#odes-observatorio .odes-mapa__fondo{filter:drop-shadow(0 2px 5px rgba(11,58,86,.32));transition:filter .45s ease,opacity .45s ease}
+#odes-observatorio .odes-mapa__base{fill:#fff;stroke:#fff;stroke-width:6;stroke-linejoin:round;vector-effect:non-scaling-stroke;pointer-events:none}
+#odes-observatorio .odes-zona{fill:var(--odes-neutro-90);fill-rule:evenodd;stroke:#fff;stroke-width:1.5;stroke-linejoin:round;vector-effect:non-scaling-stroke;cursor:pointer;transition:fill .45s ease}
+/* Capa de frente: zona bajo el cursor y zona elegida, con borde blanco grueso */
+#odes-observatorio .odes-mapa__frente{position:relative;pointer-events:none;filter:drop-shadow(0 3px 6px rgba(4,20,30,.42))}
+#odes-observatorio .odes-mapa__hover,#odes-observatorio .odes-mapa__foco{fill-rule:evenodd;stroke:#fff;stroke-linejoin:round;vector-effect:non-scaling-stroke;transition:fill .45s ease}
+#odes-observatorio .odes-mapa__hover{stroke-width:3.5}
+#odes-observatorio .odes-mapa__foco{stroke-width:4}
+#odes-observatorio .odes-mapa__etiquetas{transition:opacity .3s ease}
+#odes-observatorio .odes-et{font-family:var(--odes-fuente);font-size:calc(var(--odes-et) / var(--odes-zoom));font-weight:700;fill:var(--odes-neutro-10);stroke:#fff;stroke-width:calc(3px / var(--odes-zoom));stroke-linejoin:round;paint-order:stroke;text-anchor:middle;dominant-baseline:central}
+#odes-observatorio .odes-et--claro{fill:#fff;stroke:var(--odes-marino-40)}
+#odes-observatorio .odes-et--nombre{display:none;font-size:calc(var(--odes-et-nombre) / var(--odes-zoom));font-weight:500}
+/* Modo foco: la zona elegida queda centrada y nitida; el resto se difumina */
+#odes-observatorio .odes-mapa--foco{cursor:zoom-out}
+#odes-observatorio .odes-mapa--foco .odes-mapa__fondo{filter:drop-shadow(0 2px 5px rgba(11,58,86,.32)) blur(3px) grayscale(.5);opacity:.45}
+#odes-observatorio .odes-mapa--foco .odes-zona{cursor:zoom-out}
+#odes-observatorio .odes-mapa--foco .odes-zona--foco{cursor:default}
+#odes-observatorio .odes-mapa--foco .odes-mapa__etiquetas{opacity:0}
+@keyframes odes-surgir{from{opacity:0}to{opacity:1}}
+#odes-observatorio .odes-mapa__chip{position:absolute;top:0;left:0;z-index:2;display:flex;flex-direction:column;align-items:center;max-width:15rem;padding:.375rem .875rem;border-radius:var(--odes-radio-lg);background:#fff;color:var(--odes-neutro-10);box-shadow:var(--odes-sombra-2);line-height:1.25;text-align:center;pointer-events:none;transform:translate(-50%,-50%);animation:odes-surgir .3s ease both}
+#odes-observatorio .odes-mapa__chip-nombre{font-size:.8125rem;font-weight:700}
+#odes-observatorio .odes-mapa__chip-valor{font-size:1.125rem;font-weight:500}
+#odes-observatorio .odes-mapa__volver{position:absolute;top:.75rem;left:.75rem;z-index:3;display:inline-flex;align-items:center;gap:.375rem;min-height:2.75rem;padding:.5rem .875rem .5rem .625rem;border:2px solid #fff;border-radius:var(--odes-radio-boton);background:var(--odes-marino-40);color:#fff;font-size:.9375rem;font-weight:700;line-height:1.2;box-shadow:var(--odes-sombra-2);cursor:pointer;animation:odes-surgir .3s ease both;transition:background-color .2s ease}
+#odes-observatorio .odes-mapa__volver:hover{background:var(--odes-marino-20);border-color:#fff}
+#odes-observatorio .odes-mapa__volver .odes-i{width:1.25rem;height:1.25rem}
+#odes-observatorio .odes-tooltip{position:absolute;top:0;left:0;z-index:4;min-width:9rem;max-width:16rem;padding:.5rem .75rem;border-radius:var(--odes-radio-lg);background:var(--odes-neutro-10);color:#fff;font-size:.875rem;line-height:1.35;box-shadow:var(--odes-sombra-3);pointer-events:none;transform:translate(-50%,calc(-100% - .75rem))}
+#odes-observatorio .odes-tooltip__zona{display:block;color:var(--odes-neutro-90)}
+#odes-observatorio .odes-tooltip__valor{display:block;font-size:1rem;font-weight:700}
+#odes-observatorio .odes-tooltip::after{content:"";position:absolute;bottom:-.3rem;left:50%;width:.75rem;height:.75rem;background:inherit;transform:translateX(-50%) rotate(45deg)}
+#odes-observatorio .odes-panel{display:flex;flex-direction:column;gap:1.25rem}
+#odes-observatorio .odes-campo label{display:block;margin-bottom:.375rem;font-size:.875rem;font-weight:700;color:var(--odes-neutro-30)}
+#odes-observatorio .odes-select{display:block;width:100%;min-width:0;min-height:2.75rem;padding:.5rem 2.75rem .5rem .875rem;border:1px solid var(--odes-neutro-60);border-radius:var(--odes-radio);background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960'%3E%3Cpath fill='%230b3a56' d='M480-345 240-585l56-56 184 184 184-184 56 56-240 240Z'/%3E%3C/svg%3E") no-repeat right .75rem center/1.5rem;color:var(--odes-neutro-10);font-size:1rem;text-overflow:ellipsis;cursor:pointer;-webkit-appearance:none;appearance:none}
+#odes-observatorio .odes-info{padding:1.5rem;border-radius:var(--odes-esquina);background:var(--odes-marino-40);color:#fff}
+/* Robot ODES (flota abajo a la derecha, ver .odes-asistente): mira de lado a lado en bucle. El video y la
+   imagen son transparentes (sin fondo): el robot se ve sobre lo que haya detras. Sin script o con "reducir
+   movimiento" queda la imagen quieta, mirando al frente. 18.72rem en escritorio (15.6rem + 20 %); el video
+   mide 720 px para que se vea nitido en pantallas de alta densidad. */
+#odes-observatorio .odes-robot{position:relative;display:flex;flex-direction:column;align-items:center}
+#odes-observatorio .odes-robot__marco{position:relative;width:18.72rem}
+#odes-observatorio a.odes-robot__enlace{display:block;cursor:pointer}
+#odes-observatorio .odes-robot__escena{position:relative;aspect-ratio:1/1}
+#odes-observatorio .odes-robot__accion{display:flex;justify-content:center;margin-top:.5rem}
+#odes-observatorio .odes-asistente a.odes-btn,#odes-observatorio .odes-asistente a.odes-btn:focus{width:auto;min-width:0;padding:.5rem .875rem;border:0;font-size:.9375rem;white-space:nowrap;box-shadow:var(--odes-sombra-2)}
+/* Boton solido morado, sobre fondo blanco (blanco sobre morado-40: 5,4:1) */
+#odes-observatorio a.odes-btn--morado,#odes-observatorio a.odes-btn--morado:focus{border-color:var(--odes-morado-40);background:var(--odes-morado-40);color:#fff}
+#odes-observatorio a.odes-btn--morado:hover{border-color:var(--odes-morado-20);background:var(--odes-morado-20);color:#fff}
+#odes-observatorio .odes-robot__escena img,#odes-observatorio .odes-robot__video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;background:transparent}
+#odes-observatorio .odes-robot__video{display:none}
+#odes-observatorio .odes-robot--animado .odes-robot__quieto{display:none}
+#odes-observatorio .odes-robot--animado .odes-robot__video--bucle{display:block}
+#odes-observatorio button.odes-robot__pausa{position:absolute;right:0;bottom:0;display:inline-flex;align-items:center;justify-content:center;width:2rem;height:2rem;padding:0;border:1px solid var(--odes-neutro-80);border-radius:50%;background:#fff;color:var(--odes-neutro-30);cursor:pointer;transition:background-color .15s ease}
+#odes-observatorio button.odes-robot__pausa:hover{background:var(--odes-neutro-95)}
+#odes-observatorio .odes-robot__pausa .odes-i{width:1rem;height:1rem}
+/* Mas pequeno en tableta y celular (despues de las reglas de arriba, para que ganen) */
+@media (max-width:991.98px){#odes-observatorio .odes-robot__marco{width:14.82rem}}
+@media (max-width:575.98px){
+  #odes-observatorio .odes-robot__marco{width:11.7rem}
+  #odes-observatorio .odes-asistente a.odes-btn,#odes-observatorio .odes-asistente a.odes-btn:focus{padding:.375rem .75rem;font-size:.8125rem}
+  #odes-observatorio .odes-asistente a.odes-btn .odes-i{width:1.125rem;height:1.125rem}
+}
+#odes-observatorio .odes-info :focus-visible{outline-color:#fff}
+#odes-observatorio .odes-info__tipo{font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+#odes-observatorio .odes-info__nombre{margin-top:.25rem;font-size:1.5rem;font-weight:700;line-height:1.2}
+#odes-observatorio .odes-info__valor{margin-top:1rem;font-size:min(calc(1.475rem + 2.7vw),3.5rem);font-weight:300;line-height:1}
+#odes-observatorio .odes-info__zona{margin-top:.75rem;padding-top:.75rem;border-top:1px solid rgba(255,255,255,.4);font-size:.875rem}
+#odes-observatorio .odes-info__volver{margin-top:.75rem;padding:0;border:0;background:none;color:#fff;font-size:.875rem;font-weight:700;text-decoration:underline;text-underline-offset:.2em;cursor:pointer}
+/* Leyenda por rangos: una linea en el borde de abajo del mapa (color, rango, color, rango...); se resalta el rango
+   de la zona bajo el cursor o elegida. Cuantas comunas y corregimientos hay en cada rango va para lectores de pantalla */
+#odes-observatorio .odes-leyenda{padding:.5rem 1.25rem .5rem 1rem;border-top:1px solid var(--odes-neutro-90);border-radius:0 0 calc(var(--odes-radio-unal) - 1px) calc(var(--odes-radio-xxl) - 1px);background:#fff}
+#odes-observatorio .odes-leyenda__clases{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.25rem .375rem}
+#odes-observatorio .odes-leyenda__clase{display:inline-flex;align-items:center;gap:.3125rem;padding:.125rem .25rem;border-radius:var(--odes-radio);font-size:.8125rem;line-height:1.3;color:var(--odes-neutro-30);white-space:nowrap;transition:background-color .15s ease}
+#odes-observatorio .odes-leyenda__muestra{flex:none;width:.875rem;height:.625rem;border-radius:.1875rem;background:var(--odes-neutro-90);box-shadow:inset 0 0 0 1px rgba(0,0,0,.1)}
+#odes-observatorio .odes-leyenda__rango{font-variant-numeric:tabular-nums}
+#odes-observatorio .odes-leyenda__clase--activa{background:var(--odes-marino-95);color:var(--odes-neutro-10)}
+#odes-observatorio .odes-leyenda__clase--activa .odes-leyenda__muestra{box-shadow:inset 0 0 0 1px rgba(0,0,0,.1),0 0 0 2px #fff,0 0 0 3px var(--odes-neutro-10)}
+#odes-observatorio .odes-mapa__fuente{font-size:.75rem;color:var(--odes-neutro-50)}
+#odes-observatorio .odes-mapa__principal{min-width:0}
+/* Descargas: botones de icono del kit (contorno azul) dentro del mapa, arriba a la derecha; el nombre se ve debajo
+   al pasar el mouse o con el teclado */
+#odes-observatorio .odes-descargas{position:absolute;top:.75rem;right:.75rem;z-index:3;display:flex;gap:.5rem}
+#odes-observatorio .odes-descarga{position:relative;display:inline-flex;align-items:center;justify-content:center;width:2.5rem;height:2.5rem;padding:0;border:2px solid var(--odes-marino-40);border-radius:var(--odes-radio-boton);background:#fff;color:var(--odes-marino-40);cursor:pointer;transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out}
+#odes-observatorio .odes-descarga:hover{background:var(--odes-marino-20);border-color:var(--odes-marino-20);color:#fff}
+#odes-observatorio .odes-descarga .odes-i{width:1.5rem;height:1.5rem}
+#odes-observatorio .odes-descarga[aria-busy="true"]{opacity:.6;cursor:progress}
+#odes-observatorio .odes-descarga__nombre{position:absolute;right:0;top:calc(100% + .5rem);z-index:3;padding:.375rem .625rem;border-radius:var(--odes-radio-lg);background:var(--odes-neutro-10);color:#fff;font-size:.8125rem;font-weight:700;line-height:1.3;white-space:nowrap;box-shadow:var(--odes-sombra-2);opacity:0;pointer-events:none;transition:opacity .15s ease}
+#odes-observatorio .odes-descarga:hover .odes-descarga__nombre,#odes-observatorio .odes-descarga:focus-visible .odes-descarga__nombre{opacity:1}
+#odes-observatorio .odes-tabla{margin-top:1.5rem;border:1px solid var(--odes-neutro-80);border-radius:var(--odes-radio-xxl);background:#fff}
+#odes-observatorio .odes-tabla summary{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.875rem 1.25rem;font-weight:700;cursor:pointer;list-style:none}
+#odes-observatorio .odes-tabla summary::-webkit-details-marker{display:none}
+#odes-observatorio .odes-tabla summary .odes-i{transition:transform .2s ease}
+#odes-observatorio .odes-tabla[*|open] summary .odes-i{transform:rotate(180deg)}
+#odes-observatorio .odes-tabla__scroll{overflow-x:auto;padding:0 1.25rem 1.25rem}
+#odes-observatorio .odes-tabla table{width:100%;margin:0;border-collapse:collapse;font-size:.9375rem}
+#odes-observatorio .odes-tabla th,#odes-observatorio .odes-tabla td{padding:.5rem .75rem;border-bottom:1px solid var(--odes-neutro-90);text-align:left;vertical-align:middle}
+#odes-observatorio .odes-tabla__ayuda{display:flex;flex-wrap:wrap;gap:.25rem .5rem;padding:0 1.25rem .75rem;font-size:.875rem;line-height:1.4;color:var(--odes-neutro-50)}
+#odes-observatorio .odes-tabla__estado{font-weight:700;color:var(--odes-neutro-30)}
+#odes-observatorio .odes-tabla thead th{padding:0;background:var(--odes-neutro-95);color:var(--odes-neutro-30);font-weight:700}
+/* Titulos de columna: un clic ordena de menor a mayor (o de la A a la Z) y otro clic al reves */
+#odes-observatorio .odes-orden{display:flex;align-items:center;gap:.25rem;width:100%;min-height:2.75rem;padding:.5rem .75rem;border:0;background:none;color:inherit;font:inherit;font-weight:700;line-height:1.3;text-align:left;cursor:pointer;transition:background-color .15s ease,color .15s ease}
+#odes-observatorio .odes-orden:hover{background:var(--odes-neutro-90);color:var(--odes-neutro-10)}
+#odes-observatorio .odes-orden .odes-i{flex:none;width:1.125rem;height:1.125rem;color:var(--odes-neutro-60)}
+#odes-observatorio .odes-orden--activa,#odes-observatorio .odes-orden--activa:hover,#odes-observatorio .odes-orden--activa .odes-i{color:var(--odes-marino-40)}
+#odes-observatorio .odes-num .odes-orden{justify-content:flex-end;text-align:right}
+#odes-observatorio .odes-tabla tbody th{font-weight:500}
+#odes-observatorio .odes-tabla .odes-num{text-align:right;font-variant-numeric:tabular-nums}
+#odes-observatorio .odes-tabla td.odes-num{white-space:nowrap}
+
+/* 6. Quienes somos y contacto */
+#odes-observatorio .odes-pilares{display:grid;gap:1rem}
+#odes-observatorio .odes-pilar{display:flex;flex-direction:column;gap:.75rem;padding:1.25rem;border:1px solid var(--odes-neutro-80);border-radius:var(--odes-radio-xxl);background:#fff}
+#odes-observatorio .odes-pilar__icono{display:inline-flex;align-items:center;justify-content:center;width:3.5rem;height:3.5rem;border-radius:50%;background:var(--odes-verde-60);color:#fff}
+#odes-observatorio .odes-pilar__icono .odes-i{width:2rem;height:2rem}
+#odes-observatorio .odes-pilar__texto{color:var(--odes-neutro-30)}
+#odes-observatorio a.odes-enlace{display:block;margin-top:auto;padding-top:.25rem;color:var(--odes-morado-40);font-weight:700}
+#odes-observatorio a.odes-enlace:hover{color:var(--odes-morado-30);text-decoration:underline;text-underline-offset:.2em}
+#odes-observatorio .odes-enlace .odes-i{width:1.25rem;height:1.25rem;margin-left:.25rem;vertical-align:-.3em}
+/* La flecha va pegada a la ultima palabra: nunca queda sola en una linea */
+#odes-observatorio .odes-sin-corte{white-space:nowrap}
+#odes-observatorio .odes-contacto{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem;margin-top:1.5rem;padding:1.75rem;border-radius:var(--odes-esquina);background:var(--odes-morado-40);color:#fff}
+#odes-observatorio .odes-contacto p{margin-top:.25rem}
+#odes-observatorio a.odes-correo,#odes-observatorio a.odes-correo:hover{font-weight:700;text-decoration:underline;text-underline-offset:.2em}
+#odes-observatorio .odes-acciones{display:flex;flex-wrap:wrap;gap:.75rem}
+#odes-observatorio a.odes-btn,#odes-observatorio a.odes-btn:focus{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-width:10.25rem;padding:.5rem .875rem;border:2px solid #fff;border-radius:var(--odes-radio-boton);font-size:1rem;font-weight:700;line-height:1.5;text-align:center;transition:background-color .2s ease,color .2s ease}
+#odes-observatorio a.odes-btn--claro,#odes-observatorio a.odes-btn--claro:focus{background:#fff;color:var(--odes-morado-40)}
+#odes-observatorio a.odes-btn--claro:hover{background:var(--odes-morado-95);border-color:var(--odes-morado-95);color:var(--odes-morado-30)}
+#odes-observatorio a.odes-btn--contorno,#odes-observatorio a.odes-btn--contorno:focus{background:transparent;color:#fff}
+#odes-observatorio a.odes-btn--contorno:hover{background:#fff;color:var(--odes-morado-40)}
+
+/* Puntos de quiebre de la plantilla */
+@media (max-width:575.98px){
+  #odes-observatorio .odes-seccion--cifras{padding-top:1.5rem}
+  #odes-observatorio .odes-seccion.odes-seccion--separada{padding-top:2rem}
+  #odes-observatorio .odes-seccion--separada>.odes-contenedor::before{margin-bottom:1.5rem}
+  #odes-observatorio .odes-accesos{gap:.75rem}
+  #odes-observatorio a.odes-acceso,#odes-observatorio a.odes-acceso:focus{min-height:5rem;gap:.75rem;padding:.875rem 1rem}
+  #odes-observatorio .odes-acceso__numero{min-width:1.5rem;font-size:2rem}
+  #odes-observatorio .odes-acceso__periodo{font-size:.9375rem}
+  #odes-observatorio .odes-acceso__flecha{width:2.25rem;height:2.25rem}
+  #odes-observatorio .odes-flotante__texto{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  #odes-observatorio a.odes-flotante,#odes-observatorio a.odes-flotante:focus{width:3.5rem;height:3.5rem}
+  /* En celular el robot no se muestra: ODES pasa a ser un boton redondo encima de Repositorio y SIVU. Mientras
+     esos dos esten ocultos (comentados) solo queda ODES: 3.5rem. Con los 3 botones vuelve a 12rem (3 de 3.5rem
+     con .75rem entre ellos). */
+  #odes-observatorio .odes-asistente .odes-robot{display:none}
+  #odes-observatorio .odes-lateral a.odes-flotante--odes{display:inline-flex}
+  #odes-observatorio .odes-tramo{--odes-lateral-alto:3.5rem}
+  #odes-observatorio .odes-flotante__icono .odes-i{width:1.75rem;height:1.75rem}
+  #odes-observatorio .odes-flotante__sigla{font-size:.75rem}
+  #odes-observatorio .odes-mapa__volver{top:.5rem;left:.5rem}
+  #odes-observatorio .odes-descargas{top:.5rem;right:.5rem}
+  #odes-observatorio .odes-tabla th:nth-child(3),#odes-observatorio .odes-tabla td:nth-child(3){display:none}
+  #odes-observatorio .odes-tabla__scroll{padding:0 .75rem .75rem}
+  #odes-observatorio .odes-tabla table{font-size:.875rem}
+  #odes-observatorio .odes-tabla th,#odes-observatorio .odes-tabla td{padding:.5rem .375rem}
+  #odes-observatorio .odes-tabla thead th{padding:0}
+  #odes-observatorio .odes-orden{padding:.5rem .375rem;font-size:.8125rem}
+  /* En celular solo se ve la flecha de la columna que ordena: asi la tabla cabe sin desplazarse de lado */
+  #odes-observatorio .odes-orden .odes-i{display:none}
+  #odes-observatorio .odes-orden--activa .odes-i{display:inline-block;width:1rem;height:1rem}
+  #odes-observatorio .odes-tabla__ayuda{padding:0 .75rem .75rem}
+  #odes-observatorio .odes-contacto{padding:1.25rem}
+  #odes-observatorio .odes-acciones,#odes-observatorio a.odes-btn{width:100%}
+}
+/* Celulares de menos de 360 px (320 px): la tabla del mapa cabe sin desplazarse de lado */
+@media (max-width:359.98px){
+  #odes-observatorio .odes-tabla__scroll{padding:0 .25rem .75rem}
+  #odes-observatorio .odes-tabla th,#odes-observatorio .odes-tabla td{padding:.5rem .25rem}
+  #odes-observatorio .odes-tabla thead th{padding:0}
+  #odes-observatorio .odes-orden{gap:.125rem;padding:.5rem .25rem}
+}
+@media (min-width:576px){
+  #odes-observatorio .odes-mapa__marco{--odes-et:15px;--odes-et-nombre:12px}
+  #odes-observatorio .odes-et--nombre{display:inline}
+}
+@media (min-width:768px){
+  #odes-observatorio .odes-mapa__marco{--odes-et:13px;--odes-et-nombre:11px}
+}
+@media (min-width:992px){
+  #odes-observatorio .odes-seccion{padding-top:4rem}
+  #odes-observatorio .odes-seccion:last-child{padding-bottom:4rem}
+  #odes-observatorio .odes-seccion.odes-seccion--separada{padding-top:3rem}
+  #odes-observatorio .odes-seccion--separada>.odes-contenedor::before{margin-bottom:2.5rem}
+  #odes-observatorio .odes-mapa{grid-template-columns:minmax(0,2.25fr) minmax(0,1fr);align-items:start}
+  #odes-observatorio .odes-pilares{grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem}
+  #odes-observatorio .odes-mapa__marco{--odes-et:12px;--odes-et-nombre:10px}
+}
+@media (min-width:992px) and (max-width:1199.98px){
+  #odes-observatorio .odes-leyenda__clase{font-size:.75rem}
+}
+@media print{
+  #odes-observatorio .odes-flotante,#odes-observatorio .odes-asistente .odes-robot{display:none!important}
+}
+@media (prefers-reduced-motion:reduce){
+  #odes-observatorio *,#odes-observatorio *::before,#odes-observatorio *::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+</style>
+
+<div id="odes-observatorio" class="odes" lang="es">
+  <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><symbol id="odes-i-cifra-historicos" viewBox="0 0 200 200"><circle cx="100" cy="100" r="100" fill="#FFFFFF"/><circle cx="100" cy="100" r="89" fill="none" stroke="#163854" stroke-width=".9"/><circle cx="100" cy="100" r="85" fill="none" stroke="#163854" stroke-width=".9"/><g transform="translate(100 100) scale(0.7568) translate(-100 -100)"><path transform="translate(11.887 21.227) scale(0.5660)" d="M72.75 226.45C66.06 224.48 60.33 218.52 59.26 212.41C58.87 210.17 58.83 85.04 59.21 82.81C60.31 76.52 64.30 71.29 69.92 68.79C73.92 67.01 74.30 66.96 85.45 66.94C96.74 66.91 95.38 67.50 95.51 62.54C95.61 58.60 95.83 57.65 97.10 55.65C101.17 49.20 110.49 50.39 113.29 57.72C113.88 59.24 113.88 59.26 113.98 62.72C114.08 66.17 114.09 66.20 114.50 66.56C115.26 67.21 180.70 67.10 181.26 66.45C181.66 65.99 181.67 65.92 181.67 62.82C181.67 54.75 187.28 49.68 193.78 51.89C198.41 53.46 200.33 56.70 200.33 62.92C200.33 67.43 199.11 66.99 211.75 67.00C222.36 67.00 223.31 67.07 225.77 67.98C235.10 71.44 238.60 77.21 238.67 89.27C238.84 120.61 238.66 141.46 238.20 142.14C236.63 144.48 234.06 144.58 232.37 142.37C231.92 141.78 231.92 141.78 231.83 125.06C231.75 108.34 231.75 108.34 231.37 107.96C230.99 107.58 230.99 107.58 153.04 107.57C66.29 107.55 66.77 107.55 66.31 108.17C65.68 109.02 65.83 208.61 66.46 210.75C67.88 215.53 70.22 218.03 74.75 219.61C76.58 220.25 76.58 220.25 127.92 220.29C183.63 220.34 180.08 220.29 180.95 221.05C182.75 222.63 182.43 225.50 180.33 226.58C179.20 227.16 74.75 227.03 72.75 226.45ZM211.02 226.16C194.35 223.51 180.79 211.06 178.17 196.00C178.06 195.40 177.84 194.35 177.66 193.67C177.06 191.27 177.07 184.72 177.68 181.25C181.02 162.25 196.42 148.79 214.83 148.77C233.25 148.74 249.99 163.45 252.01 181.41C252.10 182.24 252.25 183.37 252.34 183.92C252.79 186.74 252.27 193.78 251.41 196.55C251.18 197.27 251.00 197.95 251.00 198.07C251.00 198.44 249.11 203.10 248.04 205.36C245.69 210.31 241.90 214.80 236.63 218.88C229.33 224.53 219.07 227.45 211.02 226.16ZM218.86 218.52C230.18 216.78 239.94 208.46 243.71 197.33C244.27 195.69 244.42 195.05 245.07 191.75C247.08 181.48 241.92 168.72 233.17 162.30C214.27 148.46 189.07 158.78 184.65 182.17C184.21 184.47 184.03 189.33 184.33 190.71C184.43 191.19 184.63 192.20 184.76 192.96C187.00 205.71 197.75 216.38 210.42 218.41C211.79 218.64 213.10 218.85 213.33 218.90C214.06 219.03 216.67 218.86 218.86 218.52ZM209.73 201.43C208.80 200.96 207.87 200.02 204.13 195.83C202.77 194.32 200.93 192.28 200.02 191.30C197.04 188.08 196.93 185.85 199.70 184.40C201.60 183.41 202.64 183.98 206.85 188.37C211.30 193.02 211.07 192.90 212.29 191.29C212.65 190.81 213.39 189.93 213.93 189.33C214.47 188.73 216.44 186.41 218.29 184.17C225.94 174.91 226.63 174.19 227.89 174.04C230.26 173.78 231.84 174.97 231.83 177.03C231.83 178.58 230.98 179.85 226.27 185.35C225.46 186.30 223.81 188.28 222.60 189.73C221.40 191.19 219.51 193.48 218.41 194.82C217.31 196.16 215.93 197.87 215.36 198.63C213.05 201.67 211.62 202.38 209.73 201.43ZM85.88 201.17C83.97 200.18 83.93 199.99 84.08 192.58C84.26 183.96 83.79 184.42 92.52 184.42C101.38 184.42 101.43 184.48 101.03 195.85C100.90 199.75 100.81 200.01 99.26 200.92C98.18 201.56 87.03 201.76 85.88 201.17ZM119.04 201.15C117.10 200.19 116.98 199.68 117.04 192.38C117.10 183.78 116.66 184.24 124.89 184.26C134.05 184.28 133.82 184.07 133.96 192.51C134.08 199.46 133.84 200.38 131.71 201.27C130.70 201.70 119.94 201.59 119.04 201.15ZM152.08 201.24C151.41 200.89 150.53 200.03 150.21 199.42C149.84 198.71 150.01 186.94 150.41 186.19C151.28 184.50 152.05 184.30 157.94 184.20C167.31 184.06 167.42 184.20 166.88 196.27C166.72 199.67 166.61 199.98 165.12 200.96C164.26 201.54 153.09 201.77 152.08 201.24ZM160.86 195.00C161.32 194.44 161.31 191.05 160.85 190.48C160.38 189.89 156.89 189.77 156.35 190.32C155.58 191.09 155.93 194.83 156.80 195.27C157.54 195.63 160.51 195.44 160.86 195.00ZM94.74 195.01C95.10 194.71 95.12 191.06 94.76 190.57C94.39 190.06 91.01 189.99 90.51 190.49C89.69 191.31 90.11 195.06 91.04 195.20C92.03 195.34 94.49 195.22 94.74 195.01ZM127.83 195.00C128.13 194.71 128.17 194.44 128.17 192.83C128.17 190.26 128.07 190.17 125.45 190.17C122.92 190.17 122.92 190.17 122.92 192.75C122.92 195.34 122.91 195.33 125.53 195.33C127.28 195.33 127.54 195.30 127.83 195.00ZM86.08 171.45C83.92 170.39 83.81 169.98 83.93 163.50C84.04 157.04 84.05 156.97 84.79 156.14C86.20 154.58 86.19 154.58 92.68 154.58C101.31 154.58 101.10 154.38 101.04 163.07C100.99 170.09 100.87 170.52 98.77 171.40C97.58 171.90 87.09 171.94 86.08 171.45ZM118.86 171.40C117.05 170.50 117.09 170.66 117.04 163.52C116.98 156.55 116.96 156.72 118.11 155.66C119.37 154.50 119.37 154.50 125.22 154.50C134.01 154.50 133.88 154.38 133.97 163.01C134.07 171.97 134.20 171.83 125.24 171.83C119.73 171.83 119.73 171.83 118.86 171.40ZM155.33 171.68C150.01 171.50 150.08 171.61 150.08 163.22C150.08 154.25 149.84 154.50 158.38 154.50C167.26 154.50 167.11 154.34 166.89 163.68C166.69 172.31 167.02 172.08 155.33 171.68ZM160.82 165.39C161.33 164.75 161.34 161.34 160.83 160.83C160.35 160.35 157.07 160.33 156.48 160.82C155.99 161.22 155.87 164.69 156.33 165.24C156.97 166.01 160.25 166.12 160.82 165.39ZM94.57 165.29C95.21 164.72 95.30 161.32 94.69 160.82C94.00 160.26 90.98 160.35 90.51 160.94C89.89 161.73 90.05 165.09 90.73 165.54C91.22 165.86 94.14 165.68 94.57 165.29ZM127.74 165.41C128.31 164.84 128.35 161.33 127.79 160.93C127.20 160.49 123.84 160.44 123.39 160.86C122.84 161.38 122.79 164.79 123.33 165.33C123.78 165.78 127.30 165.84 127.74 165.41ZM86.25 142.02C84.15 141.04 84.01 140.52 84.00 133.45C84.00 124.79 83.68 125.11 92.33 125.03C99.28 124.96 99.92 125.12 100.77 127.12C101.11 127.90 101.10 139.26 100.77 140.06C100.48 140.75 99.42 141.80 98.71 142.11C97.78 142.50 87.13 142.42 86.25 142.02ZM119.19 142.15C117.10 141.32 117.00 140.95 117.00 133.78C117.00 127.30 117.01 127.21 117.86 126.24C118.91 125.04 119.04 125.02 125.59 124.99C132.12 124.95 131.94 124.92 133.04 126.14C133.95 127.15 134.00 127.50 134.00 133.75C133.99 140.45 133.73 141.36 131.61 142.16C131.02 142.38 119.75 142.38 119.19 142.15ZM152.25 142.01C150.04 140.98 149.92 140.54 150.07 133.42C150.25 124.68 149.97 124.94 158.83 125.03C165.32 125.09 165.35 125.10 166.57 127.02C166.89 127.54 167.13 138.72 166.84 139.82C166.65 140.50 165.34 141.88 164.61 142.16C163.69 142.50 153.03 142.38 152.25 142.01ZM197.13 139.16C195.94 138.53 195.91 138.37 195.95 132.92C196.00 127.07 195.98 127.22 196.94 126.27C198.35 124.88 198.18 124.91 204.46 124.95C211.25 124.98 211.58 125.07 212.75 127.08C213.18 127.83 213.27 135.17 212.86 136.20C212.22 137.82 211.27 138.50 209.66 138.50C207.60 138.50 207.10 137.93 207.55 136.12C208.18 133.62 208.02 131.65 207.17 131.22C206.40 130.83 201.91 130.92 201.50 131.33C201.10 131.73 201.11 131.56 201.36 134.97C201.55 137.50 201.55 137.72 201.26 138.25C200.66 139.37 198.45 139.85 197.13 139.16ZM94.30 136.16C94.95 135.93 94.96 135.90 95.09 133.54C95.24 131.04 95.21 131.00 92.89 131.00C90.25 131.00 90.17 131.08 90.17 133.70C90.17 136.26 91.58 137.10 94.30 136.16ZM127.76 135.92C128.14 135.54 128.17 135.41 128.17 133.69C128.17 130.96 128.11 130.91 125.36 131.10C123.01 131.26 123.00 131.27 123.00 133.67C123.00 136.22 123.11 136.33 125.58 136.33C127.24 136.33 127.37 136.31 127.76 135.92ZM160.69 136.02C161.27 135.54 161.39 131.89 160.85 131.35C160.33 130.83 157.01 130.82 156.50 131.33C156.09 131.74 155.99 135.38 156.38 135.87C156.84 136.45 160.02 136.56 160.69 136.02ZM231.11 100.38C231.65 100.07 231.64 100.18 231.70 92.08C231.75 84.68 231.75 84.57 231.37 83.26C230.12 78.95 227.22 76.03 222.70 74.53C220.65 73.86 221.22 73.88 208.04 73.96C199.75 74.01 200.50 73.75 200.49 76.54C200.49 77.57 200.42 79.23 200.34 80.21C199.73 88.17 190.60 91.56 184.54 86.08C182.40 84.15 181.84 82.52 181.71 77.95C181.63 75.16 181.58 74.59 181.33 74.29C180.93 73.80 115.04 73.70 114.43 74.19C114.11 74.45 114.08 74.71 113.98 78.03C113.90 80.67 113.81 81.77 113.61 82.30C110.38 90.99 98.76 90.84 95.87 82.08C95.61 81.30 95.51 80.39 95.42 77.83C95.33 75.39 95.25 74.52 95.07 74.32C94.76 73.97 78.32 73.70 76.40 74.00C72.16 74.68 68.41 77.84 66.70 82.19C66.08 83.75 66.08 83.75 66.03 91.71C65.98 99.95 66.00 100.22 66.67 100.47C67.28 100.70 230.71 100.60 231.11 100.38ZM106.38 81.50C107.95 80.43 108.02 79.86 107.93 68.62C107.87 60.37 107.87 60.32 107.50 59.78C105.96 57.54 102.90 57.75 101.65 60.19C101.02 61.44 101.25 79.41 101.92 80.35C102.99 81.88 105.06 82.41 106.38 81.50ZM192.74 81.39C194.28 80.32 194.25 80.52 194.22 69.73C194.20 59.45 194.22 59.72 193.31 58.90C191.74 57.48 188.91 58.11 188.18 60.04C187.90 60.79 187.86 79.09 188.14 79.87C188.78 81.70 191.15 82.48 192.74 81.39Z" fill="#163854" fill-rule="evenodd"/></g></symbol><symbol id="odes-i-cifra-beneficiarios" viewBox="0 0 200 200"><circle cx="100" cy="100" r="100" fill="#FFFFFF"/><circle cx="100" cy="100" r="89" fill="none" stroke="#51ADE5" stroke-width=".9"/><circle cx="100" cy="100" r="85" fill="none" stroke="#51ADE5" stroke-width=".9"/><g transform="translate(100 100) scale(0.7568) translate(-100 -100)"><path transform="translate(19.239 15.952) scale(0.5478)" d="M184.37 250.29C182.16 249.58 182.03 249.05 182.02 240.65C182.02 235.12 181.97 233.52 181.78 232.73C181.64 232.19 181.44 231.22 181.33 230.58C179.88 222.37 170.76 214.79 160.48 213.25C158.09 212.89 136.19 212.88 134.33 213.24C128.25 214.41 123.14 217.01 119.24 220.91C113.85 226.30 112.80 229.42 112.67 240.33C112.57 249.09 112.63 248.73 111.21 249.73C109.33 251.06 106.42 250.03 105.83 247.83C105.46 246.43 105.70 233.26 106.14 230.92C106.60 228.52 107.57 225.51 108.60 223.31C109.54 221.29 109.51 221.18 107.31 219.08C104.21 216.13 99.11 213.97 93.75 213.34C91.32 213.06 77.75 213.11 76.74 213.41C76.29 213.54 75.19 213.81 74.29 214.00C68.21 215.31 62.72 220.00 60.95 225.41C60.48 226.85 60.45 227.09 60.35 230.76C60.25 234.61 60.25 234.61 59.78 235.23C58.17 237.34 55.51 237.28 54.04 235.10C53.47 234.25 53.22 229.11 53.67 227.49C53.76 227.16 53.97 226.11 54.15 225.15C55.72 216.44 64.39 208.71 74.34 207.14C75.41 206.97 78.34 206.92 86.50 206.92C98.51 206.92 96.77 206.78 101.42 208.09C105.12 209.13 108.47 211.15 111.52 214.21C113.72 216.41 113.70 216.41 115.45 214.82C119.20 211.42 124.96 208.47 130.75 206.99C133.43 206.31 134.58 206.19 140.25 206.01C147.08 205.80 147.85 205.02 142.08 204.15C135.15 203.12 127.64 196.93 124.88 190.00C116.10 167.91 140.83 147.23 160.50 160.20C178.64 172.16 173.15 200.43 151.93 204.33C147.62 205.12 148.45 205.83 153.68 205.83C165.49 205.83 174.52 209.26 181.14 216.26C184.13 219.42 187.76 225.92 188.25 229.00C188.31 229.41 188.51 230.49 188.68 231.39C189.07 233.37 189.17 246.65 188.81 247.86C188.24 249.75 186.19 250.87 184.37 250.29ZM236.26 236.14C234.89 235.21 234.78 234.82 234.65 230.83C234.39 222.75 230.57 217.51 222.92 214.75C219.06 213.35 216.76 213.12 207.92 213.21C199.59 213.29 199.76 213.27 195.73 214.66C193.46 215.45 192.11 215.28 190.98 214.06C188.25 211.13 190.34 208.83 197.18 207.21C198.60 206.88 213.80 206.75 218.58 207.03C229.19 207.65 238.69 215.40 240.92 225.25C241.40 227.35 241.46 233.79 241.02 234.71C240.14 236.53 237.85 237.22 236.26 236.14ZM83.50 204.64C83.00 204.55 81.97 204.38 81.23 204.26C76.88 203.54 70.48 198.60 68.18 194.17C62.23 182.74 68.00 168.59 80.04 165.10C94.76 160.84 108.75 173.88 105.42 188.76C103.13 198.98 93.07 206.26 83.50 204.64ZM205.50 204.41C197.22 202.90 190.37 195.82 189.16 187.52C187.92 179.03 191.65 171.47 199.35 166.86C208.75 161.24 221.94 165.33 226.97 175.42C227.83 177.15 227.88 177.29 228.59 180.17C231.94 193.59 219.24 206.92 205.50 204.41ZM212.39 197.47C219.76 195.30 223.85 187.75 221.58 180.50C217.86 168.64 201.58 167.98 196.84 179.49C192.67 189.60 202.09 200.50 212.39 197.47ZM88.93 197.48C94.98 195.76 98.96 190.60 98.89 184.58C98.73 170.23 79.89 166.19 73.83 179.22C69.31 188.92 78.78 200.37 88.93 197.48ZM151.23 197.42C167.17 193.34 169.40 172.26 154.67 165.06C146.29 160.97 136.32 164.52 132.01 173.13C125.50 186.15 137.25 201.01 151.23 197.42ZM222.50 151.13C217.14 149.24 216.38 143.85 220.03 133.50C221.25 130.06 221.60 129.54 224.27 127.13C225.18 126.31 225.12 127.61 225.10 109.91C225.08 92.91 225.12 93.50 224.13 93.50C223.60 93.50 215.64 96.05 212.67 97.17C211.25 97.71 208.21 98.79 205.92 99.58C203.62 100.37 201.15 101.23 200.42 101.49C199.68 101.76 198.65 102.09 198.12 102.23C195.81 102.82 196.01 100.80 195.96 123.72C195.91 146.31 196.05 144.19 194.41 145.64C192.74 147.11 193.76 147.01 180.23 147.07C167.55 147.14 167.22 147.12 165.55 146.34C163.33 145.30 163.20 142.68 165.31 141.19C166.61 140.26 166.43 140.27 177.33 140.22C188.32 140.16 188.39 140.16 188.75 139.61C189.10 139.08 189.21 106.97 188.87 106.38C188.47 105.68 187.32 105.97 179.42 108.74C177.67 109.36 175.80 109.99 175.25 110.16C174.70 110.33 174.03 110.55 173.75 110.67C173.04 110.95 165.37 113.59 160.42 115.25C158.12 116.02 154.67 117.18 152.75 117.83C148.98 119.11 147.79 119.33 146.33 119.02C144.49 118.63 135.21 115.58 130.00 113.66C124.01 111.46 107.11 105.83 106.48 105.83C106.24 105.83 105.95 105.94 105.85 106.07C105.60 106.36 105.59 139.20 105.83 139.66C106.13 140.22 106.57 140.24 118.17 140.26C131.10 140.29 130.55 140.25 133.08 141.50C136.22 143.06 137.91 144.65 137.80 145.94C137.70 147.15 138.79 147.08 119.83 147.08C100.59 147.08 101.99 147.21 100.19 145.24C98.92 143.85 98.98 145.04 99.01 123.06C99.04 102.64 99.05 103.05 98.31 102.66C97.96 102.47 93.31 100.81 90.83 100.00C88.40 99.20 84.19 97.73 81.50 96.74C79.16 95.88 72.49 93.57 67.21 91.80C61.84 90.00 61.82 86.39 67.17 84.41C74.86 81.56 76.22 81.08 82.25 79.00C84.72 78.15 90.04 76.21 91.17 75.75C93.04 74.98 99.50 72.72 105.67 70.66C108.31 69.78 111.38 68.68 116.75 66.67C120.68 65.20 121.56 64.89 127.33 62.93C129.58 62.17 133.74 60.71 136.58 59.70C148.35 55.52 147.54 55.60 153.83 57.96C157.22 59.23 157.85 59.45 164.42 61.67C170.72 63.80 174.36 65.08 177.25 66.16C180.50 67.39 189.68 70.59 191.33 71.07C191.75 71.20 192.31 71.39 192.58 71.50C192.86 71.61 194.32 72.14 195.83 72.67C197.35 73.19 199.33 73.91 200.25 74.25C201.17 74.59 203.72 75.49 205.92 76.25C208.12 77.02 211.38 78.17 213.17 78.83C214.95 79.48 217.62 80.42 219.08 80.91C222.06 81.90 225.49 83.12 228.25 84.17C229.47 84.63 230.62 84.93 231.71 85.08C235.65 85.60 236.47 89.08 233.04 90.75C231.23 91.63 231.42 89.54 231.38 108.46C231.34 127.48 231.29 126.31 232.21 127.13C234.79 129.46 234.85 129.54 235.76 131.42C236.76 133.50 238.06 137.30 238.24 138.67C238.30 139.17 238.48 140.00 238.63 140.50C239.08 142.01 239.03 146.53 238.55 147.43C236.79 150.72 235.44 151.25 228.40 151.41C223.67 151.51 223.56 151.51 222.50 151.13ZM231.58 144.67C232.59 143.83 232.03 139.41 230.34 134.92C229.69 133.19 229.01 132.63 227.89 132.91C225.72 133.45 223.35 144.05 225.22 144.84C225.83 145.10 231.23 144.96 231.58 144.67ZM149.86 111.82C150.35 111.62 151.88 111.10 153.25 110.66C156.21 109.72 160.56 108.19 163.58 107.04C165.65 106.25 166.43 105.98 170.83 104.57C171.89 104.23 173.61 103.66 174.67 103.29C175.72 102.93 177.15 102.46 177.83 102.25C178.52 102.04 179.95 101.56 181.00 101.18C182.05 100.80 184.87 99.82 187.25 99.01C189.63 98.20 193.50 96.85 195.83 96.01C198.17 95.17 202.37 93.70 205.17 92.75C207.96 91.80 211.26 90.66 212.50 90.21C213.74 89.76 215.28 89.23 215.93 89.03C217.16 88.66 217.78 88.19 217.61 87.75C217.49 87.46 217.46 87.44 214.50 86.45C213.26 86.04 211.01 85.27 209.50 84.74C204.42 82.98 185.71 76.56 184.73 76.25C183.97 76.00 178.32 73.92 177.67 73.64C176.92 73.32 172.69 71.84 167.99 70.25C165.47 69.39 161.46 68.00 159.08 67.16C152.71 64.91 148.01 63.33 147.66 63.33C147.09 63.33 137.20 66.57 134.92 67.50C133.84 67.94 131.01 68.94 125.75 70.75C122.73 71.78 119.50 72.91 118.58 73.25C117.67 73.59 116.62 73.96 116.25 74.08C115.88 74.21 114.76 74.62 113.75 75.00C112.74 75.38 110.00 76.36 107.67 77.18C105.33 77.99 102.67 78.92 101.75 79.25C100.83 79.58 98.99 80.22 97.65 80.67C95.39 81.43 94.00 81.92 86.67 84.51C85.15 85.04 83.09 85.79 82.08 86.17C81.08 86.55 79.91 86.96 79.49 87.07C77.25 87.70 77.44 88.42 80.08 89.32C80.91 89.60 84.70 90.88 88.50 92.16C92.30 93.44 96.17 94.77 97.08 95.10C100.08 96.20 103.81 97.50 109.92 99.58C113.22 100.71 117.23 102.09 118.83 102.66C121.45 103.59 134.25 107.97 137.83 109.16C138.61 109.42 141.01 110.24 143.17 110.99C147.53 112.50 148.00 112.56 149.86 111.82Z" fill="#51ADE5" fill-rule="evenodd"/></g></symbol><symbol id="odes-i-cifra-inversion" viewBox="0 0 200 200"><circle cx="100" cy="100" r="100" fill="#FFFFFF"/><circle cx="100" cy="100" r="89" fill="none" stroke="#9F339E" stroke-width=".9"/><circle cx="100" cy="100" r="85" fill="none" stroke="#9F339E" stroke-width=".9"/><g transform="translate(100 100) scale(0.7568) translate(-100 -100)"><path transform="translate(12.453 17.544) scale(0.5710)" d="M82.58 242.43C75.87 240.93 71.29 236.62 69.60 230.20C69.05 228.12 68.86 130.37 69.40 128.33C70.60 123.82 74.21 120.47 79.42 119.05C81.08 118.60 81.08 118.60 95.17 118.51C102.91 118.46 109.34 118.36 109.46 118.28C109.82 118.05 109.69 117.44 109.07 116.58C107.52 114.41 105.59 110.23 104.78 107.33C102.71 99.86 102.22 96.46 102.38 90.74C102.49 87.13 103.13 82.41 103.77 80.63C103.90 80.24 104.09 79.58 104.18 79.17C104.85 76.11 108.77 68.50 111.45 65.04C121.43 52.17 137.48 44.75 152.25 46.18C181.76 49.04 201.26 76.43 193.54 104.17C193.17 105.50 193.09 106.21 193.01 108.67C192.96 110.27 192.85 111.70 192.76 111.83C192.54 112.19 190.79 114.18 189.39 115.65C188.74 116.35 187.97 117.33 187.69 117.84C187.41 118.35 186.67 119.32 186.05 120.01C185.44 120.69 184.59 121.79 184.16 122.46C183.71 123.17 183.09 123.88 182.65 124.19C182.25 124.47 181.17 125.44 180.25 126.33C177.85 128.66 174.69 130.83 173.72 130.83C172.30 130.83 170.60 128.65 170.38 126.52C170.24 125.25 170.55 124.80 172.50 123.36C185.26 113.95 191.02 96.51 186.48 81.05C182.33 66.94 169.11 55.84 153.87 53.67C151.28 53.30 146.00 53.20 144.75 53.50C144.38 53.59 143.31 53.74 142.37 53.83C131.06 55.01 118.36 64.63 112.98 76.11C110.76 80.85 109.14 88.48 109.39 93.00C110.09 105.23 114.99 114.97 124.08 122.15C127.77 125.07 128.02 126.56 125.10 128.36C122.75 129.80 121.33 129.53 118.49 127.08C116.18 125.08 116.27 125.12 113.72 124.97C111.42 124.83 104.65 125.03 101.17 125.33C100.11 125.42 96.44 125.57 93.00 125.66C84.65 125.87 84.60 125.88 83.18 128.07C81.38 130.82 81.62 133.23 83.85 135.00C85.22 136.08 81.16 136.01 145.68 136.03C212.34 136.04 214.93 136.07 216.90 136.73C218.46 137.25 218.52 137.25 219.01 136.86C219.54 136.43 219.78 133.02 219.40 131.36C219.27 130.78 219.10 129.52 219.01 128.57C218.72 125.16 219.39 125.33 206.70 125.33C200.58 125.33 196.35 125.27 195.99 125.17C193.58 124.50 193.04 120.02 195.25 118.93C195.90 118.61 218.21 118.15 219.81 118.42C221.70 118.75 224.17 120.70 225.10 122.60C225.76 123.95 226.11 157.62 225.48 159.29C225.37 159.58 225.21 159.67 224.76 159.67C223.87 159.67 223.72 159.21 223.34 155.30C222.88 150.69 222.46 149.41 221.23 148.90C220.89 148.76 219.79 147.79 218.68 146.66C214.74 142.67 222.88 143.10 148.59 143.00C76.15 142.91 81.90 143.04 78.63 141.40C77.45 140.80 76.82 140.70 76.54 141.04C76.08 141.60 76.39 226.83 76.85 228.08C78.25 231.81 80.71 234.09 84.61 235.28C85.92 235.68 212.08 235.76 213.63 235.36C215.50 234.88 217.51 233.22 218.32 231.50C218.73 230.63 219.12 214.34 218.76 212.90C218.58 212.17 218.46 212.17 205.03 212.16C189.78 212.14 188.03 212.07 186.50 211.41C183.74 210.21 181.88 208.18 181.10 205.51C180.70 204.15 180.70 175.49 181.10 173.94C181.87 170.92 184.67 168.20 187.80 167.42C189.45 167.01 233.70 167.15 234.49 167.57C235.35 168.03 236.81 169.56 237.17 170.39C237.53 171.20 237.81 204.27 237.47 206.66C236.94 210.49 234.80 212.03 229.83 212.16C225.14 212.29 225.67 210.94 225.69 222.83C225.71 232.08 225.71 232.08 225.29 233.59C224.00 238.29 220.64 241.39 215.72 242.43C212.84 243.04 85.31 243.04 82.58 242.43ZM229.83 204.52C230.41 204.10 230.45 203.06 230.48 188.25C230.50 175.65 230.47 175.01 229.81 174.66C229.03 174.24 191.49 174.23 190.63 174.65C189.75 175.07 188.72 176.02 188.46 176.64C188.25 177.15 188.05 199.64 188.24 201.41C188.41 202.98 189.37 204.18 190.94 204.77C192.03 205.18 229.25 204.94 229.83 204.52ZM200.70 197.25C193.89 195.77 192.62 186.51 198.75 183.00C204.44 179.75 211.49 185.83 209.32 192.12C208.00 195.96 204.47 198.06 200.70 197.25ZM147.19 119.88C145.94 119.27 145.33 117.78 145.33 115.33C145.33 113.65 145.11 113.38 143.17 112.77C136.74 110.73 133.48 104.89 137.22 102.10C138.47 101.17 140.65 101.74 141.62 103.25C142.78 105.06 143.02 105.34 143.88 105.91C148.81 109.19 155.90 106.44 155.91 101.25C155.92 98.05 153.67 96.28 148.17 95.15C139.88 93.46 135.50 89.20 135.50 82.83C135.50 77.57 138.47 73.71 144.05 71.75C145.04 71.40 145.33 70.88 145.33 69.50C145.33 63.72 151.71 63.43 152.15 69.19C152.31 71.25 152.44 71.40 154.52 72.05C158.08 73.17 161.42 76.40 161.63 78.93C161.90 82.20 157.03 83.59 155.37 80.71C152.20 75.22 142.33 76.76 142.33 82.75C142.33 85.80 144.58 87.59 149.75 88.67C153.42 89.44 156.40 90.69 158.14 92.19C165.44 98.45 163.47 109.71 154.56 112.67C152.26 113.44 152.32 113.35 152.07 116.08C151.73 119.66 149.80 121.17 147.19 119.88Z" fill="#9F339E" fill-rule="evenodd"/></g></symbol><symbol id="odes-i-cifra-transito" viewBox="0 0 200 200"><circle cx="100" cy="100" r="100" fill="#FFFFFF"/><circle cx="100" cy="100" r="89" fill="none" stroke="#2E9E49" stroke-width=".9"/><circle cx="100" cy="100" r="85" fill="none" stroke="#2E9E49" stroke-width=".9"/><g transform="translate(100 100) scale(0.7568) translate(-100 -100)"><path transform="translate(24.255 23.124) scale(0.5218)" d="M89.01 249.79C86.13 248.31 86.56 245.90 90.31 242.49C91.56 241.35 93.84 239.22 95.38 237.75C96.92 236.28 98.79 234.53 99.55 233.85C100.30 233.17 103.43 230.21 106.50 227.26C109.57 224.31 113.17 220.89 114.50 219.66C117.78 216.62 121.32 212.98 121.33 212.63C121.34 211.82 119.51 211.78 82.19 211.82C46.00 211.86 49.18 212.01 48.01 210.19C46.66 208.07 48.17 204.83 50.53 204.83C52.01 204.83 51.88 207.95 51.91 169.90C51.94 132.28 51.85 135.34 52.94 134.30C53.92 133.37 53.20 133.40 71.58 133.42C93.04 133.45 91.27 133.14 91.12 136.83C90.96 140.78 92.73 140.39 74.38 140.50C59.34 140.58 59.34 140.58 58.96 140.96C58.38 141.55 58.36 203.65 58.94 204.33C59.49 204.97 99.12 205.06 99.75 204.43C100.13 204.05 100.13 204.05 100.12 159.47C100.11 114.88 100.11 114.88 100.48 114.12C101.00 113.06 102.04 112.12 108.92 106.60C112.22 103.94 115.59 101.20 116.42 100.50C117.24 99.80 119.60 97.89 121.67 96.25C123.73 94.61 126.13 92.66 127.00 91.92C127.87 91.17 129.56 89.79 130.75 88.83C131.94 87.88 133.70 86.47 134.67 85.70C135.63 84.93 137.23 83.65 138.23 82.86C141.57 80.21 141.23 80.80 141.37 77.47C141.44 75.88 141.45 68.47 141.39 61.00C141.28 46.12 141.23 46.90 142.26 45.68C143.25 44.51 145.10 44.19 147.19 44.82C147.77 45.00 148.66 45.22 149.17 45.32C150.08 45.49 152.68 46.28 154.92 47.05C155.56 47.28 156.90 47.85 157.89 48.32C160.26 49.45 160.60 49.50 165.90 49.50C173.88 49.50 173.56 49.08 173.63 59.80C173.70 69.42 173.52 70.31 171.44 70.99C170.78 71.21 155.54 71.30 151.57 71.11C147.78 70.93 148.14 70.43 148.20 75.86C148.25 80.19 148.25 80.19 149.00 80.89C150.81 82.56 153.43 84.77 155.75 86.59C158.63 88.85 162.15 91.74 164.67 93.92C167.12 96.03 169.85 98.26 171.42 99.43C174.76 101.90 178.64 105.00 181.93 107.84C182.95 108.71 184.52 109.98 185.43 110.66C189.81 113.96 189.50 112.96 189.46 123.44C189.43 132.76 189.44 132.83 190.37 133.16C190.72 133.28 197.78 133.33 212.98 133.33C237.01 133.34 235.96 133.29 237.00 134.34C238.38 135.72 238.25 131.88 238.26 170.04C238.27 208.91 238.05 204.60 240.00 204.96C242.97 205.51 243.89 208.96 241.60 210.97C240.55 211.89 241.82 211.85 209.70 211.84C169.78 211.82 167.33 211.85 167.33 212.41C167.33 212.62 176.28 221.58 180.75 225.85C181.76 226.81 184.76 229.70 187.42 232.26C190.08 234.82 193.67 238.24 195.42 239.85C200.96 244.99 201.24 245.35 201.14 247.19C200.99 249.83 198.14 251.01 195.57 249.49C194.95 249.12 193.18 247.53 190.67 245.08C188.51 242.97 185.59 240.16 184.17 238.84C179.95 234.92 158.43 213.69 156.61 211.66C155.80 210.75 155.80 210.75 155.88 207.50C156.04 201.47 156.02 171.91 155.86 171.48C155.53 170.62 155.40 170.59 151.10 170.49C146.07 170.36 134.71 170.50 134.20 170.69C133.41 170.98 133.40 171.09 133.36 184.75C133.30 202.88 133.40 204.42 134.67 205.36C135.32 205.85 135.32 206.46 134.67 207.75C134.39 208.30 134.09 209.08 133.99 209.47C133.79 210.31 131.16 213.27 128.68 215.45C126.70 217.20 119.66 223.97 116.25 227.41C114.69 228.98 111.05 232.52 108.17 235.27C105.28 238.02 101.84 241.31 100.51 242.58C92.52 250.22 91.31 250.98 89.01 249.79ZM214.39 204.76C230.54 204.74 230.54 204.74 230.91 204.31C231.51 203.61 231.47 141.56 230.87 140.96C230.33 140.42 229.34 140.40 208.50 140.51C189.37 140.61 189.98 140.58 189.66 141.44C189.44 142.01 189.44 203.75 189.66 204.16C190.00 204.80 192.12 205.03 196.00 204.87C197.24 204.81 205.51 204.76 214.39 204.76ZM125.78 204.43C126.25 204.03 126.25 204.03 126.27 185.56C126.30 165.39 126.26 166.12 127.29 164.98C128.61 163.51 127.23 163.62 144.49 163.62C161.41 163.63 160.43 163.56 161.65 164.72C162.99 165.99 162.89 164.43 162.96 185.33C163.02 205.87 162.95 204.55 164.10 204.76C164.43 204.83 168.48 204.84 173.09 204.80C182.29 204.72 182.17 204.73 182.46 203.71C182.71 202.80 182.61 118.31 182.35 117.71C182.05 116.99 177.71 113.25 173.50 110.09C172.54 109.36 170.36 107.64 168.67 106.25C163.01 101.64 159.45 98.77 156.64 96.58C154.06 94.56 151.38 92.28 149.17 90.23C146.75 87.98 145.44 87.00 144.87 87.00C144.27 87.00 142.94 87.99 138.25 91.91C137.15 92.83 135.02 94.56 133.52 95.75C132.02 96.94 129.47 98.99 127.86 100.30C126.24 101.61 123.74 103.59 122.29 104.69C120.85 105.79 118.64 107.61 117.38 108.73C116.12 109.85 114.21 111.48 113.14 112.34C108.39 116.20 107.35 117.15 107.18 117.80C107.00 118.46 106.82 199.55 106.99 202.56C107.13 205.06 106.18 204.83 116.59 204.83C125.31 204.83 125.31 204.83 125.78 204.43ZM73.58 191.44C72.12 190.76 72.00 190.21 72.00 183.97C72.00 178.55 72.04 178.25 72.80 177.44C73.66 176.54 73.69 176.54 79.53 176.47C87.43 176.39 87.03 175.95 86.86 184.36C86.71 192.15 87.34 191.53 79.50 191.62C75.11 191.67 73.99 191.63 73.58 191.44ZM205.11 191.50C203.09 190.98 203.00 190.67 203.00 184.14C203.00 176.45 202.83 176.66 208.97 176.45C214.68 176.26 215.61 176.31 216.45 176.92C217.96 178.01 217.92 177.81 217.89 184.21C217.86 191.96 218.35 191.45 210.75 191.58C207.72 191.63 205.50 191.59 205.11 191.50ZM73.58 167.74C71.94 166.87 71.92 166.81 71.98 160.50C72.05 152.53 71.49 153.08 79.52 153.08C87.47 153.08 86.85 152.48 86.89 160.20C86.92 165.99 86.93 165.91 86.02 166.89C85.11 167.87 85.05 167.88 79.33 167.95C74.80 167.99 74.02 167.97 73.58 167.74ZM204.89 167.89C203.13 167.53 202.86 166.54 202.86 160.33C202.87 152.46 202.56 152.75 210.86 152.95C218.27 153.14 217.74 152.58 217.88 160.28C218.04 168.30 218.40 167.91 210.61 167.94C207.66 167.95 205.09 167.93 204.89 167.89ZM140.04 138.70C127.51 134.35 125.57 118.80 136.58 110.96C139.14 109.13 143.19 108.38 147.15 108.99C159.94 110.95 164.53 127.50 154.60 135.85C150.67 139.16 144.73 140.33 140.04 138.70ZM147.08 132.08C148.94 131.55 151.14 129.62 152.02 127.75C155.96 119.35 145.33 111.75 138.74 118.25C132.77 124.13 138.96 134.38 147.08 132.08ZM163.74 64.22C166.91 64.07 166.69 64.35 166.68 60.41C166.66 56.08 167.07 56.47 162.25 56.22C158.04 55.99 157.16 55.81 154.75 54.67C150.61 52.70 148.98 52.21 148.44 52.75C147.77 53.42 147.87 62.95 148.54 63.61C149.08 64.13 158.07 64.50 163.74 64.22Z" fill="#2E9E49" fill-rule="evenodd"/></g></symbol><symbol id="odes-i-cifra-asistencia" viewBox="0 0 200 200"><circle cx="100" cy="100" r="100" fill="#FFFFFF"/><circle cx="100" cy="100" r="89" fill="none" stroke="#D94C19" stroke-width=".9"/><circle cx="100" cy="100" r="85" fill="none" stroke="#D94C19" stroke-width=".9"/><g transform="translate(100 100) scale(0.7568) translate(-100 -100)"><path transform="translate(16.581 18.582) scale(0.5857)" d="M102.42 230.74C101.78 230.41 100.87 229.54 100.59 229.00C100.27 228.37 100.11 210.60 100.41 208.75C102.90 193.60 116.14 182.81 133.08 182.15C156.74 181.23 164.53 182.74 173.53 189.97C178.95 194.33 183.07 201.49 184.08 208.33C184.53 211.34 184.38 228.63 183.90 229.28C182.74 230.85 180.35 231.35 178.79 230.35C177.30 229.39 177.40 230.07 177.26 219.45C177.13 208.96 176.99 207.69 175.56 204.35C172.44 197.06 165.03 191.50 155.64 189.42C153.19 188.88 130.78 188.84 129.39 189.37C129.02 189.52 128.10 189.75 127.36 189.89C122.11 190.88 114.79 195.58 111.67 199.96C108.06 205.03 107.43 207.99 107.42 219.92C107.42 230.06 107.51 229.45 105.83 230.46C104.79 231.08 103.32 231.21 102.42 230.74ZM57.92 212.68C56.12 211.85 55.83 211.05 55.83 206.81C55.83 197.48 59.37 191.12 67.80 185.25C69.89 183.79 69.94 183.74 70.19 182.38C70.38 181.35 71.29 179.63 72.36 178.27C73.36 177.00 73.17 176.40 70.74 173.22C63.32 163.49 67.04 149.03 78.42 143.38C91.31 136.97 107.17 148.07 105.86 162.58C104.97 172.39 99.41 178.70 90.11 180.46C86.55 181.14 85.93 181.36 86.70 181.65C87.41 181.92 90.19 182.17 92.54 182.17C99.03 182.18 102.01 184.11 99.98 187.00C98.72 188.80 97.45 189.34 95.29 189.00C92.56 188.58 80.05 188.57 78.08 188.99C68.29 191.08 63.31 196.85 63.02 206.43C62.90 210.18 62.89 210.29 62.46 211.02C61.49 212.68 59.49 213.41 57.92 212.68ZM224.17 212.74C222.24 211.88 221.96 211.13 221.93 206.92C221.88 198.43 217.76 192.94 209.11 189.82C205.53 188.53 195.70 188.05 190.42 188.91C187.32 189.42 185.83 189.05 184.76 187.54C183.40 185.60 184.20 183.92 187.02 182.84C188.43 182.30 189.10 182.20 193.27 181.85C196.48 181.59 196.31 181.11 192.73 180.30C180.65 177.59 174.70 161.49 181.86 150.88C191.74 136.23 213.27 139.79 217.43 156.76C219.79 166.37 213.58 177.37 204.26 180.07C200.75 181.09 200.87 181.69 204.67 182.00C217.29 183.02 226.03 190.15 228.31 201.29C229.10 205.14 229.15 210.13 228.41 211.19C227.33 212.73 225.57 213.37 224.17 212.74ZM140.38 180.00C127.61 178.86 120.10 171.10 117.99 156.88C117.08 150.77 120.11 142.59 125.16 137.48C136.87 125.64 156.85 129.02 164.48 144.13C166.38 147.89 167.54 155.70 166.67 158.85C166.57 159.17 166.36 160.24 166.18 161.21C164.08 172.85 152.74 181.11 140.38 180.00ZM200.47 174.24C206.22 173.06 210.66 167.57 210.71 161.58C210.82 146.86 190.18 144.05 186.22 158.25C183.77 167.03 191.77 176.01 200.47 174.24ZM89.61 173.75C96.44 171.47 99.95 165.66 98.50 159.04C95.98 147.53 81.36 144.88 75.75 154.90C70.22 164.79 79.34 177.18 89.61 173.75ZM146.63 172.52C159.91 168.92 163.99 152.23 154.02 142.33C146.59 134.95 134.35 136.24 128.30 145.02C119.02 158.49 131.17 176.71 146.63 172.52ZM127.67 121.66C125.97 121.58 122.86 121.36 120.75 121.17C118.64 120.98 115.64 120.76 114.08 120.68C109.36 120.44 106.79 119.12 105.94 116.48C105.56 115.30 105.56 109.08 105.94 105.87C106.21 103.51 106.18 100.71 105.84 97.92C105.76 97.18 105.68 94.69 105.68 92.38C105.67 89.40 105.61 88.05 105.46 87.73C105.20 87.17 102.74 85.95 99.25 84.67C95.29 83.21 92.33 82.04 90.56 81.23C89.25 80.63 88.54 80.35 84.69 78.92C80.90 77.52 79.81 76.35 80.04 73.96C80.20 72.34 81.22 71.39 83.96 70.33C84.85 69.98 86.71 69.23 88.08 68.67C89.46 68.10 91.78 67.15 93.25 66.55C95.96 65.43 100.01 63.77 101.67 63.08C102.73 62.64 104.94 61.76 108.92 60.16C113.29 58.42 117.35 56.72 119.83 55.61C120.15 55.47 121.09 55.08 121.92 54.74C122.74 54.40 123.90 53.91 124.50 53.65C125.10 53.39 127.16 52.53 129.08 51.74C131.00 50.95 133.66 49.84 134.99 49.26C140.29 46.98 142.58 46.52 144.75 47.32C146.08 47.81 149.32 49.13 150.50 49.67C152.31 50.49 155.49 51.83 157.25 52.52C158.17 52.88 159.29 53.33 159.75 53.53C160.21 53.72 161.41 54.21 162.42 54.61C163.42 55.02 164.92 55.62 165.75 55.95C166.58 56.29 167.81 56.77 168.50 57.02C169.19 57.27 170.95 57.98 172.42 58.59C173.88 59.20 176.02 60.07 177.17 60.53C178.31 60.98 180.14 61.73 181.22 62.19C182.31 62.65 183.48 63.13 183.83 63.25C184.18 63.37 184.71 63.60 185.02 63.76C185.33 63.92 186.60 64.41 187.83 64.84C190.68 65.84 194.65 67.42 199.58 69.53C200.55 69.94 202.34 70.54 203.71 70.92C206.77 71.75 207.34 74.47 204.93 76.75C203.67 77.95 203.67 77.94 203.67 90.63C203.68 99.61 203.56 98.90 205.31 100.58C207.20 102.39 207.91 103.92 209.20 108.83C209.68 110.65 209.83 116.20 209.43 117.25C208.34 120.09 204.22 121.50 198.29 121.05C194.89 120.79 193.16 119.83 191.73 117.41C189.74 114.01 192.64 102.53 196.10 100.15C197.45 99.23 197.36 99.93 197.38 89.84C197.41 78.51 197.92 79.58 193.33 81.38C192.28 81.79 190.48 82.55 189.33 83.08C187.38 83.96 183.02 85.77 181.32 86.39C179.35 87.11 179.11 89.30 179.45 102.83C179.66 111.28 179.54 115.29 179.06 116.33C177.98 118.68 174.72 120.64 171.22 121.07C168.77 121.37 132.05 121.86 127.67 121.66ZM147.97 117.42C148.86 117.20 149.92 116.89 150.33 116.75C150.75 116.60 152.05 116.22 153.22 115.90C154.40 115.59 155.90 115.09 156.56 114.80C157.75 114.27 157.75 114.27 163.42 114.15C170.38 114.00 172.01 113.72 172.24 112.62C172.56 111.05 172.50 90.84 172.18 90.51C171.69 90.02 170.59 90.38 164.00 93.22C162.09 94.04 161.82 94.15 156.42 96.33C145.36 100.78 144.05 101.22 142.08 101.12C139.96 101.01 136.36 99.81 130.00 97.09C128.85 96.60 126.68 95.70 125.17 95.10C123.65 94.50 121.59 93.67 120.58 93.25C111.98 89.67 112.50 89.59 112.50 94.49C112.50 101.35 111.85 103.53 110.15 102.32C108.31 101.01 107.27 101.98 107.94 104.36C108.04 104.74 110.06 105.83 110.65 105.83C111.46 105.83 111.82 106.66 112.41 109.86C112.80 111.93 113.10 112.70 113.66 113.00C114.76 113.58 119.45 114.28 124.92 114.66C131.45 115.11 132.73 115.31 133.96 116.07C136.13 117.41 138.10 117.76 143.80 117.81C146.02 117.83 146.57 117.78 147.97 117.42ZM202.78 113.90C204.16 112.53 202.06 105.17 200.30 105.17C198.75 105.17 196.85 112.76 198.12 113.87C198.89 114.53 202.13 114.56 202.78 113.90ZM144.46 93.32C145.35 92.95 146.69 92.43 147.43 92.16C148.18 91.89 149.30 91.44 149.93 91.15C150.57 90.87 151.61 90.43 152.25 90.17C152.89 89.92 154.17 89.40 155.08 89.03C156.00 88.66 158.06 87.86 159.67 87.25C163.47 85.81 165.04 85.19 167.17 84.25C168.13 83.82 171.02 82.63 173.58 81.59C176.15 80.55 178.89 79.42 179.67 79.08C180.95 78.53 182.66 77.82 186.83 76.12C187.61 75.81 188.64 75.42 189.11 75.26C190.66 74.76 190.71 73.98 189.23 73.42C188.78 73.26 187.40 72.67 186.17 72.12C184.93 71.57 182.00 70.35 179.67 69.41C177.33 68.47 174.10 67.16 172.50 66.50C170.90 65.85 168.61 64.93 167.42 64.47C163.12 62.80 160.16 61.61 155.08 59.51C146.05 55.77 143.12 54.67 142.23 54.67C141.61 54.67 138.45 55.83 135.25 57.24C131.95 58.69 126.60 60.91 123.58 62.08C119.49 63.67 113.99 65.92 108.83 68.12C105.78 69.42 104.81 69.83 102.33 70.83C101.00 71.36 99.21 72.11 98.34 72.49C97.47 72.86 96.48 73.25 96.13 73.34C95.23 73.59 94.53 74.23 94.76 74.60C94.99 74.98 94.94 74.95 98.08 76.26C99.55 76.87 101.20 77.57 101.75 77.83C102.90 78.35 106.58 79.81 109.25 80.80C110.26 81.18 112.43 82.06 114.08 82.76C115.73 83.46 117.83 84.33 118.75 84.69C119.67 85.05 120.98 85.60 121.67 85.90C122.35 86.21 123.33 86.61 123.83 86.79C124.34 86.98 125.09 87.26 125.50 87.42C125.91 87.58 127.41 88.14 128.83 88.67C130.25 89.20 132.02 89.87 132.75 90.17C133.48 90.46 134.53 90.88 135.08 91.09C137.07 91.85 140.95 93.46 141.43 93.72C142.17 94.13 142.69 94.06 144.46 93.32Z" fill="#D94C19" fill-rule="evenodd"/></g></symbol><symbol id="odes-i-alt_route" viewBox="0 -960 960 960"><path d="M440-80v-200q0-56-17-83t-45-53l57-57q12 11 23 23.5t22 26.5q14-19 28.5-33.5T538-485q38-35 69-81t33-161l-63 63-57-56 160-160 160 160-56 56-64-63q-2 143-44 203.5T592-425q-32 29-52 56.5T520-280v200h-80ZM248-633q-4-20-5.5-44t-2.5-50l-64 63-56-56 160-160 160 160-57 56-63-62q0 21 2 39.5t4 34.5l-78 19Zm86 176q-20-21-38.5-49T263-575l77-19q10 27 23 46t28 34l-57 57Z"/></symbol><symbol id="odes-i-arrow_back" viewBox="0 -960 960 960"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></symbol><symbol id="odes-i-arrow_forward" viewBox="0 -960 960 960"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></symbol><symbol id="odes-i-csv" viewBox="0 -960 960 960"><path d="M230-360h120v-60H250v-120h100v-60H230q-17 0-28.5 11.5T190-560v160q0 17 11.5 28.5T230-360Zm156 0h120q17 0 28.5-11.5T546-400v-60q0-17-11.5-31.5T506-506h-60v-34h100v-60H426q-17 0-28.5 11.5T386-560v60q0 17 11.5 30.5T426-456h60v36H386v60Zm264 0h60l70-240h-60l-40 138-40-138h-60l70 240ZM160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm0-80h640v-480H160v480Zm0 0v-480 480Z"/></symbol><symbol id="odes-i-unfold_more" viewBox="0 -960 960 960"><path d="M480-120 300-300l58-58 122 122 122-122 58 58-180 180ZM358-598l-58-58 180-180 180 180-58 58-122-122-122 122Z"/></symbol><symbol id="odes-i-arrow_upward" viewBox="0 -960 960 960"><path d="M440-160v-487L216-423l-56-57 320-320 320 320-56 57-224-224v487h-80Z"/></symbol><symbol id="odes-i-arrow_downward" viewBox="0 -960 960 960"><path d="M440-800v487L216-537l-56 57 320 320 320-320-56-57-224 224v-487h-80Z"/></symbol><symbol id="odes-i-pause" viewBox="0 -960 960 960"><path d="M520-200v-560h240v560H520Zm-320 0v-560h240v560H200Zm400-80h80v-400h-80v400Zm-320 0h80v-400h-80v400Zm0-400v400-400Zm320 0v400-400Z"/></symbol><symbol id="odes-i-play_arrow" viewBox="0 -960 960 960"><path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z"/></symbol><symbol id="odes-i-download" viewBox="0 -960 960 960"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></symbol><symbol id="odes-i-expand_more" viewBox="0 -960 960 960"><path d="M480-345 240-585l56-56 184 184 184-184 56 56-240 240Z"/></symbol><symbol id="odes-i-groups" viewBox="0 -960 960 960"><path d="M0-240v-63q0-43 44-70t116-27q13 0 25 .5t23 2.5q-14 21-21 44t-7 48v65H0Zm240 0v-65q0-32 17.5-58.5T307-410q32-20 76.5-30t96.5-10q53 0 97.5 10t76.5 30q32 20 49 46.5t17 58.5v65H240Zm540 0v-65q0-26-6.5-49T754-397q11-2 22.5-2.5t23.5-.5q72 0 116 26.5t44 70.5v63H780Zm-455-80h311q-10-20-55.5-35T480-370q-55 0-100.5 15T325-320ZM160-440q-33 0-56.5-23.5T80-520q0-34 23.5-57t56.5-23q34 0 57 23t23 57q0 33-23 56.5T160-440Zm640 0q-33 0-56.5-23.5T720-520q0-34 23.5-57t56.5-23q34 0 57 23t23 57q0 33-23 56.5T800-440Zm-320-40q-50 0-85-35t-35-85q0-51 35-85.5t85-34.5q51 0 85.5 34.5T600-600q0 50-34.5 85T480-480Zm0-80q17 0 28.5-11.5T520-600q0-17-11.5-28.5T480-640q-17 0-28.5 11.5T440-600q0 17 11.5 28.5T480-560Zm1 240Zm-1-280Z"/></symbol><symbol id="odes-i-library_books" viewBox="0 -960 960 960"><path d="M400-400h160v-80H400v80Zm0-120h320v-80H400v80Zm0-120h320v-80H400v80Zm-80 400q-33 0-56.5-23.5T240-320v-480q0-33 23.5-56.5T320-880h480q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H320Zm0-80h480v-480H320v480ZM160-80q-33 0-56.5-23.5T80-160v-560h80v560h560v80H160Zm160-720v480-480Z"/></symbol><symbol id="odes-i-lightbulb" viewBox="0 -960 960 960"><path d="M423.5-103.5Q400-127 400-160h160q0 33-23.5 56.5T480-80q-33 0-56.5-23.5ZM320-200v-80h320v80H320Zm10-120q-69-41-109.5-110T180-580q0-125 87.5-212.5T480-880q125 0 212.5 87.5T780-580q0 81-40.5 150T630-320H330Zm24-80h252q45-32 69.5-79T700-580q0-92-64-156t-156-64q-92 0-156 64t-64 156q0 54 24.5 101t69.5 79Zm126 0Z"/></symbol><symbol id="odes-i-mail" viewBox="0 -960 960 960"><path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z"/></symbol><symbol id="odes-i-markunread_mailbox" viewBox="0 -960 960 960"><path d="M240-400v-160h-80v400h640v-400H400v-80h400q33 0 56.5 23.5T880-560v400q0 33-23.5 56.5T800-80H160q-33 0-56.5-23.5T80-160v-400q0-33 23.5-56.5T160-640h80v-240h320v160H320v320h-80Zm-80-160v160-160 400-400Z"/></symbol></svg>
+
+  <!-- 1. BANNER: lo pone la entidad en WordPress, encima de este bloque.
+       Este titulo no se ve; es el h1 de la pagina para lectores de pantalla. -->
+  <h1 class="odes-sr">Observatorio de Sapiencia (OdeS)</h1>
+
+  <!-- 2. EL OBSERVATORIO EN CIFRAS: tarjetas fijas que ocupan todo el ancho -->
+  <section class="odes-seccion odes-seccion--cifras odes-nivel-1" aria-labelledby="odes-cifras-titulo">
+    <div class="odes-contenedor">
+      <div class="odes-cabecera">
+        <div class="odes-cabecera__texto">
+          <h2 id="odes-cifras-titulo" class="odes-h2">El Observatorio en cifras</h2>
+          <p class="odes-suave">Conoce los principales resultados de Sapiencia en educación postsecundaria</p>
+        </div>
+      </div>
+      <!-- EDITAR CIFRAS: cada tarjeta es un li.odes-cifra y se muestra en este mismo orden. En escritorio
+           van las 5 en una fila, todas del mismo tamaño, a todo el ancho de la ventana.
+           odes-cifra__valor    la cifra (si lleva unidad, en <span class="odes-cifra__unidad">, sale mas pequena)
+           odes-cifra__texto    que mide la cifra
+           odes-cifra__periodo  el periodo (2005-2026, 2025...)
+           Colores: odes-cifra--marino (#163854), --celeste (#51ADE5), --morado (#9F339E),
+           --verde (#2E9E49) y --naranja (#D94C19). Iconos: odes-i-cifra-historicos, -beneficiarios,
+           -inversion, -transito y -asistencia (los de la entidad, con su circulo blanco y el color de cada tarjeta).
+           Si se quiere mostrar la fuente o la fecha de corte, va al final de la tarjeta:
+           <p class="odes-cifra__fuente">Fuente: ... · Corte: ...</p>
+           Antes de publicar, pon las cifras oficiales. -->
+      <ul class="odes-cifras">
+        <li class="odes-cifra odes-cifra--marino">
+          <span class="odes-cifra__icono"><svg aria-hidden="true" focusable="false"><use href="#odes-i-cifra-historicos"/></svg></span>
+          <p class="odes-cifra__valor">186.540</p>
+          <p class="odes-cifra__texto">Beneficiarios históricos de educación superior</p>
+          <p class="odes-cifra__periodo">2005-2026</p>
+        </li>
+        <li class="odes-cifra odes-cifra--celeste">
+          <span class="odes-cifra__icono"><svg aria-hidden="true" focusable="false"><use href="#odes-i-cifra-beneficiarios"/></svg></span>
+          <p class="odes-cifra__valor">42.318</p>
+          <p class="odes-cifra__texto">Beneficiarios de educación superior</p>
+          <p class="odes-cifra__periodo">2024-2026</p>
+        </li>
+        <li class="odes-cifra odes-cifra--morado">
+          <span class="odes-cifra__icono"><svg aria-hidden="true" focusable="false"><use href="#odes-i-cifra-inversion"/></svg></span>
+          <p class="odes-cifra__valor">$624,4<span class="odes-cifra__unidad">mil millones</span></p>
+          <p class="odes-cifra__texto">Inversión en educación superior</p>
+          <p class="odes-cifra__periodo">2024-2026</p>
+        </li>
+        <li class="odes-cifra odes-cifra--verde">
+          <span class="odes-cifra__icono"><svg aria-hidden="true" focusable="false"><use href="#odes-i-cifra-transito"/></svg></span>
+          <p class="odes-cifra__valor">41,7&nbsp;%</p>
+          <p class="odes-cifra__texto">Tasa de tránsito inmediato a educación superior</p>
+          <p class="odes-cifra__periodo">2025</p>
+        </li>
+        <li class="odes-cifra odes-cifra--naranja">
+          <span class="odes-cifra__icono"><svg aria-hidden="true" focusable="false"><use href="#odes-i-cifra-asistencia"/></svg></span>
+          <p class="odes-cifra__valor">52,3&nbsp;%</p>
+          <p class="odes-cifra__texto">Tasa de asistencia a educación postsecundaria</p>
+          <p class="odes-cifra__periodo">2025</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 3. EXPLORA EL OBSERVATORIO: BOTONES DE ACCESO RAPIDO -->
+  <section class="odes-seccion odes-seccion--separada odes-nivel-2" aria-labelledby="odes-accesos-titulo">
+    <div class="odes-contenedor">
+      <div class="odes-cabecera">
+        <div class="odes-cabecera__texto">
+          <h2 id="odes-accesos-titulo" class="odes-h2">Explora el Observatorio</h2>
+          <p class="odes-suave">Consulta los tableros, reportes, micrositios y guías del Observatorio.</p>
+        </div>
+      </div>
+      <!-- EDITAR ACCESOS: cada boton es un li con su enlace (href), en este orden. Con href="#" el boton
+           muestra "Próximamente" en vez de la flecha y no se puede pulsar; cambia el # por la direccion real.
+           El 1 lleva al tablero de matricula del aplicativo de pruebas (sapiencia-web.vercel.app): cambialo
+           cuando el tablero tenga su direccion definitiva.
+           odes-acceso__numero   el numero grande (1 a 6)
+           odes-acceso__titulo   el nombre
+           odes-acceso__periodo  opcional: el año o periodo, debajo del nombre
+           Colores: odes-acceso (azul #163854), odes-acceso--celeste (#51ADE5), --morado (#9F339E),
+           --verde (#2E9E49), --amarillo (#F8DB1B) y --naranja (#F26623). -->
+      <ul class="odes-accesos">
+        <li>
+          <a class="odes-acceso" href="https://sapiencia-web.vercel.app/tableros/matricula-2025" data-odes-enlace>
+            <span class="odes-acceso__numero" aria-hidden="true">1</span>
+            <span class="odes-acceso__separador" aria-hidden="true"></span>
+            <span class="odes-acceso__texto" data-odes-pronto>
+              <span class="odes-acceso__titulo">Matrícula en educación superior</span>
+              <span class="odes-acceso__periodo">2025</span>
+            </span>
+            <span class="odes-acceso__flecha"><svg class="odes-i" aria-hidden="true" focusable="false"><use href="#odes-i-arrow_forward"/></svg></span>
+          </a>
+        </li>
+        <li>
+          <a class="odes-acceso odes-acceso--celeste" href="https://google.com" data-odes-enlace>
+            <span class="odes-acceso__numero" aria-hidden="true">2</span>
+            <span class="odes-acceso__separador" aria-hidden="true"></span>
+            <span class="odes-acceso__texto" data-odes-pronto>
+              <span class="odes-acceso__titulo">Mercado laboral de la educación superior</span>
+              <span class="odes-acceso__periodo">2025</span>
+            </span>
+            <span class="odes-acceso__flecha"><svg class="odes-i" aria-hidden="true" focusable="false"><use href="#odes-i-arrow_forward"/></svg></span>
+          </a>
+        </li>
+        <li>
+          <a class="odes-acceso odes-acceso--morado" href="https://sapiencia.gov.co/odes-la-clase-sapiencia-2/" data-odes-enlace>
+            <span class="odes-acceso__numero" aria-hidden="true">3</span>
+            <span class="odes-acceso__separador" aria-hidden="true"></span>
+            <span class="odes-acceso__texto" data-odes-pronto>
+              <span class="odes-acceso__titulo">Encuestas Sapiencia</span>
+            </span>
+            <span class="odes-acceso__flecha"><svg class="odes-i" aria-hidden="true" focusable="false"><use href="#odes-i-arrow_forward"/></svg></span>
+          </a>
+        </li>
+        <li>
+          <a class="odes-acceso odes-acceso--verde" href="https://sapiencia.gov.co/odes-la-clase-sapiencia/" data-odes-enlace>
+            <span class="odes-acceso__numero" aria-hidden="true">4</span>
+            <span class="odes-acceso__separador" aria-hidden="true"></span>
+            <span class="odes-acceso__texto" data-odes-pronto>
+              <span class="odes-acceso__titulo">Cátedra OdeS</span>
+            </span>
+            <span class="odes-acceso__flecha"><svg class="odes-i" aria-hidden="true" focusable="false"><use href="#odes-i-arrow_forward"/></svg></span>
+          </a>
+        </li>
+        <li>
+          <a class="odes-acceso odes-acceso--amarillo" href="https://sapiencia.gov.co/guia-digital" data-odes-enlace>
+            <span class="odes-acceso__numero" aria-hidden="true">5</span>
+            <span class="odes-acceso__separador" aria-hidden="true"></span>
+            <span class="odes-acceso__texto" data-odes-pronto>
+              <span class="odes-acceso__titulo">Guía de oferta académica</span>
+            </span>
+            <span class="odes-acceso__flecha"><svg class="odes-i" aria-hidden="true" focusable="false"><use href="#odes-i-arrow_forward"/></svg></span>
+          </a>
+        </li>
+        <li>
+          <a class="odes-acceso odes-acceso--naranja" href="https://sapiencia.gov.co/metodologia_de_pertinencia/" data-odes-enlace>
+            <span class="odes-acceso__numero" aria-hidden="true">6</span>
+            <span class="odes-acceso__separador" aria-hidden="true"></span>
+            <span class="odes-acceso__texto" data-odes-pronto>
+              <span class="odes-acceso__titulo">Medida de pertinencia</span>
+            </span>
+            <span class="odes-acceso__flecha"><svg class="odes-i" aria-hidden="true" focusable="false"><use href="#odes-i-arrow_forward"/></svg></span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Del mapa hasta el final: Repositorio y SIVU empiezan a la izquierda del mapa y el robot ODES abajo a la
+       derecha, y bajan con la pagina (sticky) hasta el final del bloque. En pantallas sin margen libre a la
+       izquierda quedan en la esquina inferior izquierda, tambien desde el mapa. En celular el robot no se muestra
+       y ODES es un boton redondo mas, encima de Repositorio y SIVU.
+       EDITAR FLOTANTES: pon en cada href la direccion real. Por ahora los tres llevan a sus paginas en el
+       aplicativo de pruebas (sapiencia-web.vercel.app); cambialos cuando tenga su dominio definitivo. El boton
+       ODES va al mismo lugar que el robot (ver EDITAR ROBOT). Con href="#" el boton muestra "Proximamente" y no
+       se puede pulsar.
+       OCULTOS POR AHORA: Repositorio y SIVU estan comentados (mas abajo, "REPOSITORIO Y SIVU OCULTOS"). Para
+       volver a mostrarlos, quita ese comentario y, en la regla de celular (max-width:575.98px), vuelve
+       --odes-lateral-alto a 12rem (3 botones). -->
+  <div class="odes-tramo" data-odes-tramo>
+    <div class="odes-asistente">
+      <!-- ROBOT ODES FLOTANTE: abajo a la derecha, desde el mapa hasta el final del bloque (sticky, como
+           Repositorio y SIVU), con su boton "Consultale a ODES" debajo. Mira de lado a lado en bucle. El video es
+           decorativo: los lectores de pantalla lo omiten. Arranca cuando se ve en pantalla y el boton redondo lo
+           pausa.
+           EDITAR ROBOT: data-odes-robot-base es la carpeta con los 3 archivos, todos sin fondo:
+           robot-mirada.webm (Chrome, Edge y Firefox), robot-mirada.mov (Safari, iPhone y iPad) y
+           robot-mirada.webp (imagen quieta). Por ahora es el servidor de pruebas; para la pagina oficial, sube los
+           3 a Medios de WordPress (el mismo mes, para que queden en la misma carpeta) y pon aqui la direccion de
+           esa carpeta, terminada en /.
+           El robot y el boton "Consultale a ODES" llevan a ODES: cambia los dos href cuando tenga su direccion
+           definitiva. El enlace del robot es solo para el mouse y el toque (los lectores de pantalla y el
+           teclado usan el boton, que va al mismo lugar).
+           OCULTO POR AHORA: el robot esta comentado (justo abajo, "ROBOT ODES OCULTO"). Sin el, el script no lo
+           inicia ni descarga los videos. Para volver a mostrarlo, quita esa linea de comentario y la del final. -->
+      <!-- ROBOT ODES OCULTO (por ahora). Para mostrarlo, quita esta linea de comentario y la del final.
+      <div class="odes-robot" data-odes-robot data-odes-robot-base="https://sapiencia-web.vercel.app/principal/robot/">
+        <div class="odes-robot__marco">
+        <a class="odes-robot__enlace" href="https://sapiencia-web.vercel.app/odes" tabindex="-1" aria-hidden="true">
+        <div class="odes-robot__escena">
+          <img class="odes-robot__quieto" data-odes-robot-quieto alt="" width="720" height="720" loading="lazy" decoding="async">
+          <video class="odes-robot__video odes-robot__video--bucle" data-odes-robot-video muted playsinline loop preload="none" width="720" height="720"></video>
+        </div>
+        </a>
+        <button type="button" class="odes-robot__pausa" data-odes-robot-pausa hidden><svg class="odes-i" aria-hidden="true" focusable="false"><use href="#odes-i-pause" data-odes-robot-icono/></svg><span class="odes-sr" data-odes-robot-pausa-texto>Pausar la animación del robot</span></button>
+        </div>
+        <p class="odes-robot__accion"><a class="odes-btn odes-btn--morado" href="https://sapiencia-web.vercel.app/odes">Consúltale a ODES <svg class="odes-i" aria-hidden="true" focusable="false"><use href="#odes-i-arrow_forward"/></svg></a></p>
+      </div>
+      FIN DEL ROBOT ODES OCULTO -->
+    </div>
+    <div class="odes-lateral">
+      <div class="odes-lateral__botones">
+        <a class="odes-flotante odes-flotante--odes" href="https://sapiencia-web.vercel.app/odes" data-odes-enlace>
+          <span class="odes-flotante__icono odes-flotante__sigla" aria-hidden="true">ODES</span>
+          <span class="odes-flotante__texto" data-odes-pronto>Consúltale a ODES</span>
+        </a>
+        <!-- REPOSITORIO Y SIVU OCULTOS (por ahora). Para mostrarlos, quita esta linea de comentario y la del final.
+        <a class="odes-flotante odes-flotante--repositorio" href="https://sapiencia-web.vercel.app/repositorio" data-odes-enlace>
+          <span class="odes-flotante__icono"><svg class="odes-i" aria-hidden="true" focusable="false"><use href="#odes-i-library_books"/></svg></span>
+          <span class="odes-flotante__texto" data-odes-pronto>Repositorio de productos</span>
+        </a>
+        <a class="odes-flotante odes-flotante--sivu" href="https://sapiencia-web.vercel.app/sivu" data-odes-enlace>
+          <span class="odes-flotante__icono odes-flotante__sigla" aria-hidden="true">SIVU</span>
+          <span class="odes-flotante__texto" data-odes-pronto>Ir a SIVU</span>
+        </a>
+        FIN DE REPOSITORIO Y SIVU OCULTOS -->
+      </div>
+    </div>
+
+  <!-- 4. MAPA: INFORMACION GEORREFERENCIADA -->
+  <section class="odes-seccion odes-seccion--separada odes-nivel-3" aria-labelledby="odes-mapa-titulo" data-odes-mapa>
+    <div class="odes-contenedor">
+      <div class="odes-cabecera">
+        <div class="odes-cabecera__texto">
+          <h2 id="odes-mapa-titulo" class="odes-h2">Información georreferenciada</h2>
+          <p class="odes-suave">Indicadores por comuna y corregimiento</p>
+        </div>
+      </div>
+
+      <div class="odes-mapa__barra" data-odes-barra hidden>
+        <div class="odes-campo" data-odes-campo-indicador>
+          <label for="odes-mapa-indicador">Indicador</label>
+          <select id="odes-mapa-indicador" class="odes-select" data-odes-indicador></select>
+        </div>
+        <div class="odes-campo">
+          <label for="odes-mapa-lista">Comuna o corregimiento</label>
+          <select id="odes-mapa-lista" class="odes-select" data-odes-select>
+            <option value="">Toda la ciudad</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="odes-mapa">
+        <div class="odes-mapa__principal">
+        <figure class="odes-mapa__lienzo" data-odes-lienzo>
+          <div class="odes-mapa__marco" data-odes-marco>
+            <svg class="odes-mapa__svg odes-mapa__fondo" viewBox="-16 -16 632 550.7" role="img" aria-labelledby="odes-mapa-desc" data-odes-svg>
+              <title id="odes-mapa-desc">Mapa de Medellín con sus 16 comunas y 5 corregimientos, coloreadas de claro a oscuro según el rango en que cae el valor del indicador elegido. Los mismos datos están en la tabla que sigue al mapa.</title>
+              <path class="odes-mapa__base" data-odes-base/>
+              <g>
+                <path class="odes-zona" data-zona="01" d="M421.4 175l0-.1.7-.4 2.1 1.6 2-.5 1.4 2.2 4.8 2.1 1.5 2.8 2.4.4 2.8 5.5 1.1.6 1.6-.5-1 1.9 1.2-.4-.8 1.7-2.2 1.1.5 1.3 2.6-1.5.6.4-.8.9 1 3.2-.8.7-2-1.7-2 2.1 2.9 1.1 1 1.2-1.4 1-.1 2.3.6-.2.1 1.1-.1-.1-.1 1.6-.8-.5-.8.9 1.5.5-.5 4 1.4.3.3 2.2-.1 2.1-2.3.2.4 1.2 1.8-.1 0 2.4-1.2 1.3 0-.1-.1 0-4.2-2.5-2.3.8-.1 3.2-3.2-2.3 1.3-1.3-.4-.3-1.4-.7-1.3.6-3.2-.7-3.4 1.6-1.6-.6-.1.9-4.7 1.8-5.1-1.7-.5 3.1-4.3-1.1 0-.9-2.2-.6.1-2.8-1.8-.5-.2 0-4.8-1.5 0-3.2-1.3-.2-.2-.9-.1-.1.1 0 3.3-1.1 1.7-4.9 1.6.5.4-1.6 4.8.5-.9-1.2 1.2 0-.4-2.3.9-2.3 2.5-1.3-.4-1.8-2.8-.6-1.3-1.6.5-1.3 1-.3 0-1.4 3.5-6.4.5-3.4-.5-1.6 1.2-2.2-.1-1.8 2.8 1.6 1.9-1.7 4.2.8z"/>
+                <path class="odes-zona" data-zona="02" d="M376.7 204.8l-.3 0 .3-1.3 2-4.3 5.9-4 .8-4.1 2.6-3.7 3.4-9 .6-3.4-1.2-12.3.6-2 .1 0 4.9 4.8 4.5 1.6 2.3 0 .9 1 2.3-.1 1 1.3 1.8-.5 1.3 1.7 1.1-.2 0 .8.8-.6 2.5 1.4 3-.5.7 1.4 2.8 2.2-.1.5-4.2-.8-1.9 1.7-2.8-1.6.1 1.8-1.2 2.2.5 1.6-.5 3.4-3.5 6.4 0 1.4-1 .3-.5 1.3 1.3 1.6 2.8.6.4 1.8-2.5 1.3-.9 2.3.4 2.3-1.2 0 .9 1.2-4.8-.5-.4 1.6-1.6-.5-1.7 4.9-3.3 1.1-.1 0-.5-.2-.7-.2 0 1.3-.5-.7-3.2 0-.6-.6-1.4 1-3.4-.7-2-1.5-1.8-.1.1-3.6-2.3-.4-.3.9-1.1-.9-1 .5z"/>
+                <path class="odes-zona" data-zona="03" d="M402 217.8l.2-1 1.8.5-.1 2.8 2.2.6 0 .9 4.3 1.1.5-3.1 5.1 1.7 4.7-1.8.1-.9 1.6.6 3.4-1.6 3.2.7 1.3-.6 1.4.7.4.3-1.3 1.3 3.2 2.3.1-3.2 2.3-.8 4.2 2.5.1 0 0 .1-2.2 3.7-1.2-.4 1.2 2.8-.4 1.9-1.6.2-2.9-1.3-.5 2.2 1.7 5.1 1.2.3.1-1.3 2.2.1 1.5 1.7 1.2 3.4.6 0-.7.7.7 2.6-.1 0 0 .3-1.5-.1.1.3.1 0 1.7.5.1 0 .1 0 .2-.1 0 1.2-3.9.4.1 2 2.4.3-1.6 3.4-.1.1 0 .2 3.2 4 .2 0 .2 0 0-.2.1.1 2.5 1.2.2 3.5 1 1.6-.4.7-2.2.5-.3.2-.9.5-.7-1.4-1.7.1-.2.9 0 .4-.1 0-2-.7 0 .1-1.1-.1.4 1.6-4.1.2 1 1.9-1 1.3 1.5.9-1.1 7.5-1.2 1.7-3.8-1.1-3.2.3-.1.7-.1 0-4.1-.6-.2-.1-3-1.7-1.6.2-1.2 2.8-2.3 0-1.8-1.4-5.8-2-5.8 3.5.4-3.7-1.3-.2-3 2.6-.1.1 0 .1-.8 1.1-1.2-.8-.1-.1.2 0 1.3-1.5 1.7-14.7 5.9-33-1-.9z"/>
+                <path class="odes-zona" data-zona="04" d="M376.1 205.5l.3-.7.3 0 .2.9 1-.5 1.1.9.3-.9 2.3.4-.1 3.6 1.8.1 2 1.5 3.3.7 1.2-1 1.6.6.4-.1.1 0 .4.1.1 0 .6 0 1.4.7 0-1.3.7.2.5.2.1.1.2.9 1.3.2 0 3.2 4.8 1.5.2 0-.2 1-.5 9.4 1 .9-5.9 33-1.7 14.7-1.3 1.5-.2 0-.2-.3-2-1.7-2.5-.1 1.4-2-34-4.7-.4-.1.1-.2 8.5-37.6.8-7.2 4.9-4.2 1.7-8z"/>
+                <path class="odes-zona" data-zona="05" d="M346.4 212.9l6-18 2.1-4.7-.4-2.3 1.5-1.5 3 .1 1-2.8 1.1.3 3.1-6.5-.8-4.2-6 0 .1-2-1.1 0 .2-5.9 1.6-5.7 3.7-.7 2.4-3.2 2.1.3 1.2-1.3 3-.5 4.3 2.4 6.5-.7 5.4.4 2.3-.7 4.7 2.1-1.9 2.5-.1.4-.6 2 1.2 12.3-.6 3.4-3.4 9-2.6 3.7-.8 4.1-5.9 4-2 4.3-.3 1.3-.3.7-4.4 5.7-1.7 8-4.9 4.2-.8 7.2-8.5 37.6-.1.2-2.3-.5-5.3-.9-3.3-2.3-1.1.8 2.5-7.8-8.4-6.3-.6-3.1 2.7-2.9.1-2.9 1.4-1.8-1.3-1.2 3.5-4 5 3.9 2.3-2.7-2.8-2.8 1.9-1.4.5-1.8 4.6 1 .1-.9-3.2-.4-2.7-2.3-1.7.1-2.6-2.9-4.8-1.6-3.8-2.3-.2 0 3.6-6.2 1.4-4.1z"/>
+                <path class="odes-zona" data-zona="06" d="M317 200.5l.1-.2 3.9-6.1 0-.1 1.5-1-.7-.5.3-.2-.6-1.7.2-.5.1-.1 0-.1.1-.1.1-.1.6-.3.1 0 0-.2 0-.1.1 0-1-.6-.3.4-.1 0-.7-.4-.1 0 0-.1 2.2-3.5-1.6-.8 1.7-4.2.8-1 1.3.5-.4-.6 0 .1.1-.1 0-.1 1 .3.4.1.1-.3.1-.4.1-.2.4.2.1.1.2-.3.7-.5 0 .1.2-.5 0-.1.3.1-.2-.9 0-.2 0-.1 0-.1 0-.1-1.1-1.9-.1 0-.7-1.2 0 .1-.1.1-1.9-.9 0-.1-.2-1.5-.1-.2.1-.2.1 0-.1-.3.2-1.4.2-.4-.2.1-.2 0-1.3-.9-1.1.3.8-.4-.6-.5 1-4.3-1.6 0-.2-.1-.1 0-.3 0-.1 0 0-.1 0-.3.4 0 0-.1-.2 0 0-.3.1 0 .2.1.1 0 0-.2.5 0 .1-.2 1-.2 3.2 1.8 4.1-.3 3 1.1 12.8-5.5 5.3 1.3 4.3.1 1.2-.7 1 1.1.2-.2-1.6 5.7-.2 5.9 1.1 0-.1 2 6 0 .8 4.2-3.1 6.5-1.1-.3-1 2.8-3-.1-1.5 1.5.4 2.3-2.1 4.7-.1.4-5.8 17.5-.1.1-5.2-1.8-1.4 4.1-3.6 6.2-.1 0-4.3-.9-.5-1.1-3.4-1.1-.7-1.4-.8 1.1-.3-2.3 0-.2-.4-.6-.1-.3 0-.1-.1-.1-2-1.4.1-.2-1.1-.6 0-.1-.1-.2-1.5-2.3 0-.1.6-.7-6.1-5.1 2.7-2.3z"/>
+                <path class="odes-zona" data-zona="07" d="M251.6 238.5l.4-.2.4-.2 3.2.7.5-.1.1 0 2.1.2 5.6-1.5.2-.1.1 0 3.8-3.2-2.1-2-1.4-3.4-.6-1.9 1 .6 1.8.8.1-1.4 1.3-.8-2-2.9.4-1.1 3.3-.7.2-.1.1 0 .1 0 3 4.1 1.3-.9.8 1.3.7-4.5-2-1.6.3-.8 2 .5 3.8-1.8 1.8 2.7 2.6 1.6 1.8-1.6-2.1-6.7-2.1-1.4-1.8-3.8-2.8-1.3 8.5-3.4.7 3.1 1.3-.6 1 1.2 1.5-1 .1 0 .2.2.2 1.2 2.3 2.3 5.6-3.3.8-2.1 1.2.3-2.1-8.3 7 .2.7-2.1 3.5 3.5 2.8-2.1 3.8 4 .4.4 1.1.9-2.7 2.3 6.1 5.1-.6.7 0 .1 1.5 2.3.1.2 0 .1 1.1.6-.1.2 2 1.4.1.1 0 .1.1.3.4.6 0 .2.3 2.3.8-1.1.7 1.4 3.4 1.1.5 1.1 4.3.9.1 0 .2 0 3.8 2.3 4.8 1.6 2.6 2.9 1.7-.1 2.7 2.3 3.2.4-.1.9-4.6-1-.5 1.8-1.9 1.4 2.8 2.8-2.3 2.7-5-3.9-3.5 4 1.3 1.2-1.4 1.8-.1 2.9-2.7 2.9.6 3.1 8.4 6.3-2.5 7.8 1.6-.6.4.3.9 1 6.8 1.7 2.3.5-.1.7-4.2 11-.5 1-.5 0-6.9 2.1-6.1-.4-4.5-1.6-6.6-3.9-1.9-2.7-1-.8-.5.8-1.8-2.4-2-3.1.6-.9-7.1-4.5-7-7.7-2-3.3-.1-.1-.1-.2-2.8-2.2-3.1-.2-2-1.6-2.6-.6-1.9-2.1-3.4-.3-4.8-2.4-2.9 1.1-4.7-2.9-3.4.1-.4 1 1 1.5-1.2 2-.2.1-2.2 5.2-4-.6-5.6 3.4-2.3.6-.1 0-3.5-.6-4.1 1.4-.1 0-3.6 1.1-4.5 0 0-.1-.1 0-.6-.3.5-7.9-1.9-1.6-1-2.2.6-5.7 2.7 2.5 2.5.4 2.5-1.4 2 .3.6-1.7z"/>
+                <path class="odes-zona" data-zona="08" d="M393.4 277.3l.1.1 1.2.8.8-1.1 0-.1.1-.1 3-2.6 1.3.2-.4 3.7 5.8-3.5 5.8 2 1.8 1.4 2.3 0 1.2-2.8 1.6-.2 3 1.7.1 0-.4 4.2-2.9 1.5 3.5 1.5 1.2 2 4.5.9.7-.8 3.6 2 3.3-.3 1 1.1 3.6-.7-3 1.4.3.7-1.5 1.6-1.8.8 1.4 2.5-.7 2.5 1.3.7 1.3-.8-.4 5-1 1.3 1.8 2.2-1.8 2 .7.7-6.2 5 1.2.8 1.2-.9.6.6-1.8 3.9-1.6-2.3-.8-.1.3 1.3.5-.3 3.2 3-.1 1.5 5.4 3.9.5 3.9 1.6.8-.2 1.2 2 1.9 2.8-.2 1.6.7 2.9-3 .5 1.3 1.1-1.1.5 2.5.1-2 1.4 0 0-1.9 1.2 0 0-.9 2.7.3 2.1-1.2.8 4.9 2.7 4.8 2 1.6 4 2.1-1 1.8.6 2.7-1.3.2-3.3 2.7-1-1.5-2.5.3-.3 2.3-2.6 2.2 0 .2-4.7.7-7.4-5.5-2.9 1.4-5.4-2.5-1.6.9-2.8-4.8-2.6-1.7-2.3-3.5-4.5-1.7-2.1-3.4-.6-3.3-4.2-.9-2.2-3.3-2.2-.8-1.3-1.4-10.2-.9-4.9-6.5-.1-.1.7-1.1 3.9-7.7-2.1-.4-.1-2.1-.8-.5.8-2.1-14.2-10 8.7-13.5z"/>
+                <path class="odes-zona" data-zona="09" d="M394.6 314.4l0 .1.1.1 4.9 6.5 10.2.9 1.3 1.4 2.2.8 2.2 3.3 4.2.9.6 3.3 2.1 3.4 4.5 1.7 2.3 3.5 2.6 1.7 2.8 4.8 1.6-.9 5.4 2.5 2.9-1.4 7.4 5.5 4.7-.7 3.2-1.3 2.8.8.9 1.6 1.4.4-4.3 1.2.2 4.1-1.8-1.4-1.7 1.6-2.1-1.8-1.8 1.8-2.7.6-.4-2.5-1.6.2-2.1-1.4-9.4 2.9-1.9 0-1.1-1-1.3.4-1.6 1.5-.1 2.5 1.8 1.3-1.3 1.7-2.7-1.9-.2 1.3-5.2-.2-.6 1.2-1.7-2.7-.3 1.3-4.3-2.7-.5 2.1-1 0-2.3-1.3.1-1.3-1.3.6-.8-.5.3-1.9-.8-.8 1.1-3 .1-.2-.5-1.1.1-.4.2-.3 0-.8 0-.1-.3-.8 0-.1-.1-.1 0-.2 0-.1 0-.2 0-.1.2-.7.1-.1-.4 0-.1.1 0 .2-2.3 1.7-.8 2.3-1.7.4 0 .1 0 .1.1.3 0 .1 0 .1 0 .1 0 .1-.1 0-.7 1.4 0 .3 0 .1-.2.5-.2.7 0 .1-.3.8-.6 1.3-1.6-1.2-1.9.1-3.9-1.9-.2 2.2-1.1.2-1.3-1.4-3-2.2 0 .3 1.6 1.8-2.3 2.2-3.9-1.2-.2.6.1.6-.2 1.3.3 3.4-.1.1-.8 3.3-1.6-.2-1 1.2.9 1.8 6.2 5.2 5.1 2.6.1.1-.1.1-1.3.5-3.3 4.1 0 .1-.1.2-.9.5 1.1 3.5-1.9.6-12-2.7-2.5-2.7-.4-2.6-1.1-.5-.5 0-.6.1-1.3-.7-.9-4.3 2.1-2.4.7-7.6-.1-.7 1.1-3.6-4.2-5.3.3-3.4 1.8-3.7-4.5-5.9 3.5-1.1 3 .8 1.8-2.2 3-6.7-.5-3.1-2.6-3.8 2.4-2.7 3-1.7 3.7 1 4.9-4 1-2 .5.4 2.6-2.5.5.8.8-2.4z"/>
+                <path class="odes-zona" data-zona="10" d="M350.8 281.4l.1-.3.5-1 4.2-11 .1-.7.4.1 34 4.7-1.4 2 2.5.1 2 1.7.2.3-1.9-.2-8.7 13.5 14.2 10-.8 2.1.8.5.1 2.1 2.1.4-3.9 7.7-.7 1.1 0-.1-.4-.4-.8 2.4-.5-.8-2.6 2.5-.5-.4-1 2-4.9 4-3.7-1-3 1.7-2.4 2.7 2.6 3.8.5 3.1-3 6.7-1.8 2.2-3-.8-3.5 1.1 4.5 5.9-1.8 3.7-.3 3.4 4.2 5.3-1.1 3.6-1.3.4-1.3-.2-.4-.1-.3-.1-.5-1.8-3.4-.7-.9-1.8-1.2-.1-.6-2.5-1.8-1.3-8.4-6.2-3.7-1.3-.9-.3 0-.5-.3-7.1-3.4-10.1-.7-2.1-.1-.3-6.6-20.2z"/>
+                <path class="odes-zona" data-zona="11" d="M261.5 333.1l-.1-.4-.1-.3-1.1-2.6-2.8-1.7 4-3.7-.1-2 9.6 1.4.9-3.4 1.6-2 9.6 2 1.6-17.2 6.2 1.1 6.2-.1 1-11.8-5.9 1.7 5.2-21.4.7-.4 3.3-18.2 0-.1.4-.6.4-.5.2.8 1-.9.2-.2.1.1 2 3.3 7 7.7 7.1 4.5-.6.9 2 3.1 1.8 2.4.5-.8 1 .8 1.9 2.7 6.6 3.9 4.5 1.6 6.1.4 6.9-2.1.5 0-.1.3-14.5 27.4 6.6 20.2.1.3-3.5.1-50.5 1.8.9 2.7-17.9.6-2.6-2.8-3.4-1.7-1.4 4.1-2.5.2z"/>
+                <path class="odes-zona" data-zona="12" d="M275.8 261.3l-.1-.3-.4-.8 2.1-1.8 1.5 2.1 2.4-.3 3.1-2.6.8-1.6.3-.9.9-1.2 3.3 2.1 1-.1 1.2 3 1.1-3 1.3-.4.5-3.3 1.4.6 4.2-1 .8 2.1.1.1 0 .1-3.3 18.2-.7.4-5.2 21.4 5.9-1.7-1 11.8-6.2.1-6.2-1.1-1.6 17.2-9.6-2-1.6 2-.9 3.4-9.6-1.4.1 2-4 3.7-1.2-.6-5.3.4-.1 0 .1-.6.7-9.8-.8-1.9-1.5-.6 3.2-3.8-1.6-2.1.2-1.6 4.4-4.3.4-1.3-4.9-4.6-1.6.4-2.3 2.4-1 0-.3-1 1.6-2.7 4.9-1.2 5.6-4-1.2-.8 1.2-1 1.6.9 3.5-5.6 10.2-.8 11.1-4.3 4 2.4-1.1-9.2-1.3-.8-1.7 2.4-6.3.1-.5-4.5 1.4-1.6-1.9-1.9-.2-1.2.9-.8z"/>
+                <path class="odes-zona" data-zona="13" d="M215.2 303.9l.1 0 .8.7 1.9-1.6 1.7 0 .3-1.1 1.5-.1 0-.1-1.5-2.2-.7.2-.3-.6-2 .3-.2-.1-.1 0-.5.1-.1 0-.9-.8-1.3-2.5.5.5.3-.9-2-1.2 1.2 0-.8-.7-.2-.1.5-.5 1.3-1.4 2.2-.4 3.5 2 .7-.5.1-.1.3-.8-1.6-2.2 1.2-.4-2-.5-1.3-2.6-1.8.6.4-1.1-.9-1.2-.9.1 0-.1.8-1.1.9.1-.8-1.1 2.4-1.7 1.2.4.5-1 3.3 4.4-1.4-3.8 1.1-.9-1.2-1.1 2-.6-2-2.2-.2-2.6-1.4-1 2.8-1.8-.5 2 1.5 4.3 1.1.1 2.7 6 2.6 1.4.6 1.4 1.8 1.2 2.1-1-.6-1.1 2.5-1.1-2.4-3.4.4-2.5-.5-1.5-2-2.4 2.2.8 1.5 1.7 4.1-3.7.1-.1 0-.1.1-.1.1 0 .1.6.1.1 1.5.5-.2-2.9 1.6-.3 1.3 2.4 1.1.6.9-.5 1 1.4 1 0 0 2 1.4.4 2.9 3.6 1.4-1 0-1.8 1.6-2.8-1.1-4.3 0-.1-.1-1.1 0-.1 0-.3.1-.1-1.8-2.6-1.3-2.6-.1-.1-.2-.3-1.5-3.8.2-.8.8-.7.1 0-1.7-2.5 0-.1.1 0 4.1-1.4 3.5.6 0 .5 1.3 5.3 7.1 8.2 2.6.6 2.8-.7.9-4.5 1.7.3.8-3.5 1.7.3.1.3 1.8 3.2-.9.8.2 1.2 1.9 1.9-1.4 1.6.5 4.5 6.3-.1 1.7-2.4 1.3.8 1.1 9.2-4-2.4-11.1 4.3-10.2.8-3.5 5.6-1.6-.9-1.2 1 1.2.8-5.6 4-4.9 1.2-1.6 2.7.3 1 1 0 2.3-2.4 1.6-.4 4.9 4.6-.4 1.3-4.4 4.3-.2 1.6 1.6 2.1-3.2 3.8 1.5.6.8 1.9-.7 9.8-.1.6-.2 0-2.2.6-10.2-1.9-2.9-4 1.4-1-.7-1.4-1-.1 1.3-1.7-2.2-1.5-.7.4 1.3-1.8-.5-1.1-2-1.1-3.3.7-2.2-.9-1.6 2.2-3.7.5-.1-2.1-4.2-.8-.4-1.3-.2 0-1.6-1.7.6-1.3-1.1-.7-.8 0-1.1-.7 2-1.6-1-1.8zM303.4 252.4l.1.2-.2.2-1 .9-.2-.8-.4.5-.4.6-.1-.1-.8-2.1-4.2 1-1.4-.6-.5 3.3-1.3.4-1.1 3-1.2-3-1 .1-3.3-2.1-.9 1.2-.3.9-.2-.1-.2-2-1.4-.2-1.1-1.2 1.6-1.5-4.3-.2-2.9.9.5-2.7-1.8-.4-1.1-2.3-.4.5-1.3-1.2-.6.6-.7-.4-.1 0 1.2-2-1-1.5.4-1 3.4-.1 4.7 2.9 2.9-1.1 4.8 2.4 3.4.3 1.9 2.1 2.6.6 2 1.6 3.1.2z"/>
+                <path class="odes-zona" data-zona="14" d="M334.5 432.4l.6-1.6 1.7-5.4 1.5-10.8 0-.1 9.1-65.1 0-.3.9.3 3.7 1.3 8.4 6.2 1.8 1.3.6 2.5 1.2.1.9 1.8 3.4.7.5 1.8.4.1.3.1 0-.1 1.3.3 1.3-.4.1.7-.7 7.6-2.1 2.4.9 4.3 1.3.7.1 0 .5-.1.5 0 1.1.5.4 2.6 2.5 2.7 12 2.7 1.9-.6-1.1-3.5.9-.5.1-.2 0-.1 3.3-4.1 1.3-.5.1-.1.2.1.2.2 9.4 8.6 0 2.6 6 0 4.2-1.6.7 2.6-.1 1.4-.2-1.4-1.6 3.5.5 3.5.4.7 1.7-.6 1.5.5-.1 0-1.6.3-2.6 1.1.9.6-1 .3 0 .1.6.7 0 .5.1.1-1.1.8.1 0 1.4.1.3 1.9-1.1.2-.2 2.3-1.1-.5-1.2 4.9-2.1-1.7-2.9 4 .5 2.9-1.3 3.8.7 0-.3 3.6-2.5-.3 1.2 6.3 1.7 2.7-4.4-2.4-2.6 5.5 0 1.4-1-.5.9.6-.4 1.1-2.4-.6-1.2 4 .5 0 2.1 2 .8 2.6 0 .2 0 .1.9 3.2 1.7.2 0 .2 0 .2-1.1 2.8-3.5-.7-2.6 4.5-2-.4-.3 4.6 3.5 1.1-.1 4.8-4.3.6-2.6-2-.7 2-2.7 1.3 2.9-.7 0 2.6 5.3-.1-1.4 1-1.4 4.9-.9.6-2.4-1-.5 1.6-1.8.3 0 1.8 0-.1-4.4-1.1-1.6.6-.5-.6-2.5 1.5-.9-1.2-1.4.5-.2-1.1-3.4.3-4.5-4.3-.7.1-1.1-1.6-2.8-1.1-6.3-.5-6-3.4-2.3-2.8-8-4-.9-1.2-1.4-6.3-2.8-2.4-2.9-.9-.9-2.2z"/>
+                <path class="odes-zona" data-zona="15" d="M346 348.7l1.4.4 0 .3-9.1 65.1 0 .1-1.5 10.8-1.7 5.4-.7.3-4.9 2.9-10.3-2.4-2.1 4.7-7.5 4.1-.6-.4-1-7.3-2.5-.4-.5-1.5-2.4-1-1.6 1-3.8-4.2-3.4-.9-2.4-2.1-1.8.1 3.1-4.5 1.1-2.9.6-.1-2.4-2.8 2.1-1.3-1.3-4.6.3-1.7 1.1-1-.7-1.9.9-.7-.8-3.5 3.7 1 5.9-2.5 6.9-35.9-.1-6.8 1.6-1.2.9-3.9 1.4-.9 16.6-.4.1-3.7 14 2.1z"/>
+                <path class="odes-zona" data-zona="16" d="M252.4 344l.1-.2.1-.4 1.6-.2 0-1.6-5.9-1.2-2.6-1.7-10.1-.4 1.5-1.6.8.5 2.2-1.3 2.1.2 2.2-1.4 1.4 1.3 2.4-.4 4.3.8 1.9 1.1.5-1.2 1.3 0 5.6 3.7-3.1-2.6 1.9-4.3.8-.4.1.4.6 1.2 2.5-.2 1.4-4.1 3.4 1.7 2.6 2.8 17.9-.6-.9-2.7 50.5-1.8 3.5-.1.7 2.1 3.4 10.1.3 7.1 0 .5-1.4-.4-1.4-2.2-14-2.1-.1 3.7-16.6.4-1.4.9-.9 3.9-1.6 1.2.1 6.8-6.9 35.9-5.9 2.5-3.7-1 .8 3.5-.9.7.7 1.9-1.1 1-.3 1.7 1.3 4.6-2.1 1.3 2.4 2.8-.6.1-1.1 2.9-3.1 4.5 0 .2 0 1 .1.5-2.2-2.1-1.9.1-.7 2.1-2.6-1.9-1.5-3.6.5-.7-1.4-1.8-3.3-1.7.1.9-1.1.8.3.6-1.6 0-.1-1.3-.9-.1.2-1.8-1.6-1.9-5.5-1 1.1-1.8 3-.8 1.6-.1 1 1.3 1.6-.2.6-2.3 1.1.2.3-1-3.7-.8-.7-1.6.5-2 3.7-2.3-.1-1.8.7-.8.4-.2-.3-.7.3-.2 0-.1.1-.1.1-.1-.1-.1.1-.7.4-.3.1-.1.5-.3.1-.1-.8-1.3.1-.5.1 0-.5-.2-.3.1-.5.4-.7-1.3 1.7-2-1.3-2.1 1.1-2.6.2 0 0-.1 3.4-.7 1.9 3.4 1.3.8-2.2-4.1-2-.7-1.6.4-1.8-2.5-1.8.6-1.9-2.1-5.2-.2-2.6-1.8.6-.7-1.5.2-1.7 1.9-3.5.3 2.1-3.4 1.1-.3-2-1 .5-2.7-1.2-.9 1.4-1.3-.1-1.5 0-.1.1-.1.3-1 .7.1.2 0 .1.1.4.1.9-.4.5-2.7.1-.1 0-.1 0 .1.2.1 0 .1.1 0 .1.1.1 0 .1.1.1.1.4.2.1.1.1 0 .3.2.1.1 1.8-.9.1 0 .3.1.1.1 1.4.6-.5-3.7 0-.1-.2-.2-.8-1-2.1-.4.5-1-.5.1.3-.7-1.2-1.6 1.8-3.6-.4-.9-1.6-.2-1.9 1.1.1 3-1.5.7-.4 1.2-.5-.7-1.9.6-3.7-1.5.9-1.4 4.2-2.7-1.4-3.1-.5.6-5.5-.9-1.5-1 1.5-4.7z"/>
+                <path class="odes-zona" data-zona="50" d="M163 104.9l-.1 1.1 0 .1-1.4 1.9-3.2-.1-.5 3.3.3.8.3 1.3.1.1-1.2 3.2-3.1-.1-5.3 3.7-.1.1-.1 0-.1.1-1.3 3-2.2 1.7-1.2 0-5.2 4.8-6-.6-7.3 3.8-3 3.9.8 5.5.2.2.2.5 0 .1.3 1.2.3.4 0 .1.1.1 0 .1 0 .1 2.2 7.9 0 .1.8 3.5-7.5 8-.7 1.8-.6 6.9 1.4 6.8.2.1-.1 0-.2 3.5 1.2 2-.9 2.8-.3 6.7.1.1 0 .1-.5 4.6.2.3.1.4-2.4 6.5-.1.1-1.6 3.5-9.2 8.8-2.3 4.2-2.6 2.4-5.9 1.1-3.6 3.6-.3.2-.1 0-.8.5 1 .1-.3.9-1.4-.2.6.5-1.2.8-.1.4-.2-.1 0 .1-3.7-.3 0-1 0-.1-1.2.9-.5.4-.1-.3-.5 1-1.2.3-.1-.1-.3-.1-3 5-.1 0-.1.1.2 0 .1 0 1.1 0-.3.5-.1.1-.2.2-.1 0-.8.2-.1 0-.4.6-.9-.1-.5 1.1-.7-1.1-.4 1.3-1.7-.5 0 .1-.1 0-.9.1-.1 0-.1.1-.1.1-1 .3-1.6 1.3-2.7.8-.4.2-.9.7-1.8.3-1.1-1.3-2.9 4.8 0 2.3-1.2 2-1.3-.9-.4-1.5-.1 0-1.1 5.2.8 1.7-1.9-.2.7 1.9-2.1-.4-.1 0 1.2 6.1-1.1.5-.3.3-1 1.9.1 1.9.2.6-.9-.1-.7 1.2-1.1-4.3-.4.1-.6 2-.1.1-4.7.5-.3.2-.3.3-.3.3-.4.2-1.1 1.3.9 2-.2 0-.1 0-.2.1-.4 2.2-.1.1-.1 0-2.7 0-.5.8.8 1.3-2 1.2-.2.5-1.4 3-.2.2-1.5.2-.1 0-.1 0-5.7-2.3.1-6.9-1.1-3 .4-2.3-.5-1.6 2.2-10.9 1.2-1.8-.6-1.9.7-5 2.1-4.9-.3-8 1.2-7.5 3.4-2.9-.5-4.9-3.7-3.7.8-5.8-1.2-2.2.9-2.4-2.1-1.3-.1-.7 1.2-.3-1.5-1.7 3.2-2-.6-1.8 1.5-3.1-1.5-4.8-2-2.9.7-3.8-.8-1.7 1.7-1 1.2-3.5-1.1-2.2.1-2.6-2.7-3.2 0-3-3.5-6.5.9-3.5-.5-2.8.8-1.4-.5-3.2-4.2-2.7-.5-1.3.9-1.4-3-2.2-1.6-4.5-1.9-.2-.5-1.4-2.3-.4-.4-.8-2.5-.3-.2-1.3-1.2-.3-1.2-2.3.4-7.4-.6-1.5 1.4-1.4-3.2-5.1 1.4-2.2 0-3 5.5-4.4.7-2.7-1.1-2.8-2.8-.5-.6-2.2.5-1.6-1.7-1.6.6-1.1-3-3.9.1-4.6 2-1-1.3-2.3 1.9-1.4 1.2-4 3.9-1.9 2 .7 3.6-2.4-3.5-4.5.8-4.2-1-2.7 2.1-.7.1-.7-1.3-3.6-2.4-2.2 1-2.9-1-1.8-.3-3.5-1-1.3.7-3.1-2.6-1.5.3-3.4-1.2-4 .1-1.7 7.6-10.3 1.3-4.9-.4-.9 7.1-1 3.3-1.8 2.4 0 1.4-1.4 5.1-1 4.5 2.6 2.4-.9 1.5 1.2 2.8-.2 4.5-1.5 8 6.2 7.2.5 2.6-2.7 4.9-.7 3-2 4 3.4 1.2 3 1.1.6 4.4-1.2 3.9.6 7-.6 2.5-1.3 2.3-3.3 1.8.3 8.5-1.9 7.3-3.2 2.9-.1 3.9-2 .5 4.8 3.8 13-.3 3.6 4.3 6.8 1.4 4.6 8.1 8.5 6.4 4.6 1.1 1.6 4.9 17.2-.2 7-2.4 7.6.4 3 2.6 4.9 1.6 6.4-.8 5.1z"/>
+                <path class="odes-zona" data-zona="60" d="M90.8 233.1l-.1 0-.6-.5 1.4.2.3-.9-1-.1.8-.5.1 0 .3-.2 3.6-3.6 5.9-1.1 2.6-2.4 2.3-4.2 9.2-8.8 1.6-3.5.1-.1 2.4-6.5-.1-.4-.2-.3.5-4.6 0-.1-.1-.1.3-6.7.9-2.8-1.2-2 .2-3.5.1 0-.2-.1-1.4-6.8.5-6.5.8-2.2 1.5-1.4 6.1-6.9-.9-3.2 0-.1-.5-2.7 0-.1-.1-.2-1.6-5.1-.1-.1 0-.1-.1-.2-.2-.2-.5-1.8-.2-.2-.8-5.5 3-3.9 7.3-3.8 5.4.8 2.9-2.5 6.3-4.2 1.3-3 .1 0 0-.1.1 0 .1-.1 5.3-3.7 3.1.1 1.3-2.9-.5-1.7-.2-.5-.1-.3.5-3.3 3.2.1 1.4-1.9 0-.1.1-1.1 2 .1 5.1 5.1 2.7.7 4.5 3 5.8 6 2.4 4.6 2.3 1.7 2.8 4.8 5.4 2.7 3.6-.8 3.7 4.2.5 2.7 2.6 2.9 2.4 1 2.9 0 6.2 2.3 6.4 3.1 4.9 3.8 2.4-.8 3.2-3 16.8 4.4 3.7-2.1 6.3-.2 4.1 1.4 3.8-.7 1.5.9.1 2.2 1.6 2 7.2 6.9 4.5-.4 3.7.9 3.6 2.5 4.8 1.3 3.6-1.7 3.4-.2.8-1.4 4.9.1 10.3-4 2.2.2 0 .1-.1.2-.4 0-.1 0 0 .2-.1 0-.1.1-.1 0 0-.2-.1 0 0 .3.2 0 0 .1-.4 0 0 .3 0 .1.5 0 .3.1 1.5 0-1 4.3.6.5-.8.4 1.1-.3 1.3.9.2 0 .2-.1-.2.4-.2 1.4.1.3-.1 0-.1.2.3 1.7 0 .1 2 .8 0-.1.7 1.2.1 0 1.1 1.9 0 .1 0 .1 0 .1 0 .1 0 .1.2.9-.3-.1 0 .1-.2.5-.6.3-.1.1-.2.3-.1-.1-.4-.2-.1.2-.1.4-.1.3-1.4-.4 0 .1-.1 0 .4.6-1.3-.5-.8 1-1.7 4.2 1.6.8-1.9 3.1 0 .1-.3.3 0 .1.8.4.1 0 .3-.4.8.5.2.1-.1 0 0 .2 0 .1-.5.2-.2.1-.1.1-.1.1 0 .1-.1.1-.2.5.6 1.6 0 .1-.3.2.7.5-1.5 1 0 .1-3.9 6.1-.1.2-.4-.4-3.8-4-2.8 2.1-3.5-3.5-.7 2.1-7-.2 2.1 8.3-1.2-.3-.8 2.1-5.6 3.3-2.3-2.3-.2-1.2-.2-.2-.1 0-1.5 1-.4-.2-.6-1-1.3.6-.7-3.1-8.5 3.4 2.8 1.3 1.8 3.8 2.1 1.4 2.1 6.7-1.8 1.6-2.6-1.6-1.8-2.7-3.8 1.8-2-.5-.3.8 2 1.6-.7 4.5-.8-1.3-1.3.9-3.1-4.1-.1 0-3.5.8-.5.8 2.1 3.2-1.3.8-.1 1.4-2.8-1.4 2 5.3 2.1 2-2.4 2.5-3.7 1.4-.1 0-5.6.7-.1 0-.5.1-3.2-.7-.4.2-.4.2-2.8.2-.6 1.7-2-.3-2.5 1.4-2.5-.4-2.7-2.5-.6 5.7 1 2.2 1.9 1.6-.5 7.9.6.3.1 0 0 .1 4.5 0 3.6-1.1 0 .1 1.7 2.5-.6.4-.3.3-.2.8 1.5 3.8.2.2.1.2 1.3 2.6 1.8 2.6-.1.1 0 .3.1 1.2 0 .1.5 1.7 0 1 .6 1.6-1.6 2.8.1 1.6-1.6 1.2-2.8-3.6-1.4-.4 0-2-1 0-1-1.4-.9.5-1.1-.6-1.3-2.4-1.6.3.2 2.9-1.5-.5-.1-.1-.3-.4-.1.1-.1.2-1.5.6-2.5 2.9-1.5-1.7-2.2-.8 2 2.4.5 1.5-.4 2.5 2.4 3.4-2.5 1.1.6 1.1-2.1 1-1.8-1.2-.6-1.4-2.6-1.4-2.7-6-1 0-.9-1.9-.4-3.9.2-.6-2.8 1.8 1.4 1 .2 2.6 2 2.2-2 .6 1.2 1.1-1.1.9 1.4 3.8-3.3-4.4-.5 1-1.2-.4-2.4 1.7.8 1.1-1.9.7 2 1.5-.4 1.1 2.5-.2-.1 1.5 1.7 1.4.1 0 .9-.2-1.2.4 1.6 2.2-.3.8-.7.6-.1 0-3.1-2-2.6.4-1.3 1.4-.5.5-.2.1-1.2 2.2-6.1-.5-2.1 1.5-.1 0-1-.4-.2-.1-.4 0-.3-.2-.1 0-1 1.5-.3.4-.4.5-1 1.3-2.4.2-.6 1.3-3.6 2.2-3.1-1.9-.1 0-1-.5-.1 0-.3-.1-.1 0-.2-.4 0-.1-.4.1-.1.1 0 .1-.1.1-.5.2-.2.2 0 .1-.1 0-.3-.5-.1 0-.1-.1-.4 0-.4-1.6 0-.1-.3.1-.2.5-.1 0-.1.1-.1 0-2.2-2-.1-.1-.6 0-.1.1-.2.3-.1.1-.2.1-.3-.8 0-.1-.9.2-.3-1-.1 0-1.9.2-.1 0-4.4-8.9.1-6.8-1.8-2.3 0-.1-4-.6-1.6.7-1 .3-2.2.6-.3.1-.1 0-.4.4-2.9-1.5-.7-.2-3.1-.1-.5.2-6.3 6-3.1 1.4-.3 0-.2-.1-.4-.1-.6-.1-.8 0-1.8 1.8-.9 4.7-3.7 5.3-.1 0-4.2-2.2-1.4-3.4-.1-.1-.3.1-.3-.1-.1 0-4.2-1.9-.1 0-.1.1-.2.2-1.4-7.6-2.9-3-2.6-1.2-1.9-2.5-.1-4.4-3.5-4.5.1-3.4-1.8-2.7-.3-.2-.9-.7-.4-2.1-3.8-1.9-4.9-5.7-2.6-7.5zM271 245.9l.2-.1.1 0 .7.4.6-.6 1.3 1.2.4-.5 1.1 2.3 1.8.4-.5 2.7 2.9-.9 4.3.2-1.6 1.5 1.1 1.2 1.4.2.2 2 .2.1-.8 1.6-3.1 2.6-2.4.3-1.5-2.1-2.1 1.8.4.8-1.7-.3-.8 3.5-1.7-.3-.9 4.5-2.8.7-2.6-.6-7.1-8.2-1.3-5.3 0-.5.1 0 2.3-.6 5.6-3.4 4 .6z"/>
+                <path class="odes-zona" data-zona="70" d="M135.6 297.8l-.2-.1.8-1 2.9-4.3.9-4.7 1.8-1.8.8 0 .6.1.1 0 .4.1.1.1.3 0 .3-.2 2.8-1.2 6.8-6.2 3.1.1.1 0 3.9 1.3.1 0 .3-.1 2.2-.6 1-.3 1.6-.7 4 .6.4.3 1.5 2.1-.1 6.8 4.3 8.8.1.1 1.9-.2.4 1 .9-.2.2.9.1 0 .2-.1.1-.1.2-.3.1-.1.6 0 2.3 2.1.1 0 .1-.1.1 0 .2-.5.3-.1 0 .1.7.4-.3 1.2.4 0 .1 0 0 .1.1 0 .3.4.1.1 0-.1.2-.2.5-.2.1-.1 0-.1.1-.1.4-.1.3.5.3.1.1 0 1.1.4 0 .1.1 0 3 1.9 3.6-2.2.6-1.3 2.4-.2 1-1.3.6-.7.1-.2 1-1.5.1 0 .3.2.4 0 1.2.5.1 0 2.1-1.5 6.1.5 1.2-2.2.2-.1.2.1.8.7-1.2 0 2 1.2-.3.9-.5-.5 1.3 2.5.1 0 .9.8.5-.1.3.1 2-.3.3.6.7-.2 1.4 1.2.2 1.1-.1 0-1.5.1-.3 1.1-1.7 0-.6 1.1-1.7 0-.4-.2-.2.1-1.5-.2 1 1.8-2 1.5.9.8.1 0 .8 0 1.1.7-.5 1.3 1.5 1.7.2 0 .4 1.2 0 .1 4.2.8.1 2.1 3.7-.5 1.6-2.2 2.2.9 3.3-.7 2 1.1.5 1.1-1.3 1.8.7-.4 2.2 1.5-1.3 1.7 1 .1.7 1.4-1.4 1 2.9 4 10.2 1.9 2.2-.6.2 0 .1 0 5.3-.4 1.2.6 2.8 1.7 1.1 2.6.1.3-.8.4-1.9 4.3 3.1 2.6-5.6-3.7-1.3 0-.5 1.2-1.9-1.1-4.3-.8-2.4.4-1.4-1.3-2.2 1.4-2.1-.2-2.2 1.3-.8-.5-1.5 1.6 10.1.4 2.6 1.7 5.9 1.2 0 1.6-1.5-.1-.1 0-1.1 5.5 1.5 1 5.5.9.5-.6 1.4 3.1-4.2 2.7-.9 1.4 3.7 1.5 1.9-.6.5.7.4-1.2 1.5-.7-.1-3 1.9-1.1 1.6.2.4.9-1.8 3.6 1.2 1.6-.3.7.5-.1-.5 1 2.1.4.8 1 .2.2 0 .1.5 3.7-1.4-.6-.1-.1-.3-.1-.1 0-1.8.9-.1-.1-.3-.2-.1 0-.1-.1-.4-.2-.1-.1-.1-.1-.1 0-.1-.1-.1 0 0-.1-.2-.1 0-.1 0 .1-.1.1-.5 2.7-.9.4-.4-.1-.1-.1-.2 0-.7-.1-.3 1-.1.1 0 .1.1 1.5-1.4 1.3 1.2.9-.5 2.7 2 1-1.1.3-2.1 3.4 3.5-.3 1.7-1.9 1.5-.2-.6.7 2.6 1.8 5.2.2 1.9 2.1 1.8-.6 1.8 2.5 1.6-.4 2 .7 2.2 4.1-1.3-.8-1.9-3.4-3.4.7 0 .1-.2 0-1.1 2.6 1.3 2.1-1.7 2 .6 1.2.1.1.1-.1.7-.4.5.2-.3.4.1.1.8 1.3-.1.1-1 .7.3.5-.4.2.1.1-.1.1-.1.1 0 1-.4.2-.7.8.1 1.8-3.7 2.3-.5 2 .7 1.6 3.7.8-.3 1-1.1-.2-.6 2.3-1.6.2-1-1.3-1.6.1-3 .8-1.1 1.8 5.5 1 1.6 1.9-.2 1.8.9.1.1 1.3 1.6 0-.3-.6 1.1-.8-.1-.9 3.3 1.7 1.4 1.8-.5.7 1.5 3.6 2.6 1.9.7-2.1 1.9-.1 2.2 2.1.1.3-8.7 2.8-3.5-.4-1.9-1.3-2.7 2.2-4.5-3.3-8.5.5-3.5 1.2-.7 2-6.3.5-2.5 3.3-3 .7-4.1-1.8-2.9.8-11.7-.9-6 1-1.6-2.4-.8-4.6-5.2-4.7-1.6.2-2.5-1.3-5.7-6.1-2-5.4-3.8-2.4-7.3-1.7-22.9-.2-1.3-2.8-2.2-1.3.6-2.6-.7-7.7 3.9 0-4-10.5-.1-3.5-2-6.4 1.1-4.8-5-3.6-.5-3.3-2.6-4.8-.5-4-4.8-3.7-.3-4.5-2.3-5.6 3.7-5.5-6.1-5.2-7.8-4.2-.2-2.9 1.1-4.3-2.2-10.1 2.4-2.9z"/>
+                <path class="odes-zona" data-zona="80" d="M41.2 277.5l.1 0 .4-2.1.1-.2.2-.1.3 0-.9-2 .9-1.1.2-.2.4-.2.3-.3.3-.3 4.6-.6.4-.1.4-1.8.3-.3.7.1.7 4 .1.1.6-.8.1-.4.6.1.3 0-.3-2.5 1-1.9.3-.3 1.1-.5-1.2-6.1 2.2.5 0-.1-.7-1.9 1.9.2-.8-1.7 1.1-5.2 1.5 2.3.3.1 1.2-2 0-2.3 2.9-4.8 1.1 1.3 1.4-.1.4-.2.9-.7.4-.2 2.7-.8 1.6-1.3 1-.3.1-.1.1-.1.9-.1.1 0 .1 0 0-.1 1.7.5.4-1.3.7 1.1.5-1.1.9.1.4-.6.9-.2.3-.2.1-.1.3-.5-1.2 0-.2 0 3.2-5.1.3.1.1.1 1.2-.3.5-1 .1.3.5-.4 1.2-.9 0 .1 0 1 3.7.3.2 0 .1-.4 1.2-.8.1 0 6.5 9.9 2.6 7.5 4.9 5.7 3.8 1.9.4 2.1.9.7.3.2 1.8 2.7-.1 3.4 3.5 4.5.1 4.4 1.9 2.5 2.6 1.2 2.9 3 1.4 7.6.2-.2.1-.1.1 0 4.6 2 .2 0 .1-.1.1.1 1.9 3.7.3 0 3.4 1.9.1 0 .2.1.5 2.4-2.4 2.9 2.2 10.1-1.1 4.3.2 2.9 7.8 4.2 6.1 5.2-3.7 5.5 2.3 5.6.3 4.5 4.8 3.7.5 4 2.6 4.8.5 3.3 5 3.6-1.1 4.8 2 6.4.1 3.5 4 10.5-3.9 0 .7 7.7-.6 2.6 2.2 1.3 1.3 2.8 22.9.2 7.3 1.7 3.8 2.4 2 5.4 5.7 6.1 2.5 1.3 1.6-.2 5.2 4.7.8 4.6 1.6 2.4 1.4 5.3 4.5 5.1-.7 5.8-4.6 4.6-1.1 2.8-4 .9-2.5 1.6.2 1-5.3 3.8-1.7 3.5-4.4 2.8 2.2 6.3 2.5.6-.1 2.9 1.8 2.2-1.7.9-1.8 2.6-4.7.8-4.3 2.2-5.3.7-2 1.6-1-.6-.5 1.8-1-.6-3.5-.1-1.3 1.1-4.3-.8 1.8 4 2.1.5-.4 2.6 1.9 7.6-5-.5-2-3.5-1.8.1-1.6-1.5-11.5.4-3.5-2.7.5-2.2-7.1-.4-3.6 2.4-1.9 2.6-4.6 3.2-.7 1.5-3.8 2.6-1.4.1-4.5 4.1-1.8-.2-3.8-2.8-2.8-3.5-7.7-5.2-4.7 1.6-2.4 3.4-4.2 3.8-1 2.2-2.6-3.2-3.4-8.8 0-9 1.9-5.7-.8-7.7-3.2-4.4-3.2-7.2-1.9-7.5 0-2.7-1.3-3.1-4.5-4-1-2.7-1.9-1.6-2.4-4.1-3.6-.3-1.2-.9-4.5.1-2.2-1.9-5 .2.1-4.4-1.8-5.9-3.7-5.7-6.6-4.8-1.3-3.8 3.2-6.2 2.9-2.5 2.7-4.9-2.6-4.1-1.5-10.9-2.9-3.7 3.5-6.5.1-1.7-1.4-.5-1.8-4.9-2.2-1.3-.6-2.9.6-2-2.4-2.7.7-5.1 1.7-1.9.5-2.9-1.1-12.2-1.2-3-7.1-10-2.8-1-6.9-.1-.8-2.1-.8-4.4 2.6-5.1 1.1-5-1.1-3.5 1.8-1.5-2.2-3.2-.1-1.3 4-5.7-1.1-1.8 2.1-3.5 0-.1 1.6-.2.2-.2 1.4-3 .2-.5 2-1.2-.8-1.3.5-.8z"/>
+                <path class="odes-zona" data-zona="90" d="M400.3 455l.1-.1 1-2.7 0-.2 0-.2-.1 0-1.6-.2-.9-3.3 0-.2 0-.2-.8-2.4 0-.2-2.1-1.8-.5 0 1.2-4 2.4.6.4-1.1-.9-.6 1 .5 0-1.4 2.6-5.5 4.4 2.4-1.7-2.7-1.2-6.3 2.5.3.3-3.6-.7 0 1.3-3.8-.5-2.9 2.9-4 2.1 1.7 1.2-4.9 1.1.5.2-2.3 1.1-.2-.3-1.9-1.5-.1.5-.3.6-.5-.1-.1 0-.5-.6-.8 1-.3-.9-.6 2.6-1.1 1.7-.3-1.5-.5-1.7.6-.4-.7-.5-3.5 1.6-3.5.2 1.4.1-1.4-.7-2.6-4.2 1.6-6 0 0-2.6-9.4-8.6-.4-.3-.1-.1-5.1-2.6-6.2-5.2-.9-1.8 0-.1 1-1.1 1.6.2.9-3.4-.3-3.4.2-1.3-.1-.6 0-.1 4.1.7 2.3-2.2-1.6-2.1 0-.1 3 2.3 1.3 1.4 1.1-.2.2-2.2 3.9 1.9 1.9-.1 1.6 1.2.6-1.3.3-.8 0-.1.1 0 .1-.7.1 0 .1-.6 0-.3.1-.1.7-1.3 0-.1 0-.1 0-.1 0-.1-.1-.4 0-.1 1.7-.4.8-2.3 2.2-1.7.1 0 0-.1 0-.1.5-.1-.3.6 0 .2 0 .1 0 .2 0 .1 0 .2.1.1 0 .1.3.8 0 .1 0 .8-.3.7.5 1.1-1.1 3.1-.1.1.8.8-.3 1.9.8.5 1.3-.6-.1 1.3 2.3 1.3 1 0 .5-2.1 4.3 2.7.3-1.3 1.7 2.7.6-1.2 5.2.2.2-1.3 2.7 1.9 1.3-1.7-1.8-1.3.1-2.5 1.6-1.5 1.3-.4 1.1 1 1.9 0 9.4-2.9 2.1 1.4 1.6-.2.4 2.5 2.7-.6 1.8-1.8 2.1 1.8 1.7-1.6 1.8 1.4-.2-4.1 4.3-1.2-1.4-.4-.9-1.6-2.8-.8-3.2 1.3 0-.2 2.6-2.2.3-2.3 2.5-.3 1 1.5 3.3-2.7 1.3-.2-.6-2.7 1-1.8-4-2.1-2-1.6-2.7-4.8-.8-4.9-2.1 1.2-2.7-.3 0 .9-1.2 0 0 1.9-1.4 0-.1 2-.6-2.6-1 1.2-.5-1.3-3.1 3.1-1.4-.8-2.4.4-2.4-2.1.2-1.2-1.6-.8-.5-3.9-5.4-3.9.1-1.5-3.2-3-.5.3-.3-1.3.9.1 1.5 2.3 1.8-3.9-.6-.6-1.2.9-1.2-.8 2.4-1.3 4-4 0-.1-.9-.3 1.8-2-1.2-.8-.5-1.9.9-.7.4-5.1-1.3.8-1.3-.7.7-2.5-1.4-2.5 1.8-.8 1.5-1.6-.3-.7 3-1.4-3.6.7-1-1.1-3.3.3-3.6-2-.7.8-4.5-.9-1.2-2-3.5-1.5 2.9-1.5.4-4.2.1.1 4.2.6.1-.7 3.2-.3 3.8 1.1 1.2-1.7 1.1-7.5-1.5-.9 1-1.3-1-1.9 4.1-.2-.4-1.6 1 .1.1 0 0-.1 2 .7.1 0 .2-1.1 0-.2 1.8-.1.5 1.4.1 0 .9-.4 0-.1 2.1-.6.4-.1.4-.7-1-1.6-.2-3.5-2.5-1.2-.1-.1 0 .2-.4 0-3.2-4 0-.2 1.7-3.5-2.4-.3-.1-2 3.9-.4 0-1.2-.2.1-.2 0-1.8-.5-.1-.3 1.5.1 0-.1.1-.2-.7-2.6 0-.1 0 .1.7-.7-.6 0-1.2-3.4-1.5-1.7-2.2-.1-.1 1.3-1.2-.3-1.7-5.1.5-2.2 2.9 1.3 1.6-.2.4-1.9-1.2-2.8 1.2.4 2.2-3.7 0-.1 0 .1 1.2-1.3 0-2.4-1.8.1-.4-1.2 2.3-.2.1-2.1-.3-2.2-1.4-.3.5-4-1.5-.5.8-.9.8.5.1-1.6.1.1-.1-1.1-.6.2.1-2.3 1.4-1-1-1.2-2.9-1.1 2-2.1 2 1.7.8-.7-1-3.2.8-.9-.6-.4-2.6 1.5-.5-1.3 2.2-1.1.8-1.7-1.2.4 1-1.9 1.6-1.8 4.4-2.1 5.2 2.2 2.5 3.1-.2.9 1.5 2.1-.3 3.9-1 2.1.8 2.1 6.2 7.6 3.9 2.1 1.5 2.5 8.3-1.2 1.5-7.4-.4-3.2 3.8-10.2 3.7-3.8 5.7-3 3.4-2.8 2.9 2.3 7.4 3.3 6.9.4 5.4 4.8.7 1.6 2.6-.5.5-1.4 2.5-1.5.1 2 2.1.3.2 2.1 2.3 2.1 1.1-.9 1.9.8.3.5-1.4.8-.1 1.6 1.3 1.8-1.4 1.2 0 1.6-1.1.1-2 2.2.2 1.6 1.6 2.2 3.6 2.1.7 4.8 1.9 5.5.7.3.9-1.2 3.3 4.1 1 4.6-2 4.7 2.6.9 3.8 2.9.5 2.2-.6 3.7-2.2 3.9-5 .6-2 4.8 2 3 4.8 1.2 2 2.7 1.3 4.9 3.2 4.1.2 1.5-1.1 2.1 1.1 1.6-.5 1.5.9 1.4 1.5 1.9 4.6 1.8 2 1.9.1 1.6 1.7.6 1.2 1.5 1.3 4.4-1.7 3 1.1 2.4 3.4 3.1 1.1-.4 1.4.7 2.1-1.2 2.6.3.4-.6 5.1.6 2.4 2.1 1.5.2 3.5 5.7 2.9-1.3 1.1.6 1.3 2.2-.2 4.8 3.4 3.1 1.2 5.4-.8 2.9-3.7 3.1 1.6 5.2-.9 1.6-11.9 4.4-.8 1.6-.1 4.3-6.9 5.6-4.6-.4-2-2.1-1.8-.4-7.1 3.1-.9 1.6-2 1.1-3.4-.5-1.5 1.7 2.8 4.7.7 7-2.1 6.3 1.8 5.6-1.4 4.9 2.2 2.5 2.1-1.5.6.5.4.6-.9.7 2 2.8.6 2.4 1.6 1.3 2.9.9-.2 1.1 2.4 2.1 1.2 6.3-1.1 3.6-2.3 2.1 1.2 3.7-.9 2.6.1 4.2 3.5 3.8.4 1.9 2 1.1.9 2.3.9.3-3.2 4.4 0 4.2-3.2 3.8 1.1 5.5-10.7-1.7-9 .1-6.1-2.5-3.2-.4-3.1 1.5.5 3.2-1.2.8-6.7.6-12.6-3.7-5.4-5-2.7-.2-18.8-6.1-5.3-1-8.3 1.1-3.7.1 0-.8 0 .8-2.8 3-5.4 8.6.5 8-2.3 1-4.2 7.9-.4 2.6 2.2.7.2 1.7-3 2.6-.8 3.6 1.4 4.6 1.3 1.1-9.2 5.4-2.1 2.3-1.5 3.6-2.2.2-.9.9-1.2 3.7-1.6-2.2-3 1.4-1.6-.6-1.5-3.7-2.6-1.1-3.4-.2-3.1-4.4-4.3-.8-1.1-.9-7.9-1.9-6.1.3-4.1 1.6-2.4-.8-5.9.4-3.2-1.2 0-1.8 1.8-.3.5-1.6 2.4 1 .9-.6 1.4-4.9 1.4-1-5.3.1 0-2.6-2.9.7 2.7-1.3.7-2 2.6 2 4.3-.6.1-4.8-3.5-1.1.3-4.6 2 .4 2.6-4.5z"/>
+              </g>
+            </svg>
+            <svg class="odes-mapa__svg odes-mapa__frente" viewBox="-16 -16 632 550.7" aria-hidden="true" focusable="false" data-odes-frente>
+              <path class="odes-mapa__foco" data-odes-foco/>
+              <path class="odes-mapa__hover" data-odes-hover/>
+            </svg>
+            <svg class="odes-mapa__svg odes-mapa__capa odes-mapa__etiquetas" viewBox="-16 -16 632 550.7" aria-hidden="true" focusable="false" data-odes-capa>
+              <text class="odes-et" data-zona="01" x="424.2" y="203.1">1</text>
+              <text class="odes-et" data-zona="02" x="395.5" y="195.3">2</text>
+              <text class="odes-et" data-zona="03" x="418.8" y="250.5">3</text>
+              <text class="odes-et" data-zona="04" x="378.9" y="252.1">4</text>
+              <text class="odes-et" data-zona="05" x="377.2" y="171">5</text>
+              <text class="odes-et" data-zona="06" x="338.2" y="189.4">6</text>
+              <text class="odes-et" data-zona="07" x="306.8" y="228.8">7</text>
+              <text class="odes-et" data-zona="08" x="416.3" y="302.5">8</text>
+              <text class="odes-et" data-zona="09" x="395.5" y="338.8">9</text>
+              <text class="odes-et" data-zona="10" x="364.6" y="305">10</text>
+              <text class="odes-et" data-zona="11" x="318.7" y="297.2">11</text>
+              <text class="odes-et" data-zona="12" x="270.4" y="300">12</text>
+              <text class="odes-et" data-zona="13" x="233.6" y="299.8">13</text>
+              <text class="odes-et" data-zona="14" x="370.7" y="419.4">14</text>
+              <text class="odes-et" data-zona="15" x="318.2" y="411.2">15</text>
+              <text class="odes-et" data-zona="16" x="288.8" y="355">16</text>
+              <text class="odes-et odes-et--nombre" data-zona="50" x="83.6" y="83.5">Palmitas</text>
+              <text class="odes-et odes-et--nombre" data-zona="60" x="184.3" y="203.3">San Cristóbal</text>
+              <text class="odes-et odes-et--nombre" data-zona="70" x="203.3" y="364.9">Altavista</text>
+              <text class="odes-et odes-et--nombre" data-zona="80" x="108.1" y="386.5"><tspan x="108.1" dy="-.6em">San Antonio</tspan><tspan x="108.1" dy="1.2em">de Prado</tspan></text>
+              <text class="odes-et odes-et--nombre" data-zona="90" x="493" y="286.9">Santa Elena</text>
+            </svg>
+            <div class="odes-mapa__chip" aria-hidden="true" data-odes-chip hidden><span class="odes-mapa__chip-nombre" data-odes-chip-nombre></span><span class="odes-mapa__chip-valor" data-odes-chip-valor></span></div>
+          </div>
+          <button type="button" class="odes-mapa__volver" data-odes-volver hidden><svg class="odes-i" aria-hidden="true" focusable="false"><use href="#odes-i-arrow_back"/></svg>Volver<span class="odes-sr"> al mapa completo</span></button>
+          <div class="odes-tooltip" data-odes-tooltip hidden></div>
+          <div class="odes-descargas" role="group" aria-label="Descargar">
+            <button type="button" class="odes-descarga" data-odes-descargar-mapa><svg class="odes-i" aria-hidden="true" focusable="false"><use href="#odes-i-download"/></svg><span class="odes-descarga__nombre">Descargar el mapa (PNG)</span></button>
+            <button type="button" class="odes-descarga" data-odes-descargar-datos><svg class="odes-i" aria-hidden="true" focusable="false"><use href="#odes-i-csv"/></svg><span class="odes-descarga__nombre">Descargar los datos (CSV)</span></button>
+          </div>
+          <div class="odes-leyenda" data-odes-leyenda hidden>
+            <p class="odes-sr" id="odes-leyenda-titulo" data-odes-leyenda-titulo></p>
+            <ul class="odes-leyenda__clases" aria-labelledby="odes-leyenda-titulo" data-odes-leyenda-clases></ul>
+          </div>
+        </figure>
+        </div>
+
+        <div class="odes-panel">
+          <div class="odes-info" aria-live="polite" data-odes-info>
+            <p class="odes-info__tipo" data-odes-info-tipo>Medellín</p>
+            <p class="odes-info__nombre" data-odes-info-nombre>Total de la ciudad</p>
+            <p class="odes-info__valor" data-odes-info-valor></p>
+            <p class="odes-info__unidad" data-odes-info-unidad></p>
+            <p class="odes-info__zona" data-odes-info-zona>16 comunas y 5 corregimientos</p>
+            <button type="button" class="odes-info__volver" data-odes-ver-total hidden>Ver el total de la ciudad</button>
+          </div>
+          <p class="odes-mapa__fuente" data-odes-fuente hidden></p>
+        </div>
+      </div>
+
+      <details class="odes-tabla" open>
+        <summary>Ver los datos en una tabla <svg class="odes-i" aria-hidden="true" focusable="false"><use href="#odes-i-expand_more"/></svg></summary>
+        <p class="odes-tabla__ayuda"><span class="odes-tabla__estado" aria-live="polite" data-odes-orden-estado></span><span>Toca el título de una columna para cambiar el orden.</span></p>
+        <div class="odes-tabla__scroll" role="region" aria-label="Tabla de datos del mapa" tabindex="0">
+          <table>
+            <caption class="odes-sr" data-odes-tabla-titulo>Datos por comuna y corregimiento</caption>
+            <thead>
+              <tr>
+                <th scope="col" data-odes-col="codigo"><button type="button" class="odes-orden" data-odes-ordenar="codigo"><span>Código</span><svg class="odes-i" aria-hidden="true" focusable="false"><use href="#odes-i-unfold_more"/></svg></button></th>
+                <th scope="col" data-odes-col="nombre"><button type="button" class="odes-orden" data-odes-ordenar="nombre"><span>Comuna o corregimiento</span><svg class="odes-i" aria-hidden="true" focusable="false"><use href="#odes-i-unfold_more"/></svg></button></th>
+                <th scope="col" data-odes-col="zona"><button type="button" class="odes-orden" data-odes-ordenar="zona"><span>Zona</span><svg class="odes-i" aria-hidden="true" focusable="false"><use href="#odes-i-unfold_more"/></svg></button></th>
+                <th scope="col" class="odes-num" data-odes-col="valor"><button type="button" class="odes-orden" data-odes-ordenar="valor"><span data-odes-col-valor>Valor</span><svg class="odes-i" aria-hidden="true" focusable="false"><use href="#odes-i-unfold_more"/></svg></button></th>
+              </tr>
+            </thead>
+            <tbody data-odes-datos></tbody>
+          </table>
+        </div>
+      </details>
+
+      <!-- EDITAR MAPA: datos del mapa en formato JSON.
+           "zonas": nombre y zona de cada comuna (01 a 16) y corregimiento (50 a 90). No cambies los codigos.
+           "indicadores": cada uno es una opcion de la lista "Indicador", en este orden (el primero se ve al cargar).
+             id       palabra corta sin espacios ni tildes; no se muestra
+             nombre   lo que se ve en la lista, la leyenda, la tabla y las descargas
+             unidad   lo que va despues del numero, por ejemplo "9.999 estudiantes beneficiarios"
+             fuente   opcional; si lo llenas se muestra bajo la leyenda y en las descargas
+             corte    opcional; fecha de corte, igual que la fuente
+             total    opcional; si no lo pones, el total de la ciudad es la suma de las zonas
+             valores  un numero por codigo de zona, sin puntos de miles (12450, no 12.450). Usa null si no hay dato.
+             clases   opcional; cuantos rangos de color usa el mapa, de 2 a 7 (si no lo pones, 5). Los rangos se
+                      calculan solos con cortes naturales: agrupan los valores parecidos y cortan donde hay saltos.
+           Antes de publicar, pon los valores oficiales de cada indicador.
+           Para agregar otro mapa copia un indicador completo, separalo con una coma y cambia su id.
+           El JSON debe quedar valido: comillas dobles y ninguna coma despues del ultimo elemento. -->
+      <script type="application/json" data-odes-mapa-datos>
+      {
+        "zonas": {
+          "01": { "nombre": "Popular", "zona": "Nororiental" },
+          "02": { "nombre": "Santa Cruz", "zona": "Nororiental" },
+          "03": { "nombre": "Manrique", "zona": "Nororiental" },
+          "04": { "nombre": "Aranjuez", "zona": "Nororiental" },
+          "05": { "nombre": "Castilla", "zona": "Noroccidental" },
+          "06": { "nombre": "Doce de Octubre", "zona": "Noroccidental" },
+          "07": { "nombre": "Robledo", "zona": "Noroccidental" },
+          "08": { "nombre": "Villa Hermosa", "zona": "Centro Oriental" },
+          "09": { "nombre": "Buenos Aires", "zona": "Centro Oriental" },
+          "10": { "nombre": "La Candelaria", "zona": "Centro Oriental" },
+          "11": { "nombre": "Laureles-Estadio", "zona": "Centro Occidental" },
+          "12": { "nombre": "La América", "zona": "Centro Occidental" },
+          "13": { "nombre": "San Javier", "zona": "Centro Occidental" },
+          "14": { "nombre": "El Poblado", "zona": "Suroriental" },
+          "15": { "nombre": "Guayabal", "zona": "Suroccidental" },
+          "16": { "nombre": "Belén", "zona": "Suroccidental" },
+          "50": { "nombre": "San Sebastián de Palmitas", "zona": "Rural" },
+          "60": { "nombre": "San Cristóbal", "zona": "Rural" },
+          "70": { "nombre": "Altavista", "zona": "Rural" },
+          "80": { "nombre": "San Antonio de Prado", "zona": "Rural" },
+          "90": { "nombre": "Santa Elena", "zona": "Rural" }
+        },
+        "indicadores": [
+          {
+            "id": "beneficiarios",
+            "nombre": "Estudiantes beneficiarios",
+            "unidad": "estudiantes beneficiarios",
+            "fuente": "",
+            "corte": "",
+            "valores": {
+              "01": 1000, "02": 2000, "03": 3000, "04": 4000, "05": 5000, "06": 6000, "07": 7000, "08": 8000,
+              "09": 9000, "10": 10000, "11": 11000, "12": 12000, "13": 13000, "14": 14000, "15": 15000, "16": 16000,
+              "50": 5000, "60": 6000, "70": 7000, "80": 8000, "90": 9000
+            }
+          },
+          {
+            "id": "matricula",
+            "nombre": "Matrícula en educación postsecundaria",
+            "unidad": "estudiantes matriculados",
+            "fuente": "",
+            "corte": "",
+            "valores": {
+              "01": 6820, "02": 5910, "03": 8430, "04": 8960, "05": 9740, "06": 9120, "07": 11860, "08": 7580,
+              "09": 9310, "10": 5240, "11": 9870, "12": 7390, "13": 8210, "14": 10640, "15": 6080, "16": 13450,
+              "50": 310, "60": 4720, "70": 1930, "80": 6940, "90": 820
+            }
+          }
+        ]
+      }
+      </script>
+    </div>
+  </section>
+
+  <!-- 6. QUIENES SOMOS Y CONTACTO -->
+  <section class="odes-seccion odes-seccion--separada odes-nivel-4" aria-labelledby="odes-nosotros-titulo">
+    <div class="odes-contenedor">
+      <div class="odes-cabecera">
+        <div class="odes-cabecera__texto">
+          <h2 id="odes-nosotros-titulo" class="odes-h2">Quiénes somos</h2>
+          <p class="odes-suave">Somos la unidad de análisis y seguimiento de información relacionada con la Educación Postsecundaria.</p>
+        </div>
+      </div>
+
+      <ul class="odes-pilares">
+        <li class="odes-pilar">
+          <span class="odes-pilar__icono"><svg class="odes-i" aria-hidden="true" focusable="false"><use href="#odes-i-lightbulb"/></svg></span>
+          <h3 class="odes-h3">Propuesta de valor</h3>
+          <p class="odes-pilar__texto">En el OdeS generamos información clara, veraz y pertinente; buscamos posicionarnos como una unidad de análisis especializada en Educación Postsecundaria con visión innovadora y a largo plazo. Además, buscamos mantener relaciones cercanas y de trabajo colaborativo.</p>
+          <a class="odes-enlace" href="https://sapiencia.gov.co/propuesta-de-valor-3/">Conoce la propuesta de <span class="odes-sin-corte">valor <svg class="odes-i" aria-hidden="true" focusable="false"><use href="#odes-i-arrow_forward"/></svg></span></a>
+        </li>
+        <li class="odes-pilar">
+          <span class="odes-pilar__icono"><svg class="odes-i" aria-hidden="true" focusable="false"><use href="#odes-i-alt_route"/></svg></span>
+          <h3 class="odes-h3">Líneas de acción</h3>
+          <p class="odes-pilar__texto">Nuestro quehacer se fundamenta en un proceso metodológico de generación de conocimiento basado en el análisis cualitativo y cuantitativo de los datos. Buscamos generar escenarios de intercambio, colaboración y divulgación para la democratización del conocimiento.</p>
+          <a class="odes-enlace" href="https://sapiencia.gov.co/lineas-de-accion">Conoce las líneas de <span class="odes-sin-corte">acción <svg class="odes-i" aria-hidden="true" focusable="false"><use href="#odes-i-arrow_forward"/></svg></span></a>
+        </li>
+        <li class="odes-pilar">
+          <span class="odes-pilar__icono"><svg class="odes-i" aria-hidden="true" focusable="false"><use href="#odes-i-groups"/></svg></span>
+          <h3 class="odes-h3">Actores estratégicos</h3>
+          <p class="odes-pilar__texto">Creemos en el trabajo colaborativo con diversos actores. Reconocemos nuestra capacidad de relacionamiento nodal, multiactoral y multidimensional.</p>
+          <a class="odes-enlace" href="https://sapiencia.gov.co/actores-estrategicos/">Conoce a los actores <span class="odes-sin-corte">estratégicos <svg class="odes-i" aria-hidden="true" focusable="false"><use href="#odes-i-arrow_forward"/></svg></span></a>
+        </li>
+      </ul>
+
+      <div class="odes-contacto">
+        <div>
+          <h3 class="odes-h3">¿Tienes preguntas o sugerencias?</h3>
+          <p>Escríbenos a <a class="odes-correo" href="mailto:observatorio@sapiencia.gov.co">observatorio@sapiencia.gov.co</a> o déjanos tu mensaje en el buzón.</p>
+        </div>
+        <div class="odes-acciones">
+          <a class="odes-btn odes-btn--claro" href="https://forms.office.com/Pages/ResponsePage.aspx?id=0R1Bj05PyEOE4heXN5kwYCv1I4jJY_JOrMNiBKouTl9UMlA5WERTWDBDM1U4TFNKRlRXVVgyOUlLVC4u"><svg class="odes-i" aria-hidden="true" focusable="false"><use href="#odes-i-markunread_mailbox"/></svg>El buzón<span class="odes-sr"> (sitio externo)</span></a>
+          <a class="odes-btn odes-btn--contorno" href="https://forms.office.com/Pages/ResponsePage.aspx?id=0R1Bj05PyEOE4heXN5kwYCv1I4jJY_JOrMNiBKouTl9UQjNUSzdWM1FJODlKRkFFNklUQkRUUE5MQi4u"><svg class="odes-i" aria-hidden="true" focusable="false"><use href="#odes-i-mail"/></svg>Recibe nuestra información<span class="odes-sr"> (sitio externo)</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var raiz = document.getElementById('odes-observatorio');
+  if (!raiz || raiz.getAttribute('data-odes-listo') === 'si') { return; }
+  raiz.setAttribute('data-odes-listo', 'si');
+
+  var consultaMovimiento = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  var formato = new Intl.NumberFormat('es-CO');
+  var formatoPorcentaje = new Intl.NumberFormat('es-CO', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+
+  function movimientoReducido() { return !!(consultaMovimiento && consultaMovimiento.matches); }
+  function todos(selector, contexto) { return Array.prototype.slice.call((contexto || raiz).querySelectorAll(selector)); }
+  function uno(selector, contexto) { return (contexto || raiz).querySelector(selector); }
+
+  /* ---------- Enlaces sin direccion: href="#" se muestra como "Proximamente" ---------- */
+  function iniciarEnlaces() {
+    todos('[data-odes-enlace]').forEach(function (a) {
+      var destino = (a.getAttribute('href') || '').trim();
+      if (destino && destino !== '#') { return; }
+      a.removeAttribute('href');
+      a.classList.add('odes-pendiente');
+      var aviso = document.createElement('span');
+      aviso.className = 'odes-pronto';
+      aviso.textContent = 'Próximamente';
+      (uno('[data-odes-pronto]', a) || a).appendChild(aviso);
+    });
+  }
+
+  /* ---------- Color: rampa secuencial interpolada en OKLab ---------- */
+  function hexARgb(hex) { return [1, 3, 5].map(function (i) { return parseInt(hex.substr(i, 2), 16) / 255; }); }
+  function aLineal(c) { return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); }
+  function aGamma(c) { return c <= 0.0031308 ? 12.92 * c : 1.055 * Math.pow(c, 1 / 2.4) - 0.055; }
+  function hexAOklab(hex) {
+    var c = hexARgb(hex).map(aLineal);
+    var l = Math.cbrt(0.4122214708 * c[0] + 0.5363325363 * c[1] + 0.0514459929 * c[2]);
+    var m = Math.cbrt(0.2119034982 * c[0] + 0.6806995451 * c[1] + 0.1073969566 * c[2]);
+    var s = Math.cbrt(0.0883024619 * c[0] + 0.2817188376 * c[1] + 0.6299787005 * c[2]);
+    return [
+      0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s,
+      1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s,
+      0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s
+    ];
+  }
+  function oklabAHex(lab) {
+    var l = Math.pow(lab[0] + 0.3963377774 * lab[1] + 0.2158037573 * lab[2], 3);
+    var m = Math.pow(lab[0] - 0.1055613458 * lab[1] - 0.0638541728 * lab[2], 3);
+    var s = Math.pow(lab[0] - 0.0894841775 * lab[1] - 1.2914855480 * lab[2], 3);
+    return '#' + [
+      4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
+      -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
+      -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s
+    ].map(function (c) {
+      var v = Math.round(aGamma(Math.max(0, Math.min(1, c))) * 255);
+      return (v < 16 ? '0' : '') + v.toString(16);
+    }).join('');
+  }
+  // Cada parada se ubica segun su luminosidad, para que el paso de claro a oscuro sea parejo
+  function crearRampa(hexes) {
+    var paradas = hexes.map(hexAOklab);
+    var claro = paradas[0][0];
+    var oscuro = paradas[ paradas.length - 1 ][0];
+    var posiciones = paradas.map(function (p) { return (claro - p[0]) / (claro - oscuro); });
+    return function (t) {
+      t = Math.max(0, Math.min(1, t));
+      var i = 1;
+      while (i < paradas.length - 1 && t > posiciones[ i ]) { i += 1; }
+      var a = paradas[ i - 1 ];
+      var b = paradas[ i ];
+      var tramo = posiciones[ i ] - posiciones[ i - 1 ];
+      var u = tramo > 0 ? (t - posiciones[ i - 1 ]) / tramo : 0;
+      return oklabAHex([0, 1, 2].map(function (k) { return a[ k ] + (b[ k ] - a[ k ]) * u; }));
+    };
+  }
+  /* ---------- Rangos por cortes naturales (Jenks) ----------
+     Ordena los valores y busca los cortes que dejan cada rango lo mas parejo posible por dentro.
+     Devuelve el valor mas alto de cada rango, de menor a mayor. */
+  function cortesNaturales(valores, k) {
+    var datos = valores.slice().sort(function (a, b) { return a - b; });
+    var n = datos.length;
+    var inicio = [];
+    var varianza = [];
+    var i, j, l, m;
+    for (i = 0; i <= n; i++) {
+      inicio.push([]);
+      varianza.push([]);
+      for (j = 0; j <= k; j++) { inicio[ i ].push(0); varianza[ i ].push(i >= 2 && j >= 1 ? Infinity : 0); }
+    }
+    for (j = 1; j <= k; j++) { inicio[1][ j ] = 1; }
+    for (l = 2; l <= n; l++) {
+      var suma = 0;
+      var sumaCuadrados = 0;
+      var v = 0;
+      for (m = 1; m <= l; m++) {
+        var desde = l - m + 1;
+        var valor = datos[ desde - 1 ];
+        suma += valor;
+        sumaCuadrados += valor * valor;
+        v = sumaCuadrados - (suma * suma) / m;
+        if (desde > 1) {
+          for (j = 2; j <= k; j++) {
+            if (varianza[ l ][ j ] >= v + varianza[ desde - 1 ][ j - 1 ]) {
+              inicio[ l ][ j ] = desde;
+              varianza[ l ][ j ] = v + varianza[ desde - 1 ][ j - 1 ];
+            }
+          }
+        }
+      }
+      inicio[ l ][1] = 1;
+      varianza[ l ][1] = v;
+    }
+    var techos = [];
+    var fin = n;
+    for (j = k; j >= 1; j--) {
+      techos[ j - 1 ] = datos[ fin - 1 ];
+      fin = inicio[ fin ][ j ] - 1;
+    }
+    return techos;
+  }
+
+  function luminancia(hex) { var c = hexARgb(hex).map(aLineal); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; }
+  function contraste(a, b) { var x = luminancia(a); var y = luminancia(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); }
+
+  /* ---------- Descargas ---------- */
+  function guardarArchivo(blob, nombre) {
+    var url = URL.createObjectURL(blob);
+    var enlace = document.createElement('a');
+    enlace.href = url;
+    enlace.download = nombre;
+    enlace.style.display = 'none';
+    document.body.appendChild(enlace);
+    enlace.click();
+    window.setTimeout(function () {
+      URL.revokeObjectURL(url);
+      if (enlace.parentNode) { enlace.parentNode.removeChild(enlace); }
+    }, 2000);
+  }
+  function nombreDeArchivo(texto) {
+    return String(texto).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  }
+  function textoCsv(texto) {
+    texto = String(texto);
+    if (/^[=+\-@]/.test(texto)) { texto = '\'' + texto; }
+    return /[";\r\n]/.test(texto) ? '"' + texto.replace(/"/g, '""') + '"' : texto;
+  }
+  function rectanguloRedondeado(ctx, x, y, ancho, alto, radio) {
+    ctx.beginPath();
+    ctx.moveTo(x + radio, y);
+    ctx.arcTo(x + ancho, y, x + ancho, y + alto, radio);
+    ctx.arcTo(x + ancho, y + alto, x, y + alto, radio);
+    ctx.arcTo(x, y + alto, x, y, radio);
+    ctx.arcTo(x, y, x + ancho, y, radio);
+    ctx.closePath();
+  }
+  function partirEnLineas(ctx, texto, ancho) {
+    var lineas = [];
+    var linea = '';
+    String(texto).split(/\s+/).forEach(function (palabra) {
+      var prueba = linea ? linea + ' ' + palabra : palabra;
+      if (linea && ctx.measureText(prueba).width > ancho) { lineas.push(linea); linea = palabra; } else { linea = prueba; }
+    });
+    if (linea) { lineas.push(linea); }
+    return lineas;
+  }
+
+  /* ---------- Mapa georreferenciado ---------- */
+  // Azules de la plantilla: celeste 90, 80, 70, 60, 50 y 40, y marino 40
+  var RAMPA_AZUL = ['#c1e8f7', '#81d0ef', '#3ab6e6', '#319ac3', '#287fa0', '#20657f', '#0b3a56'];
+  var COLOR_SIN_DATO = '#dcdcdc';
+  var TINTA = '#151717';
+  var FUENTE_IMAGEN = '"Rubik", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif';
+
+  function iniciarMapa() {
+    var seccion = uno('[data-odes-mapa]');
+    if (!seccion) { return; }
+    var datos = JSON.parse(uno('[data-odes-mapa-datos]', seccion).textContent);
+    var lienzo = uno('[data-odes-lienzo]', seccion);
+    var marco = uno('[data-odes-marco]', seccion);
+    var svg = uno('[data-odes-svg]', seccion);
+    var capas = [uno('[data-odes-frente]', seccion)].concat(todos('[data-odes-capa]', seccion));
+    var trazoHover = uno('[data-odes-hover]', seccion);
+    var trazoFoco = uno('[data-odes-foco]', seccion);
+    var chip = uno('[data-odes-chip]', seccion);
+    var chipNombre = uno('[data-odes-chip-nombre]', seccion);
+    var chipValor = uno('[data-odes-chip-valor]', seccion);
+    var tooltip = uno('[data-odes-tooltip]', seccion);
+    var botonVolver = uno('[data-odes-volver]', seccion);
+    var botonTotal = uno('[data-odes-ver-total]', seccion);
+    var selIndicador = uno('[data-odes-indicador]', seccion);
+    var selZona = uno('[data-odes-select]', seccion);
+    var estadoOrden = uno('[data-odes-orden-estado]', seccion);
+    var cuerpoTabla = uno('[data-odes-datos]', seccion);
+    var fuente = uno('[data-odes-fuente]', seccion);
+    var info = {
+      tipo: uno('[data-odes-info-tipo]', seccion),
+      nombre: uno('[data-odes-info-nombre]', seccion),
+      valor: uno('[data-odes-info-valor]', seccion),
+      unidad: uno('[data-odes-info-unidad]', seccion),
+      zona: uno('[data-odes-info-zona]', seccion)
+    };
+    var leyenda = {
+      caja: uno('[data-odes-leyenda]', seccion),
+      titulo: uno('[data-odes-leyenda-titulo]', seccion),
+      clases: uno('[data-odes-leyenda-clases]', seccion),
+      filas: []
+    };
+    var colorRampa = crearRampa(RAMPA_AZUL);
+    var cajaSvg = uno('[data-odes-frente]', seccion).viewBox.baseVal;
+    var VISTA_TOTAL = { x: cajaSvg.x, y: cajaSvg.y, w: cajaSvg.width, h: cajaSvg.height };
+
+    /* Zonas: la forma sale del SVG; el nombre y la zona, del JSON */
+    var zonas = new Map();
+    var lista = [];
+    var comunas = 0;
+    var corregimientos = 0;
+    Object.keys(datos.zonas || {}).sort(function (a, b) { return parseInt(a, 10) - parseInt(b, 10); }).forEach(function (codigo) {
+      var trazado = uno('.odes-zona[data-zona="' + codigo + '"]', svg);
+      if (!trazado) { return; }
+      var meta = datos.zonas[ codigo ] || {};
+      var etiqueta = uno('.odes-et[data-zona="' + codigo + '"]', seccion);
+      var caja = etiqueta ? null : trazado.getBBox();
+      var d = {
+        codigo: codigo,
+        numero: parseInt(codigo, 10),
+        nombre: String(meta.nombre || codigo),
+        zona: String(meta.zona || ''),
+        esCorregimiento: parseInt(codigo, 10) >= 50,
+        trazado: trazado,
+        etiqueta: etiqueta,
+        ancla: etiqueta
+          ? { x: parseFloat(etiqueta.getAttribute('x')), y: parseFloat(etiqueta.getAttribute('y')) }
+          : { x: caja.x + caja.width / 2, y: caja.y + caja.height / 2 },
+        valor: null,
+        t: null,
+        color: COLOR_SIN_DATO
+      };
+      zonas.set(codigo, d);
+      lista.push(d);
+      if (d.esCorregimiento) { corregimientos += 1; } else { comunas += 1; }
+    });
+    var indicadores = (datos.indicadores || []).filter(function (ind) { return ind && ind.id && ind.valores; });
+    if (!lista.length || !indicadores.length) { return; }
+
+    // Contorno blanco y grueso de la ciudad: copia de todas las zonas, por debajo de ellas
+    uno('[data-odes-base]', seccion).setAttribute('d', lista.map(function (d) { return d.trazado.getAttribute('d'); }).join(' '));
+
+    indicadores.forEach(function (ind) {
+      var opcion = document.createElement('option');
+      opcion.value = String(ind.id);
+      opcion.textContent = String(ind.nombre || ind.id);
+      selIndicador.appendChild(opcion);
+    });
+    uno('[data-odes-campo-indicador]', seccion).hidden = indicadores.length < 2;
+    var grupoComunas = document.createElement('optgroup');
+    grupoComunas.label = 'Comunas';
+    var grupoCorregimientos = document.createElement('optgroup');
+    grupoCorregimientos.label = 'Corregimientos';
+    lista.forEach(function (d) {
+      var opcion = document.createElement('option');
+      opcion.value = d.codigo;
+      opcion.textContent = d.esCorregimiento ? d.nombre : d.numero + '. ' + d.nombre;
+      (d.esCorregimiento ? grupoCorregimientos : grupoComunas).appendChild(opcion);
+    });
+    if (grupoComunas.children.length) { selZona.appendChild(grupoComunas); }
+    if (grupoCorregimientos.children.length) { selZona.appendChild(grupoCorregimientos); }
+    uno('[data-odes-barra]', seccion).hidden = false;
+
+    var actual = null;
+    var resumen = { total: 0, minimo: 0, maximo: 0, conDato: 0 };
+    var clases = [];
+    var foco = null;
+    var enHover = null;
+    var vista = VISTA_TOTAL;
+    var destino = VISTA_TOTAL;
+    var animacion = 0;
+
+    function aNumero(v) {
+      if (typeof v === 'number') { return isFinite(v) ? v : null; }
+      if (typeof v === 'string' && v.trim() !== '') {
+        var n = parseFloat(v.trim().replace(/\./g, '').replace(',', '.'));
+        return isFinite(n) ? n : null;
+      }
+      return null;
+    }
+    function cifra(v) { return v === null ? 'Sin dato' : formato.format(v); }
+    function titulo(d) { return d.esCorregimiento ? 'Corregimiento' : 'Comuna ' + d.numero; }
+    function porcentaje(d) { return d.valor !== null && resumen.total > 0 ? formatoPorcentaje.format((d.valor / resumen.total) * 100) + ' %' : ''; }
+    function unidad() { return actual.unidad ? ' ' + actual.unidad : ''; }
+
+    /* Indicador: colores, leyenda, tabla y panel */
+    function aplicarIndicador(ind) {
+      actual = ind;
+      selIndicador.value = String(ind.id);
+      var minimo = Infinity;
+      var maximo = -Infinity;
+      var suma = 0;
+      var conDato = 0;
+      lista.forEach(function (d) {
+        d.valor = aNumero(ind.valores[ d.codigo ]);
+        if (d.valor === null) { return; }
+        conDato += 1;
+        suma += d.valor;
+        minimo = Math.min(minimo, d.valor);
+        maximo = Math.max(maximo, d.valor);
+      });
+      var total = aNumero(ind.total);
+      resumen = { total: total !== null ? total : suma, minimo: minimo, maximo: maximo, conDato: conDato };
+      clases = calcularClases(ind);
+      lista.forEach(function (d) {
+        d.clase = null;
+        if (d.valor !== null) {
+          for (var i = 0; i < clases.length; i++) {
+            if (d.valor <= clases[ i ].techo || i === clases.length - 1) { d.clase = i; break; }
+          }
+          var c = clases[ d.clase ];
+          c.desde = Math.min(c.desde, d.valor);
+          c.hasta = Math.max(c.hasta, d.valor);
+          c.cuenta += 1;
+          if (d.esCorregimiento) { c.corregimientos += 1; }
+        }
+        d.fila = d.clase === null ? clases.length : d.clase;
+        d.color = d.clase === null ? COLOR_SIN_DATO : clases[ d.clase ].color;
+        d.trazado.style.fill = d.color;
+        // Numero claro u oscuro segun el fondo, el que tenga mas contraste
+        if (d.etiqueta) { d.etiqueta.classList.toggle('odes-et--claro', contraste(d.color, '#ffffff') > contraste(d.color, TINTA)); }
+      });
+      if (enHover) { trazoHover.style.fill = enHover.color; llenarTooltip(enHover); }
+      if (foco) { trazoFoco.style.fill = foco.color; llenarChip(foco); }
+      pintarLeyenda();
+      pintarFuente();
+      pintarTabla();
+      pintarInfo();
+    }
+
+    /* Rangos del indicador: cuantos pide el JSON (5 si no dice), sin pasar del numero de valores distintos */
+    function calcularClases(ind) {
+      var valores = [];
+      var distintos = {};
+      lista.forEach(function (d) {
+        if (d.valor === null) { return; }
+        valores.push(d.valor);
+        distintos[ d.valor ] = true;
+      });
+      var pedidas = parseInt(ind.clases, 10);
+      if (!(pedidas >= 2 && pedidas <= 7)) { pedidas = 5; }
+      var k = Math.min(pedidas, Object.keys(distintos).length);
+      if (k < 1) { return []; }
+      return cortesNaturales(valores, k).map(function (techo, i) {
+        return { techo: techo, color: colorRampa(k === 1 ? 0.5 : i / (k - 1)), desde: Infinity, hasta: -Infinity, cuenta: 0, corregimientos: 0 };
+      });
+    }
+    function textoRango(c) { return c.desde === c.hasta ? cifra(c.desde) : cifra(c.desde) + ' a ' + cifra(c.hasta); }
+    function textoCuenta(f) {
+      var partes = [];
+      if (f.comunas) { partes.push(f.comunas + (f.comunas === 1 ? ' comuna' : ' comunas')); }
+      if (f.corregimientos) { partes.push(f.corregimientos + (f.corregimientos === 1 ? ' corregimiento' : ' corregimientos')); }
+      return partes.join(' y ');
+    }
+    /* Filas de la leyenda: un rango por color y, si falta algun dato, la fila "Sin dato" */
+    function filasLeyenda() {
+      var filas = clases.map(function (c, i) {
+        return { color: c.color, texto: textoRango(c), comunas: c.cuenta - c.corregimientos, corregimientos: c.corregimientos, fila: i };
+      });
+      if (resumen.conDato < lista.length) {
+        var sinDato = lista.filter(function (d) { return d.valor === null; });
+        var rurales = sinDato.filter(function (d) { return d.esCorregimiento; }).length;
+        filas.push({ color: COLOR_SIN_DATO, texto: 'Sin dato', comunas: sinDato.length - rurales, corregimientos: rurales, fila: clases.length });
+      }
+      return filas;
+    }
+    function pintarLeyenda() {
+      leyenda.titulo.textContent = 'Rangos de color: ' + actual.nombre;
+      leyenda.clases.textContent = '';
+      leyenda.filas = filasLeyenda().map(function (f) {
+        var li = document.createElement('li');
+        li.className = 'odes-leyenda__clase';
+        var muestra = document.createElement('span');
+        muestra.className = 'odes-leyenda__muestra';
+        muestra.style.background = f.color;
+        var rango = document.createElement('span');
+        rango.className = 'odes-leyenda__rango';
+        rango.textContent = f.texto;
+        var cuenta = document.createElement('span');
+        cuenta.className = 'odes-sr';
+        cuenta.textContent = ' (' + textoCuenta(f) + ')';
+        li.appendChild(muestra);
+        li.appendChild(rango);
+        li.appendChild(cuenta);
+        leyenda.clases.appendChild(li);
+        return li;
+      });
+      leyenda.caja.hidden = false;
+      marcarLeyenda();
+    }
+    // Resalta en la leyenda el rango de la zona bajo el cursor o de la zona elegida
+    function marcarLeyenda() {
+      var d = enHover || foco;
+      leyenda.filas.forEach(function (li, i) { li.classList.toggle('odes-leyenda__clase--activa', !!d && d.fila === i); });
+    }
+    function pintarFuente() {
+      var partes = [];
+      if (actual.fuente) { partes.push('Fuente: ' + actual.fuente); }
+      if (actual.corte) { partes.push('Fecha de corte: ' + actual.corte); }
+      fuente.textContent = partes.join(' · ');
+      fuente.hidden = !partes.length;
+    }
+    function pintarInfo() {
+      if (!foco) {
+        info.tipo.textContent = 'Medellín';
+        info.nombre.textContent = 'Total de la ciudad';
+        info.valor.textContent = formato.format(resumen.total);
+        info.unidad.textContent = actual.unidad || '';
+        info.zona.textContent = comunas + ' comunas y ' + corregimientos + ' corregimientos';
+        botonTotal.hidden = true;
+        return;
+      }
+      var pct = porcentaje(foco);
+      info.tipo.textContent = titulo(foco);
+      info.nombre.textContent = foco.nombre;
+      info.valor.textContent = cifra(foco.valor);
+      info.unidad.textContent = foco.valor === null ? '' : actual.unidad || '';
+      info.zona.textContent = (foco.esCorregimiento ? 'Zona rural' : 'Zona ' + foco.zona) + (pct ? ' · ' + pct + ' del total de la ciudad' : '');
+      botonTotal.hidden = false;
+    }
+
+    /* Tabla ordenable: un clic en el titulo de una columna ordena de menor a mayor (texto: de la A a la Z);
+       otro clic en la misma columna invierte el orden. Las zonas sin dato van siempre al final. */
+    var COLUMNAS = {
+      codigo: { tipo: 'numero', dato: function (d) { return d.numero; } },
+      nombre: { tipo: 'texto', dato: function (d) { return d.nombre; } },
+      zona: { tipo: 'texto', dato: function (d) { return d.zona || ''; } },
+      valor: { tipo: 'numero', dato: function (d) { return d.valor; } }
+    };
+    var orden = { columna: 'codigo', sentido: 1 };
+    function ordenarZonas() {
+      var columna = COLUMNAS[ orden.columna ];
+      var porCodigo = function (a, b) { return a.numero - b.numero; };
+      return lista.slice().sort(function (a, b) {
+        var x = columna.dato(a);
+        var y = columna.dato(b);
+        if (x === null || y === null) {
+          if (x === y) { return porCodigo(a, b); }
+          return x === null ? 1 : -1;
+        }
+        var diferencia = columna.tipo === 'texto' ? x.localeCompare(y, 'es', { sensitivity: 'base' }) : x - y;
+        return orden.sentido * diferencia || porCodigo(a, b);
+      });
+    }
+    function textoSentido(tipo, sentido) {
+      if (tipo === 'texto') { return sentido > 0 ? 'de la A a la Z' : 'de la Z a la A'; }
+      return sentido > 0 ? 'de menor a mayor' : 'de mayor a menor';
+    }
+    function pintarOrden() {
+      todos('[data-odes-ordenar]', seccion).forEach(function (boton) {
+        var clave = boton.getAttribute('data-odes-ordenar');
+        var th = boton.parentNode;
+        var activa = clave === orden.columna;
+        if (activa) { th.setAttribute('aria-sort', orden.sentido > 0 ? 'ascending' : 'descending'); } else { th.removeAttribute('aria-sort'); }
+        boton.classList.toggle('odes-orden--activa', activa);
+        uno('use', boton).setAttribute('href', '#odes-i-' + (activa ? (orden.sentido > 0 ? 'arrow_upward' : 'arrow_downward') : 'unfold_more'));
+        if (activa) {
+          estadoOrden.textContent = 'Ordenada por ' + boton.textContent.trim() + ', ' + textoSentido(COLUMNAS[ clave ].tipo, orden.sentido) + '.';
+        }
+      });
+    }
+    todos('[data-odes-ordenar]', seccion).forEach(function (boton) {
+      boton.addEventListener('click', function () {
+        var clave = boton.getAttribute('data-odes-ordenar');
+        if (clave === orden.columna) { orden.sentido = -orden.sentido; } else { orden.columna = clave; orden.sentido = 1; }
+        pintarTabla();
+      });
+    });
+    function pintarTabla() {
+      uno('[data-odes-tabla-titulo]', seccion).textContent = actual.nombre + ' por comuna y corregimiento';
+      uno('[data-odes-col-valor]', seccion).textContent = actual.nombre;
+      pintarOrden();
+      cuerpoTabla.textContent = '';
+      ordenarZonas().forEach(function (d) {
+        var fila = document.createElement('tr');
+        fila.setAttribute('data-zona', d.codigo);
+        var codigo = document.createElement('td');
+        codigo.textContent = d.numero;
+        var nombre = document.createElement('th');
+        nombre.scope = 'row';
+        nombre.textContent = d.nombre;
+        var zona = document.createElement('td');
+        zona.textContent = d.zona;
+        var valor = document.createElement('td');
+        valor.className = 'odes-num';
+        valor.textContent = cifra(d.valor);
+        fila.appendChild(codigo);
+        fila.appendChild(nombre);
+        fila.appendChild(zona);
+        fila.appendChild(valor);
+        cuerpoTabla.appendChild(fila);
+      });
+    }
+
+    /* Vista del mapa: zoom animado cambiando el viewBox de las tres capas */
+    function cajaTexto(x, y, w, h) { return [x, y, w, h].map(function (n) { return Math.round(n * 100) / 100; }).join(' '); }
+    function ponerVista(v) {
+      vista = v;
+      var caja = cajaTexto(v.x, v.y, v.w, v.h);
+      capas.forEach(function (capa) { capa.setAttribute('viewBox', caja); });
+      // La capa de fondo mide 48px mas que el marco: se le suma ese margen en unidades del mapa
+      var m = marco.clientWidth ? 24 * v.w / marco.clientWidth : 0;
+      svg.setAttribute('viewBox', cajaTexto(v.x - m, v.y - m, v.w + 2 * m, v.h + 2 * m));
+      marco.style.setProperty('--odes-zoom', String(VISTA_TOTAL.w / v.w));
+      ubicarChip();
+    }
+    function vistaDeZona(d) {
+      var caja = d.trazado.getBBox();
+      var proporcion = VISTA_TOTAL.w / VISTA_TOTAL.h;
+      var w = Math.max(caja.width, caja.height * proporcion) / 0.7;
+      w = Math.min(VISTA_TOTAL.w, Math.max(VISTA_TOTAL.w / 6, w));
+      var h = w / proporcion;
+      return { x: caja.x + caja.width / 2 - w / 2, y: caja.y + caja.height / 2 - h / 2, w: w, h: h };
+    }
+    function irA(v, alTerminar) {
+      window.cancelAnimationFrame(animacion);
+      animacion = 0;
+      destino = v;
+      if (movimientoReducido() || document.hidden) {
+        ponerVista(v);
+        if (alTerminar) { alTerminar(); }
+        return;
+      }
+      var desde = vista;
+      var x0 = desde.x + desde.w / 2;
+      var y0 = desde.y + desde.h / 2;
+      var x1 = v.x + v.w / 2;
+      var y1 = v.y + v.h / 2;
+      var inicio = null;
+      function cuadro(t) {
+        if (inicio === null) { inicio = t; }
+        var p = Math.min(1, (t - inicio) / 650);
+        var e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+        var w = desde.w * Math.pow(v.w / desde.w, e);
+        var h = w * VISTA_TOTAL.h / VISTA_TOTAL.w;
+        if (p < 1) {
+          ponerVista({ x: x0 + (x1 - x0) * e - w / 2, y: y0 + (y1 - y0) * e - h / 2, w: w, h: h });
+          animacion = window.requestAnimationFrame(cuadro);
+          return;
+        }
+        animacion = 0;
+        ponerVista(v);
+        if (alTerminar) { alTerminar(); }
+      }
+      animacion = window.requestAnimationFrame(cuadro);
+    }
+
+    /* Foco: centrar la zona elegida y difuminar las demas */
+    function llenarChip(d) {
+      chipNombre.textContent = d.nombre;
+      chipValor.textContent = cifra(d.valor);
+    }
+    function ubicarChip() {
+      if (!foco || chip.hidden) { return; }
+      var escala = marco.clientWidth / vista.w;
+      var mitadAncho = chip.offsetWidth / 2 + 6;
+      var mitadAlto = chip.offsetHeight / 2 + 6;
+      var x = (foco.ancla.x - vista.x) * escala;
+      var y = (foco.ancla.y - vista.y) * escala;
+      chip.style.left = Math.max(mitadAncho, Math.min(marco.clientWidth - mitadAncho, x)) + 'px';
+      chip.style.top = Math.max(mitadAlto, Math.min(marco.clientHeight - mitadAlto, y)) + 'px';
+    }
+    function enfocar(d) {
+      foco = d;
+      lienzo.classList.add('odes-mapa--foco');
+      lista.forEach(function (z) { z.trazado.classList.toggle('odes-zona--foco', z === d); });
+      quitarHover();
+      trazoFoco.setAttribute('d', d.trazado.getAttribute('d'));
+      trazoFoco.style.fill = d.color;
+      selZona.value = d.codigo;
+      botonVolver.hidden = false;
+      chip.hidden = true;
+      llenarChip(d);
+      pintarInfo();
+      marcarLeyenda();
+      irA(vistaDeZona(d), function () {
+        if (foco !== d) { return; }
+        chip.hidden = false;
+        ubicarChip();
+      });
+    }
+    function volverAlTotal() {
+      if (!foco) { return; }
+      var focoEnBoton = document.activeElement === botonVolver || document.activeElement === botonTotal;
+      foco = null;
+      lienzo.classList.remove('odes-mapa--foco');
+      lista.forEach(function (z) { z.trazado.classList.remove('odes-zona--foco'); });
+      trazoFoco.removeAttribute('d');
+      chip.hidden = true;
+      botonVolver.hidden = true;
+      selZona.value = '';
+      quitarHover();
+      pintarInfo();
+      marcarLeyenda();
+      irA(VISTA_TOTAL);
+      if (focoEnBoton) { selZona.focus(); }
+    }
+
+    /* Cursor y tooltip */
+    function zonaDelEvento(e) {
+      var el = e.target && e.target.closest ? e.target.closest('.odes-zona') : null;
+      return el ? zonas.get(el.getAttribute('data-zona')) || null : null;
+    }
+    function llenarTooltip(d) {
+      tooltip.textContent = '';
+      var zona = document.createElement('span');
+      zona.className = 'odes-tooltip__zona';
+      zona.textContent = titulo(d) + ' · ' + d.nombre;
+      var valor = document.createElement('span');
+      valor.className = 'odes-tooltip__valor';
+      valor.textContent = d.valor === null ? 'Sin dato' : formato.format(d.valor) + unidad();
+      tooltip.appendChild(zona);
+      tooltip.appendChild(valor);
+    }
+    function ubicarTooltip(e) {
+      var caja = lienzo.getBoundingClientRect();
+      var mitad = tooltip.offsetWidth / 2;
+      var x = Math.max(mitad + 4, Math.min(lienzo.clientWidth - mitad - 4, e.clientX - caja.left));
+      tooltip.style.left = x + 'px';
+      tooltip.style.top = (e.clientY - caja.top) + 'px';
+    }
+    function quitarHover() {
+      enHover = null;
+      trazoHover.removeAttribute('d');
+      tooltip.hidden = true;
+      marcarLeyenda();
+    }
+    svg.addEventListener('pointermove', function (e) {
+      if (e.pointerType && e.pointerType !== 'mouse') { return; }
+      var d = zonaDelEvento(e);
+      if (!d || animacion || (foco && d !== foco)) {
+        if (enHover) { quitarHover(); }
+        return;
+      }
+      if (enHover !== d) {
+        enHover = d;
+        if (foco) {
+          trazoHover.removeAttribute('d');
+        } else {
+          trazoHover.setAttribute('d', d.trazado.getAttribute('d'));
+          trazoHover.style.fill = d.color;
+        }
+        llenarTooltip(d);
+        tooltip.hidden = false;
+        marcarLeyenda();
+      }
+      ubicarTooltip(e);
+    });
+    svg.addEventListener('pointerleave', quitarHover);
+
+    // Clic en una zona: centrarla. Con una zona elegida, clic en el fondo o en otra zona: volver
+    lienzo.addEventListener('click', function (e) {
+      if (e.target.closest && (e.target.closest('button') || e.target.closest('[data-odes-leyenda]'))) { return; }
+      var d = zonaDelEvento(e);
+      if (foco) {
+        if (d !== foco) { volverAlTotal(); }
+        return;
+      }
+      if (d) { enfocar(d); }
+    });
+    seccion.addEventListener('keydown', function (e) {
+      if ((e.key === 'Escape' || e.key === 'Esc') && foco && e.target.tagName !== 'SELECT') {
+        var dentro = lienzo.contains(document.activeElement);
+        volverAlTotal();
+        if (dentro) { selZona.focus(); }
+      }
+    });
+    selZona.addEventListener('change', function () {
+      var d = zonas.get(selZona.value);
+      if (d) { enfocar(d); } else { volverAlTotal(); }
+    });
+    selIndicador.addEventListener('change', function () {
+      var ind = indicadores.filter(function (i) { return String(i.id) === selIndicador.value; })[0];
+      if (ind) { aplicarIndicador(ind); }
+    });
+    botonVolver.addEventListener('click', volverAlTotal);
+    botonTotal.addEventListener('click', volverAlTotal);
+    window.addEventListener('resize', function () {
+      if (enHover) { quitarHover(); }
+      if (!animacion) { ponerVista(vista); }
+    });
+
+    /* Descargar datos: CSV separado por punto y coma, como lo abre Excel en espanol */
+    uno('[data-odes-descargar-datos]', seccion).addEventListener('click', function () {
+      var filas = [
+        ['Código', 'Comuna o corregimiento', 'Tipo', 'Zona', textoCsv(actual.nombre), 'Porcentaje del total']
+      ];
+      ordenarZonas().forEach(function (d) {
+        filas.push([
+          String(d.numero),
+          textoCsv(d.nombre),
+          d.esCorregimiento ? 'Corregimiento' : 'Comuna',
+          textoCsv(d.zona),
+          d.valor === null ? '' : String(d.valor).replace('.', ','),
+          d.valor !== null && resumen.total > 0 ? formatoPorcentaje.format((d.valor / resumen.total) * 100) : ''
+        ]);
+      });
+      var texto = '\ufeff' + filas.map(function (fila) { return fila.join(';'); }).join('\r\n') + '\r\n';
+      guardarArchivo(new Blob([ texto ], { type: 'text/csv;charset=utf-8' }), 'datos-' + nombreDeArchivo(actual.nombre) + '-por-comuna-y-corregimiento.csv');
+    });
+
+    /* Descargar mapa: imagen PNG de la vista actual (toda la ciudad o la zona elegida) */
+    function cargarFuentes() {
+      if (!document.fonts || !document.fonts.load) { return Promise.resolve(); }
+      return Promise.all(['400 20px Rubik', '500 20px Rubik', '700 20px Rubik'].map(function (f) { return document.fonts.load(f); })).catch(function () {});
+    }
+    function dibujarEtiqueta(ctx, d, x, y) {
+      if (!d.etiqueta) { return; }
+      var esNombre = d.etiqueta.classList.contains('odes-et--nombre');
+      var claro = d.etiqueta.classList.contains('odes-et--claro');
+      var tramos = todos('tspan', d.etiqueta);
+      var lineas = tramos.length ? tramos.map(function (t) { return t.textContent; }) : [ d.etiqueta.textContent ];
+      var tamano = esNombre ? 15 : 20;
+      ctx.save();
+      ctx.font = (esNombre ? '500 ' : '700 ') + tamano + 'px ' + FUENTE_IMAGEN;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.lineJoin = 'round';
+      ctx.lineWidth = 4;
+      ctx.strokeStyle = claro ? '#0b3a56' : '#ffffff';
+      ctx.fillStyle = claro ? '#ffffff' : TINTA;
+      lineas.forEach(function (linea, i) {
+        var yLinea = y + (i - (lineas.length - 1) / 2) * tamano * 1.2;
+        ctx.strokeText(linea, x, yLinea);
+        ctx.fillText(linea, x, yLinea);
+      });
+      ctx.restore();
+    }
+    function dibujarChip(ctx, d, x, y, area, E) {
+      var valor = cifra(d.valor);
+      ctx.save();
+      ctx.font = '700 17px ' + FUENTE_IMAGEN;
+      var anchoNombre = ctx.measureText(d.nombre).width;
+      ctx.font = '500 22px ' + FUENTE_IMAGEN;
+      var ancho = Math.max(anchoNombre, ctx.measureText(valor).width) + 36;
+      var alto = 64;
+      x = Math.max(area.x + ancho / 2 + 8, Math.min(area.x + area.w - ancho / 2 - 8, x));
+      y = Math.max(area.y + alto / 2 + 8, Math.min(area.y + area.h - alto / 2 - 8, y));
+      ctx.shadowColor = 'rgba(0,0,0,0.22)';
+      ctx.shadowBlur = 8 * E;
+      ctx.shadowOffsetY = 2 * E;
+      rectanguloRedondeado(ctx, x - ancho / 2, y - alto / 2, ancho, alto, 10);
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
+      ctx.shadowColor = 'transparent';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = TINTA;
+      ctx.font = '700 17px ' + FUENTE_IMAGEN;
+      ctx.fillText(d.nombre, x, y - 12);
+      ctx.font = '500 22px ' + FUENTE_IMAGEN;
+      ctx.fillText(valor, x, y + 13);
+      ctx.restore();
+    }
+    function dibujarMapa(ctx, v, area, E) {
+      var k = area.w / v.w;
+      var formas = lista.map(function (d) { return { d: d, forma: new Path2D(d.trazado.getAttribute('d')) }; });
+      // 1. La ciudad en una capa aparte: contorno blanco grueso, zonas y bordes blancos
+      var capa = document.createElement('canvas');
+      capa.width = Math.round(area.w * E);
+      capa.height = Math.round(area.h * E);
+      var c = capa.getContext('2d');
+      c.setTransform(E * k, 0, 0, E * k, -v.x * k * E, -v.y * k * E);
+      c.lineJoin = 'round';
+      c.fillStyle = '#ffffff';
+      c.strokeStyle = '#ffffff';
+      c.lineWidth = 6 / k;
+      formas.forEach(function (f) { c.fill(f.forma); c.stroke(f.forma); });
+      c.lineWidth = 1.5 / k;
+      formas.forEach(function (f) { c.fillStyle = f.d.color; c.fill(f.forma, 'evenodd'); c.stroke(f.forma); });
+      // 2. Pegarla con sombra; con una zona elegida, difuminada y tenue
+      ctx.save();
+      ctx.shadowColor = 'rgba(11,58,86,0.32)';
+      ctx.shadowBlur = 5 * E;
+      ctx.shadowOffsetY = 2 * E;
+      if (foco) {
+        ctx.globalAlpha = 0.45;
+        if ('filter' in ctx) { ctx.filter = 'blur(' + (3 * E) + 'px) grayscale(0.5)'; }
+      }
+      ctx.drawImage(capa, area.x, area.y, area.w, area.h);
+      ctx.restore();
+      if (!foco) {
+        lista.forEach(function (d) { dibujarEtiqueta(ctx, d, area.x + (d.ancla.x - v.x) * k, area.y + (d.ancla.y - v.y) * k); });
+        return;
+      }
+      // 3. La zona elegida, nitida y con borde blanco grueso
+      var forma = new Path2D(foco.trazado.getAttribute('d'));
+      ctx.save();
+      ctx.setTransform(E * k, 0, 0, E * k, E * (area.x - v.x * k), E * (area.y - v.y * k));
+      ctx.shadowColor = 'rgba(4,20,30,0.42)';
+      ctx.shadowBlur = 6 * E;
+      ctx.shadowOffsetY = 3 * E;
+      ctx.fillStyle = foco.color;
+      ctx.fill(forma, 'evenodd');
+      ctx.shadowColor = 'transparent';
+      ctx.lineJoin = 'round';
+      ctx.lineWidth = 4 / k;
+      ctx.strokeStyle = '#ffffff';
+      ctx.stroke(forma);
+      ctx.restore();
+      dibujarChip(ctx, foco, area.x + (foco.ancla.x - v.x) * k, area.y + (foco.ancla.y - v.y) * k, area, E);
+    }
+    /* Leyenda de la imagen: un cuadro de color por rango, en filas que se parten si no caben */
+    var LEYENDA_IMAGEN = { muestraAncho: 28, muestraAlto: 18, espacio: 10, separacion: 28, altoFila: 32, titulo: 32 };
+    function ubicarLeyenda(ctx, ancho) {
+      var L = LEYENDA_IMAGEN;
+      var x = 0;
+      var y = 0;
+      ctx.font = '700 15px ' + FUENTE_IMAGEN;
+      return filasLeyenda().map(function (f) {
+        var w = L.muestraAncho + L.espacio + ctx.measureText(f.texto).width;
+        if (x > 0 && x + w > ancho) { x = 0; y += L.altoFila; }
+        var pos = { fila: f, x: x, y: y };
+        x += w + L.separacion;
+        return pos;
+      });
+    }
+    function altoLeyenda(posiciones) {
+      return LEYENDA_IMAGEN.titulo + (posiciones.length ? posiciones[ posiciones.length - 1 ].y + LEYENDA_IMAGEN.altoFila : 0);
+    }
+    function dibujarLeyenda(ctx, x, y, posiciones) {
+      var L = LEYENDA_IMAGEN;
+      var activa = foco ? foco.fila : -1;
+      ctx.save();
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'top';
+      ctx.font = '700 16px ' + FUENTE_IMAGEN;
+      ctx.fillStyle = '#2f3233';
+      ctx.fillText(actual.nombre, x, y);
+      posiciones.forEach(function (p) {
+        var px = x + p.x;
+        var py = y + L.titulo + p.y;
+        var esActiva = p.fila.fila === activa;
+        if (esActiva) {
+          ctx.fillStyle = TINTA;
+          rectanguloRedondeado(ctx, px - 4, py - 4, L.muestraAncho + 8, L.muestraAlto + 8, 7);
+          ctx.fill();
+          ctx.fillStyle = '#ffffff';
+          rectanguloRedondeado(ctx, px - 2, py - 2, L.muestraAncho + 4, L.muestraAlto + 4, 5);
+          ctx.fill();
+        }
+        ctx.fillStyle = p.fila.color;
+        rectanguloRedondeado(ctx, px, py, L.muestraAncho, L.muestraAlto, 4);
+        ctx.fill();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = 'rgba(0,0,0,0.12)';
+        rectanguloRedondeado(ctx, px + 0.5, py + 0.5, L.muestraAncho - 1, L.muestraAlto - 1, 4);
+        ctx.stroke();
+        ctx.font = (esActiva ? '700' : '400') + ' 15px ' + FUENTE_IMAGEN;
+        ctx.fillStyle = '#2f3233';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(p.fila.texto, px + L.muestraAncho + L.espacio, py + L.muestraAlto / 2);
+        ctx.textBaseline = 'top';
+      });
+      ctx.restore();
+    }
+    function dibujarImagen() {
+      var E = 2;
+      var ANCHO = 1200;
+      var M = 56;
+      var area = { x: M, w: ANCHO - 2 * M };
+      area.h = Math.round(area.w * VISTA_TOTAL.h / VISTA_TOTAL.w);
+      var medidor = document.createElement('canvas').getContext('2d');
+      medidor.font = '700 34px ' + FUENTE_IMAGEN;
+      var lineasTitulo = partirEnLineas(medidor, actual.nombre, area.w);
+      var subtitulo = foco ? titulo(foco) + ' · ' + foco.nombre : 'Medellín · ' + comunas + ' comunas y ' + corregimientos + ' corregimientos';
+      var detalle = 'Total de la ciudad: ' + formato.format(resumen.total) + unidad();
+      if (foco) {
+        detalle = foco.valor === null ? 'Sin dato' : formato.format(foco.valor) + unidad() + (porcentaje(foco) ? ' · ' + porcentaje(foco) + ' del total de la ciudad' : '');
+      }
+      var pie = [actual.fuente ? 'Fuente: ' + actual.fuente : '', actual.corte ? 'Fecha de corte: ' + actual.corte : ''].filter(Boolean).join(' · ');
+      var ySubtitulo = M + lineasTitulo.length * 42 + 6;
+      area.y = ySubtitulo + 78;
+      var posicionesLeyenda = ubicarLeyenda(medidor, area.w);
+      var yLeyenda = area.y + area.h + 32;
+      var yPie = yLeyenda + altoLeyenda(posicionesLeyenda) + 20;
+      var alto = yPie + (pie ? 48 : 24) + M - 12;
+
+      var imagen = document.createElement('canvas');
+      imagen.width = ANCHO * E;
+      imagen.height = alto * E;
+      var ctx = imagen.getContext('2d');
+      ctx.scale(E, E);
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, ANCHO, alto);
+      ctx.textBaseline = 'top';
+      ctx.fillStyle = TINTA;
+      ctx.font = '700 34px ' + FUENTE_IMAGEN;
+      lineasTitulo.forEach(function (linea, i) { ctx.fillText(linea, M, M + i * 42); });
+      ctx.font = '500 22px ' + FUENTE_IMAGEN;
+      ctx.fillStyle = '#2f3233';
+      ctx.fillText(subtitulo, M, ySubtitulo);
+      ctx.font = '400 20px ' + FUENTE_IMAGEN;
+      ctx.fillStyle = '#4e5254';
+      ctx.fillText(detalle, M, ySubtitulo + 32);
+
+      rectanguloRedondeado(ctx, area.x, area.y, area.w, area.h, 16);
+      ctx.fillStyle = '#fafafa';
+      ctx.fill();
+      ctx.save();
+      rectanguloRedondeado(ctx, area.x, area.y, area.w, area.h, 16);
+      ctx.clip();
+      dibujarMapa(ctx, destino, area, E);
+      ctx.restore();
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = '#dcdcdc';
+      rectanguloRedondeado(ctx, area.x + 0.5, area.y + 0.5, area.w - 1, area.h - 1, 16);
+      ctx.stroke();
+
+      dibujarLeyenda(ctx, M, yLeyenda, posicionesLeyenda);
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'top';
+      ctx.font = '400 16px ' + FUENTE_IMAGEN;
+      ctx.fillStyle = '#4e5254';
+      ctx.fillText('Observatorio de Sapiencia (OdeS) · sapiencia.gov.co/observatorio', M, yPie);
+      if (pie) { ctx.fillText(pie, M, yPie + 24); }
+      return imagen;
+    }
+    uno('[data-odes-descargar-mapa]', seccion).addEventListener('click', function () {
+      var boton = this;
+      if (boton.getAttribute('aria-busy') === 'true') { return; }
+      boton.setAttribute('aria-busy', 'true');
+      var nombre = 'mapa-' + nombreDeArchivo(actual.nombre + ' ' + (foco ? titulo(foco) + ' ' + foco.nombre : 'Medellín')) + '.png';
+      cargarFuentes().then(function () {
+        var imagen = dibujarImagen();
+        return new Promise(function (listo) {
+          imagen.toBlob(function (blob) {
+            if (blob) { guardarArchivo(blob, nombre); }
+            listo();
+          }, 'image/png');
+        });
+      }).catch(function (error) {
+        if (window.console && console.error) { console.error('Observatorio Sapiencia: no se pudo descargar el mapa', error); }
+      }).then(function () { boton.removeAttribute('aria-busy'); });
+    });
+
+    aplicarIndicador(indicadores[0]);
+    ponerVista(VISTA_TOTAL);
+  }
+
+  /* ---------- Franjas a todo el ancho de la ventana (cifras y botones) ----------
+     Se mide el ancho sin la barra de desplazamiento y cuanto esta corrida la columna del tema desde el borde
+     izquierdo. Se vuelve a medir cuando cambia el tamano de la pagina (al girar el celular o cuando aparece la
+     barra de desplazamiento). */
+  function iniciarAnchoCompleto() {
+    var columna = uno('.odes-contenedor');
+    if (!columna) { return; }
+    function medir() {
+      var izquierda = columna.getBoundingClientRect().left + window.pageXOffset;
+      raiz.style.setProperty('--odes-ventana', document.documentElement.clientWidth + 'px');
+      raiz.style.setProperty('--odes-franja-izquierda', (-izquierda) + 'px');
+    }
+    medir();
+    if (window.ResizeObserver) {
+      new ResizeObserver(medir).observe(document.documentElement);
+    } else {
+      window.addEventListener('resize', medir);
+    }
+  }
+
+  /* ---------- Repositorio y SIVU: empiezan junto al mapa ----------
+     Se mide cuanto hay del inicio del tramo al mapa (cambia con el ancho, la letra y los selectores). Si algun
+     contenedor del tema recorta el contenido (overflow distinto de visible), sticky no funcionaria: entonces los
+     botones quedan fijos en la esquina inferior izquierda, como antes. */
+  function iniciarLateral() {
+    var tramo = uno('[data-odes-tramo]');
+    var mapa = tramo && uno('.odes-mapa', tramo);
+    if (!mapa) { return; }
+    for (var padre = tramo.parentElement; padre && padre !== document.body; padre = padre.parentElement) {
+      var estilo = window.getComputedStyle(padre);
+      if (/hidden|auto|scroll/.test(estilo.overflowX + ' ' + estilo.overflowY)) {
+        tramo.classList.add('odes-tramo--fijo');
+        return;
+      }
+    }
+    function medir() {
+      var inicio = mapa.getBoundingClientRect().top - tramo.getBoundingClientRect().top;
+      tramo.style.setProperty('--odes-lateral-inicio', Math.max(0, Math.round(inicio)) + 'px');
+    }
+    medir();
+    if (window.ResizeObserver) {
+      new ResizeObserver(medir).observe(tramo);
+    } else {
+      window.addEventListener('resize', medir);
+    }
+  }
+
+  /* ---------- Robot ODES flotante ----------
+     Arranca cuando se ve en pantalla y mira de lado a lado (el video en bucle). Fuera de la pantalla se pausa.
+     Con "reducir movimiento", sin IntersectionObserver, si el navegador no reproduce video con transparencia o
+     no deja reproducir solo (por ejemplo, en modo de ahorro de energia), queda la imagen quieta. El boton pausa
+     y reanuda.
+     Video sin fondo: HEVC con alfa (.mov) en Safari, iPhone y iPad (WebKit) y VP9 con alfa (.webm) en Chrome,
+     Edge y Firefox. Cada navegador pinta negro el fondo del formato del otro, por eso se elige aqui. */
+  function formatoRobot(video) {
+    var ua = navigator.userAgent || '';
+    var webkit = /iPhone|iPad|iPod/.test(ua) ||
+      (/Macintosh/.test(ua) && /Safari\//.test(ua) && !/Chrome|Chromium|Edg|OPR|Firefox/.test(ua));
+    if (webkit) { return video.canPlayType('video/mp4; codecs="hvc1"') ? '.mov' : ''; }
+    return video.canPlayType('video/webm; codecs="vp9"') ? '.webm' : '';
+  }
+  function iniciarRobot() {
+    var VELOCIDAD = 1;                // velocidad del bucle (1 = la del render)
+    var robot = uno('[data-odes-robot]');
+    if (!robot) { return; }
+    var video = uno('[data-odes-robot-video]', robot);
+    var boton = uno('[data-odes-robot-pausa]', robot);
+    var texto = uno('[data-odes-robot-pausa-texto]', robot);
+    var icono = uno('[data-odes-robot-icono]', robot);
+    var quietoImg = uno('[data-odes-robot-quieto]', robot);
+    // La carpeta de los archivos: la de la pagina si la define (/principal pone la suya), si no la del bloque.
+    var meta = document.querySelector('meta[name="observatorio-robot-base"]');
+    var base = (meta && meta.getAttribute('content')) || robot.getAttribute('data-odes-robot-base') || '';
+    quietoImg.src = base + 'robot-mirada.webp';
+    var reducir = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reducir || !window.IntersectionObserver || !video || !boton) { return; }
+    var formato = formatoRobot(video);
+    if (!formato) { return; }
+    var iniciado = false;
+    var pausado = false;
+    var visible = false;
+
+    function quieto() {
+      video.pause();
+      robot.classList.remove('odes-robot--animado');
+      boton.hidden = true;
+    }
+    function reproducir() {
+      if (pausado || !visible) { return; }
+      var promesa = video.play();
+      if (promesa && promesa.catch) { promesa.catch(quieto); }
+    }
+    boton.addEventListener('click', function () {
+      pausado = !pausado;
+      if (pausado) { video.pause(); } else { reproducir(); }
+      texto.textContent = pausado ? 'Reanudar la animación del robot' : 'Pausar la animación del robot';
+      icono.setAttribute('href', pausado ? '#odes-i-play_arrow' : '#odes-i-pause');
+    });
+    new IntersectionObserver(function (entradas) {
+      visible = entradas[ entradas.length - 1 ].isIntersecting;
+      if (visible && !iniciado) {
+        iniciado = true;
+        video.setAttribute('poster', base + 'robot-mirada.webp');
+        video.preload = 'auto';
+        video.defaultPlaybackRate = VELOCIDAD;
+        video.src = base + 'robot-mirada' + formato;
+        video.playbackRate = VELOCIDAD;
+        robot.classList.add('odes-robot--animado');
+        boton.hidden = false;
+      }
+      if (visible) { reproducir(); } else { video.pause(); }
+    }, { threshold: 0.5 }).observe(robot);
+  }
+
+  function iniciarSeguro(nombre, funcion) {
+    try { funcion(); } catch (error) {
+      if (window.console && console.error) { console.error('Observatorio Sapiencia: falló ' + nombre, error); }
+    }
+  }
+  iniciarSeguro('el ancho de las franjas', iniciarAnchoCompleto);
+  iniciarSeguro('los botones junto al mapa', iniciarLateral);
+  iniciarSeguro('los enlaces', iniciarEnlaces);
+  iniciarSeguro('el mapa', iniciarMapa);
+  iniciarSeguro('el robot', iniciarRobot);
+})();
+</script>

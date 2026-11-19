@@ -1,0 +1,157 @@
+/*
+ * Franja magenta «¡Pregúntale a OdeS!» (ingreso/BandaOdes.tsx), de la maqueta
+ * «Pregúntale a OdeS»: encabeza la pantalla de ingreso ("/odes") y el chat
+ * ("/odes/chat"). Usa solo colores fijos y el magenta del sitio, así se ve
+ * igual dentro y fuera de .odes-ingreso, y en modo oscuro.
+ */
+
+/* ── Franja magenta: cara de OdeS, título, bajada y «Ingresar» ── */
+
+/* Si la columna junto a la cara no alcanza 11rem (pantallas de menos de unos
+   375 px, o «Aumentar tamaño» del kit), el texto pasa debajo de la cara. */
+.odes .odes-banda {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(16px, 3vw, 32px);
+  overflow: hidden;
+  padding: clamp(24px, 4vw, 44px) clamp(20px, 4vw, 48px);
+  border-radius: 14px;
+  background: var(--odes-magenta);
+  color: #fff;
+}
+
+.odes .odes-banda__nebulosa {
+  position: absolute;
+  inset: -25%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 35%, rgb(255 190 235 / 0.3), transparent 38%),
+    radial-gradient(circle at 62% 80%, rgb(70 8 80 / 0.55), transparent 45%),
+    radial-gradient(circle at 85% 25%, rgb(255 120 215 / 0.28), transparent 40%),
+    radial-gradient(circle at 45% 10%, rgb(120 30 140 / 0.4), transparent 42%);
+  animation: odes-deriva 40s ease-in-out infinite alternate;
+}
+
+/* Deriva lenta de las nebulosas (también la del fondo de la pantalla de ingreso). */
+@keyframes odes-deriva {
+  from {
+    transform: translate3d(-3%, -2%, 0) rotate(0deg) scale(1);
+  }
+  to {
+    transform: translate3d(3%, 2%, 0) rotate(8deg) scale(1.08);
+  }
+}
+
+/* Lienzo de las estrellas (CieloEstrellado), debajo del contenido. */
+.odes .odes-banda__estrellas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* El aro claro de la maqueta va en CSS (dentro del tamaño de la imagen). */
+.odes .odes-banda__cara {
+  position: relative;
+  z-index: 1;
+  display: block;
+  flex: none;
+  box-sizing: border-box;
+  width: clamp(96px, 17vw, 168px);
+  height: clamp(96px, 17vw, 168px);
+  border: clamp(3px, 0.45vw, 5px) solid #f1e8fe;
+  border-radius: 50%;
+  background: #1d2a44;
+  object-fit: cover;
+}
+
+.odes .odes-banda__texto {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 11rem;
+  min-width: 0;
+}
+
+.odes .odes-banda__titulo {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(1.8rem, 5vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.1;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+
+.odes .odes-banda__bajada {
+  margin: 10px 0 0;
+  color: #fff;
+  font-size: clamp(0.917rem, 2.1vw, 1.317rem);
+  font-weight: 300;
+  line-height: 1.35;
+  text-wrap: balance;
+}
+
+/* Flex para que el texto siga centrado si la columna es más angosta que el botón. */
+.odes .odes-banda__ingresar {
+  display: flex;
+  justify-content: center;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 20px;
+  padding: 15px 52px;
+  border: 2px solid #fff;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--odes-magenta);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: normal;
+  text-align: center;
+  text-decoration: none;
+}
+
+.odes .odes-banda__ingresar:hover {
+  border-color: #f8ebf4;
+  background: #f8ebf4;
+  color: var(--odes-magenta);
+}
+
+.odes .odes-banda__ingresar:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+.odes .odes-banda__orbitas {
+  position: absolute;
+  top: 6%;
+  right: 2%;
+  z-index: 1;
+  width: auto;
+  max-width: 32%;
+  height: 80%;
+  pointer-events: none;
+}
+
+@media (max-width: 560px) {
+  .odes .odes-banda__orbitas {
+    display: none;
+  }
+}
+
+/* Quieta (pausa, «reducir movimiento» o el chat): la nebulosa no deriva. */
+.odes .odes-banda--quieta .odes-banda__nebulosa {
+  animation-play-state: paused;
+}
+
+/* Modos de alto contraste: la franja conserva un borde visible. */
+@media (forced-colors: active) {
+  .odes .odes-banda {
+    border: 1px solid CanvasText;
+  }
+}

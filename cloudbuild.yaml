@@ -1,0 +1,28 @@
+# Cloud Build: construye la imagen con el Dockerfile de la raíz, la publica en Artifact
+# Registry y la despliega en Cloud Run. Las variables de entorno NO van aquí: se ponen una vez
+# en el servicio de Cloud Run (ver DESPLIEGUE-CLOUD-RUN.md) y cada despliegue las conserva.
+#
+#   gcloud builds submit --config cloudbuild.yaml .
+#
+# Cada build etiqueta la imagen con su $BUILD_ID: para volver atrás, se despliega la anterior.
+steps:
+  # 1. Construir la imagen
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/$_REPOSITORY_NAME/$_IMAGE_NAME:$BUILD_ID', '.']
+
+  # 2. Publicarla en Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/$_REPOSITORY_NAME/$_IMAGE_NAME:$BUILD_ID']
+
+  # 3. Desplegarla en Cloud Run (el sitio es público: --allow-unauthenticated)
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args: ['run', 'deploy', '$_SERVICE_NAME',
+           '--image', 'us-central1-docker.pkg.dev/$PROJECT_ID/$_REPOSITORY_NAME/$_IMAGE_NAME:$BUILD_ID',
+           '--region', 'us-central1', '--port', '9003', '--allow-unauthenticated']
+
+# Valores por defecto; se pueden cambiar con --substitutions o en el disparador.
+substitutions:
+  _REPOSITORY_NAME: odesweb
+  _IMAGE_NAME: odesweb
+  _SERVICE_NAME: odesweb

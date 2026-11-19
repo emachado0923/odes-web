@@ -1,0 +1,91 @@
+/*
+ * Barra de navegación del PAI (BarraPai), bajo la cabecera. El marco
+ * (.pai-barra, .pai-barra-interior) está en pai.css; aquí, su contenido.
+ */
+
+.pai .pai-barra-enlaces {
+  gap: 0.25rem;
+  padding: 0;
+}
+
+.pai .pai-barra-enlaces .nav-link {
+  padding: 0.5rem 0.75rem;
+  color: var(--pai-texto);
+  border-radius: 0.25rem 0.25rem 0 0;
+}
+
+.pai .pai-barra-enlaces .nav-link:hover {
+  color: var(--pai-magenta-oscuro);
+  border-bottom-color: currentColor;
+  background: transparent;
+}
+
+/* Página actual: subrayado magenta y negrita (no solo color). */
+.pai .pai-barra-enlaces .nav-link.active {
+  color: var(--pai-magenta-oscuro);
+  font-weight: 700;
+  border-bottom: 2pt solid var(--pai-magenta);
+  background: transparent;
+}
+
+.pai[data-bs-theme='dark'] .pai-barra-enlaces .nav-link:is(:hover, .active) {
+  color: var(--pai-foco);
+}
+
+.pai .pai-barra-sesion {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin-left: auto;
+}
+
+.pai .pai-barra-bimestre,
+.pai .pai-barra-usuario {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.pai .pai-barra-bimestre {
+  padding: 0.25rem 0.625rem;
+  border-left: 3px solid var(--pai-magenta);
+  background: var(--bs-body-bg, #fff);
+  color: var(--pai-texto);
+}
+
+.pai .pai-barra-usuario {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 0.5rem;
+  overflow-wrap: anywhere;
+}
+
+.pai .pai-barra-vigencia {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.875rem;
+}
+
+.pai .pai-barra-vigencia .form-select {
+  width: auto;
+}
+
+.pai .pai-barra-rol {
+  color: var(--pai-tenue);
+}
+
+.pai .pai-barra-error {
+  margin: 0 clamp(1rem, 4vw, 3rem) 0.5rem;
+}
+
+@media (max-width: 575.98px) {
+  .pai .pai-barra-sesion {
+    margin-left: 0;
+  }
+
+  .pai .pai-barra-enlaces .nav-link {
+    padding: 0.5rem;
+  }
+}

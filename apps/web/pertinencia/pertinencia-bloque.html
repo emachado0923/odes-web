@@ -1,0 +1,487 @@
+<meta charset="utf-8"><!-- Solo sirve al abrir este archivo suelto en un navegador (evita tildes rotas). Dentro de WordPress se ignora. -->
+<!--
+  BLOQUE MEDIDA DE PERTINENCIA (Sapiencia) · v1.0 · 2026-10-27
+
+  Contenido de https://sapiencia.gov.co/metodologia_de_pertinencia/ debajo del banner:
+    1. Banda azul con estrellas y el titulo "Medida de pertinencia", con los tres triangulos a la derecha
+    2. Presentacion de la medida
+    3. "Consulta tu puntaje de pertinencia": el espacio del tablero y el boton "Conoce mas"
+    4. "Normativa y mas detalle": los 5 accesos numerados
+  La cabecera, el pie y el banner los pone WordPress: NO van en este bloque.
+
+  Donde va: pegar COMPLETO en un elemento "Raw HTML" de WPBakery, en la fila que sigue al banner.
+  Incluye estilos, contenido y script. Usa la fuente Rubik del tema. No carga nada de otros sitios
+  (el tablero, cuando tenga direccion, va en un marco; ver EDITAR TABLERO).
+
+  Que editar (busca estos textos):
+    EDITAR ENLACES   las direcciones del boton "Conoce mas" y de los 5 accesos (justo debajo de este comentario)
+    EDITAR TABLERO   la direccion del tablero de control (data-odes-tablero-url). Vacia = el recuadro
+                     punteado "Espacio para el tablero de control"
+
+  Todos los estilos llevan el prefijo #odes-pertinencia para no tocar el tema.
+  Fuente unica: sapiencia-web/apps/web/pertinencia/pertinencia-bloque.html (ver LEEME.md de esa carpeta).
+-->
+<!--
+  ===== EDITAR ENLACES =====
+  Cambia SOLO lo que va entre las comillas de cada href. Todos se abren en la misma pestana.
+  Un href vacio o "#" deja ese boton sin enlace.
+  Pendiente: por ahora todos van a https://www.google.com. Candidatos conocidos:
+    resolucion   Resolucion 5375 de 2025:
+                 https://sapiencia.gov.co/wp-content/uploads/2025/10/resolucion_pertinencia_2026_vf_def.pdf
+    conoce-mas   Circular 08 de 2026 (aclaracion sobre la medida de pertinencia):
+                 https://sapiencia.gov.co/wp-content/uploads/2026/05/las-f-ap-gd-032circular-aclaracion-pertinencia_ope-1.pdf
+-->
+<template data-odes-enlaces>
+  <a data-odes-enlace="conoce-mas" href="https://www.google.com">Conoce más (debajo del tablero)</a>
+  <a data-odes-enlace="resolucion" href="https://www.google.com">1. Resolución de pertinencia</a>
+  <a data-odes-enlace="infografia" href="https://www.google.com">2. Infografía</a>
+  <a data-odes-enlace="cuoc-sectores" href="https://www.google.com">3. Relación CUOC y sectores estratégicos</a>
+  <a data-odes-enlace="cine-cuoc" href="https://www.google.com">4. Relación CINE y CUOC</a>
+  <a data-odes-enlace="indice-cine" href="https://www.google.com">5. Índice de pertinencia por campo CINE detallado</a>
+</template>
+<style>
+#odes-pertinencia{
+  --odes-marino:#163854;--odes-celeste:#51ade5;--odes-morado:#9f339e;--odes-verde:#2e9e49;--odes-amarillo:#f8db1b;--odes-naranja:#f26623;
+  /* Magenta del boton "Conoce mas" y del triangulo central (blanco encima: 7,6:1) */
+  --odes-magenta:#921b8c;--odes-magenta-hover:#7a1675;
+  --odes-texto:#1f2b33;
+  --odes-espacio-fondo:#f0f6fb;--odes-espacio-pastilla:#7dc2ec;--odes-espacio-radio:.875rem;
+  /* Borde punteado del espacio del tablero (trazos de 5 px cada 8 px, 1,5 px de grueso): un "dashed" no deja
+     elegir el largo de los trazos, asi que es un SVG de fondo. rx = --odes-espacio-radio (14 px); el color es
+     --odes-celeste escrito a mano (un data: no lee variables) */
+  --odes-espacio-punteado:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Crect width='100%25' height='100%25' fill='none' rx='14' ry='14' stroke='%2351ade5' stroke-width='3' stroke-dasharray='5 3'/%3E%3C/svg%3E");
+  /* Esquina de los accesos: la de los accesos del Observatorio (12 12 40 12 px) */
+  --odes-esquina:.75rem .75rem 2.5rem .75rem;
+  --odes-sombra-2:0 1px 2px 0 rgba(0,0,0,.3),0 2px 6px 2px rgba(0,0,0,.15);
+  --odes-sombra-3:0 4px 8px 3px rgba(0,0,0,.15),0 1px 3px 0 rgba(0,0,0,.3);
+  --odes-fuente:"Rubik",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  /* Lo que los triangulos se salen de la columna hacia la derecha (56 px en el diseno), sin pasar del aire que
+     queda al lado de la columna (100% = el ancho del bloque) */
+  --odes-desborde:clamp(0px,(100vw - 100%) / 2 - 1rem,3.5rem);
+  /* El bloque es fluido: sus cortes dependen de su propio ancho (container queries), no del de la ventana */
+  container:odes-pertinencia / inline-size;
+  /* Aire lateral: el de la columna del tema, completado hasta 20 px cuando ella deja menos (en la pagina real,
+     entre 961 y 1140 px de ventana la columna va a 5 px de los bordes). 100% = el ancho de la columna: da 15 px
+     en ese rango y 0 en los demas y en el aplicativo. Abajo, 51 px: con los 25 px del margen del Raw HTML de
+     WPBakery quedan 76 px hasta el pie, como en el diseno */
+  display:block;position:relative;box-sizing:border-box;width:auto;margin:0;padding:1.9375rem max(0px,calc(20px - (100vw - 100%) / 2)) 3.1875rem;
+  color:var(--odes-texto);font-family:var(--odes-fuente);font-size:1rem;font-weight:400;font-style:normal;line-height:1.5;text-align:left;letter-spacing:normal;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;-webkit-text-size-adjust:100%;text-size-adjust:100%;
+}
+/* Tamanos de letra: cada elemento declara --odes-fs (1em si no dice otra cosa), relativo a su contenedor. El
+   !important le gana al boton "Aumentar texto" del plugin de accesibilidad (pojo), que pone 120 %...200 %
+   !important en p, li, span, h1, h2... y se acumula en los anidados. En cambio, con ese boton crece la letra
+   de la raiz del bloque (abajo) y todo el bloque crece parejo. */
+#odes-pertinencia *{--odes-fs:1em;font-size:var(--odes-fs)!important}
+body.pojo-a11y-resize-font-120 #odes-pertinencia{font-size:1.2rem}
+body.pojo-a11y-resize-font-130 #odes-pertinencia{font-size:1.3rem}
+body.pojo-a11y-resize-font-140 #odes-pertinencia{font-size:1.4rem}
+body.pojo-a11y-resize-font-150 #odes-pertinencia{font-size:1.5rem}
+body.pojo-a11y-resize-font-160 #odes-pertinencia{font-size:1.6rem}
+body.pojo-a11y-resize-font-170 #odes-pertinencia{font-size:1.7rem}
+body.pojo-a11y-resize-font-180 #odes-pertinencia{font-size:1.8rem}
+body.pojo-a11y-resize-font-190 #odes-pertinencia{font-size:1.9rem}
+body.pojo-a11y-resize-font-200 #odes-pertinencia{font-size:2rem}
+
+/* Reinicio local: neutraliza los estilos del tema solo dentro del bloque */
+#odes-pertinencia *,#odes-pertinencia *::before,#odes-pertinencia *::after{box-sizing:border-box}
+#odes-pertinencia h1,#odes-pertinencia h2,#odes-pertinencia p,#odes-pertinencia ol,#odes-pertinencia li,#odes-pertinencia section{margin:0;padding:0;border:0;background:none;color:inherit;font-family:inherit;font-weight:inherit;font-style:normal;line-height:inherit;letter-spacing:normal;text-transform:none;text-shadow:none;text-align:inherit}
+#odes-pertinencia ol,#odes-pertinencia li{list-style:none}
+#odes-pertinencia li::before,#odes-pertinencia li::after{content:none}
+/* El CSS del sitio pone un borde celeste a todo enlace con foco (a:focus) y en otras paginas agranda los enlaces
+   al pasar el raton: aqui se anula */
+#odes-pertinencia a,#odes-pertinencia a:hover,#odes-pertinencia a:focus,#odes-pertinencia a:active,#odes-pertinencia a:visited{color:inherit;font-family:inherit;text-decoration:none;border:0;border-radius:0;background:none;box-shadow:none;transform:none;outline-offset:3px}
+#odes-pertinencia svg{flex:none;max-width:none;vertical-align:baseline}
+#odes-pertinencia :focus:not(:focus-visible){outline:0}
+#odes-pertinencia :focus-visible{outline:3px solid var(--odes-marino);outline-offset:3px}
+#odes-pertinencia .odes-sr{position:absolute!important;width:1px!important;height:1px!important;margin:-1px!important;padding:0!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important;border:0!important}
+
+/* 1. Banda del titulo: azul noche con estrellas y, a la derecha, los triangulos */
+#odes-pertinencia .odes-titulo-fila{display:flex;align-items:flex-end;gap:1.125rem;margin:0 calc(-1 * var(--odes-desborde)) 0 0}
+#odes-pertinencia .odes-banda{position:relative;isolation:isolate;display:flex;flex:1 1 auto;align-items:center;min-width:0;min-height:4.75rem;padding:.75rem 2.125rem;overflow:hidden;color:#fff;background:var(--odes-marino);border-radius:1rem}
+#odes-pertinencia .odes-estrellas{position:absolute;z-index:-1;top:0;right:0;bottom:0;left:0;display:block;width:100%;height:100%;fill:#fff}
+/* El fondo del h1 tapa las estrellas que, en anchos angostos, caen detras del texto (van en % de la banda).
+   min-width:0: con la letra al 200 % en 320 px, "pertinencia" no cabe en la banda; sin el, el h1 no baja del
+   ancho de esa palabra y la banda (overflow:hidden) corta la ultima letra. Con el, la palabra parte de linea */
+#odes-pertinencia .odes-titulo{--odes-fs:clamp(1.5em,1em + 2.4vw,2.1875em);min-width:0;color:#fff;font-weight:500;line-height:1.2;overflow-wrap:break-word;background:var(--odes-marino)}
+/* Tope en px: con la letra agrandada los triangulos no crecen y no le quitan a la banda el ancho del titulo */
+#odes-pertinencia .odes-triangulos{display:block;width:min(11.25rem,180px);height:auto;aspect-ratio:180 / 96;overflow:visible}
+#odes-pertinencia .odes-triangulo{stroke-width:7;stroke-linejoin:round}
+#odes-pertinencia .odes-triangulo--naranja{fill:var(--odes-naranja);stroke:var(--odes-naranja)}
+#odes-pertinencia .odes-triangulo--magenta{fill:var(--odes-magenta);stroke:var(--odes-magenta)}
+#odes-pertinencia .odes-triangulo--amarillo{fill:var(--odes-amarillo);stroke:var(--odes-amarillo)}
+/* Angosto: los triangulos pasan arriba a la derecha, mas pequenos; el titulo ocupa todo el ancho de la banda */
+@container odes-pertinencia (max-width: 39.99em){
+  #odes-pertinencia .odes-titulo-fila{flex-direction:column;align-items:stretch;gap:0;margin-right:0}
+  #odes-pertinencia .odes-triangulos{position:relative;z-index:1;order:-1;align-self:flex-end;width:7.5rem;height:4rem;margin:0 .5rem .375rem 0}
+  #odes-pertinencia .odes-banda{padding:.875rem 1.25rem;border-radius:.875rem}
+}
+
+/* 2 y 3. Presentacion y secciones */
+#odes-pertinencia .odes-presentacion{--odes-fs:.90625em;margin-top:2.125rem;line-height:1.5172}
+#odes-pertinencia .odes-seccion--consulta{margin-top:2.1875rem}
+#odes-pertinencia .odes-seccion--normativa{margin-top:2rem}
+#odes-pertinencia .odes-h2{--odes-fs:clamp(1.375em,1em + 1.2vw,1.625em);color:var(--odes-marino);font-weight:700;line-height:1.2}
+#odes-pertinencia .odes-bajada{--odes-fs:.8125em;margin-top:.3125rem;line-height:1.4}
+
+/* Tablero: el recuadro punteado mientras no tenga direccion; con direccion, el marco */
+#odes-pertinencia .odes-tablero{margin-top:1.125rem}
+#odes-pertinencia .odes-tablero--con-marco{margin-top:1.25rem}
+#odes-pertinencia .odes-espacio-tablero{position:relative;padding:1.375rem;background:var(--odes-espacio-punteado) border-box no-repeat,#fff;border:1px solid transparent;border-radius:var(--odes-espacio-radio)}
+/* Esqueleto: 4 filtros arriba; abajo el area principal (3 columnas) y el panel lateral (1) */
+#odes-pertinencia .odes-esqueleto{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:2.6875rem 20.4375rem;gap:.8125rem}
+#odes-pertinencia .odes-esqueleto > span{display:block;background:var(--odes-espacio-fondo);border-radius:.5rem}
+#odes-pertinencia .odes-esqueleto .odes-esqueleto-principal{grid-column:1 / 4}
+#odes-pertinencia .odes-esqueleto .odes-esqueleto-lateral{grid-column:4 / 5}
+#odes-pertinencia .odes-espacio-tablero-texto{--odes-fs:.90625em;position:absolute;top:50%;left:50%;width:max-content;max-width:calc(100% - 3rem);padding:.6875rem 1.5rem;color:var(--odes-marino);font-weight:500;line-height:1.25;text-align:center;background:#fff;border:1px solid var(--odes-espacio-pastilla);border-radius:.5rem;transform:translate(-50%,-50%)}
+/* Alto fijo del marco cuando no se puede medir (tablero de otro sitio que no avisa su alto): el marco se desplaza */
+#odes-pertinencia .odes-tablero-marco{display:block;width:100%;max-width:100%;height:860px;margin:0;border:0;border-radius:var(--odes-espacio-radio);background:#fff}
+@container odes-pertinencia (max-width: 34.99em){
+  #odes-pertinencia .odes-espacio-tablero{padding:1rem}
+  /* Angosto: filtros de dos en dos, el area principal y el panel lateral debajo, mas bajo */
+  #odes-pertinencia .odes-esqueleto{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:2.5rem 2.5rem 14rem 5rem;gap:.625rem}
+  #odes-pertinencia .odes-esqueleto .odes-esqueleto-principal,#odes-pertinencia .odes-esqueleto .odes-esqueleto-lateral{grid-column:1 / -1}
+  #odes-pertinencia .odes-espacio-tablero-texto{padding:.625rem 1rem}
+  #odes-pertinencia .odes-tablero-marco{height:1200px}
+}
+
+/* Boton "Conoce mas", a la derecha debajo del tablero */
+#odes-pertinencia .odes-conoce-mas{display:flex;justify-content:flex-end;margin-top:.875rem}
+#odes-pertinencia a.odes-boton{--odes-fs:.90625em;display:inline-flex;align-items:center;justify-content:center;gap:.6875rem;min-height:2.875rem;padding:.6875rem .9375rem .6875rem 1.5rem;color:#fff;font-weight:500;line-height:1.25;background:var(--odes-magenta);border-radius:999px;transition:background-color .2s ease,box-shadow .2s ease}
+#odes-pertinencia a.odes-boton:hover{color:#fff;background:var(--odes-magenta-hover);box-shadow:var(--odes-sombra-2)}
+@container odes-pertinencia (max-width: 20.49em){
+  #odes-pertinencia .odes-conoce-mas a.odes-boton{width:100%;justify-content:space-between}
+}
+/* Flecha en un circulo blanco (Material Symbols arrow_forward), la misma de los accesos */
+#odes-pertinencia .odes-flecha{display:inline-flex;flex:none;align-items:center;justify-content:center;width:1.5rem;height:1.5rem;color:var(--odes-marino);background:#fff;border-radius:50%;transition:transform .2s ease}
+#odes-pertinencia .odes-flecha svg{display:block;width:1rem;height:1rem;fill:currentColor}
+#odes-pertinencia a:hover .odes-flecha{transform:translateX(2px)}
+
+/* 4. Accesos numerados (los del Observatorio): 1, 2 o 3 columnas segun el ancho del bloque. Cortes en em: con
+   la letra agrandada bajan solos a 2 o 1 columnas y los titulos no se parten */
+#odes-pertinencia .odes-accesos{display:grid;grid-template-columns:minmax(0,1fr);gap:1rem;margin-top:1.1875rem}
+@container odes-pertinencia (min-width: 30em){
+  /* Desde dos columnas, todas las filas a la altura de la mas alta */
+  #odes-pertinencia .odes-accesos{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:1fr}
+}
+@container odes-pertinencia (min-width: 52em){
+  #odes-pertinencia .odes-accesos{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+#odes-pertinencia .odes-accesos > li{display:flex}
+#odes-pertinencia a.odes-acceso{--odes-acento:var(--odes-marino);--odes-acento-texto:#fff;position:relative;display:flex;align-items:center;gap:.8125rem;width:100%;min-height:5rem;padding:.625rem 1.125rem;color:var(--odes-acento-texto);overflow-wrap:break-word;background:var(--odes-acento);border-radius:var(--odes-esquina);transition:box-shadow .2s ease}
+#odes-pertinencia a.odes-acceso--celeste{--odes-acento:var(--odes-celeste);--odes-acento-texto:var(--odes-marino)}
+#odes-pertinencia a.odes-acceso--morado{--odes-acento:var(--odes-morado);--odes-acento-texto:#fff}
+/* Marino oscurecido: #163854 sobre el verde da 3,53:1 y el titulo (16 px en negrita) pide 4,5:1; #0b1d2c da 4,98:1 */
+#odes-pertinencia a.odes-acceso--verde{--odes-acento:var(--odes-verde);--odes-acento-texto:#0b1d2c}
+#odes-pertinencia a.odes-acceso--amarillo{--odes-acento:var(--odes-amarillo);--odes-acento-texto:var(--odes-marino)}
+#odes-pertinencia a.odes-acceso:hover{color:var(--odes-acento-texto);box-shadow:var(--odes-sombra-3)}
+/* Cifras proporcionales (el "1" sin pie): el separador sigue al ancho de cada numero */
+#odes-pertinencia .odes-acceso-numero{--odes-fs:min(calc(1.25em + 1vw),2em);flex:none;font-weight:800;line-height:1}
+#odes-pertinencia .odes-acceso-separador{flex:none;width:2px;height:2.375rem;background:currentColor;opacity:.4}
+#odes-pertinencia .odes-acceso-titulo{flex:1 1 auto;min-width:0;font-weight:700;line-height:1.25}
+
+/* Preferencias del sistema y del plugin de accesibilidad */
+@media (prefers-reduced-motion: reduce){
+  #odes-pertinencia *,#odes-pertinencia *::before,#odes-pertinencia *::after{transition:none!important}
+}
+@media (forced-colors: active){
+  #odes-pertinencia a.odes-acceso,#odes-pertinencia a.odes-boton{border:2px solid LinkText}
+  #odes-pertinencia .odes-banda{border:1px solid CanvasText}
+  #odes-pertinencia .odes-triangulos{forced-color-adjust:none}
+}
+@media print{
+  #odes-pertinencia .odes-banda,#odes-pertinencia a.odes-acceso,#odes-pertinencia a.odes-boton{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+body.pojo-a11y-negative-contrast #odes-pertinencia :focus-visible,body.pojo-a11y-high-contrast #odes-pertinencia :focus-visible{outline-color:#ff0!important}
+</style>
+<div id="odes-pertinencia">
+  <div class="odes-titulo-fila">
+    <div class="odes-banda">
+      <svg class="odes-estrellas" aria-hidden="true" focusable="false">
+        <circle cx="1.9%" cy="43.3%" r="1.5" fill-opacity=".81"/><circle cx="7.7%" cy="13.7%" r="0.9" fill-opacity=".79"/><circle cx="9.2%" cy="13.2%" r="1.2" fill-opacity=".4"/><circle cx="10%" cy="13.2%" r="1.2" fill-opacity=".82"/>
+        <circle cx="14.4%" cy="84.9%" r="1.5" fill-opacity=".6"/><circle cx="16%" cy="87.7%" r="0.9" fill-opacity=".59"/><circle cx="17.6%" cy="90.1%" r="1.5" fill-opacity=".61"/><circle cx="20.6%" cy="11.8%" r="1.2" fill-opacity=".6"/>
+        <circle cx="22.5%" cy="83.8%" r="0.9" fill-opacity=".35"/><circle cx="23.6%" cy="83.8%" r="1.2" fill-opacity=".63"/><circle cx="27.3%" cy="10.1%" r="1.8" fill-opacity=".94"/><circle cx="32.5%" cy="86.2%" r="0.6" fill-opacity=".92"/>
+        <circle cx="38.3%" cy="13.8%" r="0.9" fill-opacity=".79"/><circle cx="40.9%" cy="86.8%" r="1.5" fill-opacity=".41"/><circle cx="43.6%" cy="15.8%" r="0.6" fill-opacity=".35"/><circle cx="44.3%" cy="12.7%" r="0.9" fill-opacity=".77"/>
+        <circle cx="45.5%" cy="84.9%" r="0.9" fill-opacity=".57"/><circle cx="53.3%" cy="31.6%" r="0.6" fill-opacity=".59"/><circle cx="55%" cy="50.7%" r="1.2" fill-opacity=".41"/><circle cx="55.3%" cy="75.7%" r="1.5" fill-opacity=".61"/>
+        <circle cx="56.4%" cy="62.5%" r="1.2" fill-opacity=".96"/><circle cx="57.2%" cy="87.7%" r="1.5" fill-opacity=".41"/><circle cx="57.6%" cy="22.2%" r="1.2" fill-opacity=".42"/><circle cx="57.9%" cy="89.8%" r="0.9" fill-opacity=".81"/>
+        <circle cx="61%" cy="18.3%" r="1.2" fill-opacity=".41"/><circle cx="61.3%" cy="11.8%" r="1.2" fill-opacity=".82"/><circle cx="61.4%" cy="56.6%" r="1.2" fill-opacity=".96"/><circle cx="62.2%" cy="18.4%" r="0.6" fill-opacity=".37"/>
+        <circle cx="63.7%" cy="9.8%" r="1.8" fill-opacity=".9"/><circle cx="63.7%" cy="57.7%" r="1.2" fill-opacity=".42"/><circle cx="63.8%" cy="75.7%" r="1.2" fill-opacity=".8"/><circle cx="64.2%" cy="77.6%" r="1.2" fill-opacity=".43"/>
+        <circle cx="65.2%" cy="23.5%" r="1.2" fill-opacity=".96"/><circle cx="65.2%" cy="46.2%" r="1.2" fill-opacity=".42"/><circle cx="66.3%" cy="35.5%" r="0.6" fill-opacity=".37"/><circle cx="67.5%" cy="19.5%" r="1.2" fill-opacity=".8"/>
+        <circle cx="67.8%" cy="41.4%" r="0.9" fill-opacity=".96"/><circle cx="69%" cy="44.2%" r="1.5" fill-opacity=".83"/><circle cx="69.6%" cy="34.2%" r="0.9" fill-opacity=".96"/><circle cx="69.7%" cy="69.7%" r="0.6" fill-opacity=".85"/>
+        <circle cx="69.9%" cy="58.3%" r="1.2" fill-opacity=".41"/><circle cx="71.2%" cy="48.7%" r="0.6" fill-opacity=".37"/><circle cx="71.8%" cy="21.1%" r="0.6" fill-opacity=".35"/><circle cx="72%" cy="59.4%" r="1.2" fill-opacity=".41"/>
+        <circle cx="72.6%" cy="10.4%" r="1.2" fill-opacity=".39"/><circle cx="72.8%" cy="88.8%" r="1.5" fill-opacity=".83"/><circle cx="74.1%" cy="50.4%" r="1.8" fill-opacity=".97"/><circle cx="74.3%" cy="25.3%" r="1.5" fill-opacity=".96"/>
+        <circle cx="76.5%" cy="52.5%" r="1.5" fill-opacity=".97"/><circle cx="77%" cy="38.5%" r="1.5" fill-opacity=".82"/><circle cx="77%" cy="24.3%" r="0.9" fill-opacity=".55"/><circle cx="78.9%" cy="27.6%" r="0.6" fill-opacity=".35"/>
+        <circle cx="81.5%" cy="34.5%" r="0.9" fill-opacity=".93"/><circle cx="82.1%" cy="13.9%" r="1.5" fill-opacity=".98"/><circle cx="82.8%" cy="87.8%" r="0.9" fill-opacity=".61"/><circle cx="83.2%" cy="30.3%" r="0.6" fill-opacity=".95"/>
+        <circle cx="83.4%" cy="85.6%" r="1.5" fill-opacity=".82"/><circle cx="84.1%" cy="46.1%" r="1.2" fill-opacity=".44"/><circle cx="84.8%" cy="14.5%" r="0.6" fill-opacity=".67"/><circle cx="84.9%" cy="78.9%" r="0.6" fill-opacity=".4"/>
+        <circle cx="85.6%" cy="46.2%" r="1.2" fill-opacity=".42"/><circle cx="86.7%" cy="68.6%" r="1.2" fill-opacity=".65"/><circle cx="87.7%" cy="58.6%" r="0.9" fill-opacity=".54"/><circle cx="89.5%" cy="11.2%" r="0.9" fill-opacity=".57"/>
+        <circle cx="90.2%" cy="39.3%" r="1.2" fill-opacity=".95"/><circle cx="91%" cy="58.6%" r="0.9" fill-opacity=".47"/><circle cx="92.7%" cy="35.5%" r="0.6" fill-opacity=".36"/><circle cx="93.2%" cy="11.4%" r="1.5" fill-opacity=".8"/>
+        <circle cx="93.5%" cy="36.2%" r="1.5" fill-opacity=".97"/><circle cx="94.1%" cy="58.6%" r="0.9" fill-opacity=".93"/><circle cx="94.2%" cy="19.4%" r="1.2" fill-opacity=".8"/><circle cx="95.3%" cy="11.8%" r="1.2" fill-opacity=".41"/>
+        <circle cx="96.7%" cy="23.2%" r="1.5" fill-opacity=".96"/><circle cx="96.8%" cy="11.2%" r="0.9" fill-opacity=".35"/><circle cx="97.2%" cy="41.4%" r="0.9" fill-opacity=".94"/><circle cx="97.4%" cy="66.5%" r="1.5" fill-opacity=".61"/>
+        <svg x="22.9%" y="13.6%" overflow="visible"><path d="M0 -4L0.96 -0.96L4 0L0.96 0.96L0 4L-0.96 0.96L-4 0L-0.96 -0.96Z"/></svg>
+        <svg x="49.1%" y="89.9%" overflow="visible"><path d="M0 -3.5L0.84 -0.84L3.5 0L0.84 0.84L0 3.5L-0.84 0.84L-3.5 0L-0.84 -0.84Z"/></svg>
+        <svg x="59.2%" y="24.7%" overflow="visible"><path d="M0 -4.5L1.08 -1.08L4.5 0L1.08 1.08L0 4.5L-1.08 1.08L-4.5 0L-1.08 -1.08Z"/></svg>
+        <svg x="76.4%" y="74.9%" overflow="visible"><path d="M0 -4L0.96 -0.96L4 0L0.96 0.96L0 4L-0.96 0.96L-4 0L-0.96 -0.96Z"/></svg>
+        <svg x="86%" y="16.2%" overflow="visible"><path d="M0 -3.5L0.84 -0.84L3.5 0L0.84 0.84L0 3.5L-0.84 0.84L-3.5 0L-0.84 -0.84Z"/></svg>
+        <svg x="91.9%" y="34.2%" overflow="visible"><path d="M0 -5L1.2 -1.2L5 0L1.2 1.2L0 5L-1.2 1.2L-5 0L-1.2 -1.2Z"/></svg>
+      </svg>
+      <h1 class="odes-titulo">Medida de pertinencia</h1>
+    </div>
+    <svg class="odes-triangulos" viewBox="0 0 180 96" aria-hidden="true" focusable="false">
+      <polygon class="odes-triangulo odes-triangulo--naranja" points="8.1,34.4 71.7,24.6 39.5,81.1"/>
+      <polygon class="odes-triangulo odes-triangulo--magenta" points="97.5,6.8 58.2,69.5 132.1,93.7"/>
+      <polygon class="odes-triangulo odes-triangulo--amarillo" points="140.1,25.5 174.8,35.7 154.5,68.7"/>
+    </svg>
+  </div>
+
+  <p class="odes-presentacion">La medida de pertinencia relaciona la oferta de programas de educación superior de Medellín con las ocupaciones y los sectores que demanda la ciudad. Este espacio presenta el propósito de la medida, su alcance y la forma de leer los resultados del tablero.</p>
+
+  <section class="odes-seccion odes-seccion--consulta" aria-labelledby="odes-pe-consulta-titulo">
+    <h2 id="odes-pe-consulta-titulo" class="odes-h2">Consulta tu puntaje de pertinencia</h2>
+    <p class="odes-bajada">Selecciona un programa para ver su índice y su puntaje.</p>
+
+    <!--
+      ===== EDITAR TABLERO =====
+      La direccion del tablero va entre las comillas de data-odes-tablero-url. HOY: el tablero vive en
+      Vercel (https://sapiencia-web.vercel.app/tableros/pertinencia/index.html) mientras se resuelve
+      alojarlo en sapiencia.gov.co; ese tablero ya avisa su alto (js/altura-marco.js). Para otro sitio,
+      por ejemplo: data-odes-tablero-url="https://tableros.example/pertinencia/index.html"
+      Vacia: se ve el recuadro punteado "Espacio para el tablero de control".
+      Con direccion: el script cambia el recuadro por el tablero en un marco que se ajusta a su alto:
+        - otro sitio (por ejemplo, Vercel): el tablero debe avisar su alto con postMessage (ver LEEME.md);
+          el marco arranca de 340 px y, si no avisa a los 8 s de cargar, queda de 860 px (1200 px en
+          celular) y se desplaza por dentro. Ese
+          servidor debe dejar que sapiencia.gov.co lo incruste.
+        - sapiencia.gov.co (FTP): HOY NO SE VE. El servidor responde todo con X-Frame-Options: DENY, que
+          tambien bloquea los marcos del mismo sitio: quedaria un recuadro gris de 860 px con el aviso de
+          que no se puede mostrar. Antes, el administrador del servidor debe poner en la carpeta del
+          tablero X-Frame-Options: SAMEORIGIN (o Content-Security-Policy: frame-ancestors 'self') y
+          comprobarlo con curl -I sobre la direccion del tablero. Con eso, el bloque mide el tablero solo.
+    -->
+    <div class="odes-tablero" data-odes-tablero-url="https://sapiencia-web.vercel.app/tableros/pertinencia/index.html">
+      <div class="odes-espacio-tablero">
+        <div class="odes-esqueleto" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+          <span class="odes-esqueleto-principal"></span><span class="odes-esqueleto-lateral"></span>
+        </div>
+        <p class="odes-espacio-tablero-texto">Espacio para el tablero de control</p>
+      </div>
+    </div>
+
+    <p class="odes-conoce-mas">
+      <a class="odes-boton" data-odes-enlace="conoce-mas"><span>Conoce más <span class="odes-sr">sobre la medida de pertinencia</span></span> <span class="odes-flecha"><svg viewBox="0 -960 960 960" aria-hidden="true" focusable="false"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg></span></a>
+    </p>
+  </section>
+
+  <section class="odes-seccion odes-seccion--normativa" aria-labelledby="odes-pe-normativa-titulo">
+    <h2 id="odes-pe-normativa-titulo" class="odes-h2">Normativa y más detalle</h2>
+    <p class="odes-bajada">Consulta la resolución y otras herramientas de consulta.</p>
+
+    <!-- role="list": Safari quita la semantica de lista a las listas sin vinetas. El numero se ve pero no se lee:
+         la lista ordenada ya anuncia la posicion -->
+    <ol class="odes-accesos" role="list" aria-labelledby="odes-pe-normativa-titulo">
+      <li><a class="odes-acceso odes-acceso--marino" data-odes-enlace="resolucion"><span class="odes-acceso-numero" aria-hidden="true">1</span><span class="odes-acceso-separador" aria-hidden="true"></span><span class="odes-acceso-titulo">Resolución de pertinencia</span> <span class="odes-flecha"><svg viewBox="0 -960 960 960" aria-hidden="true" focusable="false"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg></span></a></li>
+      <li><a class="odes-acceso odes-acceso--celeste" data-odes-enlace="infografia"><span class="odes-acceso-numero" aria-hidden="true">2</span><span class="odes-acceso-separador" aria-hidden="true"></span><span class="odes-acceso-titulo">Infografía</span> <span class="odes-flecha"><svg viewBox="0 -960 960 960" aria-hidden="true" focusable="false"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg></span></a></li>
+      <li><a class="odes-acceso odes-acceso--morado" data-odes-enlace="cuoc-sectores"><span class="odes-acceso-numero" aria-hidden="true">3</span><span class="odes-acceso-separador" aria-hidden="true"></span><span class="odes-acceso-titulo">Relación CUOC y sectores estratégicos</span> <span class="odes-flecha"><svg viewBox="0 -960 960 960" aria-hidden="true" focusable="false"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg></span></a></li>
+      <li><a class="odes-acceso odes-acceso--verde" data-odes-enlace="cine-cuoc"><span class="odes-acceso-numero" aria-hidden="true">4</span><span class="odes-acceso-separador" aria-hidden="true"></span><span class="odes-acceso-titulo">Relación CINE y CUOC</span> <span class="odes-flecha"><svg viewBox="0 -960 960 960" aria-hidden="true" focusable="false"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg></span></a></li>
+      <li><a class="odes-acceso odes-acceso--amarillo" data-odes-enlace="indice-cine"><span class="odes-acceso-numero" aria-hidden="true">5</span><span class="odes-acceso-separador" aria-hidden="true"></span><span class="odes-acceso-titulo">Índice de pertinencia por campo CINE detallado</span> <span class="odes-flecha"><svg viewBox="0 -960 960 960" aria-hidden="true" focusable="false"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg></span></a></li>
+    </ol>
+  </section>
+</div>
+<script>
+(function () {
+  'use strict';
+
+  /*
+    Script del bloque de pertinencia. Hace dos cosas, una sola vez (marca la raiz con data-odes-iniciado):
+      1. Pone en los botones las direcciones de EDITAR ENLACES.
+      2. Si EDITAR TABLERO tiene direccion, cambia el recuadro punteado por el tablero en un marco que se
+         ajusta a su alto. Si la raiz del bloque sale de la pagina, deja de escuchar a la ventana.
+    Indices de listas con espacios (lista[ i ]) y nada de corchetes con letras: WordPress los tomaria por
+    shortcodes.
+  */
+  var raiz = document.getElementById('odes-pertinencia');
+  if (!raiz || raiz.hasAttribute('data-odes-iniciado')) return;
+  raiz.setAttribute('data-odes-iniciado', '');
+
+  var TITULO_MARCO = 'Consulta del índice y el puntaje de pertinencia por programa';
+  /* Alto del marco mientras carga el tablero: el de su vista inicial (los dos selectores) */
+  var ALTO_CARGA = 340;
+  /* Tablero de otro sitio que no avisa su alto a los 8 s de cargar: queda el fijo del CSS */
+  var ESPERA_AVISO = 8000;
+  /* Altos aceptados (los que se miden y los que avisa un tablero de otro sitio) */
+  var ALTO_MINIMO = 200;
+  var ALTO_MAXIMO = 20000;
+  /* Aire bajo el contenido medido, para que la sombra de una lista abierta no quede cortada */
+  var AIRE_INFERIOR = 16;
+  /* Mensaje con el que un tablero de otro sitio avisa su alto: { tipo: 'pe-tablero-alto', alto: 850 } */
+  var TIPO_MENSAJE = 'pe-tablero-alto';
+
+  var limpiezas = [];
+  function limpiar() {
+    while (limpiezas.length) {
+      try { limpiezas.pop()(); } catch (e) { /* sigue con las demas */ }
+    }
+  }
+  function escucharVentana(tipo, funcion) {
+    window.addEventListener(tipo, funcion);
+    limpiezas.push(function () { window.removeEventListener(tipo, funcion); });
+  }
+  /* Si el bloque ya no esta en la pagina (por ejemplo, en el aplicativo al cambiar de pagina), suelta todo */
+  function sigueEnLaPagina() {
+    if (raiz.isConnected) return true;
+    limpiar();
+    return false;
+  }
+
+  /* Direccion valida para un enlace o un marco: vacia o "#" no cuenta, ni otro protocolo que los permitidos */
+  function direccionValida(valor, protocolos) {
+    var texto = (valor || '').trim();
+    if (!texto || texto === '#') return null;
+    try {
+      var url = new URL(texto, window.location.href);
+      return protocolos.indexOf(url.protocol) >= 0 ? { texto: texto, url: url } : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /* 1. Enlaces: salen de la plantilla de EDITAR ENLACES (va antes de los estilos, junto al bloque) */
+  function ponerEnlaces() {
+    var plantilla = (raiz.parentNode && raiz.parentNode.querySelector('template[data-odes-enlaces]')) ||
+      document.querySelector('template[data-odes-enlaces]');
+    var fuente = plantilla ? plantilla.content || plantilla : null;
+    var enlaces = raiz.querySelectorAll('a[data-odes-enlace]');
+    for (var i = 0; i < enlaces.length; i++) {
+      var enlace = enlaces[ i ];
+      var origen = fuente ? fuente.querySelector('a[data-odes-enlace="' + enlace.getAttribute('data-odes-enlace') + '"]') : null;
+      var direccion = direccionValida(origen ? origen.getAttribute('href') : '', ['https:', 'http:', 'mailto:']);
+      if (direccion) enlace.setAttribute('href', direccion.texto);
+      else enlace.removeAttribute('href');
+    }
+  }
+
+  /* 2. Tablero */
+  function ponerAlto(marco, alto) {
+    marco.style.height = Math.ceil(alto) + 'px';
+  }
+  /* Sin alto propio: queda el fijo del CSS (860 px; 1200 px en celular) y el marco se desplaza por dentro */
+  function quitarAlto(marco) {
+    marco.style.removeProperty('height');
+  }
+
+  /*
+    Borde inferior del contenido real del tablero: su body, su main y su #root se estiran al alto del marco, asi
+    que se miden los bloques de #root y, ademas, las listas desplegables abiertas de los selectores
+    (.dropdown-menu.show, con position: absolute), que si no quedarian recortadas por el borde del marco.
+  */
+  function altoContenido(doc) {
+    var raizTablero = doc.getElementById('root');
+    if (!raizTablero) return null;
+    var piezas = Array.prototype.slice.call(raizTablero.children)
+      .concat(Array.prototype.slice.call(raizTablero.querySelectorAll('.dropdown-menu.show')));
+    if (!piezas.length) return null;
+    var fondo = 0;
+    for (var i = 0; i < piezas.length; i++) fondo = Math.max(fondo, piezas[ i ].getBoundingClientRect().bottom);
+    var desplazamiento = doc.defaultView ? doc.defaultView.scrollY || 0 : 0;
+    return fondo + desplazamiento + AIRE_INFERIOR;
+  }
+
+  /* Tablero del mismo sitio: se mide por dentro, con observadores creados en la ventana del propio marco */
+  function medirMismoSitio(marco) {
+    var observadorTamano = null;
+    var observadorCambios = null;
+    function desconectar() {
+      if (observadorTamano) observadorTamano.disconnect();
+      if (observadorCambios) observadorCambios.disconnect();
+      observadorTamano = null;
+      observadorCambios = null;
+    }
+    limpiezas.push(desconectar);
+
+    function medir() {
+      try {
+        var doc = marco.contentDocument;
+        var alto = doc ? altoContenido(doc) : null;
+        if (alto && alto > ALTO_MINIMO) ponerAlto(marco, Math.min(alto, ALTO_MAXIMO));
+      } catch (e) { /* si deja de ser del mismo sitio, conserva el ultimo alto */ }
+    }
+
+    function alCargar() {
+      desconectar();
+      if (!sigueEnLaPagina()) return;
+      try {
+        var doc = marco.contentDocument;
+        var ventana = marco.contentWindow;
+        var raizTablero = doc && doc.getElementById('root');
+        if (!doc || !ventana || !raizTablero || !ventana.ResizeObserver || !ventana.MutationObserver) {
+          quitarAlto(marco);
+          return;
+        }
+        observadorTamano = new ventana.ResizeObserver(medir);
+        var observarHijos = function () {
+          if (!observadorTamano) return;
+          observadorTamano.disconnect();
+          for (var i = 0; i < raizTablero.children.length; i++) observadorTamano.observe(raizTablero.children[ i ]);
+          medir();
+        };
+        /* subtree: tambien avisa cuando se abre o se cierra una lista desplegable */
+        observadorCambios = new ventana.MutationObserver(observarHijos);
+        observadorCambios.observe(raizTablero, { childList: true, subtree: true });
+        observarHijos();
+      } catch (e) {
+        quitarAlto(marco);
+      }
+    }
+
+    ponerAlto(marco, ALTO_CARGA);
+    marco.addEventListener('load', alCargar);
+  }
+
+  /*
+    Tablero de otro sitio: arranca con el alto de su vista inicial y solo se cree el alto que avisa ese mismo
+    marco, desde su sitio, y si es un numero razonable. Si no avisa nada, queda el fijo del CSS.
+  */
+  function escucharAlto(marco, origen) {
+    var avisado = false;
+    escucharVentana('message', function (evento) {
+      if (!sigueEnLaPagina()) return;
+      if (evento.origin !== origen || evento.source !== marco.contentWindow) return;
+      var datos = evento.data;
+      if (!datos || typeof datos !== 'object' || datos.tipo !== TIPO_MENSAJE) return;
+      var alto = datos.alto;
+      if (typeof alto !== 'number' || !isFinite(alto) || alto < ALTO_MINIMO || alto > ALTO_MAXIMO) return;
+      avisado = true;
+      ponerAlto(marco, alto);
+    });
+    marco.addEventListener('load', function () {
+      window.setTimeout(function () {
+        if (!avisado && sigueEnLaPagina()) quitarAlto(marco);
+      }, ESPERA_AVISO);
+    });
+    ponerAlto(marco, ALTO_CARGA);
+  }
+
+  function ponerTablero() {
+    var espacio = raiz.querySelector('[data-odes-tablero-url]');
+    if (!espacio) return;
+    var direccion = direccionValida(espacio.getAttribute('data-odes-tablero-url'), ['https:', 'http:']);
+    if (!direccion) return;
+
+    var marco = document.createElement('iframe');
+    marco.className = 'odes-tablero-marco';
+    marco.title = TITULO_MARCO;
+    marco.setAttribute('loading', 'lazy');
+    if (direccion.url.origin === window.location.origin) medirMismoSitio(marco);
+    else escucharAlto(marco, direccion.url.origin);
+    marco.setAttribute('src', direccion.texto);
+
+    var recuadro = espacio.querySelector('.odes-espacio-tablero');
+    if (recuadro && recuadro.parentNode) recuadro.parentNode.removeChild(recuadro);
+    espacio.classList.add('odes-tablero--con-marco');
+    espacio.appendChild(marco);
+  }
+
+  ponerEnlaces();
+  ponerTablero();
+})();
+</script>

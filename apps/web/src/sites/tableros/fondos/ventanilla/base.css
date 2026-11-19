@@ -1,0 +1,170 @@
+/*
+ * Base de la ventanilla de consulta de los fondos: variables y piezas
+ * compartidas. Todo cuelga de `.vc` (dentro de .tablero-fondos), así nada se
+ * escapa al tablero. Cada componente tiene su hoja con su prefijo:
+ * vcb- buscador, vcp- persona, vcf- ficha, vch- historial, vce- eventos.
+ * Los colores son los del tablero (tablero-matricula.css y TableroFondos.tsx):
+ * no se agregan colores nuevos, solo tonos de estos.
+ */
+:where(.tablero-fondos) .vc {
+  /* Color */
+  --vc-azul: #0E5074;
+  --vc-azul-hondo: #0B3A56;
+  --vc-magenta: #921C8D;
+  --vc-cian: #3AB6E6;
+  --vc-morado: #9B48A4;
+  --vc-naranja: #ED7203;
+  --vc-verde: #2EA14E;
+  --vc-rojo: #C62F2F;
+  --vc-papel: #FFFFFF;
+  --vc-fondo: #F7F9FB;
+  --vc-fondo-azul: #EEF2F5;
+  --vc-borde: #DDE4EA;
+  --vc-borde-fuerte: #C9D3DA;
+  --vc-tinta: #17313F;
+  --vc-tinta-suave: #4F5D66;
+  --vc-foco: #3AB6E6;
+
+  /* Espacio (escala de 4) */
+  --vc-e1: .25rem;
+  --vc-e2: .5rem;
+  --vc-e3: .75rem;
+  --vc-e4: 1rem;
+  --vc-e5: 1.5rem;
+  --vc-e6: 2rem;
+  --vc-e7: 3rem;
+
+  /* Letra: la familia es la de la página (no se cambia); escala de tamaños */
+  --vc-t-xs: .75rem;
+  --vc-t-s: .8125rem;
+  --vc-t-m: .9375rem;
+  --vc-t-l: 1.125rem;
+  --vc-t-xl: 1.5rem;
+  --vc-t-2xl: 2rem;
+
+  /* Forma y movimiento */
+  --vc-radio-s: 6px;
+  --vc-radio: 12px;
+  --vc-radio-l: 18px;
+  --vc-sombra: 0 10px 30px rgba(14, 80, 116, .08);
+  /* Alto reservado para la barra del buscador cuando queda pegada arriba: los destinos de salto lo descuentan. */
+  --vc-barra: 4.75rem;
+  --vc-rapido: 140ms;
+  --vc-suave: 260ms;
+  --vc-curva: cubic-bezier(.2, .7, .2, 1);
+
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: var(--vc-e5) clamp(1rem, 2.2vw, 2.25rem) var(--vc-e7);
+  color: var(--vc-tinta);
+  font-size: var(--vc-t-m);
+  line-height: 1.45;
+}
+
+/* La plantilla pone overflow: auto en <main>, y con eso la barra del buscador no puede quedar pegada a la ventana
+   (position: sticky se mide contra el ancestro que recorta). Solo mientras la ventanilla es la vista visible,
+   <main> deja de recortar; el tablero conserva lo suyo. */
+.tableros.tablero-fondos main:has(> div:not([hidden]) > .vc) { overflow: visible; }
+
+:where(.tablero-fondos) .vc *,
+:where(.tablero-fondos) .vc *::before,
+:where(.tablero-fondos) .vc *::after { box-sizing: border-box; }
+
+:where(.tablero-fondos) .vc-resultados {
+  display: grid;
+  gap: var(--vc-e5);
+  margin-top: var(--vc-e5);
+  outline: none;
+  /* Al volver al inicio del expediente queda debajo de la barra del buscador, no tapado por ella. */
+  scroll-margin-top: calc(var(--vc-barra) + var(--vc-e3));
+}
+
+/* Aviso cuando una parte del expediente no se pudo pintar (Resguardo.tsx). */
+:where(.tablero-fondos) .vc-resguardo {
+  padding: var(--vc-e4) var(--vc-e5);
+  border: 1px solid color-mix(in srgb, var(--vc-rojo) 35%, white);
+  border-left: 4px solid var(--vc-rojo);
+  border-radius: var(--vc-radio-s);
+  background: color-mix(in srgb, var(--vc-rojo) 6%, white);
+  color: var(--vc-tinta);
+  font-size: var(--vc-t-m);
+  line-height: 1.45;
+}
+
+/* Solo para lectores de pantalla. */
+:where(.tablero-fondos) .vc-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Cifras alineadas. */
+:where(.tablero-fondos) .vc-num { font-variant-numeric: tabular-nums; }
+
+:where(.tablero-fondos) .vc-icono { flex: none; display: block; }
+
+/* Estado con el color de su categoría (ChipEstado.tsx). */
+:where(.tablero-fondos) .vc-chip-estado {
+  display: inline-flex;
+  align-items: center;
+  gap: .4em;
+  padding: .2em .7em .2em .55em;
+  border-radius: 999px;
+  background: var(--e-suave);
+  color: var(--e-texto);
+  font-size: var(--vc-t-s);
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+:where(.tablero-fondos) .vc-chip-estado > i {
+  width: .6em;
+  height: .6em;
+  border-radius: 50%;
+  background: var(--e-color);
+  box-shadow: 0 0 0 1px rgba(23, 49, 63, .18);
+}
+:where(.tablero-fondos) .vc-chip-estado-pleno { background: var(--e-color); color: var(--e-sobre); }
+:where(.tablero-fondos) .vc-chip-estado-pleno > i { display: none; }
+
+/* Copiar al portapapeles (Copiar.tsx). */
+:where(.tablero-fondos) .vc-copiar {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--vc-radio-s);
+  background: transparent;
+  color: var(--vc-tinta-suave);
+  cursor: pointer;
+  transition: background var(--vc-rapido), color var(--vc-rapido), border-color var(--vc-rapido);
+}
+:where(.tablero-fondos) .vc-copiar:hover { background: var(--vc-fondo-azul); color: var(--vc-azul); border-color: var(--vc-borde); }
+:where(.tablero-fondos) .vc-copiar[data-copiado] { background: #E0F3E5; color: #1B6B33; border-color: #B9E1C4; }
+/* Foco del teclado. Los destinos de salto (tabindex="-1": el resultado, una ficha, los eventos) reciben el foco
+   por programa y no llevan el aro: cada pieza decide cómo marcarlos. */
+:where(.tablero-fondos) .vc :is(a, button, input, summary, [tabindex]:not([tabindex='-1'])):focus-visible {
+  outline: 2px solid var(--vc-foco);
+  outline-offset: 2px;
+}
+:where(.tablero-fondos) .vc-resultados:focus { outline: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.tablero-fondos) .vc *,
+  :where(.tablero-fondos) .vc *::before,
+  :where(.tablero-fondos) .vc *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

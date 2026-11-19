@@ -1,0 +1,162 @@
+/*
+ * Rama /tableros: el marco de la página (columna a todo el alto, cabecera y
+ * pie del Observatorio). Lo de cada tablero va en su carpeta; lo demás sale de
+ * la plantilla de Sapiencia (kit). Todo anidado bajo .tableros, salvo el botón
+ * de accesibilidad del kit, que el kit agrega al final de <body>.
+ */
+
+.tableros {
+  /* Magenta del logo del Observatorio (blanco encima: 5,5:1). */
+  --tb-magenta: #a94091;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: clip;
+}
+
+.tableros .tb-principal {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.tableros .tb-principal:focus {
+  outline: 0;
+}
+
+/* ── Saltar al contenido ── */
+
+.tableros .tb-saltar {
+  position: absolute;
+  z-index: 300;
+  top: 0.5rem;
+  left: 0.5rem;
+  padding: 0.6em 1em;
+  border-radius: 0.375rem;
+  background: #fff;
+  box-shadow:
+    0 1px 2px 0 rgba(0, 0, 0, 0.3),
+    0 2px 6px 2px rgba(0, 0, 0, 0.15);
+  color: #151717;
+  font-weight: 700;
+  transform: translateY(calc(-100% - 1rem));
+}
+
+.tableros .tb-saltar:focus {
+  transform: none;
+}
+
+/* ── Cabecera del Observatorio (la misma de /principal, /odes, /repositorio y /sivu) ── */
+
+.tableros .tb-cabecera {
+  margin: 0;
+  background: var(--tb-magenta);
+}
+
+.tableros .tb-cabecera-interior {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 0.75rem clamp(1rem, 4vw, 3rem);
+}
+
+.tableros .tb-cabecera-logo {
+  display: block;
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+.tableros .tb-cabecera-logo img {
+  width: auto;
+  height: clamp(40px, 7vw, 64px);
+}
+
+/* El kit colorea los h1 con una regla de más peso: aquí va en blanco. */
+.tableros .tb-cabecera .tb-cabecera-titulo {
+  margin: 0;
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: right;
+}
+
+/* ── Pie del Observatorio: magenta, con los logos de Sapiencia y la Alcaldía en blanco ── */
+
+/* El kit pone el pie en columna y estira sus hijos: aquí siempre es una fila centrada. */
+.tableros footer.tb-pie {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  padding: 2rem 1rem 2.25rem;
+  background: var(--tb-magenta);
+}
+
+.tableros footer.tb-pie > .tb-pie-logo {
+  display: block;
+  width: auto;
+  line-height: 0;
+}
+
+.tableros .tb-pie-logo img {
+  width: clamp(230px, 24vw, 340px);
+  height: auto;
+}
+
+/* Foco visible sobre el magenta. */
+.tableros :is(.tb-cabecera, .tb-pie) a:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+@media (max-width: 575.98px) {
+  /* En el celular el nombre del tablero pasa debajo del logo. */
+  .tableros .tb-cabecera-interior {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .tableros .tb-cabecera .tb-cabecera-titulo {
+    font-size: 0.95rem;
+    text-align: left;
+  }
+}
+
+@media (max-width: 360px) {
+  .tableros .tb-pie-logo img {
+    width: 180px;
+  }
+}
+
+/* ── Botón y panel de accesibilidad del kit, en el magenta (como en /odes) ── */
+
+#accessibilityFab,
+#accessibilityModal .btn-tertiary-blue {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #a94091;
+  --bs-btn-border-color: #a94091;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #8a3577;
+  --bs-btn-hover-border-color: #8a3577;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #8a3577;
+  --bs-btn-active-border-color: #8a3577;
+}
+
+#accessibilityModal .btn-outline-tertiary-blue {
+  --bs-btn-color: #a94091;
+  --bs-btn-border-color: #a94091;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #a94091;
+  --bs-btn-hover-border-color: #a94091;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #8a3577;
+  --bs-btn-active-border-color: #8a3577;
+}

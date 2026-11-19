@@ -1,0 +1,1152 @@
+/*
+ * Estilos de la rama ODES (Asistente ODES), sobre la plantilla de Sapiencia.
+ *
+ * - La plantilla (kit) se carga aparte desde /odes/kit/styles.css (ver
+ *   kit/KitPlantilla.tsx). React la inserta al principio de <head>, así que
+ *   estas reglas van después y la corrigen sin !important.
+ * - Todo va anidado bajo .odes, salvo #accessibilityFab: es el botón flotante
+ *   que el script del kit agrega al final de <body> (fuera de .odes) y solo
+ *   existe en esta rama.
+ * - Colores: tokens del kit (--bs-*) para que el modo oscuro y los modos de
+ *   contraste del botón de accesibilidad sigan funcionando, más el magenta del
+ *   logo del Observatorio (#a94091), el de la cabecera y el pie de todo el
+ *   sitio: mensajes de la persona, números de las fuentes y acentos (la franja
+ *   «¡Pregúntale a OdeS!» del ingreso y del chat tiene su hoja,
+ *   ingreso/banda.css).
+ */
+
+.odes {
+  /* Magenta del logo del Observatorio (blanco encima: 5,5:1). */
+  --odes-magenta: #a94091;
+  --odes-texto: var(--bs-neutral-10, #151717);
+  --odes-tenue: var(--bs-neutral-50, #4e5254);
+  --odes-superficie: var(--bs-neutral-100, #fff);
+  --odes-burbuja: var(--bs-neutral-95, #f4f4f4);
+  --odes-borde: var(--bs-neutral-80, #ccc);
+  --odes-enlace: var(--bs-primary-40, #9b48a4);
+  /* Morado oscuro del kit para el anillo de foco (8:1 sobre blanco). */
+  --odes-foco: #74367b;
+  --odes-ancho-chat: 48rem;
+  /* Ancho de la franja «¡Pregúntale a OdeS!» (el mismo en el ingreso y el chat). */
+  --odes-ancho-banda: 1100px;
+  /* Radios del kit: los botones combinan 4 px y 8 px en esquinas alternas. */
+  --odes-radio-burbuja: var(--bs-border-radius-sm, 0.25rem) var(--bs-border-radius-xl, 0.625rem)
+    var(--bs-border-radius-xl, 0.625rem) var(--bs-border-radius-xl, 0.625rem);
+  --odes-radio-usuario: var(--bs-border-radius-xl, 0.625rem) var(--bs-border-radius-sm, 0.25rem)
+    var(--bs-border-radius-xl, 0.625rem) var(--bs-border-radius-xl, 0.625rem);
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: clip;
+  background: var(--bs-body-bg, #fff);
+  color: var(--odes-texto);
+  font-family: var(--bs-body-font-family, 'Rubik', system-ui, sans-serif);
+  line-height: 1.5;
+}
+
+[data-bs-theme='dark'] .odes {
+  --odes-foco: #f0b8e3;
+}
+
+/* ── Foco visible: anillo de 3 px (el del kit es una línea negra de 1 pt) ── */
+
+.odes :focus-visible,
+.odes .btn:focus-visible,
+.odes input.form-control:focus-visible,
+.odes textarea.form-control:focus-visible {
+  outline: 3px solid var(--odes-foco);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+.odes input.form-control:focus-visible,
+.odes textarea.form-control:focus-visible {
+  outline-offset: 1px;
+}
+
+/* Sobre el magenta de la cabecera y el pie el anillo va en blanco. */
+.odes .odes-header :focus-visible,
+.odes .odes-footer :focus-visible {
+  outline-color: #fff;
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.odes .odes-icono {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 1em;
+  overflow: hidden;
+  font-size: 1.25rem;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+/* Sin la fuente, la ligadura ("search") se vería como texto. */
+.odes:not(.odes--iconos) .odes-icono {
+  visibility: hidden;
+}
+
+.odes .odes-saltar {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 50;
+  padding: 0.5rem 0.875rem;
+  border-radius: var(--bs-border-radius-sm, 0.25rem) var(--bs-border-radius-lg, 0.5rem);
+  background: var(--odes-superficie);
+  color: var(--odes-enlace);
+  font-weight: 700;
+  transform: translateY(-200%);
+}
+
+.odes .odes-saltar:focus {
+  transform: none;
+}
+
+/* Destino del enlace «Saltar al contenido» (main con tabindex="-1"): sin contorno al recibir el foco. */
+.odes main[tabindex='-1']:focus {
+  outline: none;
+}
+
+/* ── Cabecera del Observatorio (la misma de /principal, /repositorio y /sivu): magenta, logo en blanco ── */
+
+.odes .odes-header {
+  margin: 0;
+  background: var(--odes-magenta);
+}
+
+.odes .odes-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 0.75rem clamp(1rem, 4vw, 3rem);
+}
+
+.odes .odes-header-logo {
+  display: block;
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+.odes .odes-header-logo img {
+  width: auto;
+  height: clamp(40px, 7vw, 64px);
+}
+
+.odes .odes-header-nombre {
+  margin: 0;
+  overflow: hidden;
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 899.98px) {
+  .odes .odes-header-nombre {
+    font-size: 0.9rem;
+    white-space: normal;
+  }
+}
+
+/* ── Pie del Observatorio: magenta, con los logos de Sapiencia y la Alcaldía en blanco ── */
+
+/* El kit pone el pie en columna en pantallas angostas, estira sus hijos y
+   alinea el último a la derecha: aquí siempre es una fila con los logos centrados. */
+.odes footer.odes-footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  padding: 2rem 1rem 2.25rem;
+  background: var(--odes-magenta);
+}
+
+.odes footer.odes-footer > .odes-footer-logo {
+  display: block;
+  width: auto;
+  line-height: 0;
+  text-align: center;
+}
+
+.odes .odes-footer-logo img {
+  width: clamp(230px, 24vw, 340px);
+  height: auto;
+}
+
+@media (max-width: 360px) {
+  .odes .odes-footer-logo img {
+    width: 180px;
+  }
+}
+
+/* ── Página y columna del chat ── */
+
+/* El kit pone overflow: auto a <main>: eso lo volvería el contenedor de
+   desplazamiento del campo de texto fijo (sticky) y dejaría de quedarse abajo. */
+.odes .odes-principal {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow: visible;
+}
+
+/* Al enfocar con el teclado un control que quedó detrás del campo de texto
+   fijo, el navegador lo desplaza por encima de él (WCAG 2.4.11). */
+html:has(.odes .odes-compositor) {
+  scroll-padding-bottom: calc(var(--odes-alto-compositor, 5rem) + 1rem);
+}
+
+/* La franja va donde está en la pantalla de ingreso (mismo relleno y ancho):
+   al pasar al chat no se mueve. */
+.odes .odes-marco-banda {
+  width: 100%;
+  max-width: calc(var(--odes-ancho-banda) + 2rem);
+  margin: 0 auto;
+  padding: 2rem 1rem 0;
+}
+
+/* El chat, una sola columna centrada bajo la franja. */
+.odes .odes-pagina {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  max-width: calc(var(--odes-ancho-chat) + 2rem);
+  margin: 0 auto;
+  padding: 24px 1rem 0;
+}
+
+.odes .odes-chat {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* Fondo de partículas del chat (CieloFondo fijo, z-index negativo): .odes no
+   lleva fondo en esa página para dejarlo ver, y el <main> es la referencia del
+   botón de pausa, sin crear un contexto de apilamiento. */
+.odes.odes--cielo {
+  background: transparent;
+}
+
+.odes .odes-principal--cielo {
+  position: relative;
+}
+
+.odes .odes-conversacion {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* ── Avisos de estado (kit: alert) ── */
+
+.odes .odes-aviso {
+  display: flex;
+  gap: 0.625rem;
+  margin: 0 0 1.25rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--odes-borde);
+  border-left-width: 4px;
+  border-radius: var(--bs-border-radius-lg, 0.5rem);
+  background: var(--odes-superficie);
+  font-size: 0.9375rem;
+}
+
+.odes .odes-aviso p {
+  margin: 0;
+  line-height: 1.45;
+}
+
+.odes .odes-aviso__cuerpo {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.odes .odes-aviso--info {
+  border-color: var(--bs-primary-80, #dec2e1);
+  border-left-color: var(--odes-magenta);
+  background: var(--bs-primary-95, #f7f0f7);
+}
+
+.odes .odes-aviso--info > .odes-icono {
+  color: var(--odes-magenta);
+}
+
+[data-bs-theme='dark'] .odes .odes-aviso--info > .odes-icono {
+  color: var(--odes-texto);
+}
+
+.odes .odes-aviso--error {
+  border-color: var(--bs-danger-40, #aa0c00);
+}
+
+.odes .odes-aviso--error > .odes-icono {
+  color: var(--bs-danger-40, #aa0c00);
+}
+
+/* ── Grupos y burbujas (estructura de BelloEduca) ── */
+
+.odes .odes-grupo {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.odes .odes-avatar {
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--bs-primary-90, #eee0f0);
+  object-fit: cover;
+}
+
+.odes .odes-grupo__contenido {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.odes .odes-burbuja {
+  max-width: 100%;
+  padding: 0.625rem 1rem;
+  border-radius: var(--odes-radio-burbuja);
+  background: var(--odes-burbuja);
+  color: var(--odes-texto);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.odes .odes-fila-usuario {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.odes .odes-burbuja--usuario {
+  max-width: min(85%, 36rem);
+  border-radius: var(--odes-radio-usuario);
+  background: var(--odes-magenta);
+  color: #fff;
+  white-space: pre-wrap;
+}
+
+/* ── Sugerencias ── */
+
+.odes .odes-sugerencias {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: 0.5rem;
+  align-self: stretch;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.odes .odes-sugerencia {
+  --bs-btn-min-width: 0;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
+  font-weight: 500;
+  line-height: 1.35;
+  text-align: left;
+  white-space: normal;
+}
+
+/* ── Respuesta del asistente ── */
+
+.odes .odes-respuesta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  align-self: stretch;
+  min-width: 0;
+}
+
+/* Paso en curso: una sola línea que se reemplaza (con una entrada suave) en
+   cada paso, con un brillo que recorre el texto mientras el asistente trabaja. */
+.odes .odes-burbuja--paso {
+  max-width: min(100%, 34rem);
+  padding: 0.5625rem 1rem;
+}
+
+.odes .odes-paso {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  animation: odes-paso-entra 0.35s ease-out;
+}
+
+.odes .odes-paso__icono {
+  margin-top: 0.0625rem;
+  color: var(--odes-magenta);
+  font-size: 1.125rem;
+  animation: odes-latido 1.6s ease-in-out infinite;
+}
+
+[data-bs-theme='dark'] .odes .odes-paso__icono {
+  color: var(--odes-texto);
+}
+
+.odes .odes-paso__texto {
+  min-width: 0;
+  background: linear-gradient(
+      100deg,
+      var(--odes-tenue) 0 38%,
+      var(--odes-magenta) 50%,
+      var(--odes-tenue) 62% 100%
+    )
+    0 0 / 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  overflow-wrap: anywhere;
+  animation: odes-brillo 2.4s linear infinite;
+}
+
+[data-bs-theme='dark'] .odes .odes-paso__texto {
+  background-image: linear-gradient(100deg, var(--odes-tenue) 0 38%, var(--odes-texto) 50%, var(--odes-tenue) 62% 100%);
+}
+
+@keyframes odes-paso-entra {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+}
+
+@keyframes odes-brillo {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+/* Solo cambia la opacidad (sin rebote). */
+@keyframes odes-latido {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Modos de alto contraste: texto normal (el degradado recortado no se vería). */
+@media (forced-colors: active) {
+  .odes .odes-paso__texto {
+    background: none;
+    color: CanvasText;
+  }
+}
+
+.odes .odes-burbuja--respuesta {
+  position: relative;
+}
+
+.odes .odes-nota {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0;
+  color: var(--odes-tenue);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.odes .odes-nota .odes-icono {
+  font-size: 1.125rem;
+}
+
+/* ── Markdown dentro de la burbuja ── */
+
+.odes .odes-markdown {
+  position: relative;
+}
+
+.odes .odes-markdown > :first-child {
+  margin-top: 0;
+}
+
+.odes .odes-markdown > :last-child {
+  margin-bottom: 0;
+}
+
+.odes .odes-markdown p {
+  margin: 0 0 0.625rem;
+  line-height: 1.5;
+}
+
+.odes .odes-markdown :is(ul, ol) {
+  margin: 0.25rem 0 0.625rem;
+  padding-left: 1.375rem;
+}
+
+.odes .odes-markdown li {
+  margin: 0.1875rem 0;
+}
+
+.odes .odes-markdown li > p {
+  margin: 0;
+}
+
+.odes .odes-markdown :is(h3, h4, h5, h6) {
+  margin: 0.875rem 0 0.375rem;
+  color: var(--odes-texto);
+  font-size: 1.0625rem;
+  line-height: 1.3;
+}
+
+.odes .odes-markdown h3 {
+  font-size: 1.1875rem;
+}
+
+.odes .odes-markdown a {
+  color: var(--odes-enlace);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.odes .odes-markdown a:hover {
+  text-decoration-thickness: 2px;
+}
+
+.odes .odes-markdown code {
+  padding: 0.0625rem 0.3125rem;
+  border-radius: var(--bs-border-radius-sm, 0.25rem);
+  background: var(--bs-neutral-90, #dcdcdc);
+  font-size: 0.875em;
+  overflow-wrap: anywhere;
+}
+
+.odes .odes-markdown pre {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 0.625rem 0.75rem;
+  border-radius: var(--bs-border-radius-lg, 0.5rem);
+  background: var(--odes-superficie);
+}
+
+.odes .odes-markdown pre code {
+  padding: 0;
+  background: none;
+}
+
+.odes .odes-markdown blockquote {
+  margin: 0 0 0.625rem;
+  padding: 0.125rem 0 0.125rem 0.75rem;
+  border-left: 3px solid var(--odes-borde);
+  color: var(--odes-tenue);
+}
+
+.odes .odes-markdown hr {
+  height: 1px;
+  margin: 0.875rem 0;
+  background: var(--odes-borde);
+}
+
+.odes .odes-tabla {
+  max-width: 100%;
+  margin: 0.25rem 0 0.75rem;
+  overflow-x: auto;
+}
+
+.odes .odes-tabla table {
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.odes .odes-tabla :is(th, td) {
+  padding: 0.375rem 0.625rem;
+  border: 1px solid var(--odes-borde);
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: normal;
+}
+
+.odes .odes-tabla th {
+  background: var(--odes-superficie);
+}
+
+/* ── Citas: número volado y globo ── */
+
+.odes .odes-cita {
+  font-size: 0.75em;
+}
+
+.odes .odes-cita__enlace {
+  display: inline-block;
+  min-width: 1.45em;
+  margin-left: 0.0625em;
+  padding: 0 0.25em;
+  border-radius: 0.6em;
+  background: var(--bs-primary-90, #eee0f0);
+  color: var(--bs-primary-20, #4f2554);
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+}
+
+.odes .odes-markdown .odes-cita__enlace {
+  color: var(--bs-primary-20, #4f2554);
+  text-decoration: none;
+}
+
+.odes .odes-cita__enlace:hover,
+.odes .odes-markdown .odes-cita__enlace:hover {
+  background: var(--bs-primary-40, #9b48a4);
+  color: var(--bs-primary-40-text, #fff);
+}
+
+.odes .odes-cita--sin-fuente {
+  color: var(--odes-tenue);
+}
+
+.odes .odes-globo {
+  position: absolute;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: max-content;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid var(--odes-borde);
+  border-radius: var(--bs-border-radius-lg, 0.5rem);
+  background: var(--odes-superficie);
+  box-shadow: var(--bs-box-shadow-3, 0 4px 8px 3px rgb(0 0 0 / 0.15));
+  color: var(--odes-texto);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.4;
+  text-align: left;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  pointer-events: auto;
+}
+
+.odes .odes-globo__titulo {
+  font-weight: 700;
+}
+
+.odes .odes-globo__meta {
+  color: var(--odes-tenue);
+  font-size: 0.8125rem;
+}
+
+.odes .odes-globo__texto {
+  font-style: italic;
+}
+
+/* ── Fuentes ── */
+
+.odes .odes-fuentes {
+  align-self: stretch;
+  margin-top: 0.25rem;
+}
+
+.odes .odes-fuentes__titulo {
+  margin: 0 0 0.5rem;
+  color: var(--odes-tenue);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.odes .odes-fuentes__lista,
+.odes .odes-documentos__lista {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.odes .odes-fuente {
+  display: grid;
+  grid-template-columns: auto 3.5rem minmax(0, 1fr);
+  align-items: start;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid var(--odes-borde);
+  border-radius: var(--bs-border-radius-xxl, 0.75rem);
+  background: var(--odes-superficie);
+}
+
+.odes .odes-fuente:focus {
+  outline: 3px solid var(--odes-foco);
+  outline-offset: 2px;
+}
+
+.odes .odes-fuente__numero {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.625rem;
+  height: 1.625rem;
+  border-radius: 50%;
+  background: var(--odes-magenta);
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.odes .odes-miniatura {
+  display: block;
+  width: 3.5rem;
+  height: 3.5rem;
+  border: 1px solid var(--bs-neutral-90, #dcdcdc);
+  border-radius: var(--bs-border-radius, 0.375rem);
+  background: var(--bs-neutral-99, #fafafa);
+  object-fit: cover;
+}
+
+.odes .odes-miniatura--vacia {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-color: var(--bs-primary-90, #efe0f0);
+  background: var(--bs-primary-95, #f7f0f7);
+  color: var(--odes-magenta);
+}
+
+[data-bs-theme='dark'] .odes .odes-miniatura--vacia {
+  color: var(--odes-texto);
+}
+
+.odes .odes-miniatura--vacia .odes-icono {
+  font-size: 1.625rem;
+}
+
+.odes :is(.odes-fuente__cuerpo, .odes-documento__cuerpo) {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.odes :is(.odes-fuente__titulo, .odes-documento__titulo) {
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.odes .odes-documento__subtitulo {
+  margin: 0;
+  color: var(--odes-tenue);
+  font-size: 0.875rem;
+  line-height: 1.35;
+}
+
+.odes :is(.odes-fuente__meta, .odes-documento__meta) {
+  margin: 0;
+  color: var(--odes-tenue);
+  font-size: 0.8125rem;
+  line-height: 1.35;
+}
+
+.odes .odes-documento__extracto {
+  margin: 0.125rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.odes .odes-fuente__cita {
+  font-size: 0.875rem;
+}
+
+.odes .odes-fuente__cita summary {
+  width: fit-content;
+  color: var(--odes-enlace);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.odes .odes-fuente__cita blockquote {
+  margin: 0.375rem 0 0;
+  padding: 0.5rem 0.75rem;
+  border-left: 3px solid var(--odes-magenta);
+  border-radius: 0 var(--bs-border-radius, 0.375rem) var(--bs-border-radius, 0.375rem) 0;
+  background: var(--bs-neutral-99, #fafafa);
+  line-height: 1.45;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.odes .odes-ver-documento {
+  --bs-btn-min-width: 0;
+  white-space: nowrap;
+  --bs-btn-padding-y: 0.25rem;
+  --bs-btn-padding-x: 0.625rem;
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.odes .odes-ver-documento .odes-icono {
+  font-size: 1.125rem;
+}
+
+/* ── Documentos (modo búsqueda / relacionados): tarjetas del kit ── */
+
+.odes .odes-documentos {
+  align-self: stretch;
+}
+
+.odes .odes-documentos__titulo {
+  margin: 0.25rem 0 0.5rem;
+  font-weight: 700;
+}
+
+/* .card del kit: max-width 350px y overflow hidden; card-lg quita el máximo. */
+.odes .card.odes-documento {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr);
+  align-items: start;
+  gap: 0.75rem;
+  max-width: 100%;
+  padding: 0.75rem;
+  overflow: visible;
+}
+
+/* ── Errores ── */
+
+.odes .odes-error {
+  display: flex;
+  gap: 0.5rem;
+  align-self: stretch;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--bs-danger-40, #aa0c00);
+  border-left-width: 4px;
+  border-radius: var(--bs-border-radius-lg, 0.5rem);
+  background: var(--odes-superficie);
+}
+
+.odes .odes-error__icono {
+  color: var(--bs-danger-40, #aa0c00);
+}
+
+.odes .odes-error__cuerpo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.odes :is(.odes-error__mensaje, .odes-error__espera) {
+  margin: 0;
+  line-height: 1.45;
+}
+
+.odes .odes-error__espera {
+  color: var(--odes-tenue);
+  font-size: 0.875rem;
+}
+
+.odes .odes-error__reintentar,
+.odes .odes-aviso .btn {
+  --bs-btn-min-width: 0;
+}
+
+/* ── Campo de texto, fijo abajo mientras se lee la conversación ── */
+
+/* Sin fondo en su lugar (se ve el fondo de partículas). Pegado abajo, encima
+   de la conversación (data-pegado, lo pone ChatOdes), lleva un velo claro con
+   desenfoque para que el texto que pasa por detrás no estorbe. */
+.odes .odes-compositor {
+  --odes-velo: color-mix(in srgb, var(--odes-superficie) 82%, transparent);
+
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  margin-top: 1rem;
+  padding: 0.75rem 0 max(0.75rem, env(safe-area-inset-bottom));
+}
+
+.odes .odes-compositor[data-pegado] {
+  background: var(--odes-velo);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+/* Degradado para que el texto que pasa por detrás no se corte en seco. */
+.odes .odes-compositor::before {
+  content: '';
+  position: absolute;
+  top: -1rem;
+  right: 0;
+  left: 0;
+  height: 1rem;
+  background: linear-gradient(to top, var(--odes-velo), transparent);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.odes .odes-compositor[data-pegado]::before {
+  opacity: 1;
+}
+
+.odes .odes-formulario__fila {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+/* El borde gris claro del kit (neutral-80, 1,6:1) no alcanza el 3:1 que
+   pide WCAG 1.4.11 para reconocer el campo: se usa neutral-60 (4,3:1). */
+.odes .odes-entrada {
+  --bs-input-border-color: var(--bs-neutral-60, #787b7d);
+  flex: 1;
+  min-width: 0;
+  min-height: 2.75rem;
+  font-size: 1rem;
+}
+
+.odes .odes-entrada::placeholder {
+  color: #6b6e70;
+}
+
+[data-bs-theme='dark'] .odes .odes-entrada::placeholder {
+  color: var(--bs-neutral-60, #a2a3a4);
+}
+
+.odes textarea.odes-entrada--pregunta {
+  padding-top: 0.5625rem;
+  padding-bottom: 0.5625rem;
+  line-height: 1.5;
+  resize: none;
+}
+
+.odes .odes-enviar {
+  --bs-btn-min-width: 6.5rem;
+  flex-shrink: 0;
+  min-height: 2.75rem;
+}
+
+.odes .odes-formulario--nombre {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+}
+
+.odes .odes-formulario--nombre .odes-formulario__fila {
+  width: min(100%, 26rem);
+}
+
+.odes .odes-prefiero,
+.odes .odes-nueva {
+  --bs-btn-min-width: 0;
+  --bs-btn-padding-x: 0.5rem;
+  --bs-btn-padding-y: 0.375rem;
+}
+
+.odes .odes-error-campo {
+  margin: 0.25rem 0 0;
+  color: var(--bs-danger-40, #aa0c00);
+  font-size: 0.875rem;
+  text-align: right;
+}
+
+.odes .odes-contador {
+  margin: 0.25rem 0 0;
+  color: var(--odes-tenue);
+  font-size: 0.8125rem;
+  text-align: right;
+}
+
+.odes .odes-pie-chat {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 0.5rem;
+}
+
+.odes .odes-nueva {
+  font-size: 0.875rem;
+}
+
+.odes .odes-nueva .odes-icono {
+  font-size: 1.125rem;
+}
+
+/* ── 404 de la rama ── */
+
+.odes .odes-principal--estado {
+  align-items: center;
+  justify-content: center;
+  padding: clamp(2.5rem, 10vw, 5rem) 1rem;
+}
+
+.odes .odes-estado {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: var(--odes-ancho-chat);
+}
+
+.odes .odes-estado__codigo {
+  margin: 0;
+  color: var(--odes-tenue);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.odes .odes-estado__titulo {
+  margin: 0;
+  color: var(--odes-texto);
+  font-size: clamp(2rem, 1.5rem + 2.5vw, 3rem);
+  line-height: 1.1;
+}
+
+.odes .odes-estado__texto {
+  margin: 0;
+  color: var(--odes-tenue);
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+.odes .odes-estado__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+/* ── Pantallas angostas ── */
+
+@media (max-width: 30rem) {
+  .odes .odes-grupo {
+    gap: 0.375rem;
+  }
+
+  .odes .odes-avatar {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .odes .odes-burbuja {
+    padding: 0.5625rem 0.875rem;
+  }
+
+  /* El número pasa a la esquina de la miniatura: así cabe el texto y el botón. */
+  .odes .odes-fuente {
+    position: relative;
+    grid-template-columns: 2.75rem minmax(0, 1fr);
+    gap: 0.625rem;
+    padding: 0.625rem;
+  }
+
+  .odes .odes-fuente__numero {
+    position: absolute;
+    top: 0.25rem;
+    left: 0.25rem;
+    z-index: 1;
+    width: 1.375rem;
+    height: 1.375rem;
+    box-shadow: 0 0 0 2px var(--odes-superficie);
+    font-size: 0.75rem;
+  }
+
+  .odes .card.odes-documento {
+    grid-template-columns: 2.75rem minmax(0, 1fr);
+    gap: 0.5rem;
+    padding: 0.625rem;
+  }
+
+  .odes .odes-miniatura {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .odes .odes-enviar {
+    --bs-btn-min-width: 5.5rem;
+  }
+}
+
+/* ── Botón flotante de accesibilidad del kit ──
+   El kit lo pone abajo a la derecha (bottom-0 end-0 m-4 mb-16). Donde la
+   columna del chat llega cerca del borde, taparía el botón "Enviar": se sube
+   justo encima del campo de texto cuando este se ve en la parte baja de la
+   pantalla (ChatOdes calcula --odes-fab-abajo al desplazarse). */
+@media (max-width: 54rem) {
+  #accessibilityFab.position-fixed {
+    bottom: calc(var(--odes-fab-abajo, 4rem) + 0.75rem) !important;
+    margin: 0 0.75rem 0 0 !important;
+  }
+}
+
+/* ── Menos movimiento ── */
+
+@media (prefers-reduced-motion: reduce) {
+  .odes *,
+  .odes *::before,
+  .odes *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+
+  .odes .odes-paso__texto {
+    background: none;
+    color: var(--odes-tenue);
+  }
+}
+
+/* ── Botón y panel de accesibilidad del kit ── */
+
+/* El kit los pinta con su azul terciario. Aquí van en el magenta de la
+   cabecera y el pie. Están fuera de .odes (el kit los agrega al final de
+   <body>), pero esta hoja solo se carga en la rama /odes, y las demás ramas se
+   abren con recarga completa. */
+#accessibilityFab,
+#accessibilityModal .btn-tertiary-blue {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #a94091;
+  --bs-btn-border-color: #a94091;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #8a3577;
+  --bs-btn-hover-border-color: #8a3577;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #8a3577;
+  --bs-btn-active-border-color: #8a3577;
+}
+
+#accessibilityModal .btn-outline-tertiary-blue {
+  --bs-btn-color: #a94091;
+  --bs-btn-border-color: #a94091;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #a94091;
+  --bs-btn-hover-border-color: #a94091;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #8a3577;
+  --bs-btn-active-border-color: #8a3577;
+}

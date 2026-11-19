@@ -1,0 +1,34 @@
+{
+  "name": "sapiencia-web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sitios web de Sapiencia: /principal (página principal del Observatorio en HTML puro, el bloque de WordPress), /sivu (SIVU: edificio en 3D y tableros de información), /odes (Asistente ODES), /repositorio (Repositorio de Productos del Observatorio), /tableros (tableros del Observatorio), /pai (Plan de Acción Institucional) y /pertinencia (Medida de pertinencia), servidos por NestJS con front-end React (Vite).",
+  "engines": {
+    "node": ">=22.22.3 <23 || >=24.15.0"
+  },
+  "scripts": {
+    "setup": "npm install && npm install --prefix apps/server && npm install --prefix apps/web",
+    "dev": "concurrently -k -n server,web -c magenta,cyan \"npm run start:dev --prefix apps/server -- --preserveWatchOutput\" \"npm run dev --prefix apps/web\"",
+    "build": "npm run build --prefix apps/web && npm run build --prefix apps/server",
+    "build:vercel": "node scripts/vercel/construir.mjs",
+    "start": "npm run start:prod --prefix apps/server",
+    "test": "npm run test --prefix apps/web && npm run test --prefix apps/server && npm run test:e2e --prefix apps/server",
+    "typecheck": "npm run typecheck --prefix apps/web && npm run typecheck --prefix apps/server",
+    "lint": "npm run lint --prefix apps/web && npm run lint --prefix apps/server",
+    "odes:indexar": "npm run odes:indexar --prefix apps/server --",
+    "odes:evaluar-busqueda": "npm run odes:evaluar-busqueda --prefix apps/server --",
+    "odes:probar": "npm run odes:probar --prefix apps/server --",
+    "repositorio:migrar": "npm run repositorio:migrar --prefix apps/server --",
+    "repositorio:importar": "npm run repositorio:importar --prefix apps/server --",
+    "repositorio:crear-admin": "npm run repositorio:crear-admin --prefix apps/server --",
+    "tableros:cargar-matricula": "npm run tableros:cargar-matricula --prefix apps/server --",
+    "tableros:cargar-fondos": "npm run tableros:cargar-fondos --prefix apps/server --",
+    "tableros:crear-usuario": "npm run tableros:crear-usuario --prefix apps/server --",
+    "pai:crear-usuario": "npm run pai:crear-usuario --prefix apps/server --",
+    "pai:cargar-fichas": "npm run pai:cargar-fichas --prefix apps/server --",
+    "pai:recolectar-evidencias": "npm run pai:recolectar-evidencias --prefix apps/server --"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.5"
+  }
+}

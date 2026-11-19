@@ -1,0 +1,240 @@
+/*
+ * Modales de Observaciones y Evidencias del PAI (dentro de .pai-modal de
+ * ModalPai): pestañas de bimestre, resumen, textos, formulario, lista de
+ * evidencias y zona de subida.
+ */
+
+.pai .pai-modal-indicador {
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+/*
+ * Pestañas de bimestre: propias (no dependen del estilo nav-tabs del kit).
+ * Las seis comparten el ancho (caben en 360 px); la marca y la insignia van
+ * en la esquina para no ensancharlas.
+ */
+.pai .pai-pestanas {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.2rem;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid var(--bs-neutral-80, #ccc);
+}
+
+.pai .pai-pestana {
+  position: relative;
+  display: inline-flex;
+  flex: 1 1 0;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  max-width: 6rem;
+  margin-bottom: -1px;
+  padding: 0.5rem 0.25rem;
+  border: 1px solid transparent;
+  border-radius: 0.375rem 0.375rem 0 0;
+  background: transparent;
+  color: var(--pai-tenue);
+  font-weight: 700;
+}
+
+.pai .pai-pestana .pai-insignia,
+.pai .pai-pestana .pai-pestana-marca {
+  position: absolute;
+  top: 0.15rem;
+  right: 0.2rem;
+}
+
+.pai .pai-pestana .pai-insignia {
+  min-width: 1.35em;
+  padding: 0 0.3em;
+  font-size: 0.625rem;
+}
+
+.pai .pai-pestana:hover {
+  color: var(--pai-texto);
+  background: var(--bs-neutral-95, #f4f4f4);
+}
+
+.pai .pai-pestana.active {
+  border-color: var(--bs-neutral-80, #ccc) var(--bs-neutral-80, #ccc) var(--bs-body-bg, #fff);
+  background: var(--bs-body-bg, #fff);
+  color: var(--pai-magenta-oscuro);
+}
+
+.pai[data-bs-theme='dark'] .pai-pestana.active {
+  color: var(--pai-foco);
+}
+
+.pai .pai-pestana:disabled {
+  opacity: 0.55;
+}
+
+.pai .pai-pestana-marca {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--pai-magenta);
+}
+
+.pai .pai-panel-bimestre {
+  padding-top: 1rem;
+}
+
+.pai .pai-panel-bimestre:focus-visible {
+  outline-offset: 4px;
+}
+
+.pai .pai-resumen-bimestre {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin: 0 0 0.75rem;
+}
+
+.pai .pai-resumen-bimestre dt {
+  color: var(--pai-tenue);
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+.pai .pai-resumen-bimestre dd {
+  margin: 0;
+  font-weight: 700;
+}
+
+.pai .pai-motivo {
+  margin-bottom: 0.25rem;
+  color: var(--pai-tenue);
+  font-size: 0.875rem;
+}
+
+.pai .pai-origen {
+  margin-bottom: 0.75rem;
+  color: var(--pai-tenue);
+  font-size: 0.8125rem;
+}
+
+.pai .pai-textos {
+  margin: 0;
+}
+
+.pai .pai-textos dt {
+  margin-top: 0.75rem;
+  font-weight: 700;
+}
+
+.pai .pai-textos dd {
+  margin: 0.15rem 0 0;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.pai .pai-riesgo-materializado {
+  margin-bottom: 1rem;
+  padding-left: 0.75rem;
+  border-left: 3px solid var(--pai-magenta);
+}
+
+.pai .pai-riesgos-accion {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.pai .pai-riesgos-accion ul {
+  margin: 0.25rem 0 0;
+  padding-left: 1.25rem;
+}
+
+.pai .pai-confirmacion {
+  margin-bottom: 1rem;
+}
+
+/* ── Evidencias ── */
+
+.pai .pai-titulo-lista {
+  scroll-margin-top: 1rem;
+}
+
+.pai .pai-evidencias {
+  margin: 0 0 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.pai .pai-evidencia {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--bs-neutral-90, #dcdcdc);
+}
+
+.pai .pai-evidencia-fila {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.pai .pai-evidencia-datos {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.pai .pai-evidencia-enlace {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.pai .pai-evidencia-meta {
+  color: var(--pai-tenue);
+  font-size: 0.8125rem;
+}
+
+.pai .pai-evidencia-nombre {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.pai .pai-zona-subida {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 2px dashed var(--pai-borde-campo);
+  border-radius: 0.5rem;
+  background: var(--bs-neutral-99, #fafafa);
+}
+
+.pai .pai-zona-subida-activa {
+  border-color: var(--pai-magenta);
+  background: var(--bs-neutral-95, #f4f4f4);
+}
+
+.pai .pai-subida .progress {
+  --bs-progress-height: 0.75rem;
+  flex-direction: row;
+  margin: 0;
+}
+
+.pai .pai-subida .progress-bar {
+  background: var(--pai-magenta);
+}
+
+.pai .pai-subida-porcentaje {
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+/* Estado del guardado junto a los botones del pie (ModalObservaciones). */
+.pai .pai-modal .pai-pie-estado {
+  flex: 1 1 12rem;
+  margin: 0 auto 0 0;
+  color: var(--bs-success-40, #1e6b2f);
+  font-weight: 600;
+}
+
+.pai .pai-modal .pai-pie-estado:empty {
+  flex-basis: 0;
+}

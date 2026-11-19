@@ -1,0 +1,152 @@
+/*
+ * Ficha del indicador (/pai/indicadores/:codigo): datos del proceso, del
+ * indicador y de la acción, tabla de los seis bimestres y reportes.
+ */
+
+/* La miga del kit no subraya el enlace ni le da color: aquí sí (es un enlace). */
+.pai .pai-ficha .breadcrumb-item a {
+  color: var(--pai-magenta-oscuro);
+  text-decoration: underline !important;
+}
+
+.pai[data-bs-theme='dark'] .pai-ficha .breadcrumb-item a {
+  color: var(--pai-foco);
+}
+
+.pai .pai-ficha-titulo {
+  margin-bottom: 0.25rem;
+  overflow-wrap: anywhere;
+}
+
+.pai .pai-ficha-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+}
+
+.pai .pai-datos {
+  margin: 0;
+}
+
+.pai .pai-dato {
+  display: grid;
+  grid-template-columns: minmax(8rem, 13rem) minmax(0, 1fr);
+  gap: 0.15rem 1rem;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--bs-neutral-90, #dcdcdc);
+}
+
+.pai .pai-dato:last-child {
+  border-bottom: 0;
+}
+
+.pai .pai-dato dt {
+  font-weight: 700;
+}
+
+.pai .pai-dato dd {
+  margin: 0;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.pai .pai-riesgos {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.pai .pai-riesgos li {
+  margin-bottom: 0.4rem;
+  overflow-wrap: anywhere;
+}
+
+.pai .pai-etiqueta-rc {
+  display: inline-block;
+  margin-left: 0.35rem;
+  padding: 0 0.45em;
+  border: 1px solid var(--bs-danger-40, #aa0c00);
+  border-radius: 999px;
+  color: var(--bs-danger-40, #aa0c00);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.pai .pai-riesgo-descripcion {
+  display: block;
+  color: var(--pai-tenue);
+  font-size: 0.875rem;
+}
+
+.pai .pai-tabla-bimestres {
+  margin-bottom: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.pai .pai-tabla-bimestres th[scope='row'] {
+  font-weight: 700;
+}
+
+.pai .pai-tabla-meses {
+  display: block;
+  color: var(--pai-tenue);
+  font-size: 0.8125rem;
+  font-weight: 400;
+}
+
+.pai .pai-reporte {
+  margin-bottom: 1rem;
+}
+
+.pai .pai-reporte-estado {
+  margin-bottom: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.pai .pai-etiqueta-editable {
+  display: inline-block;
+  margin-left: 0.35rem;
+  padding: 0 0.45em;
+  border-radius: 999px;
+  background: var(--pai-magenta);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.pai .pai-tabla-bimestres .text-end {
+  white-space: nowrap;
+}
+
+/* Encabezado corto solo en el celular ("Evid."). */
+.pai .pai-ficha-corto {
+  display: none;
+  text-decoration: none;
+}
+
+@media (max-width: 575.98px) {
+  .pai .pai-dato {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* En el celular la tabla cabe en 360 px: celdas más compactas. */
+  .pai .pai-tabla-bimestres {
+    font-size: 0.8125rem;
+  }
+
+  .pai .pai-tabla-bimestres > :not(caption) > * > * {
+    padding: 0.4rem 0.2rem;
+  }
+
+  .pai .pai-tabla-meses {
+    font-size: 0.75rem;
+  }
+
+  .pai .pai-ficha-largo {
+    display: none;
+  }
+
+  .pai .pai-ficha-corto {
+    display: inline;
+  }
+}

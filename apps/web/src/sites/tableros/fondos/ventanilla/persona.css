@@ -1,0 +1,503 @@
+/*
+ * La persona: cabecera del expediente (ResumenPersona.tsx).
+ *
+ * No es una tarjeta más. El nombre va directo sobre el fondo de la página y
+ * manda por tamaño; el contacto es una lista callada debajo; el total girado
+ * queda a un lado, separado por un filete; y el índice de beneficios es la
+ * única superficie blanca, porque es lo único que se pulsa.
+ *
+ * Los selectores llevan «.vcp .vcp-…» para ganarle a las reglas por elemento
+ * de la plantilla (h2, dt, button…) sin recurrir a !important.
+ */
+
+:where(.tablero-fondos) .vcp {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--vc-e5);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  font-size: var(--vc-t-m);
+  line-height: 1.45;
+  color: var(--vc-tinta);
+}
+
+/* ── Cabecera: identidad y contacto a la izquierda, el total a la derecha ── */
+
+:where(.tablero-fondos) .vcp .vcp-cabecera {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: var(--vc-e6);
+  row-gap: 0;
+  min-width: 0;
+}
+
+:where(.tablero-fondos) .vcp .vcp-cabecera--con-total {
+  grid-template-columns: minmax(0, 1fr) minmax(15rem, 20rem);
+}
+
+:where(.tablero-fondos) .vcp .vcp-identidad {
+  grid-column: 1;
+  min-width: 0;
+}
+
+:where(.tablero-fondos) .vcp .vcp-nombre {
+  margin: 0;
+  padding: 0;
+  font-size: var(--vc-t-2xl);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--vc-azul);
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+:where(.tablero-fondos) .vcp .vcp-doc {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--vc-e1) var(--vc-e2);
+  min-height: 1.75rem;
+  margin: var(--vc-e2) 0 0;
+  font-size: var(--vc-t-l);
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--vc-tinta-suave);
+}
+
+:where(.tablero-fondos) .vcp .vcp-doc-texto {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+:where(.tablero-fondos) .vcp .vcp-doc-numero {
+  font-weight: 500;
+  color: var(--vc-tinta);
+}
+
+/* ── El total girado: la única cifra grande de la cabecera ── */
+
+:where(.tablero-fondos) .vcp .vcp-total {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: start;
+  min-width: 0;
+  margin: 0;
+  padding: var(--vc-e1) 0 var(--vc-e1) var(--vc-e5);
+  border-left: 1px solid var(--vc-borde-fuerte);
+}
+
+:where(.tablero-fondos) .vcp .vcp-total-cifra {
+  font-size: var(--vc-t-xl);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--vc-azul-hondo);
+  white-space: nowrap;
+}
+
+:where(.tablero-fondos) .vcp .vcp-total-rotulo {
+  max-width: 36ch;
+  margin: var(--vc-e1) 0 0;
+  font-size: var(--vc-t-s);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--vc-tinta-suave);
+}
+
+/* ── Contacto y residencia ── */
+
+:where(.tablero-fondos) .vcp .vcp-contacto {
+  grid-column: 1;
+  display: grid;
+  gap: var(--vc-e1);
+  min-width: 0;
+  max-width: 44rem;
+  margin: var(--vc-e4) 0 0;
+  padding: 0;
+}
+
+:where(.tablero-fondos) .vcp .vcp-fila {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  column-gap: var(--vc-e3);
+  align-items: start;
+  min-width: 0;
+}
+
+/* El rótulo mide lo mismo que el botón de copiar (28 px) para quedar en su línea. */
+:where(.tablero-fondos) .vcp .vcp-rotulo {
+  display: flex;
+  align-items: center;
+  min-height: 1.75rem;
+  margin: 0;
+  padding: 0;
+  font-size: var(--vc-t-s);
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--vc-tinta-suave);
+}
+
+:where(.tablero-fondos) .vcp .vcp-dato {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+
+:where(.tablero-fondos) .vcp .vcp-valores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--vc-e4);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Correos y residencia: uno por renglón, que son largos. */
+:where(.tablero-fondos) .vcp .vcp-valores--columna {
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+:where(.tablero-fondos) .vcp .vcp-valor {
+  display: flex;
+  align-items: center;
+  gap: var(--vc-e1);
+  min-width: 0;
+  min-height: 1.75rem;
+  margin: 0;
+  padding: 0;
+  font-size: var(--vc-t-m);
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--vc-tinta);
+}
+
+:where(.tablero-fondos) .vcp .vcp-texto {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+:where(.tablero-fondos) .vcp .vcp-enlace {
+  min-width: 0;
+  color: var(--vc-azul);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: color-mix(in srgb, var(--vc-azul) 45%, transparent);
+  overflow-wrap: anywhere;
+}
+
+:where(.tablero-fondos) .vcp .vcp-enlace:hover {
+  text-decoration-color: currentColor;
+}
+
+/* ── Índice de beneficios ── */
+
+/* El índice cambia de forma según SU ancho, no el de la ventana: la página
+   puede traer márgenes o columnas que la ventanilla no controla. */
+:where(.tablero-fondos) .vcp .vcp-indice {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--vc-e3);
+  min-width: 0;
+  container-type: inline-size;
+}
+
+:where(.tablero-fondos) .vcp .vcp-indice-cabeza {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--vc-e2) var(--vc-e3);
+  min-height: 2rem;
+}
+
+:where(.tablero-fondos) .vcp .vcp-indice-titulo {
+  margin: 0;
+  padding: 0;
+  font-size: var(--vc-t-l);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--vc-azul);
+}
+
+:where(.tablero-fondos) .vcp .vcp-todos {
+  min-height: 2rem;
+  margin: 0;
+  padding: var(--vc-e1) var(--vc-e3);
+  font: inherit;
+  font-size: var(--vc-t-s);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--vc-azul);
+  background: var(--vc-papel);
+  border: 1px solid var(--vc-borde-fuerte);
+  border-radius: var(--vc-radio-s);
+  cursor: pointer;
+}
+
+:where(.tablero-fondos) .vcp .vcp-todos:hover {
+  background: var(--vc-fondo-azul);
+  border-color: var(--vc-azul);
+}
+
+/* Una sola superficie con renglones; las columnas se comparten entre renglones
+   (subgrid) para que estado, periodos y girado queden alineados. */
+:where(.tablero-fondos) .vcp .vcp-lista {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto auto auto;
+  column-gap: var(--vc-e5);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: var(--vc-papel);
+  border: 1px solid var(--vc-borde);
+  border-radius: var(--vc-radio);
+}
+
+:where(.tablero-fondos) .vcp .vcp-item {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-columns: subgrid;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+
+:where(.tablero-fondos) .vcp .vcp-item + .vcp-item {
+  border-top: 1px solid var(--vc-borde);
+}
+
+:where(.tablero-fondos) .vcp .vcp-entrada {
+  grid-column: 1 / -1;
+  position: relative;
+  display: grid;
+  /* Respaldo si el navegador no entiende subgrid: proporciones fijas. */
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.2fr) minmax(0, 1.3fr) minmax(0, 1.1fr) 1.25rem;
+  grid-template-columns: subgrid;
+  align-items: center;
+  min-width: 0;
+  min-height: 3.5rem;
+  margin: 0;
+  padding: var(--vc-e3) var(--vc-e4);
+  font: inherit;
+  font-size: var(--vc-t-m);
+  line-height: 1.3;
+  text-align: left;
+  color: var(--vc-tinta);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+/* La lista no recorta (el foco se vería cortado): las esquinas las redondea
+   el primer y el último renglón. */
+:where(.tablero-fondos) .vcp .vcp-item:first-child .vcp-entrada {
+  border-top-left-radius: calc(var(--vc-radio) - 1px);
+  border-top-right-radius: calc(var(--vc-radio) - 1px);
+}
+
+:where(.tablero-fondos) .vcp .vcp-item:last-child .vcp-entrada {
+  border-bottom-left-radius: calc(var(--vc-radio) - 1px);
+  border-bottom-right-radius: calc(var(--vc-radio) - 1px);
+}
+
+:where(.tablero-fondos) .vcp .vcp-entrada:hover {
+  background: var(--vc-fondo-azul);
+}
+
+:where(.tablero-fondos) .vcp .vcp-entrada:focus-visible {
+  z-index: 1;
+}
+
+/* Marca del beneficio que ya está desplegado más abajo. */
+:where(.tablero-fondos) .vcp .vcp-entrada[aria-expanded='true'] {
+  box-shadow: inset 3px 0 0 var(--vc-azul);
+}
+
+:where(.tablero-fondos) .vcp .vcp-prog {
+  grid-column: 1;
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+
+:where(.tablero-fondos) .vcp .vcp-prog-nombre {
+  font-size: var(--vc-t-m);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--vc-azul);
+  overflow-wrap: break-word;
+}
+
+:where(.tablero-fondos) .vcp .vcp-prog-conv {
+  font-size: var(--vc-t-s);
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--vc-tinta-suave);
+}
+
+:where(.tablero-fondos) .vcp .vcp-estado {
+  grid-column: 2;
+  justify-self: start;
+  display: flex;
+  min-width: 0;
+}
+
+/* En ancho completo el envoltorio desaparece y sus dos hijos ocupan cada uno
+   su columna; en angosto vuelve a ser un renglón (ver la consulta de abajo). */
+:where(.tablero-fondos) .vcp .vcp-cifras {
+  display: contents;
+}
+
+:where(.tablero-fondos) .vcp .vcp-periodos {
+  grid-column: 3;
+  font-size: var(--vc-t-s);
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--vc-tinta);
+  white-space: nowrap;
+}
+
+:where(.tablero-fondos) .vcp .vcp-girado {
+  grid-column: 4;
+  justify-self: end;
+  font-size: var(--vc-t-s);
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--vc-tinta);
+  text-align: right;
+  white-space: nowrap;
+}
+
+:where(.tablero-fondos) .vcp .vcp-apoyo {
+  color: var(--vc-tinta-suave);
+}
+
+:where(.tablero-fondos) .vcp .vcp-girado-valor {
+  font-size: var(--vc-t-m);
+  font-weight: 600;
+  color: var(--vc-azul-hondo);
+}
+
+:where(.tablero-fondos) .vcp .vcp-eventos-cuenta {
+  grid-column: 2 / 5;
+  font-size: var(--vc-t-s);
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--vc-tinta-suave);
+}
+
+:where(.tablero-fondos) .vcp .vcp-flecha {
+  grid-column: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--vc-tinta-suave);
+}
+
+/* Índice angosto: cada renglón se apila (programa, estado, periodos y girado). */
+@container (max-width: 46rem) {
+  :where(.tablero-fondos) .vcp .vcp-lista {
+    grid-template-columns: minmax(0, 1fr);
+    column-gap: 0;
+  }
+
+  :where(.tablero-fondos) .vcp .vcp-item {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  :where(.tablero-fondos) .vcp .vcp-entrada {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--vc-e2) var(--vc-e3);
+    align-items: start;
+    padding: var(--vc-e3) var(--vc-e4);
+  }
+
+  :where(.tablero-fondos) .vcp .vcp-prog {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  :where(.tablero-fondos) .vcp .vcp-flecha {
+    grid-column: 2;
+    grid-row: 1;
+    min-height: 1.25rem;
+  }
+
+  :where(.tablero-fondos) .vcp .vcp-estado,
+  :where(.tablero-fondos) .vcp .vcp-eventos-cuenta {
+    grid-column: 1 / -1;
+  }
+
+  :where(.tablero-fondos) .vcp .vcp-cifras {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--vc-e1) var(--vc-e4);
+    min-width: 0;
+  }
+
+  :where(.tablero-fondos) .vcp .vcp-periodos,
+  :where(.tablero-fondos) .vcp .vcp-girado {
+    white-space: normal;
+    text-align: left;
+  }
+}
+
+/* ── Pantallas angostas ── */
+
+@media (max-width: 720px) {
+  :where(.tablero-fondos) .vcp .vcp-cabecera--con-total {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  :where(.tablero-fondos) .vcp .vcp-nombre {
+    font-size: var(--vc-t-xl);
+  }
+
+  :where(.tablero-fondos) .vcp .vcp-doc {
+    font-size: var(--vc-t-m);
+  }
+
+  /* El total baja entre el documento y el contacto: primero la respuesta. */
+  :where(.tablero-fondos) .vcp .vcp-total {
+    grid-column: 1;
+    grid-row: auto;
+    margin: var(--vc-e4) 0 0;
+    padding: var(--vc-e4) 0 0;
+    border-left: 0;
+    border-top: 1px solid var(--vc-borde-fuerte);
+  }
+
+  :where(.tablero-fondos) .vcp .vcp-total-rotulo {
+    max-width: none;
+  }
+
+  /* Blancos más altos para el dedo. */
+  :where(.tablero-fondos) .vcp .vcp-todos {
+    min-height: 2.5rem;
+  }
+}
+
+@media (max-width: 420px) {
+  /* Rótulo encima del valor: un correo necesita todo el ancho. */
+  :where(.tablero-fondos) .vcp .vcp-contacto {
+    gap: var(--vc-e2);
+  }
+
+  :where(.tablero-fondos) .vcp .vcp-fila {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  :where(.tablero-fondos) .vcp .vcp-rotulo {
+    min-height: 0;
+  }
+}

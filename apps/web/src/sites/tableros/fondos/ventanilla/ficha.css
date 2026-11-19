@@ -1,0 +1,502 @@
+/*
+ * Ficha de un beneficio (FichaBeneficio.tsx). Prefijo vcf-.
+ *
+ * Una sola idea para distinguir una ficha de la siguiente: el lomo. Como una
+ * carpeta de expediente, el borde izquierdo es recto y lleva el color del
+ * estado actual (--vcf-color, que pone el componente). Lo demás es papel
+ * blanco con un borde fino: sin sombra, para que el recorrido por periodo sea
+ * lo único con color dentro.
+ *
+ * Casi todos los selectores llevan «.vcf .vcf-…» para ganarle a los estilos
+ * de la plantilla (h3, h4, dl, dt, dd, button, summary) sin !important.
+ */
+
+:where(.tablero-fondos) .vcf {
+  --vcf-color: var(--vc-borde-fuerte);
+  position: relative;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  font-size: var(--vc-t-m);
+  line-height: 1.45;
+  color: var(--vc-tinta);
+  background: var(--vc-papel);
+  border: 1px solid var(--vc-borde);
+  border-left: 5px solid var(--vcf-color);
+  border-radius: 0 var(--vc-radio) var(--vc-radio) 0;
+  /* Arriba queda pegada la barra del buscador. */
+  scroll-margin-top: calc(var(--vc-barra) + var(--vc-e3));
+}
+
+/* El foco llega por programa (al saltar desde la persona): un aviso suave,
+   no el anillo completo de teclado. */
+:where(.tablero-fondos) article.vcf.vcf:focus,
+:where(.tablero-fondos) article.vcf.vcf:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--vc-cian) 40%, transparent);
+  outline-offset: 3px;
+}
+
+/* ---------- Cabecera: el botón que despliega ---------- */
+
+:where(.tablero-fondos) .vcf .vcf-cabecera {
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+:where(.tablero-fondos) .vcf .vcf-boton {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto auto;
+  grid-template-areas: 'identidad vistazo estado flecha';
+  align-items: center;
+  gap: var(--vc-e2) var(--vc-e5);
+  width: 100%;
+  margin: 0;
+  padding: var(--vc-e4) var(--vc-e5);
+  font: inherit;
+  color: var(--vc-tinta);
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  border-radius: 0 calc(var(--vc-radio) - 1px) calc(var(--vc-radio) - 1px) 0;
+  cursor: pointer;
+}
+
+:where(.tablero-fondos) .vcf .vcf-boton:hover {
+  background: var(--vc-fondo);
+}
+
+/* El anillo va por dentro: por fuera lo taparía el borde de la ficha. */
+:where(.tablero-fondos) .vcf .vcf-boton:focus-visible {
+  outline-offset: -3px;
+}
+
+:where(.tablero-fondos) .vcf .vcf-boton[aria-expanded='true'] {
+  border-bottom-color: var(--vc-borde);
+  border-bottom-right-radius: 0;
+}
+
+:where(.tablero-fondos) .vcf .vcf-identidad {
+  grid-area: identidad;
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+:where(.tablero-fondos) .vcf .vcf-programa {
+  font-size: var(--vc-t-l);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--vc-azul);
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+:where(.tablero-fondos) .vcf .vcf-convocatoria {
+  font-size: var(--vc-t-s);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--vc-tinta-suave);
+}
+
+:where(.tablero-fondos) .vcf .vcf-vistazo {
+  grid-area: vistazo;
+  display: grid;
+  gap: 2px;
+  justify-items: end;
+  text-align: right;
+  white-space: nowrap;
+}
+
+:where(.tablero-fondos) .vcf .vcf-vistazo-total {
+  font-size: var(--vc-t-m);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--vc-azul-hondo);
+}
+
+:where(.tablero-fondos) .vcf .vcf-vistazo-rango {
+  font-size: var(--vc-t-s);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--vc-tinta-suave);
+}
+
+/* Desplegada, lo esencial dice lo mismo completo. Se oculta sin quitarle el
+   sitio para que el título no cambie de renglones al abrir. */
+:where(.tablero-fondos) .vcf .vcf-boton[aria-expanded='true'] .vcf-vistazo {
+  visibility: hidden;
+}
+
+:where(.tablero-fondos) .vcf .vcf-estado {
+  grid-area: estado;
+  justify-self: end;
+}
+
+:where(.tablero-fondos) .vcf .vcf-flecha {
+  grid-area: flecha;
+  flex: none;
+  color: var(--vc-azul);
+  transition: transform var(--vc-rapido) var(--vc-curva);
+}
+
+:where(.tablero-fondos) .vcf .vcf-boton[aria-expanded='true'] .vcf-flecha {
+  transform: rotate(180deg);
+}
+
+/* ---------- Cuerpo: se despliega sin saltos ---------- */
+
+/* La fila pasa de 0fr a 1fr: anima la altura real sin medirla. Plegado,
+   además de inert, queda oculto para que no lo encuentre «buscar en la página». */
+:where(.tablero-fondos) .vcf .vcf-cuerpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows var(--vc-suave) var(--vc-curva),
+    visibility 0s linear var(--vc-suave);
+}
+
+:where(.tablero-fondos) .vcf .vcf-cuerpo-abierto {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition:
+    grid-template-rows var(--vc-suave) var(--vc-curva),
+    visibility 0s;
+}
+
+:where(.tablero-fondos) .vcf .vcf-recorte {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  overflow: clip;
+}
+
+/* Ya desplegado deja de recortar, para que lo que flote o se pegue dentro del
+   historial no quede cortado. La animación solo sostiene el recorte mientras
+   dura el despliegue. */
+:where(.tablero-fondos) .vcf .vcf-cuerpo-abierto .vcf-recorte {
+  overflow: visible;
+  animation: vcf-recortar var(--vc-suave);
+}
+
+@keyframes vcf-recortar {
+  from,
+  to {
+    overflow: hidden;
+    overflow: clip;
+  }
+}
+
+:where(.tablero-fondos) .vcf .vcf-contenido {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--vc-e5);
+  padding: var(--vc-e5);
+}
+
+/* ---------- Lo esencial: una cifra manda, el resto la acompaña ---------- */
+
+:where(.tablero-fondos) .vcf .vcf-esencial {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: var(--vc-e4) var(--vc-e6);
+}
+
+:where(.tablero-fondos) .vcf .vcf-esencial-simple {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+:where(.tablero-fondos) .vcf .vcf-total {
+  display: grid;
+  gap: var(--vc-e1);
+  min-width: 0;
+}
+
+:where(.tablero-fondos) .vcf .vcf-total-rotulo {
+  font-size: var(--vc-t-s);
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--vc-tinta-suave);
+}
+
+:where(.tablero-fondos) .vcf .vcf-total-cifra {
+  font-size: var(--vc-t-2xl);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--vc-azul-hondo);
+  white-space: nowrap;
+}
+
+:where(.tablero-fondos) .vcf .vcf-total-giros {
+  font-size: var(--vc-t-m);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--vc-tinta);
+}
+
+:where(.tablero-fondos) .vcf .vcf-acompana {
+  display: grid;
+  align-self: stretch;
+  align-content: center;
+  gap: var(--vc-e2);
+  min-width: 0;
+  margin: 0;
+  padding: 0 0 0 var(--vc-e6);
+  border-left: 1px solid var(--vc-borde);
+}
+
+:where(.tablero-fondos) .vcf .vcf-esencial-simple .vcf-acompana {
+  padding-left: 0;
+  border-left: 0;
+}
+
+:where(.tablero-fondos) .vcf .vcf-acompana-fila {
+  display: grid;
+  grid-template-columns: 9.5rem minmax(0, 1fr);
+  align-items: baseline;
+  column-gap: var(--vc-e4);
+  min-width: 0;
+}
+
+:where(.tablero-fondos) .vcf .vcf-acompana-rotulo {
+  margin: 0;
+  padding: 0;
+  font-size: var(--vc-t-s);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--vc-tinta-suave);
+}
+
+:where(.tablero-fondos) .vcf .vcf-acompana-valor {
+  max-width: 60ch;
+  margin: 0;
+  padding: 0;
+  font-size: var(--vc-t-m);
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--vc-tinta);
+  overflow-wrap: anywhere;
+}
+
+/* ---------- El recorrido por periodo: todo el ancho del cuerpo ---------- */
+
+:where(.tablero-fondos) .vcf .vcf-historial {
+  min-width: 0;
+}
+
+:where(.tablero-fondos) .vcf .vcf-historial:empty {
+  display: none;
+}
+
+/* ---------- Los datos de la ficha, por secciones que se despliegan ---------- */
+
+:where(.tablero-fondos) .vcf .vcf-datos {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
+  border-top: 1px solid var(--vc-borde);
+}
+
+:where(.tablero-fondos) .vcf .vcf-seccion {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid var(--vc-borde);
+}
+
+:where(.tablero-fondos) .vcf .vcf-seccion:last-child {
+  border-bottom: 0;
+}
+
+:where(.tablero-fondos) .vcf .vcf-seccion-cabecera {
+  display: flex;
+  align-items: center;
+  gap: var(--vc-e2);
+  margin: 0;
+  padding: var(--vc-e3) 0;
+  list-style: none;
+  color: var(--vc-azul);
+  border-radius: var(--vc-radio-s);
+  cursor: pointer;
+}
+
+:where(.tablero-fondos) .vcf .vcf-seccion-cabecera::-webkit-details-marker {
+  display: none;
+}
+
+:where(.tablero-fondos) .vcf .vcf-seccion-titulo {
+  margin: 0;
+  padding: 0;
+  font-size: var(--vc-t-m);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--vc-azul);
+}
+
+/* Cerrada, la flecha señala a la derecha; abierta, hacia abajo. */
+:where(.tablero-fondos) .vcf .vcf-seccion-flecha {
+  flex: none;
+  color: var(--vc-tinta-suave);
+  transform: rotate(-90deg);
+  transition: transform var(--vc-rapido) var(--vc-curva);
+}
+
+:where(.tablero-fondos) .vcf .vcf-seccion[open] .vcf-seccion-flecha {
+  transform: rotate(0deg);
+}
+
+/* En columnas de periódico: se lee de arriba abajo en el orden de la ficha,
+   y luego la segunda columna. Nunca más de dos. */
+:where(.tablero-fondos) .vcf .vcf-lista {
+  columns: 24rem 2;
+  column-gap: var(--vc-e6);
+  margin: 0;
+  padding: 0 0 var(--vc-e3);
+}
+
+:where(.tablero-fondos) .vcf .vcf-campo {
+  display: grid;
+  grid-template-columns: minmax(0, 11rem) minmax(0, 1fr);
+  align-items: start;
+  column-gap: var(--vc-e4);
+  min-width: 0;
+  margin: 0 0 var(--vc-e1);
+  break-inside: avoid;
+}
+
+/* Rótulo y valor comparten alto de renglón (21 px) y relleno (3,5 px): así el
+   primer renglón queda alineado y cada fila mide lo mismo que el botón de
+   copiar (28 px), lleve botón o no. */
+:where(.tablero-fondos) .vcf .vcf-rotulo {
+  margin: 0;
+  padding: 0.21875rem 0;
+  font-size: var(--vc-t-s);
+  font-weight: 400;
+  line-height: 1.3125rem;
+  color: var(--vc-tinta-suave);
+}
+
+:where(.tablero-fondos) .vcf .vcf-valor {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--vc-e2);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  font-size: var(--vc-t-m);
+  font-weight: 500;
+  color: var(--vc-tinta);
+}
+
+:where(.tablero-fondos) .vcf .vcf-valor-texto {
+  min-width: 0;
+  padding: 0.21875rem 0;
+  line-height: 1.3125rem;
+  overflow-wrap: anywhere;
+}
+
+:where(.tablero-fondos) .vcf .vcf-valor-chip {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  min-height: 1.75rem;
+}
+
+:where(.tablero-fondos) .vcf .vcf-copiar {
+  flex: none;
+}
+
+/* ---------- Tableta y celular ---------- */
+
+@media (max-width: 720px) {
+  /* La cabecera se apila: programa, estado y, plegada, el vistazo. */
+  :where(.tablero-fondos) .vcf .vcf-boton {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'identidad flecha'
+      'estado estado'
+      'vistazo vistazo';
+    align-items: start;
+    column-gap: var(--vc-e3);
+    padding: var(--vc-e4);
+  }
+
+  :where(.tablero-fondos) .vcf .vcf-estado {
+    justify-self: start;
+  }
+
+  :where(.tablero-fondos) .vcf .vcf-vistazo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 2px var(--vc-e4);
+    text-align: left;
+    white-space: normal;
+  }
+
+  /* Aquí sí se quita: apilado ya no sostiene el ancho del título. */
+  :where(.tablero-fondos) .vcf .vcf-boton[aria-expanded='true'] .vcf-vistazo {
+    display: none;
+  }
+
+  :where(.tablero-fondos) .vcf .vcf-contenido {
+    padding: var(--vc-e4);
+  }
+
+  :where(.tablero-fondos) .vcf .vcf-esencial {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  :where(.tablero-fondos) .vcf .vcf-acompana {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  :where(.tablero-fondos) .vcf .vcf-acompana-fila {
+    grid-template-columns: 8.5rem minmax(0, 1fr);
+    column-gap: var(--vc-e3);
+  }
+
+  :where(.tablero-fondos) .vcf .vcf-campo {
+    grid-template-columns: minmax(0, 40%) minmax(0, 1fr);
+    column-gap: var(--vc-e3);
+  }
+}
+
+@media (max-width: 420px) {
+  :where(.tablero-fondos) .vcf .vcf-total-cifra {
+    font-size: 1.75rem;
+  }
+
+  /* Sin ancho para dos columnas: el rótulo va encima del valor. */
+  :where(.tablero-fondos) .vcf .vcf-acompana-fila,
+  :where(.tablero-fondos) .vcf .vcf-campo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  :where(.tablero-fondos) .vcf .vcf-campo {
+    margin-bottom: var(--vc-e2);
+  }
+
+  :where(.tablero-fondos) .vcf .vcf-rotulo {
+    padding: 0;
+    line-height: 1.3;
+  }
+
+  :where(.tablero-fondos) .vcf .vcf-valor-texto {
+    padding-top: 0;
+  }
+
+  :where(.tablero-fondos) .vcf .vcf-valor-chip {
+    min-height: 0;
+    padding: 2px 0 var(--vc-e1);
+  }
+}

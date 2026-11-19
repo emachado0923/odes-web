@@ -1,0 +1,222 @@
+/*
+ * Página /principal: lo que en WordPress pone el tema alrededor del bloque.
+ *
+ * Aquí NO van estilos del bloque: los suyos viajan dentro de
+ * observatorio-bloque.html (todos bajo #odes-observatorio) y son los que se
+ * pegan en WordPress. Esta hoja solo arma la página del aplicativo: la
+ * cabecera y el pie del Observatorio (magenta, con los logos en blanco), la
+ * columna del tema y su botón "Volver arriba", con las medidas de
+ * sapiencia.gov.co para que el bloque se vea igual que allá.
+ */
+
+/* ---------- Rubik: en WordPress la carga el tema; aquí sale del propio sitio ---------- */
+
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url('./recursos/fuentes/Rubik-latin-normal.woff2') format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC,
+    U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url('./recursos/fuentes/Rubik-latin-ext-normal.woff2') format('woff2');
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
+    U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ---------- Documento ---------- */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: #fff;
+  color: #151717;
+  font-family: Rubik, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.5;
+}
+
+.pp-oculto {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* ---------- Saltar al contenido ---------- */
+
+.pp-saltar {
+  position: absolute;
+  z-index: 300;
+  top: 0.5rem;
+  left: 0.5rem;
+  padding: 0.6em 1em;
+  border-radius: 0.375rem;
+  background: #fff;
+  box-shadow:
+    0 1px 2px 0 rgba(0, 0, 0, 0.3),
+    0 2px 6px 2px rgba(0, 0, 0, 0.15);
+  color: #151717;
+  font-weight: 700;
+  transform: translateY(calc(-100% - 1rem));
+}
+
+.pp-saltar:focus {
+  transform: none;
+}
+
+.pp-principal:focus {
+  outline: 0;
+}
+
+/*
+ * ---------- Cabecera y pie del Observatorio: magenta, con los logos en blanco ----------
+ * El magenta es el del logo del Observatorio (#a94091). Con blanco encima da
+ * 5,5:1 de contraste.
+ */
+
+.pp-cabecera {
+  background: #a94091;
+}
+
+.pp-cabecera__interior {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem clamp(1rem, 4vw, 3rem);
+}
+
+.pp-cabecera__logo {
+  display: block;
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+.pp-cabecera__logo img {
+  width: auto;
+  height: clamp(40px, 7vw, 64px);
+}
+
+/* ---------- Columna del tema: 1070 px de contenido; 20 px a cada lado por debajo de 1140 px ---------- */
+
+.pp-columna {
+  box-sizing: border-box;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 35px;
+}
+
+@media (max-width: 1140px) {
+  .pp-columna {
+    padding: 0 20px;
+  }
+}
+
+/* ---------- Pie del Observatorio: los logos de Sapiencia y la Alcaldía, en blanco y centrados ---------- */
+
+.pp-pie {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem 2.25rem;
+  background: #a94091;
+}
+
+.pp-pie__logo {
+  display: block;
+  line-height: 0;
+}
+
+.pp-pie__logo img {
+  width: clamp(230px, 24vw, 340px);
+  height: auto;
+}
+
+@media (max-width: 360px) {
+  .pp-pie__logo img {
+    width: 180px;
+  }
+}
+
+/* Foco visible sobre el magenta. */
+:is(.pp-cabecera, .pp-pie) a:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/*
+ * ---------- "Volver arriba": el botón del tema Jupiter ----------
+ * Mismo tamaño y lugar (45 px a 15 px del borde; a 72 px por debajo de
+ * 1140 px), porque el botón flotante ODES del bloque se ubica encima de él.
+ * Fondo más oscuro que el del tema para que la flecha se distinga.
+ */
+
+.pp-arriba {
+  position: fixed;
+  right: 15px;
+  bottom: 15px;
+  z-index: 280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  background: rgba(21, 23, 23, 0.65);
+  color: #fff;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.2s,
+    visibility 0.2s,
+    background-color 0.2s;
+}
+
+.pp-arriba--visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.pp-arriba:hover {
+  background: rgba(21, 23, 23, 0.85);
+}
+
+.pp-arriba:focus-visible {
+  outline: 3px solid #151717;
+  outline-offset: 2px;
+}
+
+.pp-arriba svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+@media (max-width: 1140px) {
+  .pp-arriba {
+    right: 22px;
+    bottom: 72px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pp-arriba {
+    transition: none;
+  }
+}

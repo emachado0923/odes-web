@@ -1,0 +1,3 @@
+/* Datos generados por etl/generar_vistas.py; no editar a mano. */
+window.ODES=window.ODES||{};window.ODES.datos=window.ODES.datos||{};
+window.ODES.datos["ctx-pobreza__unica"]={"cols":[{"n":"Año","t":"c","vals":["2014","2015","2016","2017","2018","2019","2020","2021","2022"]},{"n":"Índice probreza multidiciplinar por Medellín","t":"n"},{"n":"Índice probreza monetaria por Medellín","t":"n"},{"n":"Índice probreza monetaria extrema por Medellín","t":"n"},{"n":"n","t":"n"}],"filas":[[0,0.1316,0.245,0.085,1],[1,0.126,0.238,0.089,1],[2,0.1197,0.242,0.103,1],[3,0.1431,0.233,0.073,1],[4,0.1207,0.232,0.06,1],[5,0.1104,0.244,0.113,1],[6,0.2181,0.329,0.091,1],[7,0.134402,0.276,0.051,1],[8,0.0983,null,null,1]],"nfuente":9};

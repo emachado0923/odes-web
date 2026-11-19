@@ -1,0 +1,302 @@
+/*
+ * Pantalla de ingreso de ODES ("/odes"), adaptada de la maqueta
+ * «Pregúntale a OdeS» (Downloads/Preguntale-a-OdeS.html): medidas, colores y
+ * animaciones de la maqueta, anidados bajo .odes como el resto de la rama.
+ * La franja magenta y el fondo de partículas, que el chat también usa, están
+ * en banda.css y cielo-fondo.css.
+ *
+ * - El modo oscuro sigue al del kit (data-bs-theme="dark", desde el botón de
+ *   accesibilidad), no al del sistema como la maqueta.
+ * - El fondo de partículas (CieloFondo, cielo-fondo.css) cubre el <main>,
+ *   entre la cabecera y el pie del Observatorio, y el planeta se apoya en el
+ *   pie. El botón de pausa (BotonPausa) también está en cielo-fondo.css.
+ * - Cambios de accesibilidad respecto a la maqueta: la franja usa el magenta
+ *   del sitio también en modo oscuro (blanco encima: 5,5:1); el icono de la
+ *   pregunta elegida va oscuro sobre el celeste del modo oscuro (3:1); en
+ *   pantallas angostas (o con «Aumentar tamaño» del kit) el texto de la franja
+ *   pasa debajo de la cara en vez de cortarse, y la bajada puede partirse; hay
+ *   un botón para pausar las animaciones.
+ */
+
+.odes .odes-ingreso {
+  --ingreso-fondo: #ffffff;
+  --ingreso-texto: #2b2b2b;
+  --ingreso-acento: var(--odes-magenta);
+  --ingreso-azul: #163854;
+  --ingreso-sobre-azul: #ffffff;
+
+  position: relative;
+  isolation: isolate;
+  padding: 2rem 1rem 0;
+  background: var(--ingreso-fondo);
+  color: var(--ingreso-texto);
+}
+
+[data-bs-theme='dark'] .odes .odes-ingreso {
+  --ingreso-fondo: #17131a;
+  --ingreso-texto: #f1ecf3;
+  --ingreso-acento: #c25aa9;
+  --ingreso-azul: #51ade5;
+  --ingreso-sobre-azul: #17131a;
+}
+
+/* El planeta se apoya en el pie magenta (sin el margen que el pie tiene en las demás páginas). */
+.odes .odes-ingreso + footer.odes-footer {
+  margin-top: 0;
+}
+
+.odes .odes-ingreso__contenido {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  /* El mismo ancho que la franja en el chat (odes.css). */
+  max-width: var(--odes-ancho-banda);
+  margin-inline: auto;
+}
+
+/* ── Constelación: cuatro preguntas unidas por una línea que avanza ── */
+
+/* Toma el espacio libre entre la franja y el planeta y se centra en él. El
+   relleno de arriba (menos los 7 px del anillo de los círculos) iguala lo que
+   queda bajo la respuesta inicial, de una línea, hasta la punta del telescopio. */
+.odes .odes-ingreso__constelacion {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  padding-top: 20px;
+}
+
+.odes .odes-ingreso__nodos {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+  max-width: 900px;
+}
+
+.odes .odes-ingreso__nodos::before,
+.odes .odes-ingreso__nodos::after {
+  content: '';
+  position: absolute;
+  top: 33px;
+  left: 12.5%;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--ingreso-azul);
+}
+
+.odes .odes-ingreso__nodos::before {
+  right: 12.5%;
+  opacity: 0.22;
+}
+
+.odes .odes-ingreso__nodos::after {
+  width: calc(var(--odes-nodo, 0) * 25%);
+  transition: width 0.45s ease;
+}
+
+.odes .odes-ingreso__nodo {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 0 6px;
+  border: 0;
+  background: none;
+  color: var(--ingreso-texto);
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.odes .odes-ingreso__circulo {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+  border: 2px solid var(--ingreso-azul);
+  border-radius: 50%;
+  background: var(--ingreso-fondo);
+  color: var(--ingreso-azul);
+  transition:
+    background 0.2s,
+    color 0.2s,
+    transform 0.2s;
+}
+
+.odes .odes-ingreso__circulo::before {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border: 1.5px solid var(--ingreso-azul);
+  border-radius: 50%;
+  opacity: 0.28;
+  transition: opacity 0.2s;
+}
+
+.odes .odes-ingreso__circulo svg {
+  width: 40px;
+  height: 40px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.odes .odes-ingreso__rotulo {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  max-width: 15ch;
+  min-height: 2.5em;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.25;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.odes .odes-ingreso__nodo:hover .odes-ingreso__circulo {
+  transform: scale(1.06);
+}
+
+.odes .odes-ingreso__nodo[aria-pressed='true'] .odes-ingreso__circulo {
+  background: var(--ingreso-azul);
+  color: var(--ingreso-sobre-azul);
+}
+
+.odes .odes-ingreso__nodo[aria-pressed='true'] .odes-ingreso__circulo::before {
+  opacity: 0.9;
+}
+
+.odes .odes-ingreso__nodo[aria-pressed='true'] .odes-ingreso__rotulo {
+  color: var(--ingreso-azul);
+  font-weight: 600;
+}
+
+.odes .odes-ingreso__nodo:focus-visible {
+  outline: 3px solid var(--ingreso-acento);
+  outline-offset: 4px;
+  border-radius: 12px;
+}
+
+/* Las cuatro respuestas (la visible y las invisibles) en la misma celda: la
+   caja mide lo que la más larga, y la visible va centrada en ella. */
+.odes .odes-ingreso__respuesta {
+  display: grid;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 560px;
+  padding: 8px 0;
+  color: var(--ingreso-texto);
+  font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+  font-weight: 300;
+  line-height: 1.4;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.odes .odes-ingreso__respuesta > p {
+  grid-area: 1 / 1;
+  margin: 0;
+}
+
+.odes .odes-ingreso__respuesta-texto {
+  align-self: center;
+}
+
+.odes .odes-ingreso__respuesta-molde {
+  visibility: hidden;
+}
+
+.odes .odes-ingreso__respuesta-entrada {
+  display: block;
+  animation: odes-aparece 0.35s ease;
+}
+
+@keyframes odes-aparece {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .odes .odes-ingreso__circulo {
+    width: 56px;
+    height: 56px;
+  }
+
+  .odes .odes-ingreso__circulo svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .odes .odes-ingreso__nodos::before,
+  .odes .odes-ingreso__nodos::after {
+    top: 27px;
+  }
+
+  .odes .odes-ingreso__rotulo {
+    font-size: 0.8rem;
+  }
+}
+
+/* ── Pie: planeta con el telescopio, órbita, puntos y la luna ── */
+
+/* Sube 2rem sobre el espacio que lo separa de la respuesta: su franja de
+   arriba, hasta la punta del telescopio (unos 24 px), es cielo vacío. Así lo
+   que queda bajo la respuesta iguala lo que hay sobre las preguntas. */
+.odes .odes-ingreso__pie {
+  position: relative;
+  height: clamp(150px, 22vw, 240px);
+  margin-top: -2rem;
+  overflow: hidden;
+}
+
+.odes .odes-ingreso__pie svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.odes .odes-ingreso__planeta,
+.odes .odes-ingreso__punto,
+.odes .odes-ingreso__acento {
+  fill: var(--ingreso-acento);
+}
+
+/* El planeta se funde con el pie, que es magenta del sitio también en modo oscuro. */
+[data-bs-theme='dark'] .odes .odes-ingreso__planeta {
+  fill: var(--odes-magenta);
+}
+
+.odes .odes-ingreso__orbita {
+  fill: none;
+  stroke: var(--ingreso-acento);
+  stroke-opacity: 0.7;
+  stroke-width: 2;
+}
+
+.odes .odes-ingreso__luna {
+  fill: var(--ingreso-fondo);
+  stroke: var(--ingreso-acento);
+  stroke-width: 2;
+}

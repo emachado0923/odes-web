@@ -1,0 +1,3 @@
+/* Datos generados por etl/generar_vistas.py; no editar a mano. */
+window.ODES=window.ODES||{};window.ODES.datos=window.ODES.datos||{};
+window.ODES.datos["ctx-tasa-continuidad__unica"]={"cols":[{"n":"Año","t":"c","vals":["2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021","2022","2023"]},{"n":"Tasa de continuidad a educación postsecundaria","t":"n"},{"n":"Tasa de continuidad a educación superior","t":"n"},{"n":"n","t":"n"}],"filas":[[0,0.574,0.399,1],[1,0.671,0.435,1],[2,0.729,0.399,1],[3,0.634,0.464,1],[4,0.742,0.522,1],[5,0.726,0.485,1],[6,0.91,0.556,1],[7,0.7435,0.576,1],[8,0.6599,0.614,1],[9,0.7196,0.665172,1],[10,0.66504,0.552795,1],[11,0.7271,0.44,1],[12,0.6883,0.5214,1]],"nfuente":13};

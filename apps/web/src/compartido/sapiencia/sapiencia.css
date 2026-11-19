@@ -1,0 +1,1245 @@
+/*
+ * Recreación de la cabecera (header) y el pie (footer) oficiales de https://sapiencia.gov.co/, del panel de
+ * accesibilidad y de los efectos de ese panel en la página. Todo bajo .sap-oficial, clases sap- (y sap-efecto- para
+ * los efectos). Sin @keyframes: las animaciones son transiciones.
+ *
+ * Valores medidos el 26 de octubre de 2026 en el sitio oficial (Chrome headless, getComputedStyle a 1920, 1440,
+ * 1280, 1140, 1024, 768, 600, 390 y 320 px): tamaños, colores, letras y cortes son los de allá. Letras: Arial (del
+ * sistema) en la barra del menú, los títulos y los textos del pie; Rubik (la de la página) en la barra GOV.CO, los
+ * enlaces de los paneles del menú, los enlaces del pie y el panel de accesibilidad, como en el sitio.
+ *
+ * Cortes del sitio: menú de escritorio desde 1141 px (hacia abajo, hamburguesa y cabecera de 120 px); pie en
+ * columnas desde 769 px; barra GOV.CO solo con íconos hasta 600 px; panel de accesibilidad más abajo y más compacto
+ * hasta 767 px.
+ *
+ * Uso (componentes compartidos, src/compartido/sapiencia/): la raíz del sitio lleva la clase sap-oficial (junto a
+ * la suya) y las clases y el estilo que devuelve useAccesibilidad(); su <main> lleva sap-contenido, que es lo que
+ * agranda el panel de accesibilidad. Es una copia de la de /pertinencia (26 de octubre de 2026) con las clases
+ * renombradas (pe-sap- → sap-, pe-a11y- → sap-efecto-, .pertinencia → .sap-oficial); /pertinencia conserva la suya.
+ * Rubik la carga cada sitio (@font-face en su CSS).
+ */
+
+.sap-oficial {
+  --sap-govco: #4267c5;
+  --sap-azul: #295bd6;
+  --sap-azul-claro: #486ecb;
+  --sap-azul-activo: #109cde;
+  --sap-borde-panel: #314d91;
+  --sap-celeste: #67c6dd;
+  --sap-amarillo: #ffffaa;
+  --sap-magenta: #a71989;
+  --sap-gris-icono: #3f3f3f;
+  --sap-a11y: #4054b2;
+  --sap-arial: Arial, 'Helvetica Neue', Helvetica, 'Liberation Sans', sans-serif;
+  --sap-rubik: Rubik, Arial, 'Helvetica Neue', Helvetica, sans-serif;
+  /* Degradado de la barra del menú y de sus paneles; el de un ítem al pasar el mouse o abierto. */
+  --sap-degradado: linear-gradient(var(--sap-azul), var(--sap-azul-claro));
+  --sap-degradado-activo: linear-gradient(var(--sap-azul-activo), var(--sap-azul));
+}
+
+.sap-oficial .sap-sr {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.sap-oficial :where(.sap-govco, .sap-cabecera, .sap-movil, .sap-a11y, .sap-pie),
+.sap-oficial :where(.sap-govco, .sap-cabecera, .sap-movil, .sap-a11y, .sap-pie) :where(*, ::before, ::after) {
+  box-sizing: border-box;
+}
+
+/* ---------- Base de la cabecera, el pie y los paneles ----------
+   Los resets van con :where() (especificidad mínima) para que las reglas de clase de cada pieza siempre ganen. */
+
+.sap-oficial :where(.sap-govco, .sap-cabecera, .sap-movil, .sap-a11y, .sap-pie) :where(ul, h2, h3, p, form) {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sap-oficial :where(.sap-govco, .sap-cabecera, .sap-movil, .sap-a11y, .sap-pie) :where(h2, h3) {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: normal;
+}
+
+/* :where() deja este reset en especificidad mínima: las reglas de clase de cada botón (menú, buscador, panel) ganan. */
+.sap-oficial :where(.sap-govco, .sap-cabecera, .sap-movil, .sap-a11y) button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+.sap-oficial :where(.sap-govco, .sap-cabecera, .sap-movil, .sap-a11y, .sap-pie) a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.sap-oficial :is(.sap-govco, .sap-cabecera, .sap-movil, .sap-pie) img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.sap-oficial .sap-icono {
+  display: block;
+  flex: none;
+}
+
+/* Foco visible: blanco sobre los azules; azul oscuro (el de la página) sobre la cabecera blanca. */
+.sap-oficial :is(.sap-govco, .sap-menu-barra, .sap-movil-lista, .sap-pie, .sap-a11y-pestana) :focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* ---------- 1. Barra GOV.CO (60 px, azul #4267C5) ---------- */
+
+.sap-oficial .sap-govco {
+  position: relative;
+  /* Encima de la cabecera blanca: el menú "Idioma" cae sobre ella. */
+  z-index: 310;
+  display: flex;
+  align-items: center;
+  height: 60px;
+  background: var(--sap-govco);
+  font-family: var(--sap-rubik);
+  font-size: 14px;
+  line-height: 23.24px;
+}
+
+.sap-oficial .sap-govco-logo {
+  display: flex;
+  flex: 0 1 50%;
+  justify-content: center;
+  min-width: 0;
+}
+
+.sap-oficial .sap-govco-logo a {
+  display: block;
+  height: 22px;
+}
+
+.sap-oficial .sap-govco-logo img {
+  width: 110px;
+}
+
+.sap-oficial .sap-govco-acciones {
+  display: flex;
+  flex: 0 1 50%;
+  align-items: center;
+  justify-content: center;
+  column-gap: 50px;
+  min-width: 0;
+}
+
+.sap-oficial .sap-govco-boton {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  padding: 1px 6px;
+  color: #fff;
+}
+
+.sap-oficial .sap-govco-boton:focus-visible {
+  outline-offset: -6px;
+}
+
+.sap-oficial .sap-govco-icono-persona {
+  width: 16px;
+  height: 20px;
+}
+
+.sap-oficial .sap-govco-icono-mundo {
+  width: 20px;
+  height: 20px;
+}
+
+.sap-oficial .sap-govco-texto {
+  margin: 0 5px;
+  color: #fff;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.sap-oficial .sap-idioma {
+  position: relative;
+}
+
+/* Franja gris de 250 × 32 px con las dos banderas, bajo el botón (se ve al pasar el mouse o al activarlo). */
+.sap-oficial .sap-idioma-menu {
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 250px;
+  height: 32px;
+  background: #f3f3f3;
+}
+
+.sap-oficial .sap-idioma-menu[hidden] {
+  display: none;
+}
+
+.sap-oficial .sap-idioma:hover .sap-idioma-menu {
+  display: flex;
+}
+
+.sap-oficial .sap-idioma-opcion {
+  display: flex;
+  align-items: center;
+  color: #2e2e2e;
+  font-size: 14px;
+  line-height: 23.24px;
+  transition: color 0.31s;
+}
+
+.sap-oficial .sap-idioma-opcion:hover {
+  color: var(--sap-azul);
+}
+
+.sap-oficial .sap-idioma-opcion:focus-visible {
+  outline-color: var(--sap-azul);
+}
+
+.sap-oficial .sap-idioma-bandera {
+  width: 24px;
+  height: 24px;
+  margin-right: 2px;
+  opacity: 0.8;
+}
+
+@media (max-width: 600px) {
+  .sap-oficial .sap-govco-acciones {
+    justify-content: flex-end;
+    column-gap: 10px;
+    margin-right: 15px;
+  }
+
+  /* Solo los íconos: el texto queda para los lectores de pantalla. */
+  .sap-oficial .sap-govco-texto {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .sap-oficial .sap-idioma-menu {
+    right: 0;
+    left: auto;
+  }
+}
+
+/* ---------- 2. Cabecera blanca: logo, menú y lupa ---------- */
+
+.sap-oficial .sap-cabecera {
+  position: relative;
+  z-index: 300;
+  height: 120px;
+  background: #fff;
+  font-family: var(--sap-arial);
+  font-size: 14px;
+}
+
+.sap-oficial .sap-cabecera-interior {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0 20px;
+}
+
+.sap-oficial .sap-logo {
+  display: block;
+  flex: 0 1 180px;
+  min-width: 0;
+  margin-top: 15.4px;
+}
+
+.sap-oficial .sap-logo img {
+  width: 100%;
+}
+
+/* Escritorio: 130 px (+ la línea gris de 1 px del sitio), pegada arriba al desplazar. La grilla del sitio es de
+   1200 px centrados: el logo sale 44 px a la izquierda de ella y la lupa termina en su borde derecho. Entre 1141 y
+   1288 px el sitio corta el logo por la izquierda; aquí se queda a 20 px del borde y se encoge si no cabe. */
+@media (min-width: 1141px) {
+  .sap-oficial .sap-cabecera {
+    position: sticky;
+    top: 0;
+    height: 131px;
+    border-bottom: 1px solid #f7f7f7;
+  }
+
+  .sap-oficial .sap-cabecera-interior {
+    padding-right: max(20px, calc((100% - 1200px) / 2));
+    padding-left: max(20px, calc((100% - 1200px) / 2 - 44px));
+  }
+
+  .sap-oficial .sap-logo {
+    flex: 0 1 232px;
+    min-width: 180px;
+    margin-top: 10px;
+  }
+}
+
+.sap-oficial .sap-cabecera-navegacion {
+  display: none;
+}
+
+@media (min-width: 1141px) {
+  .sap-oficial .sap-cabecera-navegacion {
+    display: flex;
+    flex: none;
+    align-items: flex-start;
+    gap: 14px;
+    margin: 50px 0 0 10px;
+  }
+}
+
+/* Barra azul redondeada de 40 px con los ocho ítems. */
+.sap-oficial .sap-menu-barra {
+  position: relative;
+  display: flex;
+  height: 40px;
+  background: var(--sap-degradado);
+  border-radius: 15px;
+}
+
+.sap-oficial .sap-menu-item--derecha {
+  position: relative;
+}
+
+.sap-oficial .sap-menu-enlace {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 10px;
+  color: #fff;
+  font-family: var(--sap-arial);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 40px;
+  white-space: nowrap;
+  background: var(--sap-degradado);
+  border-radius: 20px;
+}
+
+.sap-oficial .sap-menu-barra .sap-menu-enlace {
+  color: #fff;
+}
+
+.sap-oficial .sap-menu-enlace:hover,
+.sap-oficial .sap-menu-enlace:focus-visible,
+.sap-oficial .sap-menu-item.is-abierto > .sap-menu-enlace {
+  background: var(--sap-degradado-activo);
+}
+
+.sap-oficial .sap-menu-item.is-abierto > .sap-menu-enlace {
+  border-radius: 20px 20px 0 0;
+}
+
+.sap-oficial .sap-menu-barra .sap-menu-enlace:focus-visible {
+  outline-offset: -4px;
+}
+
+.sap-oficial .sap-menu-indicador {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 40px;
+  margin-left: 6px;
+}
+
+.sap-oficial .sap-menu-indicador .sap-icono {
+  width: 7px;
+  height: 4.4px;
+}
+
+/* Panel (mega menú): bajo la barra, de su mismo ancho, borde de 3 px #314D91, esquinas de 15 px; aparece subiendo
+   10 px en 200 ms ("fade up" del sitio). Cerrado: invisible e inerte. */
+.sap-oficial .sap-mega {
+  position: absolute;
+  z-index: 999;
+  top: 100%;
+  left: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  color: #fff;
+  background: var(--sap-degradado);
+  border: 3px solid var(--sap-borde-panel);
+  border-radius: 15px;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.2s ease-in,
+    transform 0.2s ease-in,
+    visibility 0.2s ease-in;
+}
+
+.sap-oficial .sap-menu-item.is-abierto > .sap-mega {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+}
+
+.sap-oficial .sap-mega--3-columnas {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* "Prensa": panel de 420 px alineado a la derecha de la barra. */
+.sap-oficial .sap-menu-item--derecha > .sap-mega {
+  right: 0;
+  left: auto;
+  width: 420px;
+}
+
+.sap-oficial .sap-mega-columna {
+  padding: 20px;
+}
+
+.sap-oficial .sap-mega-titulo {
+  margin: 0;
+  padding: 0 0 5px;
+  color: #fff;
+  font-family: var(--sap-arial);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 26px;
+  text-transform: uppercase;
+}
+
+.sap-oficial .sap-mega-columna--bloques .sap-mega-titulo {
+  margin: 0 0 12px;
+  padding: 0;
+}
+
+.sap-oficial .sap-mega-columna--bloques .sap-mega-lista + .sap-mega-titulo {
+  margin-top: 40px;
+}
+
+.sap-oficial .sap-mega-columna--bloques .sap-mega-lista > li {
+  margin: 0 0 8px 13.6px;
+}
+
+.sap-oficial .sap-mega-enlace {
+  display: inline-block;
+  padding: 6px 10px;
+  color: #fff;
+  font-family: var(--sap-rubik);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 27.2px;
+  transition: color 0.31s;
+}
+
+.sap-oficial .sap-mega-columna--bloques .sap-mega-enlace {
+  padding: 0;
+}
+
+.sap-oficial .sap-mega-enlace:hover {
+  color: var(--sap-amarillo);
+}
+
+.sap-oficial :is(.sap-mega, .sap-movil-sub) .sap-mega-enlace:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 0;
+}
+
+/* Lupa (Font Awesome "search", 14,86 × 16 px, gris #3F3F3F; magenta al pasar el mouse o abierta). */
+.sap-oficial .sap-buscar {
+  position: relative;
+}
+
+.sap-oficial .sap-buscar-boton {
+  position: relative;
+  display: block;
+  width: 15px;
+  height: 34px;
+  color: var(--sap-gris-icono);
+  transition: color 0.31s;
+}
+
+/* Zona de clic más ancha que el ícono. */
+.sap-oficial .sap-buscar-boton::before {
+  content: '';
+  position: absolute;
+  inset: 0 -8px;
+}
+
+.sap-oficial .sap-buscar-boton .sap-icono {
+  width: 14.86px;
+  height: 16px;
+  margin-top: 9px;
+}
+
+.sap-oficial .sap-buscar-boton:hover,
+.sap-oficial .sap-buscar.is-abierto > .sap-buscar-boton {
+  color: var(--sap-magenta);
+}
+
+/* Caja de búsqueda: 330 × 56 px justo bajo la cabecera (130 px), 50 px más allá del borde derecho de la lupa. */
+.sap-oficial .sap-buscar-caja {
+  position: absolute;
+  top: 80px;
+  right: -50px;
+  width: 330px;
+  height: 56px;
+  background: #fff;
+}
+
+.sap-oficial .sap-buscar-caja[hidden] {
+  display: none;
+}
+
+.sap-oficial .sap-buscar-formulario {
+  position: relative;
+  display: flex;
+}
+
+.sap-oficial .sap-buscar-campo {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  color: #767676;
+  font-family: var(--sap-rubik);
+  font-size: 13px;
+  background: #fff;
+  border-radius: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.sap-oficial .sap-buscar-campo::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.sap-oficial .sap-buscar-campo:focus-visible {
+  outline: 2px solid var(--sap-azul);
+  outline-offset: -2px;
+}
+
+.sap-oficial .sap-buscar-formulario--escritorio {
+  height: 56px;
+}
+
+.sap-oficial .sap-buscar-formulario--escritorio .sap-buscar-campo {
+  height: 56px;
+  padding: 0 10px;
+  line-height: 30px;
+  border: 1px solid #e3e3e3;
+  border-right: 0;
+}
+
+.sap-oficial .sap-buscar-enviar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.sap-oficial .sap-buscar-formulario--escritorio .sap-buscar-enviar {
+  width: 56px;
+  height: 56px;
+  color: #fff;
+  background: #bfbcbc;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.sap-oficial .sap-buscar-formulario--escritorio .sap-buscar-enviar:hover {
+  background: #a9a6a6;
+}
+
+.sap-oficial .sap-buscar-enviar .sap-icono {
+  width: 14.86px;
+  height: 16px;
+}
+
+.sap-oficial .sap-buscar-enviar:focus-visible {
+  outline: 2px solid var(--sap-azul);
+  outline-offset: -4px;
+}
+
+/* Hamburguesa (≤ 1140 px): tres líneas de 18 × 3 px gris #606060 en una caja de 38 px; abierta, una X. */
+.sap-oficial .sap-hamburguesa {
+  display: block;
+  flex: none;
+  width: 38px;
+  height: 38px;
+  margin-top: 42px;
+  padding: 10px;
+}
+
+.sap-oficial .sap-hamburguesa-linea {
+  display: block;
+  width: 18px;
+  height: 3px;
+  background: #606060;
+  border-radius: 3px;
+  transition:
+    transform 0.2s,
+    opacity 0.1s;
+}
+
+.sap-oficial .sap-hamburguesa-linea + .sap-hamburguesa-linea {
+  margin-top: 3px;
+}
+
+.sap-oficial .sap-hamburguesa.is-abierto .sap-hamburguesa-linea:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.sap-oficial .sap-hamburguesa.is-abierto .sap-hamburguesa-linea:nth-child(2) {
+  opacity: 0;
+}
+
+.sap-oficial .sap-hamburguesa.is-abierto .sap-hamburguesa-linea:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+@media (min-width: 1141px) {
+  .sap-oficial .sap-hamburguesa {
+    display: none;
+  }
+}
+
+/* ---------- 3. Panel del menú en tablet y celular ---------- */
+
+.sap-oficial .sap-movil {
+  position: fixed;
+  z-index: 295;
+  top: var(--sap-movil-arriba, 0);
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 10px 0 24px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: #fff;
+  font-family: var(--sap-arial);
+  font-size: 14px;
+  line-height: 23.24px;
+}
+
+.sap-oficial .sap-movil[hidden] {
+  display: none;
+}
+
+@media (min-width: 1141px) {
+  .sap-oficial .sap-movil {
+    display: none;
+  }
+}
+
+.sap-oficial .sap-movil-lista {
+  background: var(--sap-azul);
+}
+
+.sap-oficial .sap-movil-enlace {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 56px;
+  padding: 8px 20px;
+  color: #fff;
+  font-family: var(--sap-arial);
+  font-size: 14px;
+  line-height: 1.3;
+  text-align: left;
+}
+
+.sap-oficial .sap-movil-lista .sap-movil-enlace {
+  color: #fff;
+}
+
+.sap-oficial .sap-movil-enlace:hover,
+.sap-oficial .sap-movil-enlace[aria-expanded='true'] {
+  background: var(--sap-degradado-activo);
+}
+
+.sap-oficial .sap-movil-lista .sap-movil-enlace:focus-visible {
+  outline-offset: -4px;
+}
+
+.sap-oficial .sap-movil-indicador {
+  display: inline-flex;
+  flex: none;
+  justify-content: center;
+  width: 24px;
+}
+
+.sap-oficial .sap-movil-indicador .sap-icono {
+  width: 10px;
+  height: 6px;
+  transition: transform 0.2s;
+}
+
+.sap-oficial .sap-movil-enlace[aria-expanded='true'] .sap-movil-indicador .sap-icono {
+  transform: rotate(180deg);
+}
+
+.sap-oficial .sap-movil-sub {
+  padding: 4px 10px 10px;
+  color: #fff;
+  background: var(--sap-degradado);
+}
+
+.sap-oficial .sap-movil-sub[hidden] {
+  display: none;
+}
+
+.sap-oficial .sap-movil-sub .sap-mega-columna {
+  padding: 10px;
+}
+
+.sap-oficial .sap-movil-sub .sap-mega-titulo {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.sap-oficial .sap-buscar-formulario--movil {
+  margin: 10px;
+}
+
+.sap-oficial .sap-buscar-formulario--movil .sap-buscar-campo {
+  height: 41px;
+  padding: 0 44px 0 12px;
+  color: #444;
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.sap-oficial .sap-buscar-formulario--movil .sap-buscar-campo::placeholder {
+  color: #767676;
+}
+
+.sap-oficial .sap-buscar-formulario--movil .sap-buscar-enviar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 44px;
+  height: 41px;
+  color: #777;
+}
+
+.sap-oficial .sap-buscar-formulario--movil .sap-buscar-enviar .sap-icono {
+  width: 18.6px;
+  height: 20px;
+}
+
+/* ---------- 4. Panel de accesibilidad (el del plugin del sitio) ---------- */
+
+.sap-oficial .sap-a11y {
+  position: fixed;
+  z-index: 9999;
+  top: 150px;
+  left: -180px;
+  width: 180px;
+  color: #333;
+  font-family: var(--sap-rubik);
+  font-size: 16px;
+  line-height: 1.4;
+  transition: left 0.75s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.sap-oficial .sap-a11y.is-abierto {
+  left: 0;
+}
+
+.sap-oficial .sap-a11y-pestana {
+  position: absolute;
+  top: 0;
+  left: 180px;
+}
+
+.sap-oficial .sap-a11y-pestana-boton {
+  display: block;
+  width: 52px;
+  height: 52px;
+  padding: 10px;
+  color: #fff;
+  line-height: 0;
+  background: var(--sap-a11y);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sap-oficial .sap-a11y .sap-a11y-pestana-boton {
+  color: #fff;
+  background: var(--sap-a11y);
+}
+
+.sap-oficial .sap-a11y-pestana-boton:hover,
+.sap-oficial .sap-a11y-pestana-boton:focus-visible {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.sap-oficial .sap-a11y-pestana-boton .sap-icono {
+  width: 32px;
+  height: 32px;
+}
+
+/* Cerrado: fuera de la pantalla y, terminada la salida (0,75 s), invisible. */
+.sap-oficial .sap-a11y-contenido {
+  width: 180px;
+  background: #fff;
+  border: 1px solid var(--sap-a11y);
+  visibility: hidden;
+  transition: visibility 0s 0.75s;
+}
+
+.sap-oficial .sap-a11y.is-abierto .sap-a11y-contenido {
+  visibility: visible;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: none;
+}
+
+.sap-oficial .sap-a11y-titulo {
+  padding: 10px 15px 0;
+  color: #333;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 2;
+}
+
+.sap-oficial .sap-a11y-lista {
+  padding: 10px 0;
+}
+
+.sap-oficial .sap-a11y-lista--enlaces {
+  border-top: 1px solid var(--sap-a11y);
+}
+
+.sap-oficial .sap-a11y-item {
+  margin: 0 0 0 13.6px;
+}
+
+.sap-oficial .sap-a11y-opcion {
+  display: block;
+  width: 100%;
+  padding: 10px 15px;
+  color: #333;
+  font-family: var(--sap-rubik);
+  font-size: 12.8px;
+  line-height: 1;
+  text-align: left;
+}
+
+.sap-oficial .sap-a11y .sap-a11y-opcion {
+  color: #333;
+}
+
+.sap-oficial .sap-a11y .sap-a11y-opcion.is-activo {
+  color: #fff;
+  font-weight: 700;
+  background: var(--sap-a11y);
+}
+
+.sap-oficial .sap-a11y-opcion:focus-visible {
+  outline: 2px solid var(--sap-a11y);
+  outline-offset: -2px;
+}
+
+.sap-oficial .sap-a11y-opcion.is-activo:focus-visible {
+  outline-color: #fff;
+  outline-offset: -4px;
+}
+
+.sap-oficial .sap-a11y-icono {
+  display: inline-block;
+  width: 19.2px;
+  height: 15px;
+  padding-right: 6px;
+  vertical-align: middle;
+}
+
+.sap-oficial .sap-a11y-opcion span {
+  vertical-align: middle;
+}
+
+@media (max-width: 767px) {
+  .sap-oficial .sap-a11y {
+    top: 250px;
+  }
+
+  .sap-oficial .sap-a11y-titulo {
+    padding: 7px 12px 0;
+  }
+
+  .sap-oficial .sap-a11y-lista {
+    padding: 7px 0;
+  }
+
+  .sap-oficial .sap-a11y-opcion {
+    padding: 7px 12px;
+  }
+}
+
+/* ---------- 5. Pie (franja azul #295BD6, grilla de 1140 px) ---------- */
+
+/* Aire sobre el pie: 25 px desde 768 px y 15 px hasta 767 px, el del sitio oficial (medido en /pertinencia). */
+.sap-oficial .sap-pie {
+  margin-top: 25px;
+  padding-top: 10px;
+  color: #fff;
+  font-family: var(--sap-arial);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 23.24px;
+  background: var(--sap-azul);
+}
+
+@media (max-width: 767px) {
+  .sap-oficial .sap-pie {
+    margin-top: 15px;
+  }
+}
+
+.sap-oficial .sap-pie-contenedor {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 60px 0;
+}
+
+.sap-oficial .sap-pie-columnas {
+  display: flex;
+  align-items: flex-start;
+  padding: 0 20px;
+}
+
+@media (max-width: 1140px) {
+  .sap-oficial .sap-pie-columnas {
+    padding: 0;
+  }
+}
+
+/* Las columnas del sitio: 1/3 y 2/3 (esta, con tres columnas de 1/3 adentro), cada una con 2 % de relleno. */
+.sap-oficial .sap-pie-col {
+  min-width: 0;
+  padding: 0 2%;
+}
+
+.sap-oficial .sap-pie-col--agencia {
+  display: flex;
+  flex: 0 0 33.33%;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sap-oficial .sap-pie-col--resto {
+  display: flex;
+  flex: 0 0 66.66%;
+  align-items: flex-start;
+}
+
+.sap-oficial .sap-pie-sub {
+  display: flex;
+  flex: 0 0 33.33%;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  padding: 0 2%;
+}
+
+/* La cuarta columna arranca con un bloque vacío del sitio (10 px). */
+.sap-oficial .sap-pie-sub--occidente {
+  padding-top: 10px;
+}
+
+.sap-oficial .sap-pie-titulo {
+  color: #fff;
+  font-family: var(--sap-arial);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 23.24px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.sap-oficial .sap-pie-titulo--sangria {
+  margin-left: 23px;
+}
+
+.sap-oficial .sap-pie-destacado {
+  font-weight: 500;
+}
+
+.sap-oficial .sap-pie-contacto {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Fila con ícono: el ícono va centrado en la primera línea y, si el texto no cabe, se encoge como en el sitio. */
+.sap-oficial .sap-pie-fila {
+  display: flex;
+  align-items: flex-start;
+}
+
+.sap-oficial .sap-pie-fila-icono {
+  display: flex;
+  flex: 0 1 auto;
+  align-items: center;
+  min-width: 0;
+  height: 24.6px;
+  color: var(--sap-celeste);
+}
+
+.sap-oficial .sap-pie-fila-icono .sap-icono {
+  max-width: 100%;
+  height: auto;
+}
+
+.sap-oficial .sap-pie-icono-telefono,
+.sap-oficial .sap-pie-icono-correo,
+.sap-oficial .sap-pie-icono-reloj {
+  width: 17px;
+}
+
+.sap-oficial .sap-pie-lineas {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: column;
+  min-width: 0;
+  margin-left: 5px;
+}
+
+.sap-oficial .sap-pie-redes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 10px 20px;
+}
+
+.sap-oficial .sap-pie-red {
+  display: block;
+}
+
+.sap-oficial .sap-pie-red img {
+  max-width: none;
+}
+
+.sap-oficial .sap-pie-logo {
+  width: 245px;
+}
+
+.sap-oficial .sap-pie-enlace {
+  color: #fff;
+  font-family: var(--sap-rubik);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 23.24px;
+  transition: color 0.31s;
+}
+
+.sap-oficial .sap-pie a:hover {
+  color: var(--sap-celeste);
+}
+
+/* "Procesos Contractuales" con el logo de Colombia Compra Eficiente debajo, en el mismo enlace. */
+.sap-oficial .sap-pie-enlace--secop {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.sap-oficial .sap-pie-enlace--secop img {
+  width: 160px;
+  margin-bottom: 3px;
+}
+
+.sap-oficial .sap-pie-marca {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.sap-oficial .sap-pie-sede {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.sap-oficial .sap-pie-linea {
+  display: block;
+}
+
+/* Dos líneas en blanco del sitio entre el nombre de la sede y el pin del mapa. */
+.sap-oficial .sap-pie-sede-nombre {
+  margin-bottom: 46.48px;
+}
+
+.sap-oficial .sap-pie-mapa {
+  display: block;
+  width: 48px;
+  height: 48px;
+}
+
+/* En el sitio, este tramo de la sede Ciudadela Occidente va en un <p> y sale en Rubik delgada. */
+.sap-oficial .sap-pie-tramo-rubik {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-family: var(--sap-rubik);
+  font-weight: 300;
+}
+
+.sap-oficial .sap-pie-tramo-rubik .sap-pie-horario {
+  font-weight: 400;
+}
+
+.sap-oficial .sap-pie-actualizacion {
+  margin-left: 1px;
+}
+
+/* ≤ 768 px: una columna debajo de otra. El sitio deja el 2 % de relleno (8 px a 390) y en la segunda columna lo
+   duplica; aquí todo va alineado a 16 px, como el resto de la página. */
+@media (max-width: 768px) {
+  .sap-oficial :is(.sap-pie-columnas, .sap-pie-col--resto) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .sap-oficial .sap-pie-col {
+    flex: none;
+    width: 100%;
+    padding: 0 16px;
+  }
+
+  .sap-oficial .sap-pie-sub {
+    flex: none;
+    width: 100%;
+    padding: 0;
+  }
+
+  .sap-oficial .sap-pie-sub--occidente {
+    padding-top: 0;
+  }
+}
+
+/* ---------- 6. Efectos del panel de accesibilidad (clases en la raíz .sap-oficial) ---------- */
+
+/* Tamaño del texto: zoom del contenido y del pie (la página se reacomoda como con el zoom del navegador). La
+   cabecera conserva su tamaño para que el menú y el panel sigan a mano. */
+.sap-oficial :is(.sap-contenido, .sap-pie) {
+  zoom: var(--sap-efecto-escala, 1);
+}
+
+/* Escala de grises: cada bloque de la raíz menos el panel. El filtro no va en la raíz porque sacaría de su
+   posición fija al panel de accesibilidad y al menú de celular. */
+.sap-oficial.sap-efecto-grises > :not(.sap-a11y) {
+  filter: grayscale(1);
+}
+
+/* Alto contraste y contraste negativo: fondo negro, letra blanca, enlaces amarillos (como el plugin). */
+.sap-oficial:is(.sap-efecto-alto-contraste, .sap-efecto-contraste-negativo),
+.sap-oficial:is(.sap-efecto-alto-contraste, .sap-efecto-contraste-negativo) :not(.sap-a11y, .sap-a11y *, svg, svg *) {
+  color: #fff !important;
+  background-color: #000 !important;
+  background-image: none !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.sap-oficial:is(.sap-efecto-alto-contraste, .sap-efecto-contraste-negativo) :is(a, a *):not(.sap-a11y *, svg *) {
+  color: #ff0 !important;
+}
+
+.sap-oficial.sap-efecto-alto-contraste :not(.sap-a11y, .sap-a11y *, svg, svg *) {
+  border-color: #fff !important;
+}
+
+.sap-oficial.sap-efecto-alto-contraste :is(a, button):not(.sap-a11y *) {
+  text-decoration: underline !important;
+}
+
+/* Logos oscuros sobre el fondo negro: con su recuadro blanco. */
+.sap-oficial:is(.sap-efecto-alto-contraste, .sap-efecto-contraste-negativo) :is(.sap-logo img, .sap-pie-enlace--secop img) {
+  background-color: #fff !important;
+}
+
+/* Fondo claro: fondo blanco y letra negra; los logos blancos, con su recuadro azul. */
+.sap-oficial.sap-efecto-fondo-claro,
+.sap-oficial.sap-efecto-fondo-claro :not(.sap-a11y, .sap-a11y *, svg, svg *) {
+  color: #000 !important;
+  background-color: #fff !important;
+  background-image: none !important;
+  text-shadow: none !important;
+}
+
+.sap-oficial.sap-efecto-fondo-claro :is(.sap-govco-logo img, .sap-pie-logo, .sap-pie-marca img, .sap-pie-red img) {
+  background-color: var(--sap-azul) !important;
+}
+
+.sap-oficial.sap-efecto-subrayar a,
+.sap-oficial.sap-efecto-subrayar a * {
+  text-decoration: underline !important;
+}
+
+.sap-oficial.sap-efecto-legible,
+.sap-oficial.sap-efecto-legible :not(svg, svg *) {
+  font-family: Verdana, Arial, Helvetica, sans-serif !important;
+}
+
+/* ---------- Preferencias del sistema ---------- */
+
+@media (forced-colors: active) {
+  /* Logos blancos sobre azul (barra GOV.CO y pie): conservan su fondo; si no, quedarían blancos sobre Canvas. */
+  .sap-oficial :is(.sap-govco, .sap-pie) {
+    forced-color-adjust: none;
+  }
+
+  .sap-oficial :is(.sap-menu-enlace, .sap-movil-enlace, .sap-a11y-opcion) {
+    border: 1px solid transparent;
+  }
+
+  .sap-oficial .sap-hamburguesa-linea {
+    background: CanvasText;
+  }
+
+  .sap-oficial .sap-a11y .sap-a11y-opcion.is-activo {
+    color: HighlightText;
+    background: Highlight;
+  }
+
+  .sap-oficial .sap-buscar-caja {
+    border: 1px solid CanvasText;
+  }
+}
+
+@media print {
+  .sap-oficial :is(.sap-govco, .sap-a11y, .sap-cabecera-navegacion, .sap-hamburguesa, .sap-movil) {
+    display: none;
+  }
+
+  .sap-oficial .sap-cabecera {
+    position: static;
+  }
+
+  .sap-oficial .sap-pie {
+    print-color-adjust: exact;
+  }
+}

@@ -1,0 +1,133 @@
+/*
+ * Ingreso, cambio de contraseña y /pai/cuenta (todo bajo .pai). El resto es
+ * marcado del kit (card card-lg, form-control, btn, alert).
+ */
+
+.pai .pai-ingreso {
+  display: flex;
+  justify-content: center;
+  padding-top: clamp(1.5rem, 5vw, 3rem);
+}
+
+/* Más específico que `.pai .card.card-lg { max-width: none }` de pai.css. */
+.pai .pai-ingreso .card.pai-ingreso-tarjeta {
+  width: 100%;
+  max-width: 30rem;
+}
+
+.pai .pai-ingreso-tarjeta h1 {
+  margin-bottom: 0.5rem;
+}
+
+.pai .pai-ingreso-tarjeta .card-body > p:not(.pai-ingreso-etiqueta) {
+  margin-bottom: 1.25rem;
+}
+
+.pai .pai-ingreso-tarjeta .card-body {
+  padding: clamp(1.25rem, 4vw, 2rem);
+}
+
+.pai .pai-ingreso-etiqueta {
+  margin-bottom: 0.25rem;
+  color: var(--pai-magenta);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.pai[data-bs-theme='dark'] .pai-ingreso-etiqueta {
+  color: var(--pai-foco);
+}
+
+.pai .pai-ingreso h1:focus {
+  outline: 0;
+}
+
+.pai .pai-ingreso h1:focus-visible {
+  outline: 3px solid var(--pai-foco);
+  outline-offset: 2px;
+}
+
+/*
+ * Contraseña con el ojo dentro del campo (abierto: mostrar; tachado: ocultar).
+ * El campo deja sitio a la derecha para el botón y Edge no dibuja el suyo.
+ */
+.pai .pai-campo-contrasena {
+  position: relative;
+}
+
+.pai .pai-campo-contrasena .form-control {
+  padding-right: 3rem;
+}
+
+.pai .pai-campo-contrasena .form-control::-ms-reveal {
+  display: none;
+}
+
+.pai .pai-ver-contrasena {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: var(--pai-tenue);
+  cursor: pointer;
+}
+
+.pai .pai-ver-contrasena:hover {
+  color: var(--pai-texto);
+}
+
+.pai .pai-ver-contrasena:focus-visible {
+  outline-offset: -4px;
+}
+
+.pai .pai-ver-contrasena svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: currentColor;
+}
+
+/* "¿Olvidó su contraseña?": enlace de correo bajo el botón (7,4:1 sobre blanco). */
+.pai .pai-ingreso-olvido {
+  text-align: center;
+}
+
+.pai .pai-ingreso-olvido a {
+  color: var(--pai-magenta-oscuro);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.pai .pai-ingreso-olvido a:hover {
+  color: var(--pai-texto);
+}
+
+.pai .pai-datos-cuenta {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.5rem 1rem;
+}
+
+.pai .pai-datos-cuenta dt {
+  color: var(--pai-tenue);
+  font-weight: 400;
+}
+
+.pai .pai-datos-cuenta dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-weight: 700;
+}
+
+.pai .pai-formulario-contrasena {
+  max-width: 32rem;
+}

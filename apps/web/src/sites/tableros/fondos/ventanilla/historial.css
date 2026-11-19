@@ -1,0 +1,795 @@
+/*
+ * Recorrido por periodo (HistorialPeriodos.tsx). Es la única pieza con gesto
+ * propio de la ventanilla: una línea de transporte con una parada por periodo.
+ * Todo selector cuelga de .vch para ganarle a la plantilla sin !important.
+ * Colores: solo las variables --vc-* y los de COLOR_ESTADO, que llegan por
+ * style como --c (pleno) y --t (tono oscuro, para el filo de los colores claros).
+ */
+
+:where(.tablero-fondos) .vch {
+  /* Paso entre paradas, alto de la barra más alta y cuánto baja la barra hasta la línea. */
+  --vch-paso: 46px;
+  --vch-alto: 46px;
+  --vch-solape: 10px;
+  display: grid;
+  gap: var(--vc-e4);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  font-size: var(--vc-t-m);
+  line-height: 1.45;
+  color: var(--vc-tinta);
+}
+
+/* Encabezado: el título y el recorrido dicho en palabras */
+
+:where(.tablero-fondos) .vch .vch-cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--vc-e1) var(--vc-e4);
+  min-width: 0;
+}
+
+:where(.tablero-fondos) .vch .vch-titulo {
+  margin: 0;
+  padding: 0;
+  font-size: var(--vc-t-l);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--vc-azul);
+}
+
+:where(.tablero-fondos) .vch .vch-resumen {
+  max-width: 70ch;
+  margin: 0;
+  font-size: var(--vc-t-m);
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--vc-tinta-suave);
+}
+
+/* El plano: la línea arriba, sobre fondo tenue, y el detalle de la parada debajo */
+
+:where(.tablero-fondos) .vch .vch-plano {
+  min-width: 0;
+  background: var(--vc-fondo);
+  border: 1px solid var(--vc-borde);
+  border-radius: var(--vc-radio);
+}
+
+:where(.tablero-fondos) .vch .vch-pista {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-wrap: wrap;
+  /* Cada fila mide lo que su parada más alta: con barras, el alto de la barra; sin giros, solo la parada.
+     Los años se estiran a ese alto y las paradas se asientan abajo, sobre la línea. */
+  align-items: stretch;
+  row-gap: var(--vc-e4);
+  min-width: 0;
+  margin: 0;
+  padding: var(--vc-e4) var(--vc-e4) var(--vc-e3);
+}
+
+/* Marco de selección: lo mueve el componente hasta la parada elegida */
+:where(.tablero-fondos) .vch .vch-cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+  background: var(--vc-papel);
+  border: 2px solid var(--vc-magenta);
+  border-radius: var(--vc-radio-s);
+  transition: transform var(--vc-suave) var(--vc-curva, ease);
+}
+
+:where(.tablero-fondos) .vch .vch-anio {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  min-width: 0;
+}
+
+:where(.tablero-fondos) .vch .vch-anio-paradas {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: stretch;
+}
+
+/* El año, una vez por grupo, bajo un corchete que abarca sus paradas.
+   width 0 + min-width evita que un rótulo largo ensanche el grupo. */
+:where(.tablero-fondos) .vch .vch-anio-rotulo {
+  width: 0;
+  min-width: calc(100% - 6px);
+  margin: var(--vc-e1) 3px 0;
+  padding: 3px 0 0;
+  overflow: hidden;
+  font-size: var(--vc-t-xs);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--vc-tinta-suave);
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-top: 2px solid var(--vc-borde-fuerte);
+}
+
+/* La parada: toda la columna es el botón, para que la zona de toque sea amplia */
+:where(.tablero-fondos) .vch .vch-parada {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: stretch;
+  /* La parada ocupa el alto de su fila y su contenido baja hasta la línea */
+  justify-content: flex-end;
+  width: var(--vch-paso);
+  margin: 0;
+  padding: var(--vc-e1) 0 2px;
+  font: inherit;
+  color: var(--vc-tinta);
+  background: transparent;
+  border: 0;
+  border-radius: var(--vc-radio-s);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:where(.tablero-fondos) .vch .vch-parada:hover {
+  background: color-mix(in srgb, var(--vc-azul) 8%, transparent);
+}
+
+:where(.tablero-fondos) .vch .vch-parada[aria-pressed='true']:hover {
+  background: transparent;
+}
+
+:where(.tablero-fondos) .vch .vch-parada--tenue {
+  opacity: 0.26;
+}
+
+/* Barra de lo girado: nace en la línea y sube en proporción al giro más alto.
+   Solo la llevan las paradas con giro; las demás no reservan ese alto. */
+:where(.tablero-fondos) .vch .vch-mastil {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: calc(var(--vch-alto) + var(--vch-solape));
+  margin-bottom: calc(-1 * var(--vch-solape));
+}
+
+:where(.tablero-fondos) .vch .vch-giro {
+  display: block;
+  width: 10px;
+  height: calc(var(--vch-solape) + var(--vch-alto) * var(--h, 0) / 100);
+  background: var(--c);
+  border-radius: 3px 3px 0 0;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--t) 35%, transparent);
+}
+
+/* La línea: cada parada pinta su tramo, del color de su estado */
+:where(.tablero-fondos) .vch .vch-riel {
+  position: relative;
+  z-index: 1;
+  display: block;
+  height: 20px;
+}
+
+:where(.tablero-fondos) .vch .vch-riel::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  height: 6px;
+  margin-top: -3px;
+  background: var(--c);
+  border-top: 1px solid color-mix(in srgb, var(--t) 30%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--t) 30%, transparent);
+}
+
+/* La línea empieza en la primera parada y termina en la última */
+:where(.tablero-fondos) .vch .vch-parada--primera .vch-riel::before {
+  left: 50%;
+}
+
+:where(.tablero-fondos) .vch .vch-parada--ultima .vch-riel::before {
+  right: 50%;
+}
+
+:where(.tablero-fondos) .vch .vch-estacion {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  background: var(--c);
+  border: 2px solid var(--vc-papel);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--t) 45%, transparent);
+  transition: transform var(--vc-rapido) var(--vc-curva, ease);
+}
+
+/* La elegida se distingue por forma: estación más grande con aro, número marcado y el marco */
+:where(.tablero-fondos) .vch .vch-parada[aria-pressed='true'] .vch-estacion {
+  transform: scale(1.45);
+  box-shadow: 0 0 0 1.5px var(--vc-magenta);
+}
+
+:where(.tablero-fondos) .vch .vch-parte {
+  display: block;
+  margin: 2px 0 0;
+  font-size: var(--vc-t-xs);
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--vc-tinta-suave);
+  text-align: center;
+}
+
+:where(.tablero-fondos) .vch .vch-parada[aria-pressed='true'] .vch-parte {
+  font-weight: 700;
+  color: var(--vc-magenta);
+}
+
+/* Leyenda: solo los estados presentes; pulsar uno resalta sus paradas */
+
+:where(.tablero-fondos) .vch .vch-claves {
+  display: grid;
+  gap: var(--vc-e2);
+  min-width: 0;
+  padding: 0 var(--vc-e4) var(--vc-e4);
+}
+
+:where(.tablero-fondos) .vch .vch-leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--vc-e2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+:where(.tablero-fondos) .vch .vch-leyenda-item {
+  margin: 0;
+  padding: 0;
+}
+
+:where(.tablero-fondos) .vch .vch-clave {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--vc-e2);
+  min-height: 32px;
+  margin: 0;
+  padding: 0 var(--vc-e3) 0 var(--vc-e2);
+  font: inherit;
+  font-size: var(--vc-t-s);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--vc-tinta);
+  text-align: left;
+  background: var(--vc-papel);
+  border: 1px solid var(--vc-borde-fuerte);
+  border-radius: 999px;
+}
+
+:where(.tablero-fondos) .vch button.vch-clave {
+  cursor: pointer;
+}
+
+:where(.tablero-fondos) .vch button.vch-clave:hover {
+  border-color: var(--vc-azul);
+}
+
+:where(.tablero-fondos) .vch .vch-clave[aria-pressed='true'] {
+  font-weight: 600;
+  color: var(--vc-azul-hondo);
+  background: color-mix(in srgb, var(--vc-azul) 10%, var(--vc-papel));
+  border-color: var(--vc-azul);
+  box-shadow: inset 0 0 0 1px var(--vc-azul);
+}
+
+/* Con un solo estado no hay nada que resaltar: se lee como texto, no como botón */
+:where(.tablero-fondos) .vch .vch-clave--fija {
+  padding-left: 0;
+  background: transparent;
+  border-color: transparent;
+}
+
+/* Muestra: un tramo de línea con su parada, como en la pista */
+:where(.tablero-fondos) .vch .vch-clave-muestra {
+  position: relative;
+  flex: none;
+  width: 22px;
+  height: 6px;
+  background: var(--c);
+  border-top: 1px solid color-mix(in srgb, var(--t) 30%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--t) 30%, transparent);
+  border-radius: 3px;
+}
+
+:where(.tablero-fondos) .vch .vch-clave-muestra::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  background: var(--c);
+  border: 2px solid var(--vc-papel);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--t) 45%, transparent);
+}
+
+:where(.tablero-fondos) .vch .vch-clave-nombre {
+  min-width: 0;
+}
+
+:where(.tablero-fondos) .vch .vch-clave-cuenta {
+  font-weight: 600;
+  color: var(--vc-tinta-suave);
+}
+
+:where(.tablero-fondos) .vch .vch-clave[aria-pressed='true'] .vch-clave-cuenta {
+  color: var(--vc-azul-hondo);
+}
+
+:where(.tablero-fondos) .vch .vch-todos {
+  min-height: 32px;
+  margin: 0;
+  padding: 0 var(--vc-e2);
+  font: inherit;
+  font-size: var(--vc-t-s);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--vc-azul);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  background: transparent;
+  border: 0;
+  border-radius: var(--vc-radio-s);
+  cursor: pointer;
+}
+
+:where(.tablero-fondos) .vch .vch-nota {
+  max-width: 70ch;
+  margin: 0;
+  font-size: var(--vc-t-s);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--vc-tinta-suave);
+}
+
+/* Detalle de la parada elegida */
+
+:where(.tablero-fondos) .vch .vch-detalle {
+  display: grid;
+  gap: var(--vc-e3);
+  min-width: 0;
+  padding: var(--vc-e4) var(--vc-e4) var(--vc-e5);
+  background: var(--vc-papel);
+  border-top: 1px solid var(--vc-borde);
+  border-radius: 0 0 calc(var(--vc-radio) - 1px) calc(var(--vc-radio) - 1px);
+}
+
+/* Un solo periodo: el detalle va sin plano alrededor */
+:where(.tablero-fondos) .vch .vch-detalle--solo {
+  padding: var(--vc-e4);
+  border: 1px solid var(--vc-borde);
+  border-radius: var(--vc-radio);
+}
+
+:where(.tablero-fondos) .vch .vch-paso {
+  display: flex;
+  align-items: center;
+  gap: var(--vc-e2);
+  min-width: 0;
+}
+
+:where(.tablero-fondos) .vch .vch-mover {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  color: var(--vc-azul);
+  background: var(--vc-papel);
+  border: 1px solid var(--vc-borde-fuerte);
+  border-radius: var(--vc-radio-s);
+  cursor: pointer;
+}
+
+:where(.tablero-fondos) .vch .vch-mover:hover {
+  background: var(--vc-fondo-azul);
+}
+
+:where(.tablero-fondos) .vch .vch-mover[aria-disabled='true'] {
+  color: var(--vc-tinta-suave);
+  background: var(--vc-papel);
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* El chevrón del juego de iconos apunta abajo: se gira para anterior y siguiente */
+:where(.tablero-fondos) .vch .vch-mover--antes svg {
+  transform: rotate(90deg);
+}
+
+:where(.tablero-fondos) .vch .vch-mover--despues svg {
+  transform: rotate(-90deg);
+}
+
+:where(.tablero-fondos) .vch .vch-paso-texto {
+  margin-left: var(--vc-e1);
+  font-size: var(--vc-t-s);
+  line-height: 1.3;
+  color: var(--vc-tinta-suave);
+}
+
+:where(.tablero-fondos) .vch .vch-ficha {
+  display: grid;
+  grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
+  gap: var(--vc-e4) var(--vc-e6);
+  align-items: start;
+  min-width: 0;
+}
+
+:where(.tablero-fondos) .vch .vch-ahora {
+  display: grid;
+  gap: var(--vc-e2);
+  justify-items: start;
+  min-width: 0;
+}
+
+:where(.tablero-fondos) .vch .vch-periodo {
+  margin: 0;
+  font-size: var(--vc-t-2xl);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--vc-azul-hondo);
+  overflow-wrap: anywhere;
+}
+
+:where(.tablero-fondos) .vch .vch-periodo-largo {
+  margin: calc(-1 * var(--vc-e1)) 0 var(--vc-e1);
+  font-size: var(--vc-t-s);
+  line-height: 1.3;
+  color: var(--vc-tinta-suave);
+}
+
+:where(.tablero-fondos) .vch .vch-chip {
+  justify-self: start;
+  max-width: 100%;
+}
+
+:where(.tablero-fondos) .vch .vch-motivo {
+  margin: var(--vc-e1) 0 0;
+  font-size: var(--vc-t-m);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--vc-tinta);
+  overflow-wrap: anywhere;
+}
+
+:where(.tablero-fondos) .vch .vch-motivo-rotulo {
+  display: block;
+  font-size: var(--vc-t-s);
+  line-height: 1.3;
+  color: var(--vc-tinta-suave);
+}
+
+:where(.tablero-fondos) .vch .vch-campos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  gap: var(--vc-e4) var(--vc-e5);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+
+:where(.tablero-fondos) .vch .vch-campo {
+  min-width: 0;
+}
+
+:where(.tablero-fondos) .vch .vch-campo--giro {
+  grid-column: 1 / -1;
+}
+
+:where(.tablero-fondos) .vch .vch-campo-rotulo {
+  margin: 0;
+  font-size: var(--vc-t-s);
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--vc-tinta-suave);
+}
+
+:where(.tablero-fondos) .vch .vch-campo-valor {
+  margin: 2px 0 0;
+  font-size: var(--vc-t-m);
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--vc-tinta);
+  overflow-wrap: anywhere;
+}
+
+:where(.tablero-fondos) .vch .vch-campo--giro .vch-campo-valor {
+  margin-top: 0;
+  font-size: var(--vc-t-xl);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--vc-azul-hondo);
+}
+
+:where(.tablero-fondos) .vch .vch-campo--giro .vch-campo-valor--vacio {
+  font-size: var(--vc-t-l);
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--vc-tinta-suave);
+}
+
+/* La tabla completa, tras su botón */
+
+:where(.tablero-fondos) .vch .vch-tabla-zona {
+  display: grid;
+  gap: var(--vc-e3);
+  justify-items: start;
+  min-width: 0;
+}
+
+:where(.tablero-fondos) .vch .vch-alternar {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--vc-e2);
+  min-height: 36px;
+  margin: 0;
+  padding: 0 var(--vc-e3);
+  font: inherit;
+  font-size: var(--vc-t-m);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--vc-azul);
+  background: var(--vc-papel);
+  border: 1px solid var(--vc-borde-fuerte);
+  border-radius: var(--vc-radio-s);
+  cursor: pointer;
+}
+
+:where(.tablero-fondos) .vch .vch-alternar:hover {
+  background: var(--vc-fondo-azul);
+}
+
+:where(.tablero-fondos) .vch .vch-alternar-giro {
+  transition: transform var(--vc-rapido) var(--vc-curva, ease);
+}
+
+:where(.tablero-fondos) .vch .vch-alternar[aria-expanded='true'] .vch-alternar-giro {
+  transform: rotate(180deg);
+}
+
+:where(.tablero-fondos) .vch .vch-tabla-sitio {
+  justify-self: stretch;
+  min-width: 0;
+}
+
+:where(.tablero-fondos) .vch .vch-tabla-sitio:empty {
+  display: none;
+}
+
+/* El marco desplaza la tabla en los dos sentidos; el encabezado y el total quedan pegados */
+:where(.tablero-fondos) .vch .vch-tabla-marco {
+  max-width: 100%;
+  max-height: 28rem;
+  min-width: 0;
+  overflow: auto;
+  background: var(--vc-papel);
+  border: 1px solid var(--vc-borde);
+  border-radius: var(--vc-radio-s);
+}
+
+/* border-collapse separado: con «collapse» los bordes no acompañan a las celdas pegadas */
+:where(.tablero-fondos) .vch .vch-tabla {
+  width: 100%;
+  margin: 0;
+  font-size: var(--vc-t-s);
+  line-height: 1.35;
+  color: var(--vc-tinta);
+  background: var(--vc-papel);
+  border-collapse: separate;
+  border-spacing: 0;
+  caption-side: top;
+}
+
+:where(.tablero-fondos) .vch .vch-th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  min-width: 5.5rem;
+  max-width: 12rem;
+  padding: var(--vc-e2) var(--vc-e3);
+  font-size: var(--vc-t-s);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--vc-azul);
+  text-align: left;
+  vertical-align: bottom;
+  white-space: normal;
+  background: var(--vc-fondo-azul);
+  border: 0;
+  border-bottom: 1px solid var(--vc-borde-fuerte);
+}
+
+:where(.tablero-fondos) .vch .vch-th--num {
+  text-align: right;
+}
+
+:where(.tablero-fondos) .vch .vch-td {
+  padding: var(--vc-e3);
+  font-size: var(--vc-t-s);
+  font-weight: 400;
+  line-height: 1.35;
+  color: var(--vc-tinta);
+  text-align: left;
+  vertical-align: middle;
+  background: var(--vc-papel);
+  border: 0;
+  border-bottom: 1px solid var(--vc-borde);
+}
+
+:where(.tablero-fondos) .vch .vch-td--num {
+  text-align: right;
+  white-space: nowrap;
+}
+
+:where(.tablero-fondos) .vch .vch-td--periodo {
+  font-weight: 600;
+  color: var(--vc-azul-hondo);
+  white-space: nowrap;
+}
+
+:where(.tablero-fondos) .vch .vch-fila--elegible {
+  cursor: pointer;
+}
+
+:where(.tablero-fondos) .vch .vch-fila--elegible:hover .vch-td {
+  background: var(--vc-fondo);
+}
+
+:where(.tablero-fondos) .vch .vch-fila--elegida .vch-td,
+:where(.tablero-fondos) .vch .vch-fila--elegida:hover .vch-td {
+  background: color-mix(in srgb, var(--vc-magenta) 7%, var(--vc-papel));
+}
+
+/* Además del fondo, la fila elegida lleva una marca al borde y el periodo subrayado */
+:where(.tablero-fondos) .vch .vch-fila--elegida .vch-td--primera {
+  box-shadow: inset 3px 0 0 var(--vc-magenta);
+}
+
+:where(.tablero-fondos) .vch .vch-fila-boton {
+  margin: 0;
+  padding: 2px 4px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--vc-azul);
+  text-decoration: underline;
+  text-decoration-color: var(--vc-borde-fuerte);
+  text-underline-offset: 3px;
+  background: transparent;
+  border: 0;
+  border-radius: var(--vc-radio-s);
+  cursor: pointer;
+}
+
+:where(.tablero-fondos) .vch .vch-fila-boton[aria-pressed='true'] {
+  color: var(--vc-magenta);
+  text-decoration-color: var(--vc-magenta);
+}
+
+:where(.tablero-fondos) .vch .vch-pie-celda {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  padding: var(--vc-e3);
+  font-size: var(--vc-t-s);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--vc-azul-hondo);
+  text-align: left;
+  white-space: nowrap;
+  background: var(--vc-fondo-azul);
+  border: 0;
+  border-top: 1px solid var(--vc-borde-fuerte);
+}
+
+:where(.tablero-fondos) .vch .vch-pie-celda--rotulo,
+:where(.tablero-fondos) .vch .vch-pie-celda--total {
+  text-align: right;
+}
+
+@media (max-width: 720px) {
+  :where(.tablero-fondos) .vch {
+    --vch-paso: 40px;
+    --vch-alto: 40px;
+  }
+
+  :where(.tablero-fondos) .vch .vch-pista {
+    padding: var(--vc-e3) var(--vc-e3) var(--vc-e2);
+  }
+
+  :where(.tablero-fondos) .vch .vch-claves {
+    padding: 0 var(--vc-e3) var(--vc-e3);
+  }
+
+  :where(.tablero-fondos) .vch .vch-clave,
+  :where(.tablero-fondos) .vch .vch-todos {
+    min-height: 36px;
+  }
+
+  :where(.tablero-fondos) .vch .vch-detalle {
+    padding: var(--vc-e3) var(--vc-e3) var(--vc-e4);
+  }
+
+  :where(.tablero-fondos) .vch .vch-mover {
+    width: 40px;
+    height: 40px;
+  }
+
+  :where(.tablero-fondos) .vch .vch-ficha {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  :where(.tablero-fondos) .vch .vch-campos {
+    grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
+    gap: var(--vc-e3) var(--vc-e4);
+  }
+
+  :where(.tablero-fondos) .vch .vch-alternar {
+    min-height: 40px;
+  }
+
+  /* En pantallas angostas el periodo acompaña el desplazamiento horizontal */
+  :where(.tablero-fondos) .vch .vch-th--primera,
+  :where(.tablero-fondos) .vch .vch-td--primera {
+    position: sticky;
+    left: 0;
+    box-shadow: 1px 0 0 var(--vc-borde);
+  }
+
+  :where(.tablero-fondos) .vch .vch-th--primera {
+    z-index: 3;
+  }
+
+  :where(.tablero-fondos) .vch .vch-td--primera {
+    z-index: 1;
+  }
+
+  :where(.tablero-fondos) .vch .vch-fila--elegida .vch-td--primera {
+    box-shadow:
+      inset 3px 0 0 var(--vc-magenta),
+      1px 0 0 var(--vc-borde);
+  }
+
+  :where(.tablero-fondos) .vch .vch-th {
+    min-width: 4.75rem;
+  }
+}
+
+@media (max-width: 420px) {
+  :where(.tablero-fondos) .vch .vch-periodo {
+    font-size: var(--vc-t-xl);
+  }
+
+  :where(.tablero-fondos) .vch .vch-campos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

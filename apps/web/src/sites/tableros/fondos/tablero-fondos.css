@@ -1,0 +1,166 @@
+/*
+ * Lo propio del tablero de beneficiarios de los fondos (/tableros/fondos-2026).
+ * Todo lo demás sale de ../matricula/tablero-matricula.css: la raíz lleva las
+ * dos clases (tablero-matricula tablero-fondos), así que cabecera, pie,
+ * botones de sección, filtros, tarjetas, indicadores, tablas y bienvenida se
+ * ven igual que en matrícula. Cada regla va bajo :where(.tablero-fondos).
+ */
+
+/* Ocho botones de sección (matrícula tiene siete): una sola fila en pantallas
+   anchas. Por debajo de 1280 px siguen las cuatro y dos columnas de matrícula. */
+@media (min-width: 1280px) {
+  :where(.tablero-fondos) .tabs { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+}
+
+/* «millones» junto al monto del indicador. */
+
+/* Nota de cada sección: qué muestra y qué filtros no se le aplican. */
+:where(.tablero-fondos) .nota-seccion {
+  display: flex;
+  align-items: flex-start;
+  gap: .6rem;
+  margin-bottom: 1.5rem;
+  padding: .7rem 1.25rem;
+  background: #fff;
+  border: 1px solid var(--odes-borde);
+  border-left: 4px solid var(--odes-magenta);
+  border-radius: var(--odes-radio);
+  font-size: .8125rem;
+  line-height: 1.45;
+}
+:where(.tablero-fondos) .nota-seccion p { font-size: .8125rem; }
+:where(.tablero-fondos) .nota-seccion .material-symbols-outlined { flex-shrink: 0; font-size: 1.15rem; color: var(--odes-magenta); }
+
+/* Definición de cada estado, con su color. */
+:where(.tablero-fondos) .estados-lista {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+:where(.tablero-fondos) .estados-lista li { display: flex; align-items: flex-start; gap: .75rem; }
+:where(.tablero-fondos) .estados-lista i { flex: 0 0 .75rem; width: .75rem; height: .75rem; margin-top: .3rem; border-radius: 3px; }
+:where(.tablero-fondos) .estados-nombre { display: block; margin-bottom: .15rem; font-size: .875rem; font-weight: 500; }
+:where(.tablero-fondos) .estados-texto { display: block; font-size: .8125rem; line-height: 1.45; color: #5b646a; }
+
+@media (max-width: 1199.98px) {
+  :where(.tablero-fondos) .estados-lista { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 575.98px) {
+  :where(.tablero-fondos) .estados-lista { grid-template-columns: 1fr; }
+}
+
+/* Al pie: qué es un beneficio, privacidad y corte. */
+:where(.tablero-fondos) .nota-pie {
+  margin-top: .5rem;
+  padding: 1rem 1.25rem;
+  background: #fff;
+  border: 1px solid var(--odes-borde);
+  border-radius: var(--odes-radio);
+}
+:where(.tablero-fondos) .nota-pie p { margin: 0 0 .5rem; font-size: .8125rem; line-height: 1.5; }
+:where(.tablero-fondos) .nota-pie p:last-child { margin-bottom: 0; }
+:where(.tablero-fondos) .nota-pie b { font-weight: 600; }
+
+/* ------------------------------------------- ingreso (tablero privado) */
+/* La tarjeta es la de la ventana de bienvenida (clases bienvenida-* de
+   tablero-matricula.css), pero en la página: centrada y sin el velo. */
+:where(.tablero-fondos) .ingreso-tablero {
+  display: flex;
+  justify-content: center;
+  padding: 3rem 1rem 4rem;
+}
+:where(.tablero-fondos) .ingreso-tablero .bienvenida {
+  max-width: 520px;
+  max-height: none;
+  box-shadow: 0 10px 30px rgba(14, 80, 116, .12);
+  border: 1px solid var(--odes-borde);
+}
+:where(.tablero-fondos) .ingreso-campos {
+  display: grid;
+  gap: .35rem;
+  margin: .25rem 0 1.25rem;
+}
+:where(.tablero-fondos) .ingreso-etiqueta {
+  margin-top: .5rem;
+  font-size: .8125rem;
+  font-weight: 600;
+  color: var(--odes-negro);
+}
+:where(.tablero-fondos) .ingreso-campo {
+  height: 2.75rem;
+  padding: 0 .9rem;
+  border: 1px solid #C9D3DA;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--odes-negro);
+  font: inherit;
+  font-size: .9375rem;
+}
+:where(.tablero-fondos) .ingreso-campo:focus {
+  outline: 2px solid var(--bs-info-70);
+  outline-offset: 1px;
+  border-color: var(--odes-azul);
+}
+:where(.tablero-fondos) .ingreso-aviso {
+  margin: 0 0 .75rem;
+  padding: .6rem .9rem;
+  border-left: 4px solid var(--odes-azul);
+  border-radius: 8px;
+  background: #EEF2F5;
+  font-size: .8125rem;
+}
+:where(.tablero-fondos) .ingreso-aviso-error {
+  border-left-color: #B42318;
+  background: #FDECEA;
+  color: #7A1C14;
+}
+:where(.tablero-fondos) .bienvenida-boton:disabled { opacity: .55; cursor: default; }
+
+/* Barra de la sesión, sobre la ruta de navegación del tablero. */
+:where(.tablero-fondos) .tb-sesion {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: .9rem;
+  padding: .55rem clamp(1rem, 2.2vw, 2.25rem) 0;
+  font-size: .8125rem;
+  color: #5b646a;
+}
+:where(.tablero-fondos) .tb-sesion-salir {
+  padding: .2rem .8rem;
+  border: 1px solid var(--odes-magenta);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--odes-magenta);
+  font: inherit;
+  font-size: .8125rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+:where(.tablero-fondos) .tb-sesion-salir:hover { background: var(--odes-magenta); color: #fff; }
+:where(.tablero-fondos) .tb-sesion-salir:focus-visible { outline: 2px solid var(--bs-info-70); outline-offset: 2px; }
+
+/* ── Selector tablero / ventanilla (PaginaFondos.tsx). La ventanilla tiene sus hojas en ./ventanilla. ── */
+:where(.tablero-fondos) .tb-sesion { flex-wrap: wrap; }
+:where(.tablero-fondos) .vc-selector {
+  display: inline-flex;
+  margin-right: auto;
+  padding: 3px;
+  border: 1px solid var(--odes-borde);
+  border-radius: 999px;
+  background: #fff;
+}
+:where(.tablero-fondos) .vc-selector-opcion {
+  padding: .35rem 1.05rem;
+  border-radius: 999px;
+  color: var(--odes-azul);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+:where(.tablero-fondos) .vc-selector-opcion:hover { background: #EEF2F5; }
+:where(.tablero-fondos) .vc-selector-opcion[aria-current='page'] { background: var(--odes-magenta); color: #fff; }
+:where(.tablero-fondos) .vc-selector-opcion:focus-visible { outline: 2px solid var(--bs-info-70); outline-offset: 2px; }

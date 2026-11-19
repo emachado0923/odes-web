@@ -1,0 +1,20 @@
+node_modules/
+dist/
+coverage/
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+# Decodificador Draco copiado desde node_modules/three al instalar/compilar
+apps/web/public/sivu/draco/
+# Asistente ODES: el índice (indice.sqlite) SÍ va en git, porque la imagen de Docker
+# (Cloud Build) se construye desde el repositorio. Fuera quedan sus temporales y la caché.
+apps/server/datos/odes/indice.sqlite-*
+apps/server/datos/odes/indice.sqlite.lock
+apps/server/datos/odes/indice.sqlite.tmp-*
+apps/server/datos/odes/cache/
+
+# MySQL local de desarrollo (datos y credenciales de prueba)
+.mysql-local/
+.vercel

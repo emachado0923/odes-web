@@ -1,0 +1,453 @@
+{
+  "descripcion": "Casos para evaluar la búsqueda del repositorio (npm run odes:evaluar-busqueda). Cada caso: consulta como la escribiría una persona o el asistente, filtros opcionales y los documentos que deberían aparecer. Ids del paquete repositorio-datos v4.2 (2026-10-08). Las traducciones al inglés no cuentan como relevantes en consultas en español (y al revés): buscar devuelve solo una versión de cada par.",
+  "casos": [
+    {
+      "id": "sinergia",
+      "consulta": "sinergia",
+      "relevantes": [
+        "boletin-avances-retos-estrategia-sinergia-entre-tres-2016",
+        "boletin-que-es-sinergia-2015"
+      ]
+    },
+    {
+      "id": "fe-de-erratas",
+      "consulta": "fe de erratas",
+      "relevantes": [
+        "boletin-19-fe-erratas-boletin-n-19-2021"
+      ]
+    },
+    {
+      "id": "issues-note-23",
+      "consulta": "issues note 23",
+      "relevantes": [
+        "nota-tematica-23-en-main-generative-artificial-intelligences-gai-their-2023"
+      ]
+    },
+    {
+      "id": "convocatoria-2018-2",
+      "consulta": "convocatoria 2018-2",
+      "nota": "El semestre 2018-2 es exacto (3 documentos). El bloque de WordPress encontraba 6 porque trataba las cifras como prefijo; el caso convocatorias-2018 cubre los 6.",
+      "relevantes": [
+        "educacion-superior-en-cifras-resultados-convocatoria-becas-tecnologias-2018-2-2018",
+        "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-epm-universidades-10",
+        "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-recursos-presupues-9"
+      ]
+    },
+    {
+      "id": "convocatorias-2018",
+      "consulta": "resultados de las convocatorias de 2018",
+      "relevantes": [
+        "educacion-superior-en-cifras-resultados-convocatoria-becas-tecnologias-2018-2-2018",
+        "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-epm-universidades-10",
+        "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-recursos-presupues-9",
+        "educacion-superior-en-cifras-resultados-convocatoria-becas-tecnologias-2018-1-2018",
+        "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-epm-universidades-11",
+        "educacion-superior-en-cifras-resultados-convocatoria-fondo-sapiencia-recursos-presupues-10"
+      ]
+    },
+    {
+      "id": "desercion-beneficiarios",
+      "consulta": "¿Cuál es la tasa de deserción de los beneficiarios de los programas de Sapiencia?",
+      "relevantes": [
+        "estudio-panorama-desercion-personas-beneficiarias-programas-sapiencia-2023",
+        "infografia-panorama-desercion-personas-beneficiarias-programas-sapiencia-2023",
+        "estudio-panorama-desercion-beneficiarios-programas-sapiencia-2015-2020",
+        "infografia-panorama-desercion-beneficiarios-fondos-sapiencia-2020",
+        "estudio-panorama-desercion-participantes-proyectos-acceso-educacion"
+      ]
+    },
+    {
+      "id": "desercion-educacion-superior",
+      "consulta": "deserción en la educación superior",
+      "relevantes": [
+        "boletin-5-desercion-educacion-superior-2017",
+        "boletin-6-educacion-superior-nivel-tecnologico-acceso-desercion-2017",
+        "infografia-ranking-ciudades-desercion-periodo-educacion-superior-2015",
+        "estudio-panorama-desercion-personas-beneficiarias-programas-sapiencia-2023",
+        "estudio-panorama-desercion-beneficiarios-programas-sapiencia-2015-2020",
+        "infografia-panorama-desercion-beneficiarios-fondos-sapiencia-2020",
+        "infografia-panorama-desercion-personas-beneficiarias-programas-sapiencia-2023"
+      ]
+    },
+    {
+      "id": "desercion-infografias",
+      "consulta": "deserción",
+      "filtros": {
+        "categorias": [
+          "Infografías"
+        ]
+      },
+      "relevantes": [
+        "infografia-panorama-desercion-personas-beneficiarias-programas-sapiencia-2023",
+        "infografia-panorama-desercion-beneficiarios-fondos-sapiencia-2020",
+        "infografia-ranking-ciudades-desercion-periodo-educacion-superior-2015"
+      ]
+    },
+    {
+      "id": "transito-inmediato",
+      "consulta": "tasa de tránsito inmediato a la educación superior en Medellín",
+      "relevantes": [
+        "boletin-29-resultados-preliminares-estudios-educacion-postsecundaria-2024",
+        "boletin-23-realidades-educacion-postsecundaria-medellin-2021",
+        "estudio-seguimiento-continuidad-educacion-postsecundaria-bachilleres-2020-2021",
+        "estudio-ranking-ciudades-2022"
+      ]
+    },
+    {
+      "id": "continuidad-2024",
+      "consulta": "¿Cuál fue la tasa de continuidad inmediata de los bachilleres en 2024?",
+      "relevantes": [
+        "boletin-29-resultados-preliminares-estudios-educacion-postsecundaria-2024",
+        "estudio-seguimiento-continuidad-educacion-postsecundaria-bachilleres-medellin-2024"
+      ]
+    },
+    {
+      "id": "seguimiento-bachilleres",
+      "consulta": "seguimiento a la continuidad de bachilleres a la educación postsecundaria",
+      "relevantes": [
+        "estudio-seguimiento-continuidad-educacion-postsecundaria-bachilleres-medellin-2024",
+        "estudio-seguimiento-continuidad-educacion-postsecundaria-bachilleres-medellin-2023",
+        "estudio-seguimiento-continuidad-educacion-postsecundaria-bachilleres-medellin-2022",
+        "estudio-seguimiento-continuidad-educacion-postsecundaria-bachilleres-2020-2021",
+        "estudio-seguimiento-continuidad-educacion-postsecundaria-bachilleres-2019-2020",
+        "estudio-seguimiento-continuidad-educacion-postsecundaria-bachilleres-medellin",
+        "infografia-seguimiento-continuidad-educacion-postsecundaria-bachilleres-medellin-2023",
+        "infografia-seguimiento-continuidad-educacion-postsecundaria-bachilleres-medellin-2022"
+      ]
+    },
+    {
+      "id": "expectativas-bachilleres",
+      "consulta": "expectativas de los estudiantes de grado 11 frente a la educación postsecundaria",
+      "relevantes": [
+        "estudio-expectativas-estudiantes-grado-11-medellin-continuidad-2024",
+        "estudio-expectativas-estudiantes-grado-11-distrito-medellin-2023",
+        "estudio-expectativas-estudiantes-grado-11-distrito-medellin-2022",
+        "estudio-expectativas-estudiantes-grado-11-municipio-medellin-2021",
+        "estudio-expectativas-estudiantes-grado-11-municipio-medellin-2020",
+        "estudio-expectativas-estudiantes-grado-11-ano-2019",
+        "estudio-resultados-encuesta-expectativas-estudiantes-grado-11-2018",
+        "estudio-expectativas-continuidad-educacion-postsecundaria-jovenes-grado",
+        "boletin-12-que-expectativas-tienen-jovenes-medellin-frente-2019",
+        "infografia-expectativas-estudiantes-grado-11-distrito-medellin-2023",
+        "infografia-expectativas-estudiantes-grado-11-distrito-medellin-2022"
+      ]
+    },
+    {
+      "id": "expectativas-desde-2023",
+      "consulta": "expectativas grado 11",
+      "filtros": {
+        "anioDesde": 2023
+      },
+      "relevantes": [
+        "estudio-expectativas-estudiantes-grado-11-medellin-continuidad-2024",
+        "estudio-expectativas-estudiantes-grado-11-distrito-medellin-2023",
+        "infografia-expectativas-estudiantes-grado-11-distrito-medellin-2023",
+        "boletin-29-resultados-preliminares-estudios-educacion-postsecundaria-2024"
+      ]
+    },
+    {
+      "id": "clei",
+      "consulta": "expectativas de los estudiantes de CLEI 5 y 6",
+      "relevantes": [
+        "estudio-expectativas-estudiantes-clei-5-6-distrito-2023",
+        "estudio-expectativas-estudiantes-clei-5-6-distrito-2022",
+        "infografia-expectativas-estudiantes-clei-5-6-distrito-2023",
+        "infografia-primer-estudio-expectativas-estudiantes-clei-5",
+        "estudio-expectativas-continuidad-educacion-postsecundaria-estudiantes-clei"
+      ]
+    },
+    {
+      "id": "matricula-cero",
+      "consulta": "Matrícula Cero",
+      "relevantes": [
+        "estudio-matricula-cero-2023",
+        "estudio-matricula-cero-2022",
+        "estudio-matricula-cero-2021",
+        "infografia-matricula-cero-contribucion-acceso-permanencia-educacion-2023",
+        "infografia-matricula-cero-contribucion-acceso-permanencia-educacion-2022",
+        "infografia-matricula-cero-2021",
+        "estudio-matricula-cero-3-ies-distrito"
+      ]
+    },
+    {
+      "id": "matricula-cero-permanencia",
+      "consulta": "¿Cómo contribuyó Matrícula Cero a la permanencia de los estudiantes?",
+      "relevantes": [
+        "estudio-matricula-cero-2023",
+        "estudio-matricula-cero-2022",
+        "estudio-matricula-cero-2021",
+        "infografia-matricula-cero-contribucion-acceso-permanencia-educacion-2023",
+        "infografia-matricula-cero-contribucion-acceso-permanencia-educacion-2022"
+      ]
+    },
+    {
+      "id": "demanda-matricula-ies",
+      "consulta": "demanda y matrícula de las 3 IES del Distrito",
+      "relevantes": [
+        "educacion-superior-en-cifras-demanda-matricula-2023-2-3-ies-2023",
+        "educacion-superior-en-cifras-demanda-matricula-2023-1-3-ies-2023",
+        "educacion-superior-en-cifras-demanda-matricula-2022-2-3-ies-2022",
+        "educacion-superior-en-cifras-demanda-matricula-2022-1-3-ies-2022",
+        "educacion-superior-en-cifras-demanda-matricula-2021-2-3-ies-2021",
+        "educacion-superior-en-cifras-demanda-matricula-2021-1-3-ies-2021"
+      ]
+    },
+    {
+      "id": "matricula-stem",
+      "consulta": "evolución de la matrícula en programas STEM",
+      "relevantes": [
+        "boletin-13-evolucion-proyeccion-matricula-programas-stem-2019"
+      ]
+    },
+    {
+      "id": "cobertura",
+      "consulta": "cobertura de la educación superior en Medellín",
+      "relevantes": [
+        "nota-tematica-1-cobertura-educacion-superior-medellin-2021",
+        "infografia-cobertura-educacion-superior-medellin"
+      ]
+    },
+    {
+      "id": "mercado-laboral",
+      "consulta": "panorama del mercado laboral en Medellín",
+      "relevantes": [
+        "boletin-24-panorama-general-mercado-laboral-medellin-2022",
+        "infografia-panorama-general-mercado-laboral-medellin",
+        "nota-tematica-18-mercado-laboral-fuerza-trabajo-perfiles-ocupacionales-2022",
+        "nota-tematica-7-empleo-dinamicas-laborales-actuales-2021",
+        "nota-tematica-21-tendencias-manana-empleo-2023",
+        "boletin-8-insercion-laboral-analisis-oferta-demanda-mercado-2018"
+      ]
+    },
+    {
+      "id": "becas-tecnologias",
+      "consulta": "resultados de la convocatoria Becas Tecnologías",
+      "relevantes": [
+        "educacion-superior-en-cifras-resultados-convocatoria-becas-tecnologias-2021-2-2021",
+        "educacion-superior-en-cifras-resultados-convocatoria-becas-tecnologias-2021-1-2021",
+        "educacion-superior-en-cifras-resultados-convocatoria-becas-tecnologias-2020-2-2020",
+        "educacion-superior-en-cifras-resultados-convocatoria-becas-tecnologias-2020-1-2020",
+        "educacion-superior-en-cifras-resultados-convocatoria-becas-tecnologias-2019-2-2019",
+        "educacion-superior-en-cifras-resultados-convocatoria-becas-tecnologias-2019-1-2019",
+        "educacion-superior-en-cifras-resultados-convocatoria-becas-tecnologias-2018-2-2018",
+        "educacion-superior-en-cifras-resultados-convocatoria-becas-tecnologias-2018-1-2018",
+        "educacion-superior-en-cifras-resultados-convocatoria-becas-tecnologias-2017-2-2017"
+      ]
+    },
+    {
+      "id": "becas-financiacion",
+      "consulta": "becas y créditos para financiar la matrícula y el sostenimiento",
+      "relevantes": [
+        "estudio-fuentes-financiacion-matricula-sostenimiento-educacion-postsecundaria-2021",
+        "estudio-fuentes-financiacion-matricula-sostenimiento-educacion-superior",
+        "infografia-fuentes-financiacion-educacion-postsecundaria-medellin",
+        "estudio-financiacion-estudiantes-etdh-2022",
+        "estudio-fuentes-financiacion-matricula-sostenimiento-estudiantes-etdh"
+      ]
+    },
+    {
+      "id": "financiacion-etdh",
+      "consulta": "financiación de estudiantes de ETDH",
+      "relevantes": [
+        "estudio-financiacion-estudiantes-etdh-2022",
+        "infografia-financiacion-estudios-personas-matriculadas-educacion-trabajo",
+        "estudio-fuentes-financiacion-matricula-sostenimiento-estudiantes-etdh"
+      ]
+    },
+    {
+      "id": "comunas-corregimientos",
+      "consulta": "asistencia a la educación postsecundaria en comunas y corregimientos",
+      "relevantes": [
+        "estudio-asistencia-educacion-postsecundaria-distrito-medellin-2023",
+        "estudio-asistencia-educacion-postsecundaria-distrito-medellin-2022",
+        "estudio-asistencia-educacion-postsecundaria-municipio-medellin-2021",
+        "estudio-asistencia-educacion-postsecundaria-bachilleres-corregimientos-medellin-2020",
+        "estudio-asistencia-educacion-superior-bachilleres-entre-16-2019",
+        "infografia-asistencia-educacion-postsecundaria-bachilleres-corregimientos-medellin-2020",
+        "boletin-15-resultados-estudios-educacion-superior-asistencia-corregimientos-2019",
+        "infografia-asistencia-educacion-postsecundaria-distrito-medellin-2023",
+        "infografia-asistencia-educacion-postsecundaria-distrito-medellin-2022",
+        "infografia-tasa-asistencia-educacion-postsecundaria-municipio-medellin-2021"
+      ]
+    },
+    {
+      "id": "megatendencias",
+      "consulta": "megatendencias en educación",
+      "relevantes": [
+        "informe-de-tendencias-1-aprendizaje-maquina-2023",
+        "informe-de-tendencias-2-desafios-enfoques-proteger-informacion-entornos-sector-2023",
+        "informe-de-tendencias-3-brechas-genero-inteligencia-artificial-2023",
+        "informe-de-tendencias-4-explorando-futuro-educacion-postsecundaria-traves-metaverso-202",
+        "informe-de-tendencias-5-computacion-nube-2023"
+      ]
+    },
+    {
+      "id": "ia-generativa",
+      "consulta": "oportunidades de la inteligencia artificial generativa para la educación",
+      "relevantes": [
+        "nota-tematica-23-principales-inteligencias-artificiales-generativas-iag-oportunidades-2"
+      ]
+    },
+    {
+      "id": "brecha-digital",
+      "consulta": "brecha digital en estudiantes de educación postsecundaria",
+      "relevantes": [
+        "estudio-brecha-digital-medellin-2023",
+        "infografia-brecha-digital-estudiantes-educacion-postsecundaria-distrito",
+        "estudio-brecha-digital-estudiantes-educacion-postsecundaria-distrito"
+      ]
+    },
+    {
+      "id": "acoso-sexual",
+      "consulta": "acoso sexual en las instituciones de educación superior",
+      "relevantes": [
+        "estudio-acoso-sexual-instituciones-educacion-superior-ies-2022",
+        "estudio-acoso-sexual-universitario-3-ies-adscritas",
+        "estudio-prevencion-atencion-acoso-sexual-entornos-educativos"
+      ]
+    },
+    {
+      "id": "destino-universitario",
+      "consulta": "satisfacción con Medellín como destino universitario",
+      "relevantes": [
+        "estudio-satisfaccion-medellin-como-destino-universitario-2023",
+        "estudio-satisfaccion-medellin-como-destino-universitario-2022",
+        "estudio-satisfaccion-medellin-como-destino-universitario-2021",
+        "estudio-satisfaccion-medellin-como-destino-universitario-2020",
+        "estudio-satisfaccion-comunidad-academica-medellin-como-destino",
+        "infografia-satisfaccion-medellin-como-destino-universitario-2023",
+        "infografia-satisfaccion-medellin-como-destino-universitario-2022"
+      ]
+    },
+    {
+      "id": "pandemia",
+      "consulta": "efectos de la pandemia del COVID-19 en los estudiantes",
+      "relevantes": [
+        "estudio-efectos-asociados-pandemia-global-covid-19-2020",
+        "infografia-efectos-asociados-pandemia-global-covid-19-2020"
+      ]
+    },
+    {
+      "id": "talento-especializado",
+      "consulta": "vinculación laboral de los beneficiarios del programa Talento Especializado",
+      "relevantes": [
+        "estudio-vinculacion-laboral-personas-beneficiarias-programa-talento-2022",
+        "infografia-vinculacion-laboral-personas-beneficiarias-programa-talento-2022"
+      ]
+    },
+    {
+      "id": "habilidades-blandas",
+      "consulta": "importancia de las habilidades blandas",
+      "relevantes": [
+        "nota-tematica-25-habilidades-blandas-importancia-ambitos-academico-laboral-2023"
+      ]
+    },
+    {
+      "id": "cuarta-revolucion",
+      "consulta": "Medellín hacia la cuarta revolución industrial",
+      "relevantes": [
+        "boletin-11-medellin-hacia-cuarta-revolucion-industrial-2019",
+        "nota-tematica-6-retos-oportunidades-4ta-revolucion-industrial-2021",
+        "nota-tematica-14-revoluciones-industriales-educacion-2022",
+        "boletin-9-impactos-cuarta-revolucion-industrial-trabajo-mercado-2018",
+        "boletin-16-habilidades-como-factor-diferencial-talento-4ta-2020"
+      ]
+    },
+    {
+      "id": "politica-publica",
+      "consulta": "política pública de educación postsecundaria",
+      "relevantes": [
+        "boletin-22-politica-publica-educacion-postsecundaria-medellin-fase-2021",
+        "boletin-28-politica-publica-postsecundaria"
+      ]
+    },
+    {
+      "id": "ranking-ciudades",
+      "consulta": "ranking de ciudades en educación superior",
+      "relevantes": [
+        "estudio-ranking-ciudades-2022",
+        "estudio-ranking-ciudades-variables-educacion-postsecundaria",
+        "infografia-ranking-ciudades-matricula-educacion-superior-2016",
+        "infografia-ranking-ciudades-graduados-educacion-superior-2015",
+        "infografia-ranking-ciudades-desercion-periodo-educacion-superior-2015",
+        "infografia-ranking-ciudades-oferta-programas-tecnicos-tecnologicos",
+        "infografia-ranking-ciudades-grupos-investigacion",
+        "infografia-ranking-ciudades-docentes-educacion-superior-2016",
+        "infografia-ranking-ciudades-posgrados-educacion-superior-2016",
+        "infografia-ranking-ciudades-resultados-examen-estado-calidad-2016",
+        "infografia-ranking-ciudades-instituciones-educacion-superior-alta-2015"
+      ]
+    },
+    {
+      "id": "simes-docx",
+      "consulta": "SIMES sistema de medición de la educación superior",
+      "relevantes": [
+        "boletin-simes-sistema-medicion-educacion-superior-2015"
+      ]
+    },
+    {
+      "id": "semilleros-pptx",
+      "consulta": "caracterización de grupos y semilleros de investigación",
+      "relevantes": [
+        "estudio-caracterizacion-grupos-semilleros-investigacion-instituciones-educacion-2022",
+        "infografia-caracterizacion-grupos-semilleros-investigacion-instituciones-educacion-2022"
+      ]
+    },
+    {
+      "id": "ciencia-datos-png",
+      "consulta": "ciencia de datos",
+      "relevantes": [
+        "infografia-ciencia-datos"
+      ]
+    },
+    {
+      "id": "nube-metaverso",
+      "consulta": "computación en la nube y metaverso en la educación",
+      "relevantes": [
+        "informe-de-tendencias-5-computacion-nube-2023",
+        "informe-de-tendencias-4-explorando-futuro-educacion-postsecundaria-traves-metaverso-202"
+      ]
+    },
+    {
+      "id": "tableros-pp",
+      "consulta": "tablero de Power BI de créditos condonables con Presupuesto Participativo",
+      "relevantes": [
+        "educacion-superior-en-cifras-linea-creditos-condonables-pregrado-recurso-presupuesto-20"
+      ]
+    },
+    {
+      "id": "en-labor-market",
+      "consulta": "trends of tomorrow's labor market",
+      "relevantes": [
+        "nota-tematica-21-en-trends-tomorrow-s-labor-market-2023"
+      ]
+    },
+    {
+      "id": "en-women",
+      "consulta": "women in higher education",
+      "relevantes": [
+        "infografia-en-women-higher-education",
+        "infografia-en-female-leadership-higher-education-institutions-colombia"
+      ]
+    },
+    {
+      "id": "en-dropout",
+      "consulta": "dropout of Sapiencia funds beneficiaries",
+      "relevantes": [
+        "infografia-en-outlook-desertion-sapiencia-funds-beneficiaries-2020",
+        "estudio-panorama-desercion-beneficiarios-programas-sapiencia-2015-2020"
+      ]
+    },
+    {
+      "id": "en-filtro-ingles",
+      "consulta": "expectations 11th grade students",
+      "filtros": {
+        "idioma": "en"
+      },
+      "relevantes": [
+        "infografia-en-expectations-continuity-post-secondary-education-11th-2021",
+        "infografia-en-expectations-continuity-post-secondary-education-11th-2020"
+      ]
+    }
+  ]
+}

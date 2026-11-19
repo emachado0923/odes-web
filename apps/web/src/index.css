@@ -1,0 +1,14 @@
+/*
+ * Reinicio mínimo y neutral, compartido por todas las ramas.
+ * No agregues aquí estilos de un sitio: cada rama (.inicio, .sivu, .odes)
+ * define su aspecto en su propio CSS, anidado bajo su clase raíz.
+ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
