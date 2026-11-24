@@ -59,9 +59,10 @@ export default function Dialogo({
           </p>
         ) : null}
         <div className="crm-modal-cuerpo">{children}</div>
+        {/* Entre el cuerpo y el pie, en el flujo: no tapa las acciones del pie. */}
+        <RegionAvisos mostrar={esSuperior} />
         {pie ? <footer className="crm-modal-pie">{pie}</footer> : null}
       </div>
-      <RegionAvisos mostrar={esSuperior} />
     </dialog>
   )
 }

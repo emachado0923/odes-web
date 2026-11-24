@@ -130,6 +130,54 @@ describe('Tablero de una persona (/crm/equipo/:personaId)', () => {
     expect(await screen.findByRole('dialog', { name: `Terminar «${INFORME.titulo}»` })).toBeInTheDocument()
   })
 
+  it('desde el panel: «Empezar» la pasa a En proceso y «Terminar» la termina; queda un solo panel y se cierra', async () => {
+    // La tarea del panel y la del diálogo de terminar son la misma: antes compartían la key de React y,
+    // al terminar, quedaba otro panel viejo abierto (con «Empezar»/«Terminar») que no se podía cerrar.
+    const errores = vi.spyOn(console, 'error')
+    const SIMPLE = tareaMuestra({ id: 105, titulo: 'Revisar el borrador del informe de gestión' })
+    const enProceso = { ...SIMPLE, estado: 'en_proceso' as const }
+    const terminada = { ...SIMPLE, estado: 'terminada' as const, terminadaEn: '2026-11-24T22:15:00.000Z' }
+    let actual: TareaCrm = SIMPLE
+    vi.mocked(apiEquipo.tablero).mockImplementation(async () => ({ persona: ANA, tareas: [actual, COMITE] }))
+    vi.mocked(apiEquipo.tarea).mockImplementation(async (_persona, id) => detalleDe(id === COMITE.id ? COMITE : actual))
+    vi.mocked(apiEquipo.cambiarEstado).mockImplementation(async () => {
+      actual = enProceso
+      return detalleDe(enProceso)
+    })
+    vi.mocked(apiEquipo.terminar).mockImplementation(async () => {
+      actual = terminada
+      return { tarea: detalleDe(terminada), aviso: { correoId: 9, estado: 'enviado', mensaje: 'Se le avisó a José por correo.' } }
+    })
+    montar(`/crm/equipo/2?tarea=${SIMPLE.id}`)
+
+    const panel = await screen.findByRole('dialog', { name: SIMPLE.titulo })
+    fireEvent.click(await within(panel).findByRole('button', { name: 'Empezar' }))
+    expect(apiEquipo.cambiarEstado).toHaveBeenCalledWith(2, SIMPLE.id, 'en_proceso')
+    const aviso = await within(panel).findByText(`«${SIMPLE.titulo}» pasó a En proceso.`)
+    // El aviso va en el flujo del panel, antes del pie: fijo abajo a la derecha tapaba «Terminar».
+    const pie = panel.querySelector('.crm-modal-pie')
+    expect(aviso.closest('.crm-modal-caja')).toBe(pie?.parentElement)
+    expect(aviso.compareDocumentPosition(pie as Node) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    expect(within(panel).getByRole('button', { name: 'Volver a pendiente' })).toBeInTheDocument()
+
+    fireEvent.click(within(panel).getByRole('button', { name: 'Terminar' }))
+    const dialogo = await screen.findByRole('dialog', { name: `Terminar «${SIMPLE.titulo}»` })
+    fireEvent.change(within(dialogo).getByLabelText(/Nota para José/), { target: { value: 'Listo.' } })
+    fireEvent.click(within(dialogo).getByRole('button', { name: 'Terminar y avisar a José' }))
+    await waitFor(() => expect(apiEquipo.terminar).toHaveBeenCalledWith(2, SIMPLE.id, 'Listo.'))
+    expect(await screen.findByText('Se le avisó a José por correo.')).toBeInTheDocument()
+
+    await waitFor(() => expect(document.querySelectorAll('dialog')).toHaveLength(1))
+    const [unico] = screen.getAllByRole('dialog')
+    expect(within(unico).getByText(/^Terminada el /)).toBeInTheDocument()
+    expect(within(unico).queryByRole('button', { name: 'Empezar' })).toBeNull()
+    expect(within(unico).queryByRole('button', { name: 'Volver a pendiente' })).toBeNull()
+
+    fireEvent.click(within(unico).getByRole('button', { name: 'Cerrar' }))
+    await waitFor(() => expect(document.querySelector('dialog')).toBeNull())
+    expect(errores.mock.calls.filter(([mensaje]) => String(mensaje).includes('same key'))).toEqual([])
+  })
+
   it('«Ver todas las terminadas» pide también las viejas y deja volver a las recientes', async () => {
     montar()
     fireEvent.click(await screen.findByRole('button', { name: 'Ver todas las terminadas' }))

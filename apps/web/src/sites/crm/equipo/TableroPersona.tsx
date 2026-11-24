@@ -273,9 +273,11 @@ function TableroDePersona({ personaId }: { personaId: number }) {
         }}
       />
 
+      {/* Las keys llevan prefijo: el panel y el diálogo de terminar son hermanos y suelen ser de la misma
+          tarea. Con la misma key, React perdía uno de los dos y quedaba un panel viejo abierto. */}
       {abierta !== null ? (
         <DetalleTarea
-          key={abierta}
+          key={`detalle-${abierta}`}
           personaId={personaId}
           tareaId={abierta}
           resumen={tareas.find((tarea) => tarea.id === abierta) ?? null}
@@ -293,7 +295,7 @@ function TableroDePersona({ personaId }: { personaId: number }) {
 
       {porTerminar ? (
         <DialogoTerminar
-          key={porTerminar.id}
+          key={`terminar-${porTerminar.id}`}
           personaId={personaId}
           tarea={porTerminar}
           lider={lider}

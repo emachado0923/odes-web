@@ -1743,12 +1743,28 @@ html:has(.crm-modal[open]) {
   margin-block: -0.25rem;
 }
 
+/* En un modal los avisos van en el flujo, entre el cuerpo y el pie: fijos abajo a la derecha quedaban
+   encima de los botones del pie (el «Terminar» del panel justo después de «Empezar») y se llevaban el clic. */
+:where(.crm) .crm-modal .crm-avisos {
+  position: static;
+  flex: none;
+  width: auto;
+}
+
+:where(.crm) .crm-modal .crm-avisos:not(:empty) {
+  padding: 0 1.5rem 1rem;
+}
+
 @media (max-width: 30rem) {
   :where(.crm) .crm-avisos {
     right: 1rem;
     bottom: 1rem;
     left: 1rem;
     width: auto;
+  }
+
+  :where(.crm) .crm-modal .crm-avisos:not(:empty) {
+    padding-inline: 1rem;
   }
 }
 
