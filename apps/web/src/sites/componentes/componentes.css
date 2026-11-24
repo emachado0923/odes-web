@@ -1,0 +1,317 @@
+/*
+ * Catálogo de componentes (/componentes). Todo anidado bajo .componentes, con
+ * prefijo co-. Ninguna regla entra a la vista previa (.co-vista__marco): cada
+ * componente trae sus propios estilos bajo su id raíz, como en WordPress.
+ */
+
+.componentes {
+  --co-fondo: #f6f7f9;
+  --co-superficie: #ffffff;
+  --co-texto: #1f2933;
+  --co-tenue: #52606d;
+  --co-borde: #d5dbe2;
+  --co-acento: #163854;
+  --co-acento-hover: #0b2236;
+  --co-foco: #3b6fd8;
+  --co-sombra: rgb(15 23 42 / 0.08);
+
+  color-scheme: light;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--co-fondo);
+  color: var(--co-texto);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.5;
+}
+
+.co-volver:focus-visible,
+.co-ancho:focus-visible,
+.co-boton:focus-visible {
+  outline: 3px solid var(--co-foco);
+  outline-offset: 2px;
+}
+
+.co-pagina {
+  padding: clamp(1.5rem, 5vw, 3rem) 1rem 4rem;
+}
+
+.co-columna {
+  width: 100%;
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+.co-volver {
+  display: inline-block;
+  margin-bottom: 1.25rem;
+  color: var(--co-tenue);
+  font-size: 0.9375rem;
+  text-decoration: none;
+}
+
+.co-volver:hover {
+  color: var(--co-texto);
+  text-decoration: underline;
+}
+
+.co-titulo {
+  margin: 0;
+  font-size: clamp(2rem, 1.6rem + 2vw, 2.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.co-bajada {
+  max-width: 44rem;
+  margin: 0.5rem 0 2rem;
+  color: var(--co-tenue);
+  font-size: 1.0625rem;
+}
+
+.co-lista {
+  display: grid;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Ficha de un componente */
+.co-ficha {
+  overflow: hidden;
+  border: 1px solid var(--co-borde);
+  border-radius: 0.875rem;
+  background: var(--co-superficie);
+  box-shadow: 0 1px 2px var(--co-sombra);
+}
+
+.co-ficha__cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  padding: 1.5rem 1.5rem 1rem;
+}
+
+.co-ficha__nombre {
+  margin: 0;
+  font-size: 1.375rem;
+  line-height: 1.25;
+}
+
+.co-ficha__descripcion {
+  max-width: 48rem;
+  margin: 0.375rem 0 0;
+  color: var(--co-tenue);
+}
+
+.co-ficha__partes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.co-chip {
+  padding: 0.125rem 0.625rem;
+  border: 1px solid var(--co-borde);
+  border-radius: 50rem;
+  background: var(--co-fondo);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.co-chip--apagado {
+  color: var(--co-tenue);
+  font-weight: 400;
+}
+
+.co-ficha__barra,
+.co-ficha__descargas {
+  padding: 0 1.5rem;
+}
+
+.co-ficha__barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  padding-bottom: 0.75rem;
+}
+
+.co-ficha__rotulo {
+  margin: 0;
+  color: var(--co-tenue);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Anchos de la vista previa */
+.co-anchos {
+  display: inline-flex;
+  flex-wrap: wrap;
+  padding: 0.1875rem;
+  border: 1px solid var(--co-borde);
+  border-radius: 0.625rem;
+  background: var(--co-fondo);
+}
+
+.co-ancho {
+  min-height: 2.25rem;
+  padding: 0.25rem 0.75rem;
+  border: 0;
+  border-radius: 0.4375rem;
+  background: none;
+  color: var(--co-tenue);
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.co-ancho:hover {
+  color: var(--co-texto);
+}
+
+.co-ancho[aria-pressed='true'] {
+  background: var(--co-superficie);
+  color: var(--co-texto);
+  font-weight: 600;
+  box-shadow: 0 1px 3px var(--co-sombra);
+}
+
+.co-ancho__px {
+  font-weight: 400;
+}
+
+/* Vista previa: el componente tal cual, centrado; con Tableta o Celular, el marco se angosta */
+.co-vista {
+  padding: 1.5rem;
+  border-block: 1px solid var(--co-borde);
+  background:
+    repeating-conic-gradient(#eef0f3 0% 25%, transparent 0% 50%) 50% / 1.25rem 1.25rem,
+    var(--co-superficie);
+}
+
+.co-vista__marco {
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 0.375rem;
+  background: var(--co-superficie);
+  box-shadow: 0 0 0 1px var(--co-borde);
+  transition: max-width 0.25s ease;
+}
+
+/* Descargas */
+.co-ficha__descargas {
+  padding-top: 1.25rem;
+  padding-bottom: 1.5rem;
+}
+
+.co-botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  margin-top: 0.625rem;
+}
+
+.co-boton {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-width: 9.5rem;
+  min-height: 3.25rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--co-borde);
+  border-radius: 0.5rem;
+  background: var(--co-superficie);
+  color: var(--co-texto);
+  font: inherit;
+  line-height: 1.25;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.co-boton:hover {
+  border-color: var(--co-acento);
+}
+
+.co-boton--principal {
+  border-color: var(--co-acento);
+  background: var(--co-acento);
+  color: #fff;
+}
+
+.co-boton--principal:hover {
+  border-color: var(--co-acento-hover);
+  background: var(--co-acento-hover);
+}
+
+.co-boton:disabled {
+  border-style: dashed;
+  background: var(--co-fondo);
+  color: var(--co-tenue);
+  cursor: not-allowed;
+}
+
+.co-boton__etiqueta {
+  font-weight: 600;
+}
+
+.co-boton__archivo {
+  font-size: 0.8125rem;
+  opacity: 0.8;
+}
+
+.co-ficha__aviso {
+  min-height: 1.5em;
+  margin: 0.75rem 0 0;
+  color: var(--co-tenue);
+  font-size: 0.875rem;
+}
+
+/* 404 */
+.co-404 {
+  max-width: 36rem;
+  padding-top: 3rem;
+}
+
+.co-404__codigo {
+  margin: 0 0 0.25rem;
+  color: var(--co-tenue);
+  font-weight: 600;
+}
+
+@media (max-width: 575.98px) {
+  .co-ficha__cabecera,
+  .co-ficha__barra,
+  .co-ficha__descargas {
+    padding-inline: 1rem;
+  }
+
+  .co-vista {
+    padding: 1rem 0.5rem;
+  }
+
+  .co-boton {
+    flex: 1 1 calc(50% - 0.625rem);
+    min-width: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .co-vista__marco,
+  .co-boton {
+    transition: none;
+  }
+}

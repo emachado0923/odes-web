@@ -10,6 +10,7 @@ export const SITIOS_SPA = [
   'pai',
   'pertinencia',
   'crm',
+  'componentes',
 ] as const;
 
 const PATRON_RUTA_SPA = new RegExp(
@@ -20,7 +21,8 @@ const PATRON_RUTA_SPA = new RegExp(
 
 /**
  * "/", "/sivu[/…]", "/odes[/…]", "/repositorio[/…]", "/tableros[/…]",
- * "/pai[/…]", "/pertinencia[/…]" y "/crm[/…]" (pathname, sin query).
+ * "/pai[/…]", "/pertinencia[/…]", "/crm[/…]" y "/componentes[/…]" (pathname,
+ * sin query).
  */
 export function esRutaDelFrontend(ruta: string): boolean {
   return PATRON_RUTA_SPA.test(ruta);

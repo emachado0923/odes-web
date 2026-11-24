@@ -1,0 +1,56 @@
+/* TRES LADOS (OdeS). Todo va bajo #odes-tres-lados para no tocar el tema.
+   Responde al ancho del propio bloque (container queries), no al de la ventana: en una columna angosta de
+   WordPress se apila aunque la pantalla sea ancha. */
+#odes-tres-lados{
+  /* Colores: fondo, letra y los tres triangulos */
+  --odes-tl-fondo:#fdfcf0;--odes-tl-tinta:#14333a;
+  --odes-tl-naranja:#f7932f;--odes-tl-azul:#74a6e6;--odes-tl-morado:#65234b;
+  --odes-tl-fuente:"Rubik",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  container:odes-tres-lados / inline-size;
+  display:block;padding:3rem 1rem 3.5rem;background:var(--odes-tl-fondo);color:var(--odes-tl-tinta);font-family:var(--odes-tl-fuente);font-size:1rem;font-weight:400;line-height:1.5;text-align:left;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale
+}
+/* Reinicio local: neutraliza los estilos del tema solo dentro del bloque */
+#odes-tres-lados *,#odes-tres-lados *::before,#odes-tres-lados *::after{box-sizing:border-box}
+#odes-tres-lados h2,#odes-tres-lados h3,#odes-tres-lados p,#odes-tres-lados ul,#odes-tres-lados li{margin:0;padding:0;border:0;font:inherit;color:inherit;line-height:inherit;letter-spacing:normal;text-transform:none;background:none;list-style:none}
+#odes-tres-lados svg{display:block}
+
+/* Titulo: la ultima palabra en mayusculas, mas grande y en negrilla */
+#odes-tres-lados .odes-tl__titulo{margin:0 auto 2.5rem;font-size:clamp(1.25rem,1rem + 1.1cqi,1.625rem);font-weight:400;line-height:1.2;text-align:center}
+#odes-tres-lados .odes-tl__marca{display:inline-block;font-size:1.35em;font-weight:800;letter-spacing:.02em;text-transform:uppercase}
+
+/* Los tres lados. Angosto: uno debajo de otro, de hasta 26rem. Cada uno guarda la proporcion de su triangulo
+   (aspect-ratio) y es un contenedor: la letra crece con el ancho del triangulo (cqi). */
+#odes-tres-lados .odes-tl__lados{display:flex;flex-direction:column;align-items:center;gap:2.5rem;max-width:72rem;margin:0 auto}
+#odes-tres-lados .odes-tl-lado{--odes-tl-color:var(--odes-tl-naranja);--odes-tl-texto:var(--odes-tl-tinta);container-type:inline-size;position:relative;width:100%;max-width:26rem;color:var(--odes-tl-texto)}
+#odes-tres-lados .odes-tl-lado--investigacion{aspect-ratio:390/330}
+#odes-tres-lados .odes-tl-lado--formacion{--odes-tl-color:var(--odes-tl-azul);aspect-ratio:437/332}
+#odes-tres-lados .odes-tl-lado--divulgacion{--odes-tl-color:var(--odes-tl-morado);--odes-tl-texto:#fff;aspect-ratio:385/388}
+
+/* Triangulo: el SVG se estira a la caja; el trazo grueso del mismo color redondea las esquinas */
+#odes-tres-lados .odes-tl-lado__forma{position:absolute;top:0;left:0;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 .5rem .75rem rgba(20,51,58,.18))}
+#odes-tres-lados .odes-tl-lado__forma polygon{fill:var(--odes-tl-color);stroke:var(--odes-tl-color);stroke-width:18px;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+
+/* Texto dentro del triangulo, en la parte ancha */
+#odes-tres-lados .odes-tl-lado__texto{position:absolute;display:flex;flex-direction:column;align-items:center;gap:.25rem;text-align:center}
+#odes-tres-lados .odes-tl-lado--investigacion .odes-tl-lado__texto{top:18%;left:8%;width:60%}
+#odes-tres-lados .odes-tl-lado--formacion .odes-tl-lado__texto{top:46%;left:27%;width:46%}
+#odes-tres-lados .odes-tl-lado--divulgacion .odes-tl-lado__texto{top:23%;left:24%;width:52%}
+#odes-tres-lados .odes-tl-lado__nombre{font-size:clamp(1rem,5.2cqi,1.375rem);font-weight:700;line-height:1.2}
+#odes-tres-lados .odes-tl-lado__descripcion{font-size:clamp(.8125rem,4.2cqi,1.125rem);line-height:1.2}
+
+/* Circulo con el icono (se puede quitar del HTML) */
+#odes-tres-lados .odes-tl-lado__medalla{position:absolute;z-index:1;display:flex;align-items:center;justify-content:center;width:36%;aspect-ratio:1/1;border:clamp(3px,1.2cqi,5px) solid var(--odes-tl-color);border-radius:50%;background:#fff;color:var(--odes-tl-color);box-shadow:0 .25rem .625rem rgba(20,51,58,.14);transform:translate(-50%,-50%)}
+#odes-tres-lados .odes-tl-lado__medalla svg{width:40%;height:40%;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+#odes-tres-lados .odes-tl-lado--investigacion .odes-tl-lado__medalla{top:78%;left:32%}
+#odes-tres-lados .odes-tl-lado--formacion .odes-tl-lado__medalla{top:21%;left:52%;width:33%}
+#odes-tres-lados .odes-tl-lado--divulgacion .odes-tl-lado__medalla{top:78%;left:73%}
+
+/* Ancho (desde 56rem de bloque): los tres en fila y escalonados. La fila guarda la proporcion del diseno y cada
+   triangulo va en su lugar, en porcentajes de la fila */
+@container odes-tres-lados (min-width:56rem){
+  #odes-tres-lados .odes-tl__lados{position:relative;display:block;width:100%;aspect-ratio:1105/390}
+  #odes-tres-lados .odes-tl-lado{position:absolute;max-width:none}
+  #odes-tres-lados .odes-tl-lado--investigacion{top:0;left:0;width:35.3%}
+  #odes-tres-lados .odes-tl-lado--formacion{top:8.2%;left:30.3%;width:39.5%}
+  #odes-tres-lados .odes-tl-lado--divulgacion{top:.5%;left:65.2%;width:34.8%}
+}

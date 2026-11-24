@@ -69,6 +69,13 @@ export default defineConfig({
     // Las hojas no se procesan en las pruebas (jsdom no aplica CSS), salvo las
     // del PAI importadas como texto (?raw) por src/sites/pai/estilos.test.ts.
     // También la de /pertinencia (?raw), por src/sites/pertinencia/estilos.test.ts.
-    css: { include: [/\/src\/sites\/pai\/[^?]*\.css\?raw$/, /\/src\/sites\/pertinencia\/[^?]*\.css\?raw$/] },
+    // Y las de los componentes de /componentes (?raw): son lo que se descarga (src/sites/componentes/catalogo).
+    css: {
+      include: [
+        /\/src\/sites\/pai\/[^?]*\.css\?raw$/,
+        /\/src\/sites\/pertinencia\/[^?]*\.css\?raw$/,
+        /\/src\/sites\/componentes\/catalogo\/[^?]*\.css\?raw$/,
+      ],
+    },
   },
 })

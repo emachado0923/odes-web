@@ -113,7 +113,8 @@ export function crearRouterFrontend({
   } else {
     registro.warn(
       `No existe ${rutaIndex}. Las rutas /, /sivu, /odes, /repositorio, ` +
-        '/tableros, /pai, /pertinencia y /principal responderán 503 hasta ' +
+        '/tableros, /pai, /pertinencia, /crm, /componentes y /principal ' +
+        'responderán 503 hasta ' +
         'compilar el ' +
         'front-end (npm run build). En desarrollo usa ' +
         'http://localhost:5173 (Vite).',

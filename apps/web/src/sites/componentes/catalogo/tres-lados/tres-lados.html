@@ -1,0 +1,40 @@
+<!--
+  TRES LADOS (OdeS): tres triangulos de colores, cada uno con un titulo, un texto corto y un circulo con
+  un icono. En pantallas anchas van en fila y escalonados; en angostas, uno debajo de otro.
+
+  Que editar:
+    - El titulo: "Los tres lados del" y la palabra en mayusculas (odes-tl__marca).
+    - Cada triangulo es un li.odes-tl-lado: su titulo (odes-tl-lado__nombre) y su texto
+      (odes-tl-lado__descripcion). Textos cortos: deben caber dentro del triangulo.
+    - Los colores, en las variables --odes-tl-* del comienzo del CSS.
+    - El circulo con el icono (span.odes-tl-lado__medalla) se puede borrar completo.
+-->
+<section id="odes-tres-lados" class="odes-tl" aria-labelledby="odes-tres-lados-titulo">
+  <h2 id="odes-tres-lados-titulo" class="odes-tl__titulo">Los tres lados del <span class="odes-tl__marca">Observatorio</span></h2>
+  <ul class="odes-tl__lados">
+    <li class="odes-tl-lado odes-tl-lado--investigacion">
+      <svg class="odes-tl-lado__forma" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false"><polygon points="3,3 97,22 6,97"/></svg>
+      <span class="odes-tl-lado__medalla" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
+      <div class="odes-tl-lado__texto">
+        <h3 class="odes-tl-lado__nombre">Investigación</h3>
+        <p class="odes-tl-lado__descripcion">Estudia la educación postsecundaria de Medellín para entender sus causas y sus efectos.</p>
+      </div>
+    </li>
+    <li class="odes-tl-lado odes-tl-lado--formacion">
+      <svg class="odes-tl-lado__forma" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false"><polygon points="51.5,17 3,74 97,97"/></svg>
+      <span class="odes-tl-lado__medalla" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>
+      <div class="odes-tl-lado__texto">
+        <h3 class="odes-tl-lado__nombre">Formación</h3>
+        <p class="odes-tl-lado__descripcion">Lleva el conocimiento basado en evidencia a colegios, instituciones y equipos de trabajo.</p>
+      </div>
+    </li>
+    <li class="odes-tl-lado odes-tl-lado--divulgacion">
+      <svg class="odes-tl-lado__forma" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false"><polygon points="3,22 97,3 60,97"/></svg>
+      <span class="odes-tl-lado__medalla" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></span>
+      <div class="odes-tl-lado__texto">
+        <h3 class="odes-tl-lado__nombre">Divulgación</h3>
+        <p class="odes-tl-lado__descripcion">Traduce los resultados en conversaciones públicas y accesibles.</p>
+      </div>
+    </li>
+  </ul>
+</section>

@@ -15,6 +15,8 @@
  *              espacio del tablero de consulta y accesos a la normativa.
  *   /crm/*     CRM de la Oficina de Planeación (chunk diferido): tareas del
  *              equipo por persona y panel del líder con clave.
+ *   /componentes/*  Catálogo de bloques para WordPress (chunk diferido): vista
+ *              previa y descarga del HTML, el CSS, el script y el bloque.
  *   *          404 global.
  *
  * /principal no está aquí: es una página de HTML puro (el bloque de
@@ -98,6 +100,13 @@ export const rutas: RouteObject[] = [
         HydrateFallback: CargaRama,
         ErrorBoundary: ErrorRama,
         lazy: async () => ({ Component: (await import('./sites/crm/CrmSitio')).default }),
+      },
+      {
+        id: 'componentes',
+        path: 'componentes/*',
+        HydrateFallback: CargaRama,
+        ErrorBoundary: ErrorRama,
+        lazy: async () => ({ Component: (await import('./sites/componentes/ComponentesSitio')).default }),
       },
       { path: '*', Component: NoEncontrado },
     ],

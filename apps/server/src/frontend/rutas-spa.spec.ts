@@ -32,6 +32,9 @@ describe('rutas de la SPA', () => {
     '/crm/',
     '/crm/equipo/3',
     '/CRM/lider/tareas/nueva',
+    '/componentes',
+    '/componentes/',
+    '/Componentes/x',
   ])('%s es ruta del front-end', (ruta) => {
     expect(esRutaDelFrontend(ruta)).toBe(true);
   });
@@ -48,6 +51,8 @@ describe('rutas de la SPA', () => {
     '/pertinencia-x',
     '/crms',
     '/crm-x',
+    '/componentess',
+    '/componentes-x',
     '/api/crm/personas',
     '/api/pai/sesion',
     '/api',

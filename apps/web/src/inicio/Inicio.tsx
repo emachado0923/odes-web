@@ -38,6 +38,11 @@ const SITIOS: Sitio[] = [
     nombre: 'Medida de pertinencia',
     descripcion: 'Cómo se relaciona la oferta de educación superior de Medellín con las ocupaciones y los sectores que demanda la ciudad.',
   },
+  {
+    ruta: '/componentes',
+    nombre: 'Componentes',
+    descripcion: 'Bloques listos para WordPress: míralos en vivo y descarga su HTML, su CSS, su script o el bloque completo.',
+  },
 ]
 
 /**
