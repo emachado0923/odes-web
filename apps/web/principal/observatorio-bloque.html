@@ -1,6 +1,6 @@
 <meta charset="utf-8"><!-- Solo sirve al abrir este archivo suelto en un navegador (evita tildes rotas). Dentro de WordPress se ignora. -->
 <!--
-  BLOQUE OBSERVATORIO SAPIENCIA (OdeS) · v2.38 · 2026-11-24
+  BLOQUE OBSERVATORIO SAPIENCIA (OdeS) · v2.39 · 2026-11-24
 
   Parte superior reestructurada segun el documento "Reestructuracion parte
   superior del micrositio del Observatorio":
@@ -107,14 +107,14 @@
    Cada ficha tiene dos caras: el frente (icono, cifra, titulo, nota y periodo) y el reverso (titulo, descripcion,
    fuente y fecha de corte). Gira al pasar el mouse, al llegar con el teclado o al tocarla en el celular (eso lo
    hace el script: .odes-cifra--girada).
-   Todas las fichas comparten las mismas 6 filas (subgrid): icono / unidad / cifra / titulo / nota / periodo. Asi,
-   aunque solo una ficha lleve unidad ("mil millones") o solo algunas la nota "Dato preliminar", en todas las
+   Todas las fichas comparten las mismas 6 filas (subgrid): icono / cifra / unidad / titulo / nota / periodo. Asi,
+   aunque solo una ficha lleve unidad ("mil millones", debajo de la cifra) o solo algunas la nota "Dato preliminar", en todas las
    fichas las cifras, los titulos y los periodos quedan a la misma altura: las demas dejan el hueco. Las filas de
    la unidad y de la nota tienen un alto minimo (el de una linea), para que el hueco quede tambien en las fichas
    que van en otra fila (tableta y celular).
    La primera fila (la del icono) se estira: ahi va el aire, y crece si el reverso necesita mas alto. */
 #odes-observatorio .odes-seccion--cifras{padding-top:2rem}
-#odes-observatorio .odes-cifras{position:relative;display:grid;grid-template-columns:minmax(0,1fr);grid-auto-rows:1fr minmax(1.25rem,auto) auto auto minmax(1.75rem,auto) auto;column-gap:1rem;row-gap:0;width:var(--odes-ventana,100vw);margin-left:var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2));margin-bottom:-1rem;padding:0 var(--odes-aire)}
+#odes-observatorio .odes-cifras{position:relative;display:grid;grid-template-columns:minmax(0,1fr);grid-auto-rows:1fr auto minmax(1.25rem,auto) auto minmax(1.625rem,auto) auto;column-gap:1rem;row-gap:0;width:var(--odes-ventana,100vw);margin-left:var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2));margin-bottom:-1rem;padding:0 var(--odes-aire)}
 #odes-observatorio .odes-cifra{--odes-cifra-fondo:#163854;position:relative;display:grid;grid-row:span 6;grid-template-rows:subgrid;grid-template-columns:minmax(0,1fr);margin-bottom:1rem;border-radius:var(--odes-esquina);color:#fff;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #odes-observatorio .odes-cifra--marino{--odes-cifra-fondo:#163854}
 #odes-observatorio .odes-cifra--celeste{--odes-cifra-fondo:#51ade5}
@@ -135,21 +135,25 @@
 /* Aro decorativo arriba a la derecha del frente */
 #odes-observatorio .odes-cifra__frente::after{content:"";position:absolute;top:0;right:0;width:min(12rem,62%);aspect-ratio:1/1;border:1.125rem solid rgba(255,255,255,.15);border-radius:50%;transform:translate(26%,-26%);pointer-events:none}
 /* Frente: cada parte en su fila (ver arriba) */
-#odes-observatorio .odes-cifra__icono{position:relative;z-index:1;grid-row:1;align-self:start;justify-self:start;display:inline-flex;align-items:center;justify-content:center;width:2.75rem;height:2.75rem;margin-bottom:.75rem;border-radius:var(--odes-radio-lg);background:rgba(255,255,255,.2);line-height:0}
+#odes-observatorio .odes-cifra__icono{position:relative;z-index:1;grid-row:1;align-self:start;justify-self:start;display:inline-flex;align-items:center;justify-content:center;width:2.75rem;height:2.75rem;margin-bottom:.5rem;border-radius:var(--odes-radio-lg);background:rgba(255,255,255,.2);line-height:0}
 #odes-observatorio .odes-cifra__icono svg{display:block;width:1.375rem;height:1.375rem;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-#odes-observatorio .odes-cifra__unidad{grid-row:2;align-self:end;margin-bottom:.125rem;font-size:.9375rem;font-weight:400;line-height:1.2}
-#odes-observatorio .odes-cifra__valor{grid-row:3;align-self:end;font-size:min(calc(1.6rem + 3.1vw),3.125rem);font-weight:900;line-height:1.05;letter-spacing:-.01em;font-variant-numeric:tabular-nums;white-space:nowrap}
+#odes-observatorio .odes-cifra__unidad{grid-row:3;align-self:start;margin-top:.125rem;font-size:.9375rem;font-weight:400;line-height:1.2}
+#odes-observatorio .odes-cifra__valor{grid-row:2;align-self:end;font-size:min(calc(1.6rem + 3.1vw),3.125rem);font-weight:900;line-height:1.05;letter-spacing:-.01em;font-variant-numeric:tabular-nums;white-space:nowrap}
 #odes-observatorio .odes-cifra__asterisco{margin-left:.04em;font-size:.6em;font-weight:700;vertical-align:.5em}
-#odes-observatorio .odes-cifra__texto{grid-row:4;margin-top:.625rem;font-size:1.0625rem;font-weight:700;line-height:1.3}
-/* Nota "Dato preliminar": rojo suave, en pastilla para que se lea sobre cualquier color de ficha (6,4:1) */
-#odes-observatorio .odes-cifra__nota{grid-row:5;justify-self:start;align-self:start;margin-top:.5rem;padding:.0625rem .5rem;border-radius:50rem;background:#fde3e1;color:#a1261d;font-size:.75rem;font-weight:700;line-height:1.5}
+#odes-observatorio .odes-cifra__texto{grid-row:4;margin-top:.5rem;font-size:1.0625rem;font-weight:700;line-height:1.3}
+/* Nota "Dato preliminar": pastilla blanca con el texto del color de la ficha */
+#odes-observatorio .odes-cifra__nota{grid-row:5;justify-self:start;align-self:start;margin-top:.375rem;padding:.0625rem .5rem;border-radius:50rem;background:#fff;color:var(--odes-cifra-fondo);font-size:.75rem;font-weight:700;line-height:1.4}
 #odes-observatorio .odes-cifra__periodo{grid-row:6;margin-top:.25rem;font-size:.9375rem;font-weight:400;line-height:1.3;opacity:.9}
 /* Reverso */
 #odes-observatorio .odes-cifra__titulo{font-size:1.125rem;font-weight:700;line-height:1.3}
 #odes-observatorio .odes-cifra__descripcion{margin-top:.5rem;font-size:.9375rem;font-weight:500;line-height:1.4}
-#odes-observatorio .odes-cifra__datos{display:flex;flex-direction:column;gap:.125rem;margin-top:auto;padding-top:.5rem;border-top:1px solid rgba(255,255,255,.4);font-size:.75rem;line-height:1.4}
+#odes-observatorio .odes-cifra__datos{display:flex;flex-direction:column;gap:.125rem;margin-top:auto;padding-top:.5rem;border-top:1px solid rgba(255,255,255,.4);font-size:.6875rem;line-height:1.4}
 #odes-observatorio .odes-cifra__reverso>.odes-cifra__descripcion{margin-bottom:.75rem}
 #odes-observatorio .odes-cifra__etiqueta{font-weight:700}
+/* Fuente y fecha de corte en una sola linea: el script pone esta clase y baja la letra de cada ficha lo justo para
+   que quepan (sin script, el texto pasa a la linea siguiente) */
+#odes-observatorio .odes-cifra__datos--linea{align-items:flex-start}
+#odes-observatorio .odes-cifra__datos--linea>span{white-space:nowrap}
 #odes-observatorio .odes-cifras__ayuda{width:var(--odes-ventana,100vw);margin-top:1.25rem;margin-left:var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2));padding:0 var(--odes-aire);font-size:.9375rem}
 @media (min-width:576px){
   #odes-observatorio .odes-cifras{grid-template-columns:repeat(4,minmax(0,1fr))}
@@ -171,17 +175,15 @@
   #odes-observatorio .odes-cifras{grid-template-columns:repeat(5,minmax(0,1fr))}
   #odes-observatorio .odes-cifra,#odes-observatorio .odes-cifra:nth-child(4),#odes-observatorio .odes-cifra:nth-child(5){grid-column:auto}
   #odes-observatorio .odes-cifra__frente{padding:1.125rem}
-  #odes-observatorio .odes-cifra__reverso{padding:1rem 1.125rem}
+  #odes-observatorio .odes-cifra__reverso{padding:1rem}
   #odes-observatorio .odes-cifra__valor{font-size:min(calc(3.7vw - .75rem),3.125rem)}
   #odes-observatorio .odes-cifra__texto{font-size:1rem}
   #odes-observatorio .odes-cifra__titulo{font-size:1.0625rem}
   #odes-observatorio .odes-cifra__descripcion{font-size:.8125rem}
-  #odes-observatorio .odes-cifra__datos{font-size:.6875rem}
 }
 @media (min-width:1440px){
-  #odes-observatorio .odes-cifra__frente{padding:1.5rem}
-  #odes-observatorio .odes-cifra__reverso{padding:1.125rem 1.25rem 1.25rem}
-  #odes-observatorio .odes-cifra__icono{margin-bottom:1rem}
+  #odes-observatorio .odes-cifra__frente{padding:1.25rem 1.375rem}
+  #odes-observatorio .odes-cifra__reverso{padding:1.125rem 1rem}
 }
 
 /* 3. Explora el Observatorio: botones numerados en una franja con el ancho de la ventana, como las cifras (usa las
@@ -508,9 +510,9 @@
              odes-cifra__icono     el icono (odes-i-cifra-historicos, -beneficiarios, -inversion, -transito, -asistencia)
              odes-cifra__valor     la cifra. Si es un dato preliminar, lleva al lado
                                    <span class="odes-cifra__asterisco" aria-hidden="true">*</span>
-             odes-cifra__unidad    opcional, va despues de la cifra y se ve encima de ella ("mil millones")
+             odes-cifra__unidad    opcional, va despues de la cifra y se ve debajo de ella ("mil millones")
              odes-cifra__texto     que mide la cifra
-             odes-cifra__nota      opcional, la pastilla roja "*Dato preliminar" (quitala cuando el dato sea
+             odes-cifra__nota      opcional, la pastilla blanca "*Dato preliminar" (quitala cuando el dato sea
                                    definitivo, junto con el asterisco de la cifra)
              odes-cifra__periodo   el periodo (2005-2026, 2025...)
            Reverso (odes-cifra__reverso): el titulo (el mismo del frente), la descripcion, la fuente y la fecha
@@ -572,7 +574,7 @@
           <div class="odes-cifra__cara odes-cifra__reverso">
             <p class="odes-cifra__titulo" aria-hidden="true">Tasa de tránsito inmediato a educación superior</p>
             <p class="odes-cifra__descripcion">Porcentaje de bachilleres de Medellín que ingresan a educación superior en el año siguiente a su graduación de grado 11, con datos de 2025.</p>
-            <p class="odes-cifra__datos"><span><span class="odes-cifra__etiqueta">Fuente:</span> Agencia de Educación Postsecundaria - Sapiencia</span><span><span class="odes-cifra__etiqueta">Fecha de corte:</span> 24 de noviembre de 2026</span></p>
+            <p class="odes-cifra__datos"><span><span class="odes-cifra__etiqueta">Fuente:</span> Sistema Nacional de Información de Educación Superior - SNIES</span><span><span class="odes-cifra__etiqueta">Fecha de corte:</span> 24 de noviembre de 2026</span></p>
           </div>
         </li>
         <li class="odes-cifra odes-cifra--naranja" tabindex="0">
@@ -1951,10 +1953,47 @@
   /* ---------- El Observatorio en cifras: las fichas giran al tocarlas ----------
      Con mouse giran al pasar el cursor y con teclado al llegar a ellas (eso lo hace el CSS). En pantallas
      tactiles no hay cursor: un toque gira la ficha y otro la devuelve; al girar una, las demas vuelven al frente,
-     y un toque fuera de las fichas las devuelve todas. */
+     y un toque fuera de las fichas las devuelve todas.
+     En el reverso, la fuente y la fecha de corte van cada una en una sola linea: se mide la mas larga de cada
+     ficha y se baja la letra de las dos lo justo para que quepa, sin bajar de LETRA_MINIMA_DATOS (si no cabe ni
+     asi, se queda en ese tamano y pasa a la linea siguiente). Se vuelve a medir cuando cambia el ancho y cuando
+     termina de cargar la letra. */
+  var LETRA_MINIMA_DATOS = 7;
+  function ajustarDatosCifras() {
+    todos('.odes-cifra__datos').forEach(function (datos) {
+      datos.style.fontSize = '';
+      datos.classList.add('odes-cifra__datos--linea');
+      var disponible = datos.clientWidth;
+      var mayor = 0;
+      Array.prototype.forEach.call(datos.children, function (linea) { mayor = Math.max(mayor, linea.offsetWidth); });
+      if (!disponible || mayor <= disponible) { return; }
+      var base = parseFloat(window.getComputedStyle(datos).fontSize);
+      var letra = Math.floor(base * disponible / mayor * 10) / 10;
+      if (letra < LETRA_MINIMA_DATOS) {
+        letra = LETRA_MINIMA_DATOS;
+        datos.classList.remove('odes-cifra__datos--linea');
+      }
+      datos.style.fontSize = letra + 'px';
+    });
+  }
+
   function iniciarCifras() {
     var fichas = todos('.odes-cifra');
-    if (!fichas.length || !window.matchMedia) { return; }
+    if (!fichas.length) { return; }
+    var lista = uno('.odes-cifras');
+    ajustarDatosCifras();
+    if (window.ResizeObserver && lista) {
+      var ancho = lista.clientWidth;
+      new ResizeObserver(function () {
+        if (lista.clientWidth === ancho) { return; }
+        ancho = lista.clientWidth;
+        ajustarDatosCifras();
+      }).observe(lista);
+    } else {
+      window.addEventListener('resize', ajustarDatosCifras);
+    }
+    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(ajustarDatosCifras); }
+    if (!window.matchMedia) { return; }
     var conMouse = window.matchMedia('(hover: hover)');
     function devolver(excepto) {
       fichas.forEach(function (ficha) { if (ficha !== excepto) { ficha.classList.remove('odes-cifra--girada'); } });
