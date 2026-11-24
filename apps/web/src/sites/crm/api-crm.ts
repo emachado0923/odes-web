@@ -88,6 +88,17 @@
  * PATCH  /api/crm/lider/personas/:id  <- EdicionPersonaCrm -> PersonaAdminCrm
  * PUT    /api/crm/lider/personas/:id/foto <- multipart, campo `archivo` (PNG, JPEG o WEBP) -> PersonaAdminCrm
  * DELETE /api/crm/lider/personas/:id/foto -> PersonaAdminCrm
+ *
+ * ── Cuenta de correo (líder) ───────────────────────────────────────────────
+ * Si el servidor tiene las variables CRM_CORREO_*, mandan ellas y aquí solo
+ * se ven. Si no, el líder guarda la cuenta (con su contraseña de aplicación)
+ * en la base; la contraseña se guarda cifrada y nunca se devuelve.
+ * GET    /api/crm/lider/correo/cuenta  -> CuentaCorreoCrm
+ * PUT    /api/crm/lider/correo/cuenta  <- GuardarCuentaCorreoCrm -> CuentaCorreoCrm
+ *        (clave vacía u omitida: se conserva la guardada)
+ * DELETE /api/crm/lider/correo/cuenta  -> CuentaCorreoCrm (borra la guardada)
+ * POST   /api/crm/lider/correo/prueba  <- PruebaCorreoCrm -> ResultadoPruebaCorreoCrm
+ *        (envía un correo de prueba con la cuenta efectiva; 429 tras 10 por hora)
  */
 
 // ── Constantes ──────────────────────────────────────────────────────────────
@@ -339,6 +350,57 @@ export interface CorreoCrm {
   creadoEn: string;
   enviadoEn: string | null;
 }
+
+// ── Cuenta de correo ────────────────────────────────────────────────────────
+
+/** De dónde sale la cuenta: las variables CRM_CORREO_* del servidor (mandan y no se editan aquí), la guardada en la base, o ninguna. */
+export type OrigenCuentaCorreoCrm = 'variables' | 'base' | 'ninguna';
+
+export interface CuentaCorreoCrm {
+  origen: OrigenCuentaCorreoCrm;
+  /** Modo efectivo del envío: 'smtp' envía de verdad; 'archivo' y 'memoria' son de desarrollo y pruebas. */
+  modo: 'smtp' | 'archivo' | 'memoria' | 'desactivado';
+  /** La cuenta (también el remitente), o null. */
+  usuario: string | null;
+  host: string | null;
+  puerto: number | null;
+  /** TLS desde el inicio (465); false = STARTTLS (587). */
+  seguro: boolean | null;
+  /** Nombre visible del remitente. */
+  nombre: string;
+  /** Hay contraseña guardada (nunca se devuelve). */
+  tieneClave: boolean;
+  /** Se puede cambiar desde el CRM (false si mandan las variables del servidor). */
+  editable: boolean;
+  /** ISO 8601 de la última vez que se guardó en la base, o null. */
+  actualizadoEn: string | null;
+}
+
+export interface GuardarCuentaCorreoCrm {
+  usuario: string;
+  /** Contraseña de aplicación (se le quitan los espacios). Vacía u omitida: se conserva la guardada. */
+  clave?: string;
+  /** Servidor SMTP. Por defecto según el dominio (Gmail o Microsoft); para Google Workspace, smtp.gmail.com. */
+  host?: string;
+  puerto?: number;
+  seguro?: boolean;
+  nombre?: string;
+}
+
+export interface PruebaCorreoCrm {
+  /** A quién mandar la prueba; por defecto, al líder. */
+  para?: string;
+}
+
+export interface ResultadoPruebaCorreoCrm {
+  enviado: boolean;
+  para: string;
+  /** «Se envió un correo de prueba a …» o el error del servidor de correo, en palabras claras. */
+  mensaje: string;
+}
+
+/** Servidor SMTP sugerido para las cuentas de Google Workspace (como @sapiencia.gov.co). */
+export const HOST_SMTP_GOOGLE = 'smtp.gmail.com';
 
 // ── Líder ───────────────────────────────────────────────────────────────────
 

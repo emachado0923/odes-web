@@ -251,7 +251,7 @@ describe('encolar', () => {
 
   it('sin cuenta queda «sin configurar»', async () => {
     const { bd, correo } = preparar(cargarConfiguracionCorreoCrm({}));
-    expect(correo.configurado).toBe(false);
+    expect(await correo.estaConfigurado()).toBe(false);
     await correo.encolar(bd.conexion, mensaje({ responderA: null }));
     expect(bd.correos.get(1)).toMatchObject({ estado: 'sin_configurar', responder_a: null });
     expect(await correo.enviar(1)).toEqual({

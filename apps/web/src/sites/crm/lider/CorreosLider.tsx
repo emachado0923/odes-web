@@ -13,6 +13,8 @@
  * - Reintentar reemplaza la fila con lo que devuelve el servidor, aunque ya no
  *   cumpla el filtro (así se ve que salió), y llama avisarCambioCorreos() para
  *   que la insignia del menú se recargue.
+ * - Arriba de todo, CuentaCorreo: desde qué cuenta salen los avisos (y, si no
+ *   hay, el formulario para guardarla).
  * - Si alguno está sin_configurar, una nota arriba dice qué hacer.
  * - Ante un 401 llama vencida(): SitioLider vuelve al ingreso.
  */
@@ -23,6 +25,7 @@ import { esNoAutenticado, mensajeDe } from '../datos/clienteCrm'
 import { useCarga } from '../datos/useCarga'
 import { Cargando, ErrorCarga, fechaHora, Icono, plural, useAvisar, useTituloCrm, Vacio, type NombreIcono } from '../ui'
 import { useLider } from './contexto'
+import CuentaCorreo from './CuentaCorreo'
 import './administracion.css'
 
 /** El servidor devuelve a lo sumo estos (los más recientes). */
@@ -238,6 +241,8 @@ export default function CorreosLider() {
         </div>
       </header>
 
+      <CuentaCorreo />
+
       <div className="crm-la-barra">
         <div className="crm-la-segmentos" role="group" aria-label="Mostrar los correos">
           {FILTROS.map((f) => (
@@ -266,7 +271,10 @@ export default function CorreosLider() {
       {haySinConfigurar && estado !== 'error' ? (
         <div className="crm-la-nota">
           <Icono nombre="info" tamano={20} />
-          <p>El correo todavía no está configurado en el servidor. Cuando lo configuren, use «Reintentar» para enviar los pendientes.</p>
+          <p>
+            Algunos avisos no salieron porque el correo no estaba configurado. La cuenta se configura aquí arriba, en «Cuenta de envío»;
+            después use «Reintentar» para enviarlos.
+          </p>
         </div>
       ) : null}
 

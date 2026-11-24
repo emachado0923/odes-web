@@ -45,6 +45,13 @@ Las marcadas como **secreto** conviene guardarlas en Secret Manager y referencia
 Sin `CRM_CORREO_USUARIO` y `CRM_CORREO_CLAVE` el CRM funciona igual, pero no envía correos (los
 avisos quedan «sin configurar» en la bandeja del líder, que los puede reintentar después).
 
+**Sin variables `CRM_CORREO_*`, el líder puede guardar la cuenta desde `/crm/lider/correos`**
+(cuenta, contraseña de aplicación y, para @sapiencia.gov.co en Google Workspace, el servidor
+`smtp.gmail.com`). Queda en la tabla `crm_correo_cuenta` con la contraseña cifrada con una llave
+derivada de `CRM_CORREO_LLAVE` o, sin ella, de la contraseña de la base (`REPOSITORIO_MYSQL_PASSWORD`);
+nunca se devuelve. Si existen las variables, mandan ellas y la pantalla solo las muestra. Si cambia
+ese secreto (se rota la contraseña de la base), el líder vuelve a escribir la contraseña de aplicación.
+
 | Variable | Valor |
 | --- | --- |
 | `CRM_CORREO_USUARIO` | La cuenta que envía los avisos; también es el remitente. |
@@ -56,6 +63,7 @@ avisos quedan «sin configurar» en la bandeja del líder, que los puede reinten
 | `CRM_CORREO_MODO` | Opcional: `smtp` (por defecto si hay usuario y clave) o `desactivado`. El modo `archivo` no sirve en Cloud Run (el disco se borra). |
 | `CRM_CORREO_DIRECTORIO` | No se pone en Cloud Run: es la carpeta de los `.eml` del modo `archivo`. |
 | `CRM_URL_SITIO` | `https://odes-web-327402776385.us-central1.run.app` (base de los enlaces de los correos; opcional). |
+| `CRM_CORREO_LLAVE` | Opcional, **secreto**: de dónde sale la llave que cifra la contraseña que guarda el líder (mínimo 16 caracteres, p. ej. `openssl rand -base64 32`). Sin ella se usa la contraseña de la base. |
 
 Microsoft 365 está retirando la autenticación básica de SMTP: con una cuenta @sapiencia.gov.co puede
 no funcionar. Con Gmail y una contraseña de aplicación sí.
@@ -73,6 +81,10 @@ llega antes que la migración, toda la API de la base responde 503 hasta migrar)
    del equipo no se sube al repositorio.
 3. Poner las variables `CRM_*` de arriba en Cloud Run (`CRM_CORREO_CLAVE` desde Secret Manager).
 4. Después, el push (Cloud Build construye y despliega la imagen).
+
+**Versión con la cuenta guardada por el líder** (el servidor exige el esquema 11): antes del push,
+migrar planeacionbd a la 11 (`011-crm-cuenta-correo.sql`) y dar a `sapiencia_web` el GRANT de
+`crm_correo_cuenta` (`apps/server/db/repositorio/LEEME.md`, «CRM: cuenta de correo (versión 11)»).
 
 ### Detrás de Cloud Run
 

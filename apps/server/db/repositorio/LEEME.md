@@ -303,6 +303,34 @@ dos se pueden repetir: el equipo se actualiza por correo (el líder del archivo
 queda como único líder; quien no esté en el archivo no se toca), y la clave
 nueva cierra las sesiones del líder y levanta su bloqueo por intentos fallidos.
 
+## CRM: cuenta de correo (versión 11)
+
+La migración 011 (24 de noviembre de 2026) crea `crm_correo_cuenta`, de una
+sola fila (`id = 1`): la cuenta con la que salen los avisos del CRM cuando el
+servidor no tiene las variables `CRM_CORREO_*`. Si las tiene, mandan ellas y la
+fila no se usa. La guarda el líder desde `/crm/lider/correos`.
+
+| Columna | Qué guarda |
+| --- | --- |
+| `usuario` | La cuenta, que también es el remitente. |
+| `clave_cifrada` | La contraseña de aplicación cifrada con AES-256-GCM (`v1.` + base64url). Nunca se devuelve. La llave no está en la base: se deriva (HKDF-SHA256) de `CRM_CORREO_LLAVE` o, sin ella, de la contraseña de la base de la aplicación. Si ese secreto cambia, la contraseña deja de leerse y el líder la escribe otra vez. |
+| `host`, `puerto`, `seguro` | El servidor SMTP (`smtp.gmail.com`, 465 y TLS para Gmail y Google Workspace). |
+| `nombre` | Nombre visible del remitente. |
+| `actualizado_en`, `actualizado_por` | Cuándo la guardó y quién (el nombre de la sesión del líder). |
+
+**Primero migrar, después desplegar**: el servidor exige la versión 11 (con
+una base en la 10, toda la API de la base responde 503). Con
+`npm run repositorio:migrar -- --usuario <cuenta_admin>`, o a mano: pegue
+`migraciones/011-crm-cuenta-correo.sql` (o la de `postgres/migraciones/`) y
+registre la versión
+(`INSERT IGNORE INTO sistema_esquema_version (version, descripcion) VALUES (11, 'crm-cuenta-correo');`).
+
+**Permisos en `planeacionbd`.** Como las demás, la tabla necesita su GRANT:
+
+```sql
+GRANT SELECT, INSERT, UPDATE, DELETE ON planeacionbd.crm_correo_cuenta TO 'sapiencia_web'@'%';
+```
+
 ## Paso a la versión 4 (nombres por módulo)
 
 Hasta la versión 3 las tablas del repositorio y del tablero no tenían

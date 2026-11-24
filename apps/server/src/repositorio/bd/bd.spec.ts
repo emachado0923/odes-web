@@ -50,6 +50,11 @@ function tablasDe(sql: string): string[] {
   return [...sql.matchAll(/CREATE TABLE IF NOT EXISTS (\w+)/g)].map((m) => m[1]);
 }
 
+/** Columnas de una tabla en un guion, en orden (las líneas «  nombre TIPO …» en minúscula). */
+function columnas(sql: string): string[] {
+  return [...sql.matchAll(/^ {2}([a-z_]+) +\S/gm)].map((m) => m[1]);
+}
+
 /** Nombres de llaves, índices y CHECK del CRM en un guion (sin comentarios). */
 function nombresCrmDe(sql: string): Set<string> {
   return new Set(sql.match(/\b(?:uq|ix|fk|ck)_crm_\w+/g));
@@ -76,8 +81,8 @@ describe('guion del esquema', () => {
       for (const m of sql.matchAll(/CREATE TABLE IF NOT EXISTS\s+`?(\w+)`?/gi)) creadas.add(m[1]);
     }
     // 39 + las 8 del tablero de los fondos (007) + las 3 del acceso a tableros (008) + las 2 de la consulta (009)
-    // + las 10 del CRM (010).
-    expect(creadas.size).toBe(62);
+    // + las 10 del CRM (010) + la cuenta de correo del CRM (011).
+    expect(creadas.size).toBe(63);
     expect([...creadas].filter((tabla) => !PREFIJOS.test(tabla))).toEqual([]);
     // SIVU: el catálogo sivu_tableros, por cada tablero sivu_tablero_<tablero>_<tabla> y el acceso a
     // los tableros privados, sivu_acceso_<tabla> (migración 008).
@@ -188,6 +193,34 @@ describe('guion del esquema', () => {
         expect(copiadas.length).toBeGreaterThanOrEqual(5);
         expect(copiadas.filter((s) => !en010.includes(s))).toEqual([]);
       }
+    });
+  });
+
+  describe('migración 011 (cuenta de correo del CRM)', () => {
+    const mysql = readFileSync(join(DIRECTORIO_MIGRACIONES, '011-crm-cuenta-correo.sql'), 'utf8').replace(/--[^\n]*/g, '');
+    const postgres = readFileSync(join(DIRECTORIO_MIGRACIONES_POSTGRES, '011-crm-cuenta-correo.sql'), 'utf8').replace(
+      /--[^\n]*/g,
+      '',
+    );
+    it('crea crm_correo_cuenta en los dos motores, de una sola fila (CHECK id = 1, sin autoincremento), sin tocar sistema_esquema_version', () => {
+      expect(tablasDe(mysql)).toEqual(['crm_correo_cuenta']);
+      expect(tablasDe(postgres)).toEqual(['crm_correo_cuenta']);
+      // MySQL: una sentencia que se puede repetir, sin # (el divisor lo toma por comentario).
+      expect(dividirSentencias(mysql)).toHaveLength(1);
+      expect(mysql).not.toContain('#');
+      for (const sql of [mysql, postgres]) {
+        expect(sql).toMatch(/CONSTRAINT ck_crm_correo_cuenta_id CHECK \(id = 1\)/);
+        expect(sql).not.toMatch(/AUTO_INCREMENT|IDENTITY/);
+        expect(sql).not.toMatch(/INSERT\s+(IGNORE\s+)?INTO/i);
+      }
+      expect(TABLAS_CON_ID.has('crm_correo_cuenta')).toBe(false);
+      const esperadas = ['id', 'usuario', 'clave_cifrada', 'host', 'puerto', 'seguro', 'nombre', 'actualizado_en', 'actualizado_por'];
+      expect(columnas(mysql)).toEqual(esperadas);
+      expect(columnas(postgres)).toEqual(esperadas);
+      expect(nombresCrmDe(postgres)).toEqual(nombresCrmDe(mysql));
+      // Postgres: RLS y sin permisos para la API pública de Supabase.
+      expect([...postgres.matchAll(/ALTER TABLE (\w+) ENABLE ROW LEVEL SECURITY/g)].map((m) => m[1])).toEqual(['crm_correo_cuenta']);
+      expect(postgres).toMatch(/REVOKE ALL ON crm_correo_cuenta FROM anon, authenticated/);
     });
   });
 

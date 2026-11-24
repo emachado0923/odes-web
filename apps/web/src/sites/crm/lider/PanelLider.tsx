@@ -23,8 +23,8 @@ function AvisosCorreo({ correo }: { correo: ResumenLiderCrm['correo'] }) {
         <div className="crm-li-nota">
           <Icono nombre="info" tamano={20} className="crm-li-nota-icono" />
           <p>
-            El correo todavía no está configurado: los avisos quedan en la bandeja y saldrán cuando se configure.{' '}
-            <Link to="/crm/lider/correos">Ver la bandeja de correos</Link>
+            El correo todavía no está configurado: los avisos quedan guardados y no salen.{' '}
+            <Link to="/crm/lider/correos">Configurar el correo</Link>
           </p>
         </div>
       ) : null}

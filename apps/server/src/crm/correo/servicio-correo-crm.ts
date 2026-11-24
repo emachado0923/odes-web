@@ -9,8 +9,14 @@
  * instancias) no salen dos veces: antes de enviar, `enviar` «reclama» la fila
  * con un UPDATE condicional sobre ultimo_intento_en; un intento que quedó a
  * medias (la instancia se apagó) se puede reclamar pasados 60 s.
+ *
+ * Con qué cuenta sale cada correo: si las variables CRM_CORREO_* configuran el
+ * correo (modo distinto de 'desactivado'), con ellas, como siempre; si no, con
+ * la cuenta que el líder guardó en la base (crm_correo_cuenta, ver
+ * cuenta-correo.ts), releída antes de cada envío. Su transporte se guarda
+ * mientras la cuenta no cambie (actualizado_en).
  */
-import { Inject, Injectable, Logger, type OnModuleInit } from '@nestjs/common';
+import { Inject, Injectable, Logger, type OnModuleInit, Optional } from '@nestjs/common';
 import type { RowDataPacket } from 'mysql2/promise';
 import type { CorreoCrm, EstadoAvisoCrm, EstadoCorreo, TipoCorreoCrm } from '../api-crm.js';
 import { ServicioArchivosCrm } from '../archivos/servicio-archivos-crm.js';
@@ -24,6 +30,14 @@ import {
   describirConfiguracionCorreoCrm,
 } from './configuracion-correo.js';
 import {
+  CACHE_CUENTA_MS,
+  configuracionDeCuenta,
+  CORREO_PRUEBA,
+  describirCuentaGuardada,
+  type ResultadoEnvioDirecto,
+  ServicioCuentaCorreoCrm,
+} from './cuenta-correo.js';
+import {
   conTiempoLimite,
   type CorreoSalienteCrm,
   crearTransporteCrm,
@@ -31,6 +45,17 @@ import {
   TIEMPOS_CORREO_CRM,
   type TransporteCrm,
 } from './transporte.js';
+
+/**
+ * Crea el transporte de una configuración. El módulo da crearTransporteCrm;
+ * las pruebas lo reemplazan (FABRICA_TRANSPORTE_CORREO_CRM) por uno falso.
+ */
+export type FabricaTransporteCrm = (
+  config: ConfiguracionCorreoCrm,
+  alArmarEnMemoria: (correo: CorreoSalienteCrm) => void,
+) => TransporteCrm | null;
+
+export const FABRICA_TRANSPORTE_CORREO_CRM = Symbol('FABRICA_TRANSPORTE_CORREO_CRM');
 
 export interface MensajeCrm {
   tipo: TipoCorreoCrm;
@@ -152,34 +177,123 @@ function codigoDe(error: unknown): string {
 export class ServicioCorreoCrm implements OnModuleInit {
   private readonly registro = new Logger('CRM');
   private readonly enMemoria: MensajeEnviadoCrm[] = [];
-  private readonly transporte: TransporteCrm | null;
+  /** Modo 'memoria': guarda cada correo armado (pruebas). */
+  private readonly guardarEnMemoria = (correo: CorreoSalienteCrm): void => {
+    this.enMemoria.push({
+      correoId: correo.correoId,
+      para: correo.para,
+      responderA: correo.responderA,
+      asunto: correo.asunto,
+      texto: correo.texto,
+      html: correo.html,
+      adjuntos: correo.adjuntos.map((a) => ({ nombre: a.nombre, mime: a.mime, bytes: a.contenido.length })),
+    });
+  };
+  private readonly fabrica: FabricaTransporteCrm;
+  /** El de las variables CRM_CORREO_* (null si están en 'desactivado'). */
+  private readonly transporteVariables: TransporteCrm | null;
+  /** El de la cuenta de la base, mientras no cambie (`marca`). */
+  private transporteBase: { marca: string; config: ConfiguracionCorreoCrm; transporte: TransporteCrm | null } | null =
+    null;
 
   constructor(
     @Inject(BaseDatosRepositorio) private readonly bd: BaseDatosRepositorio,
     @Inject(CONFIGURACION_CORREO_CRM) private readonly config: ConfiguracionCorreoCrm,
     @Inject(ServicioArchivosCrm) private readonly archivos: ServicioArchivosCrm,
+    @Optional() @Inject(ServicioCuentaCorreoCrm) private readonly cuentas: ServicioCuentaCorreoCrm | null = null,
+    @Optional() @Inject(FABRICA_TRANSPORTE_CORREO_CRM) fabrica: FabricaTransporteCrm | null = null,
   ) {
-    this.transporte = crearTransporteCrm(config, (correo) => {
-      this.enMemoria.push({
-        correoId: correo.correoId,
-        para: correo.para,
-        responderA: correo.responderA,
-        asunto: correo.asunto,
-        texto: correo.texto,
-        html: correo.html,
-        adjuntos: correo.adjuntos.map((a) => ({ nombre: a.nombre, mime: a.mime, bytes: a.contenido.length })),
-      });
-    });
+    this.fabrica = fabrica ?? crearTransporteCrm;
+    this.transporteVariables = this.fabrica(config, this.guardarEnMemoria);
   }
 
-  /** Una línea en el log al arrancar: modo, servidor y cuenta (nunca la clave). */
+  /**
+   * Una línea en el log al arrancar: modo, servidor y cuenta (nunca la clave).
+   * Sin variables, dice además si hay cuenta guardada en la base (lo lee sin
+   * demorar el arranque).
+   */
   onModuleInit(): void {
-    this.registro.log(describirConfiguracionCorreoCrm(this.config));
+    const cuentas = this.cuentas;
+    if (this.mandanVariables || !cuentas || !this.bd.configurada) {
+      this.registro.log(describirConfiguracionCorreoCrm(this.config));
+      return;
+    }
+    void cuentas.guardada().then(
+      (cuenta) => this.registro.log(describirCuentaGuardada(cuenta)),
+      () => this.registro.log(describirConfiguracionCorreoCrm(this.config)),
+    );
   }
 
-  /** Hay cuenta de correo (modo 'smtp', 'archivo' o 'memoria'). */
-  get configurado(): boolean {
+  /** Las variables CRM_CORREO_* configuran el correo: mandan sobre la cuenta de la base. */
+  private get mandanVariables(): boolean {
     return this.config.modo !== 'desactivado';
+  }
+
+  /**
+   * Hay con qué enviar: las variables (modo 'smtp', 'archivo' o 'memoria') o,
+   * sin ellas, una cuenta guardada en la base con su contraseña legible (leída
+   * como mucho cada CACHE_CUENTA_MS). Con `conexion`, la lectura va por ella
+   * (dentro de la transacción del llamador, sin pedir otra conexión al pool).
+   * Si la lectura falla responde false: el correo queda «sin configurar» y
+   * `enviar` vuelve a mirar.
+   */
+  async estaConfigurado(conexion?: Conexion): Promise<boolean> {
+    if (this.mandanVariables) return true;
+    if (!this.cuentas) return false;
+    try {
+      const cuenta = await this.cuentas.guardada({ maxEdadMs: CACHE_CUENTA_MS, conexion });
+      return cuenta !== null && cuenta.clave !== null;
+    } catch (error) {
+      this.registro.warn(`No se pudo leer la cuenta de correo guardada (${codigoDe(error)}).`);
+      return false;
+    }
+  }
+
+  /**
+   * Configuración y transporte con que sale un correo ahora. Sin variables,
+   * relee la cuenta de la base (una fila): así se nota un cambio hecho en
+   * otra instancia. Lanza si la base falla.
+   */
+  private async efectiva(): Promise<{ config: ConfiguracionCorreoCrm; transporte: TransporteCrm | null }> {
+    if (this.mandanVariables || !this.cuentas) return { config: this.config, transporte: this.transporteVariables };
+    const cuenta = await this.cuentas.guardada();
+    if (!cuenta || cuenta.clave === null) {
+      this.transporteBase = null;
+      return { config: this.config, transporte: null };
+    }
+    const marca = [cuenta.actualizadoEn.getTime(), cuenta.usuario, cuenta.host, cuenta.puerto, cuenta.seguro, cuenta.nombre].join('|');
+    if (this.transporteBase?.marca !== marca) {
+      const config = configuracionDeCuenta({ ...cuenta, clave: cuenta.clave }, this.config);
+      this.transporteBase = { marca, config, transporte: this.fabrica(config, this.guardarEnMemoria) };
+    }
+    return { config: this.transporteBase.config, transporte: this.transporteBase.transporte };
+  }
+
+  /**
+   * Envía ya el correo de prueba del líder con la cuenta efectiva (no se
+   * guarda en crm_correos). Nunca lanza por el transporte: devuelve el error
+   * para traducirlo (resultadoPrueba). Lanza solo si la base falla.
+   */
+  async enviarPrueba(para: string): Promise<ResultadoEnvioDirecto> {
+    const { config, transporte } = await this.efectiva();
+    if (!transporte) return { estado: 'sin_configurar' };
+    try {
+      await conTiempoLimite(
+        transporte.enviar({
+          correoId: 0,
+          para,
+          responderA: null,
+          asunto: CORREO_PRUEBA.asunto,
+          texto: CORREO_PRUEBA.texto,
+          html: CORREO_PRUEBA.html,
+          adjuntos: [],
+        }),
+        TIEMPOS_CORREO_CRM.total,
+      );
+      return { estado: 'enviado', smtp: config.smtp };
+    } catch (error) {
+      return { estado: 'error', error, smtp: config.smtp };
+    }
   }
 
   /** CRM_URL_SITIO, o null (el llamador usa entonces el origen de la petición). */
@@ -192,6 +306,7 @@ export class ServicioCorreoCrm implements OnModuleInit {
     const adjuntos = JSON.stringify(idsAdjuntos(mensaje.adjuntos));
     if (adjuntos.length > 1000) throw new Error('Demasiados adjuntos para un correo del CRM.');
     const responderA = mensaje.responderA === null ? '' : enUnaLinea(mensaje.responderA, 254);
+    const estado = (await this.estaConfigurado(conexion)) ? 'pendiente' : 'sin_configurar';
     const [resultado] = await conexion.query<ResultadoEscritura>(
       `INSERT INTO crm_correos
          (tarea_id, tipo, para, responder_a, asunto, cuerpo_texto, cuerpo_html, adjuntos, estado, intentos, creado_en)
@@ -205,7 +320,7 @@ export class ServicioCorreoCrm implements OnModuleInit {
         mensaje.texto,
         mensaje.html,
         adjuntos,
-        this.configurado ? 'pendiente' : 'sin_configurar',
+        estado,
         new Date(),
       ],
     );
@@ -237,7 +352,8 @@ export class ServicioCorreoCrm implements OnModuleInit {
     if (!fila) return { correoId, estado: 'error', mensaje: 'El correo no existe.' };
     if (fila.estado === 'enviado') return { correoId, estado: 'enviado', mensaje: MENSAJE_ENVIADO };
 
-    if (!this.transporte) {
+    const { config, transporte } = await this.efectiva();
+    if (!transporte) {
       await this.bd.ejecutar(
         `UPDATE crm_correos SET estado = 'sin_configurar' WHERE id = ? AND estado <> 'enviado'`,
         [correoId],
@@ -271,9 +387,9 @@ export class ServicioCorreoCrm implements OnModuleInit {
     let idMensaje: string | null;
     try {
       const correo = await this.armar(fila);
-      ({ idMensaje } = await conTiempoLimite(this.transporte.enviar(correo), TIEMPOS_CORREO_CRM.total));
+      ({ idMensaje } = await conTiempoLimite(transporte.enviar(correo), TIEMPOS_CORREO_CRM.total));
     } catch (error) {
-      const descrito = describirErrorCorreo(error, this.config.smtp);
+      const descrito = describirErrorCorreo(error, config.smtp);
       this.registro.warn(`Correo ${correoId} (${fila.tipo}): no salió [${descrito.codigo}].`);
       await this.bd.ejecutar(
         `UPDATE crm_correos SET estado = 'error', intentos = intentos + 1, ultimo_error = ? WHERE id = ?`,

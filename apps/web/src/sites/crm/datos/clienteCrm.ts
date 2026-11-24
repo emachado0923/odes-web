@@ -21,16 +21,20 @@ import {
   type ArchivoCrm,
   type CodigoErrorCrm,
   type CorreoCrm,
+  type CuentaCorreoCrm,
   type EdicionPersonaCrm,
   type EdicionTareaCrm,
   type EstadoAvisoCrm,
   type EstadoCorreo,
   type EstadoTarea,
+  type GuardarCuentaCorreoCrm,
   type NuevaPersonaCrm,
   type NuevaTareaCrm,
   type PersonaAdminCrm,
   type PersonaCrm,
+  type PruebaCorreoCrm,
   type ResultadoDevolverCrm,
+  type ResultadoPruebaCorreoCrm,
   type ResultadoTerminarCrm,
   type ResumenLiderCrm,
   type SesionLiderCrm,
@@ -418,6 +422,23 @@ export function crearApiLider(csrf: string) {
     },
     reintentarCorreo(id: number): Promise<CorreoCrm> {
       return pedirJson<CorreoCrm>('POST', `/lider/correos/${id}/reintentar`, undefined, op)
+    },
+    /** La cuenta desde la que salen los avisos (nunca trae la contraseña). */
+    correoCuenta(signal?: AbortSignal): Promise<CuentaCorreoCrm> {
+      return pedirJson<CuentaCorreoCrm>('GET', '/lider/correo/cuenta', undefined, { signal })
+    },
+    /** Sin `clave` (o vacía), el servidor conserva la guardada. */
+    guardarCorreoCuenta(datos: GuardarCuentaCorreoCrm): Promise<CuentaCorreoCrm> {
+      return pedirJson<CuentaCorreoCrm>('PUT', '/lider/correo/cuenta', datos, op)
+    },
+    borrarCorreoCuenta(): Promise<CuentaCorreoCrm> {
+      return pedirJson<CuentaCorreoCrm>('DELETE', '/lider/correo/cuenta', undefined, op)
+    },
+    /** Correo de prueba con la cuenta efectiva: a `para` o, vacío, al líder. */
+    probarCorreo(para?: string): Promise<ResultadoPruebaCorreoCrm> {
+      const destino = para?.trim()
+      const cuerpo: PruebaCorreoCrm = destino ? { para: destino } : {}
+      return pedirJson<ResultadoPruebaCorreoCrm>('POST', '/lider/correo/prueba', cuerpo, op)
     },
     personas(signal?: AbortSignal): Promise<PersonaAdminCrm[]> {
       return pedirJson<PersonaAdminCrm[]>('GET', '/lider/personas', undefined, { signal })

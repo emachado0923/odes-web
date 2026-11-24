@@ -192,6 +192,33 @@ describe('rutas', () => {
     expect(peticion(3)).toMatchObject({ url: '/api/crm/lider/correos/8/reintentar', metodo: 'POST' })
     expect(peticion(3).cabeceras[CABECERA_CSRF]).toBe('token-1')
   })
+
+  it('de la cuenta de correo: consulta, guarda, borra y prueba; las que cambian algo llevan el CSRF', async () => {
+    fetchSimulado.mockImplementation(async () => respuesta(200, {}))
+    const api = crearApiLider('token-1')
+    await api.correoCuenta()
+    await api.guardarCorreoCuenta({ usuario: 'odes-web@sapiencia.gov.co', clave: 'abcd efgh ijkl mnop', host: 'smtp.gmail.com' })
+    await api.borrarCorreoCuenta()
+    await api.probarCorreo()
+    await api.probarCorreo('  jose@sapiencia.gov.co ')
+    await api.probarCorreo('   ')
+
+    expect([0, 1, 2, 3, 4, 5].map((i) => `${peticion(i).metodo} ${peticion(i).url}`)).toEqual([
+      'GET /api/crm/lider/correo/cuenta',
+      'PUT /api/crm/lider/correo/cuenta',
+      'DELETE /api/crm/lider/correo/cuenta',
+      'POST /api/crm/lider/correo/prueba',
+      'POST /api/crm/lider/correo/prueba',
+      'POST /api/crm/lider/correo/prueba',
+    ])
+    expect(peticion(0).cabeceras[CABECERA_CSRF]).toBeUndefined()
+    for (const i of [1, 2, 3, 4, 5]) expect(peticion(i).cabeceras[CABECERA_CSRF]).toBe('token-1')
+    expect(peticion(1).cuerpo).toEqual({ usuario: 'odes-web@sapiencia.gov.co', clave: 'abcd efgh ijkl mnop', host: 'smtp.gmail.com' })
+    expect(peticion(2).init.body).toBeUndefined()
+    expect(peticion(3).cuerpo).toEqual({})
+    expect(peticion(4).cuerpo).toEqual({ para: 'jose@sapiencia.gov.co' })
+    expect(peticion(5).cuerpo).toEqual({})
+  })
 })
 
 // ── Subidas (XMLHttpRequest) ────────────────────────────────────────────────

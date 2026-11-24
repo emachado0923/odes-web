@@ -9,8 +9,12 @@ import {
   RepositorioProductosModule,
 } from '../repositorio/repositorio-productos.module.js';
 import { ServicioArchivosCrm } from './archivos/servicio-archivos-crm.js';
+import { crearLlaveCuentaCorreoCrm, LLAVE_CUENTA_CORREO_CRM } from './correo/cifrado-cuenta.js';
 import { CONFIGURACION_CORREO_CRM, cargarConfiguracionCorreoCrm } from './correo/configuracion-correo.js';
-import { ServicioCorreoCrm } from './correo/servicio-correo-crm.js';
+import { CuentaCorreoLiderCrmController } from './correo/cuenta-correo.controller.js';
+import { ServicioCuentaCorreoCrm } from './correo/cuenta-correo.js';
+import { FABRICA_TRANSPORTE_CORREO_CRM, ServicioCorreoCrm } from './correo/servicio-correo-crm.js';
+import { crearTransporteCrm } from './correo/transporte.js';
 import { PersonasCrmController, PersonasLiderCrmController } from './personas/personas.controller.js';
 import { ServicioPersonasCrm } from './personas/servicio-personas-crm.js';
 import { GuardiaLiderCrm } from './sesion/guardia-lider.js';
@@ -33,14 +37,17 @@ import { TareasLiderCrmController } from './tareas/tareas-lider.controller.js';
  *   /api/crm/personas/:id/tareas[...]     tareas/     (tablero de cada persona)
  *   /api/crm/lider/resumen, /tareas[...]  tareas/     (panel del líder)
  *   /api/crm/lider/correos[...]           tareas/     (bandeja de correos)
+ *   /api/crm/lider/correo/cuenta, /prueba correo/     (cuenta de correo guardada por el líder)
  *   archivos/  almacén crm_almacen_* y validación de archivos
- *   correo/    configuración (CRM_CORREO_*), plantillas y envío (crm_correos)
+ *   correo/    configuración (CRM_CORREO_*, o la cuenta cifrada de crm_correo_cuenta),
+ *              plantillas y envío (crm_correos)
  *
  * Este archivo registra TODOS los controladores y proveedores del CRM: cada
  * parte implementa sus archivos sin editarlo.
  *
  * Sin base configurada el servidor arranca igual y /api/crm/* responde 503.
- * Sin CRM_CORREO_* el CRM funciona y los correos quedan «sin configurar».
+ * Sin CRM_CORREO_* el CRM funciona y los correos quedan «sin configurar»
+ * hasta que el líder guarde la cuenta en /crm/lider/correos (migración 011).
  */
 @Module({
   imports: [
@@ -60,6 +67,7 @@ import { TareasLiderCrmController } from './tareas/tareas-lider.controller.js';
     TareasEquipoCrmController,
     TareasLiderCrmController,
     CorreosLiderCrmController,
+    CuentaCorreoLiderCrmController,
   ],
   providers: [
     ServicioSesionesCrm,
@@ -68,7 +76,14 @@ import { TareasLiderCrmController } from './tareas/tareas-lider.controller.js';
     ServicioTareasCrm,
     ServicioArchivosCrm,
     ServicioCorreoCrm,
+    ServicioCuentaCorreoCrm,
     { provide: CONFIGURACION_CORREO_CRM, useFactory: () => cargarConfiguracionCorreoCrm(process.env) },
+    {
+      provide: LLAVE_CUENTA_CORREO_CRM,
+      useFactory: (config: ConfiguracionRepositorio) => crearLlaveCuentaCorreoCrm(process.env, config),
+      inject: [CONFIGURACION_REPOSITORIO],
+    },
+    { provide: FABRICA_TRANSPORTE_CORREO_CRM, useValue: crearTransporteCrm },
   ],
 })
 export class CrmModule {}

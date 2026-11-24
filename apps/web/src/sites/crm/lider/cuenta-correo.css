@@ -1,0 +1,263 @@
+/*
+ * «Cuenta de envío» (CuentaCorreo, arriba de la bandeja de correos) y sus
+ * diálogos. Todo bajo .crm, con el prefijo crm-cc- y los tokens de crm.css:
+ * sin colores nuevos. La sección solo informa (no se pulsa): va sin caja
+ * blanca, con el filete de su estado a la izquierda; sin cuenta, en naranja
+ * y con su texto, porque los avisos no salen.
+ */
+
+/* ───────── Sección ───────── */
+
+:where(.crm) .crm-cc {
+  display: grid;
+  justify-items: start;
+  gap: var(--crm-e2);
+  max-width: 52rem;
+  margin-bottom: var(--crm-e5);
+  padding: var(--crm-e4) var(--crm-e5) var(--crm-e4) var(--crm-e4);
+  border: 1px solid color-mix(in srgb, var(--crm-azul) 22%, white);
+  border-left: 4px solid var(--crm-azul);
+  border-radius: var(--crm-radio);
+  background: var(--crm-fondo-azul);
+  color: var(--crm-tinta);
+}
+
+:where(.crm) .crm-cc[data-origen='ninguna'] {
+  border-color: color-mix(in srgb, var(--crm-naranja) 35%, white);
+  border-left-color: var(--crm-naranja);
+  background: var(--crm-proceso-suave);
+}
+
+:where(.crm) .crm-cc > * {
+  max-width: 100%;
+  min-width: 0;
+}
+
+:where(.crm) .crm-cc-titulo {
+  display: flex;
+  align-items: center;
+  gap: var(--crm-e2);
+  margin: 0;
+  font-size: var(--crm-t-l);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--crm-azul);
+}
+
+:where(.crm) .crm-cc[data-origen='ninguna'] .crm-cc-titulo .crm-icono {
+  color: var(--crm-proceso-texto);
+}
+
+:where(.crm) .crm-cc-texto {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+:where(.crm) .crm-cc-falta {
+  font-weight: 600;
+  color: var(--crm-proceso-texto);
+}
+
+:where(.crm) .crm-cc-cuenta {
+  font-weight: 600;
+  color: var(--crm-azul-hondo);
+}
+
+:where(.crm) .crm-cc-detalle {
+  margin: 0;
+  font-size: var(--crm-t-s);
+  line-height: 1.4;
+  color: var(--crm-tinta-suave);
+}
+
+:where(.crm) .crm-cc-detalle[data-tono='error'] {
+  font-weight: 500;
+  color: var(--crm-rojo-texto);
+}
+
+:where(.crm) .crm-cc-modo {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.375rem;
+  margin: 0;
+  font-size: var(--crm-t-s);
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--crm-proceso-texto);
+}
+
+:where(.crm) .crm-cc-modo .crm-icono {
+  margin-top: 0.0625rem;
+}
+
+:where(.crm) .crm-cc-acciones {
+  margin-top: var(--crm-e2);
+}
+
+/* ───────── Formulario ───────── */
+
+:where(.crm) .crm-cc-error {
+  margin: 0;
+}
+
+/* Contraseña con «mostrar». */
+:where(.crm) .crm-cc-clave {
+  position: relative;
+}
+
+:where(.crm) .crm-cc-clave .crm-control {
+  padding-right: 3.25rem;
+}
+
+:where(.crm) .crm-cc-clave .crm-cc-ver {
+  position: absolute;
+  top: 50%;
+  right: 0.25rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  transform: translateY(-50%);
+}
+
+:where(.crm) .crm-cc-clave .crm-cc-ver[aria-pressed='true'] {
+  color: var(--crm-azul);
+}
+
+:where(.crm) .crm-cc-puerto {
+  max-width: 9rem;
+}
+
+/* Opciones avanzadas: plegadas; con un error adentro se abren solas. */
+:where(.crm) .crm-cc-avanzadas {
+  border: 1px solid var(--crm-borde);
+  border-radius: var(--crm-radio);
+  background: var(--crm-fondo);
+}
+
+:where(.crm) .crm-cc-avanzadas > summary {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.875rem;
+  border-radius: var(--crm-radio);
+  color: var(--crm-azul);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  list-style: none;
+  cursor: pointer;
+}
+
+:where(.crm) .crm-cc-avanzadas > summary::-webkit-details-marker {
+  display: none;
+}
+
+:where(.crm) .crm-cc-avanzadas > summary::before {
+  content: '';
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform var(--crm-rapido);
+}
+
+:where(.crm) .crm-cc-avanzadas[open] > summary::before {
+  transform: rotate(45deg);
+}
+
+:where(.crm) .crm-cc-avanzadas > summary:hover {
+  background: var(--crm-fondo-azul);
+}
+
+:where(.crm) .crm-cc-avanzadas > summary:focus-visible {
+  outline: 3px solid var(--crm-foco);
+  outline-offset: 2px;
+}
+
+:where(.crm) .crm-cc-avanzadas-cuerpo {
+  display: grid;
+  gap: 1.25rem;
+  padding: var(--crm-e2) var(--crm-e4) var(--crm-e4);
+}
+
+/* ───────── Prueba y confirmación ───────── */
+
+:where(.crm) .crm-cc-guardada {
+  display: flex;
+  align-items: center;
+  gap: var(--crm-e2);
+  margin: 0;
+  font-weight: 600;
+  color: var(--crm-terminada-texto);
+}
+
+/* Recibe el foco por código (no con Tab): sin anillo. */
+:where(.crm) .crm-cc-guardada:focus {
+  outline: none;
+}
+
+:where(.crm) .crm-cc-resultado {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--crm-e3);
+  margin-top: var(--crm-e4);
+  padding: var(--crm-e3) var(--crm-e4);
+  border: 1px solid var(--crm-borde);
+  border-left: 4px solid var(--crm-borde-fuerte);
+  border-radius: var(--crm-radio);
+  background: var(--crm-fondo);
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+:where(.crm) .crm-cc-resultado p {
+  margin: 0;
+}
+
+:where(.crm) .crm-cc-resultado > .crm-icono {
+  flex: none;
+  margin-top: 0.0625rem;
+}
+
+:where(.crm) .crm-cc-resultado > .crm-giro {
+  margin-top: 0.25rem;
+}
+
+:where(.crm) .crm-cc-resultado-texto {
+  display: grid;
+  gap: var(--crm-e1);
+}
+
+:where(.crm) .crm-cc-resultado[data-tono='enviando'] {
+  color: var(--crm-tinta-suave);
+}
+
+:where(.crm) .crm-cc-resultado[data-tono='exito'] {
+  border-color: color-mix(in srgb, var(--crm-verde) 30%, white);
+  border-left-color: var(--crm-verde);
+  background: var(--crm-terminada-suave);
+}
+
+:where(.crm) .crm-cc-resultado[data-tono='exito'] > .crm-icono {
+  color: var(--crm-terminada-texto);
+}
+
+:where(.crm) .crm-cc-resultado[data-tono='error'] {
+  border-color: color-mix(in srgb, var(--crm-rojo) 30%, white);
+  border-left-color: var(--crm-rojo);
+  background: color-mix(in srgb, var(--crm-rojo) 5%, white);
+}
+
+:where(.crm) .crm-cc-resultado[data-tono='error'] > .crm-icono {
+  color: var(--crm-rojo);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.crm) .crm-cc-avanzadas > summary::before {
+    transition: none;
+  }
+}

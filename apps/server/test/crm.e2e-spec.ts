@@ -6,11 +6,13 @@ import {
   type ArchivoCrm,
   CABECERA_CSRF,
   type CorreoCrm,
+  type CuentaCorreoCrm,
   type EstadoAvisoCrm,
   LIMITES_CRM,
   type PersonaAdminCrm,
   type PersonaCrm,
   type ResultadoDevolverCrm,
+  type ResultadoPruebaCorreoCrm,
   type ResultadoTerminarCrm,
   type ResumenLiderCrm,
   type SesionLiderCrm,
@@ -18,8 +20,25 @@ import {
   type TareaCrm,
   type TareaDetalleCrm,
 } from '../src/crm/api-crm.js';
-import { CONFIGURACION_CORREO_CRM, cargarConfiguracionCorreoCrm } from '../src/crm/correo/configuracion-correo.js';
-import { type MensajeEnviadoCrm, ServicioCorreoCrm } from '../src/crm/correo/servicio-correo-crm.js';
+import {
+  CONFIGURACION_CORREO_CRM,
+  cargarConfiguracionCorreoCrm,
+  type ConfiguracionCorreoCrm,
+} from '../src/crm/correo/configuracion-correo.js';
+import {
+  MENSAJE_AUTH_GMAIL,
+  MENSAJE_CLAVE_FALTA,
+  MENSAJE_HOST_FALTA,
+  MENSAJE_MANDAN_VARIABLES,
+  TOPE_PRUEBAS_POR_HORA,
+} from '../src/crm/correo/cuenta-correo.js';
+import {
+  FABRICA_TRANSPORTE_CORREO_CRM,
+  type FabricaTransporteCrm,
+  type MensajeEnviadoCrm,
+  ServicioCorreoCrm,
+} from '../src/crm/correo/servicio-correo-crm.js';
+import { type CorreoSalienteCrm, crearTransporteCrm } from '../src/crm/correo/transporte.js';
 import { USUARIO_LIDER_CRM } from '../src/crm/sesion/servicio-sesiones-crm.js';
 import { MENSAJE_CORREO_SIN_CONFIGURAR } from '../src/crm/tareas/avisos-tareas.js';
 import {
@@ -57,8 +76,10 @@ import { pdfFalso, pngFalso } from './repositorio-fixtures.js';
  * con el correo al líder); la devolución; la bandeja de correos (también con
  * el correo desactivado, en una segunda app sobre la misma base); el doble
  * clic en «Terminar» y las terminadas antiguas; el tope por IP de las
- * peticiones del equipo; el cupo de entregables con un correo de más de 18 MB
- * y el bloqueo de la cuenta del líder. Al final, la carpeta temporal de las
+ * peticiones del equipo; el cupo de entregables con un correo de más de 18 MB;
+ * la cuenta de correo guardada por el líder (cifrada en crm_correo_cuenta, en
+ * una tercera app con el correo desactivado y un transporte smtp falso) y el
+ * bloqueo de la cuenta del líder. Al final, la carpeta temporal de las
  * subidas queda vacía. Aparte, sin base: /api/crm/* responde 503 (corre
  * siempre).
  */
@@ -1303,6 +1324,190 @@ describe.skipIf(!HAY_BD)(`CRM con ${MOTOR_PRUEBAS} (e2e)`, () => {
       const [ultimo] = (await lider.get('/lider/correos').expect(200)).body as CorreoCrm[];
       expect(ultimo).toMatchObject({ id: aviso.correoId, tipo: 'tarea_terminada', adjuntos: 4, estado: 'enviado' });
     }, 60_000);
+  });
+
+  // ── 9b. Cuenta de correo guardada por el líder ─────────────────────────────
+
+  describe('cuenta de correo guardada por el líder', () => {
+    const CUENTA = { usuario: 'planeacion.crm@gmail.com', clave: 'abcd efgh ijkl mnop' };
+    const CLAVE_SIN_ESPACIOS = 'abcdefghijklmnop';
+    /** Lo que recibió el transporte smtp falso: con qué configuración salió cada correo. */
+    const salidos: { config: ConfiguracionCorreoCrm; correo: CorreoSalienteCrm }[] = [];
+    let fallo: unknown = null;
+    const fabricaFalsa: FabricaTransporteCrm = (config, alArmar) =>
+      config.modo !== 'smtp'
+        ? crearTransporteCrm(config, alArmar)
+        : {
+            enviar(correo) {
+              if (fallo) return Promise.reject(fallo);
+              salidos.push({ config, correo });
+              return Promise.resolve({ idMensaje: `<falso-${salidos.length}@smtp.test>` });
+            },
+          };
+    /** Otra app sobre la misma base, sin variables de correo (modo desactivado) y con el transporte falso. */
+    let conBase: AppPrueba;
+    const cuenta = {
+      get: () => lider.get('/lider/correo/cuenta', conBase),
+      put: () => lider.mutar('put', '/lider/correo/cuenta', conBase),
+      prueba: () => lider.mutar('post', '/lider/correo/prueba', conBase),
+    };
+
+    beforeAll(async () => {
+      conBase = await crearAppRepositorio(base.config, dist.directorio, {}, [
+        { proveedor: CONFIGURACION_CORREO_CRM, valor: CORREO_DESACTIVADO },
+        { proveedor: FABRICA_TRANSPORTE_CORREO_CRM, valor: fabricaFalsa },
+      ]);
+    });
+
+    afterAll(async () => {
+      await conBase?.cerrar();
+    });
+
+    it('con las variables (modo memoria) mandan ellas: origen «variables», no editable, y PUT y DELETE son 409', async () => {
+      const actual = (await lider.get('/lider/correo/cuenta').expect(200)).body as CuentaCorreoCrm;
+      expect(actual).toMatchObject({ origen: 'variables', modo: 'memoria', editable: false, tieneClave: false });
+      const res = await lider.mutar('put', '/lider/correo/cuenta').send(CUENTA).expect(409);
+      expect(res.body).toEqual({ codigo: 'conflicto', mensaje: MENSAJE_MANDAN_VARIABLES });
+      await lider.mutar('delete', '/lider/correo/cuenta').expect(409);
+      expect(await contar('crm_correo_cuenta')).toBe(0);
+    });
+
+    it('sin variables: PUT valida, guarda la cuenta y ni PUT ni GET devuelven la clave', async () => {
+      const antes = (await lider.get('/lider/resumen', conBase).expect(200)).body as ResumenLiderCrm;
+      expect(antes.correo.configurado).toBe(false);
+      expect((await cuenta.get().expect(200)).body).toMatchObject({
+        origen: 'ninguna',
+        modo: 'desactivado',
+        editable: true,
+        tieneClave: false,
+      });
+
+      const sinClave = await cuenta.put().send({ usuario: CUENTA.usuario }).expect(400);
+      expect(sinClave.body).toMatchObject({ codigo: 'solicitud_invalida', campos: { clave: MENSAJE_CLAVE_FALTA } });
+      const sinHost = await cuenta.put().send({ usuario: 'planeacion@sapiencia.gov.co', clave: CUENTA.clave }).expect(400);
+      expect(sinHost.body).toMatchObject({ campos: { host: MENSAJE_HOST_FALTA } });
+      await cuenta.put().type('form').send('usuario=x').expect(400);
+      await request(conBase.servidor).put(`${RUTA}/lider/correo/cuenta`).set('Cookie', sesion.cookie).send(CUENTA).expect(403);
+      expect(await contar('crm_correo_cuenta')).toBe(0);
+
+      const guardada = await cuenta.put().send(CUENTA).expect(200);
+      expect(guardada.body).toEqual({
+        origen: 'base',
+        modo: 'smtp',
+        usuario: CUENTA.usuario,
+        host: 'smtp.gmail.com',
+        puerto: 465,
+        seguro: true,
+        nombre: 'Planeación Sapiencia',
+        tieneClave: true,
+        editable: true,
+        actualizadoEn: expect.any(String),
+      });
+      const leida = await cuenta.get().expect(200);
+      expect(leida.body).toEqual(guardada.body);
+      for (const res of [guardada, leida]) {
+        expect(res.text).not.toContain(CLAVE_SIN_ESPACIOS);
+        expect(res.text).not.toContain('abcd');
+        expect(res.headers['cache-control']).toBe('no-store');
+      }
+    });
+
+    it('la fila de crm_correo_cuenta no tiene la clave en claro y dice quién la guardó', async () => {
+      const filas = await consultar('SELECT * FROM crm_correo_cuenta');
+      expect(filas).toHaveLength(1);
+      const [fila] = filas;
+      expect(fila).toMatchObject({ usuario: CUENTA.usuario, host: 'smtp.gmail.com', actualizado_por: NOMBRE_CUENTA });
+      expect([Number(fila?.id), Number(fila?.puerto), Number(fila?.seguro)]).toEqual([1, 465, 1]);
+      expect(String(fila?.clave_cifrada)).toMatch(/^v1\.[A-Za-z0-9_-]+$/);
+      expect(JSON.stringify(fila)).not.toContain(CLAVE_SIN_ESPACIOS);
+      expect(JSON.stringify(fila)).not.toContain('abcd efgh');
+    });
+
+    it('con el correo desactivado y la cuenta en la base, queda configurado y un aviso sale con esa cuenta', async () => {
+      const resumen = (await lider.get('/lider/resumen', conBase).expect(200)).body as ResumenLiderCrm;
+      expect(resumen.correo.configurado).toBe(true);
+      const creada = await lider
+        .mutar('post', '/lider/tareas', conBase)
+        .send({ titulo: 'Tarea avisada con la cuenta de la base', responsableId: id.jose })
+        .expect(201);
+      const tareaId = (creada.body as TareaDetalleCrm).id;
+      const aviso = (await lider.mutar('post', `/lider/tareas/${tareaId}/avisar`, conBase).expect(200)).body as EstadoAvisoCrm;
+      expect(aviso).toMatchObject({ estado: 'enviado' });
+      expect(salidos.at(-1)?.correo).toMatchObject({ correoId: aviso.correoId, para: JOSE.correo });
+      expect(salidos.at(-1)?.config).toMatchObject({
+        modo: 'smtp',
+        smtp: { host: 'smtp.gmail.com', puerto: 465, seguro: true, usuario: CUENTA.usuario, clave: CLAVE_SIN_ESPACIOS },
+        remitente: { nombre: 'Planeación Sapiencia', correo: CUENTA.usuario },
+      });
+      const [fila] = await consultar('SELECT estado, id_mensaje FROM crm_correos WHERE id = ?', [aviso.correoId]);
+      expect(fila).toMatchObject({ estado: 'enviado', id_mensaje: `<falso-${salidos.length}@smtp.test>` });
+      await lider.mutar('delete', `/lider/tareas/${tareaId}`, conBase).expect(204);
+    });
+
+    it('PUT sin clave conserva la guardada (y cambia lo demás)', async () => {
+      const cambio = await cuenta.put().send({ usuario: CUENTA.usuario, nombre: 'Oficina de Planeación', clave: '' }).expect(200);
+      expect(cambio.body).toMatchObject({ origen: 'base', tieneClave: true, nombre: 'Oficina de Planeación' });
+      const res = await cuenta.prueba().send({ para: CARLOS.correo }).expect(200);
+      expect(res.body).toEqual({ enviado: true, para: CARLOS.correo, mensaje: `Se envió un correo de prueba a ${CARLOS.correo}.` });
+      expect(salidos.at(-1)?.config).toMatchObject({
+        smtp: { usuario: CUENTA.usuario, clave: CLAVE_SIN_ESPACIOS },
+        remitente: { nombre: 'Oficina de Planeación' },
+      });
+    });
+
+    it('POST prueba sale al líder (sin pasar por la bandeja); con un error simulado, el mensaje traducido sin la clave', async () => {
+      const correos = await contar('crm_correos');
+      const res = await cuenta.prueba().send({}).expect(200);
+      expect(res.body as ResultadoPruebaCorreoCrm).toEqual({
+        enviado: true,
+        para: LIDER.correo,
+        mensaje: `Se envió un correo de prueba a ${LIDER.correo}.`,
+      });
+      expect(salidos.at(-1)?.correo).toMatchObject({ para: LIDER.correo, asunto: 'Prueba del correo del CRM', adjuntos: [] });
+      expect(salidos.at(-1)?.correo.texto).toContain('Si le llegó, los avisos de tareas ya pueden salir.');
+
+      fallo = Object.assign(new Error(`Invalid login: 535-5.7.8 Username and Password not accepted ${CLAVE_SIN_ESPACIOS}`), {
+        code: 'EAUTH',
+        responseCode: 535,
+        response: `535-5.7.8 ${CLAVE_SIN_ESPACIOS}`,
+      });
+      const rechazada = await cuenta.prueba().send({}).expect(200);
+      expect(rechazada.body).toEqual({ enviado: false, para: LIDER.correo, mensaje: MENSAJE_AUTH_GMAIL });
+      expect(rechazada.text).not.toContain(CLAVE_SIN_ESPACIOS);
+      fallo = Object.assign(new Error('connect ETIMEDOUT'), { code: 'ETIMEDOUT' });
+      expect((await cuenta.prueba().send({}).expect(200)).body).toMatchObject({
+        enviado: false,
+        mensaje: 'No se pudo conectar con smtp.gmail.com:465.',
+      });
+      fallo = null;
+      const mala = await cuenta.prueba().send({ para: 'no-es-un-correo' }).expect(400);
+      expect(mala.body).toMatchObject({ codigo: 'solicitud_invalida', campos: { para: expect.any(String) } });
+      expect(await contar('crm_correos')).toBe(correos);
+    });
+
+    it(`más de ${TOPE_PRUEBAS_POR_HORA} pruebas por hora en la misma instancia: 429 con Retry-After`, async () => {
+      // Ya van 4 en esta app (las de las dos pruebas anteriores que llegaron al servidor de correo).
+      const estados: number[] = [];
+      let ultima: request.Response | undefined;
+      for (let i = 0; i < TOPE_PRUEBAS_POR_HORA; i++) {
+        ultima = await cuenta.prueba().send({});
+        estados.push(ultima.status);
+        if (ultima.status === 429) break;
+      }
+      expect(estados).toEqual([...Array<number>(TOPE_PRUEBAS_POR_HORA - 4).fill(200), 429]);
+      expect(ultima?.body).toMatchObject({ codigo: 'demasiados_intentos' });
+      expect(Number(ultima?.headers['retry-after'])).toBeGreaterThan(3500);
+    });
+
+    it('DELETE borra la cuenta: vuelve a «ninguna» y el correo, a sin configurar', async () => {
+      const borrada = await lider.mutar('delete', '/lider/correo/cuenta', conBase).expect(200);
+      expect(borrada.body).toMatchObject({ origen: 'ninguna', modo: 'desactivado', tieneClave: false, usuario: null });
+      expect(await contar('crm_correo_cuenta')).toBe(0);
+      const resumen = (await lider.get('/lider/resumen', conBase).expect(200)).body as ResumenLiderCrm;
+      expect(resumen.correo.configurado).toBe(false);
+      // La app con las variables sigue igual.
+      expect(((await lider.get('/lider/resumen').expect(200)).body as ResumenLiderCrm).correo.configurado).toBe(true);
+    });
   });
 
   // ── 10. Bloqueo de la cuenta del líder y limpieza ─────────────────────────

@@ -577,11 +577,15 @@ export class ServicioTareasCrm {
 
   /** GET /lider/resumen */
   async resumen(): Promise<ResumenLiderCrm> {
-    const [personas, correos] = await Promise.all([this.personas.listarPublicas(), this.correo.contar()]);
+    const [personas, correos, configurado] = await Promise.all([
+      this.personas.listarPublicas(),
+      this.correo.contar(),
+      this.correo.estaConfigurado(),
+    ]);
     return {
       personas,
       totales: sumarConteos(personas.map((persona) => persona.conteo)),
-      correo: { configurado: this.correo.configurado, pendientes: correos.pendientes, errores: correos.errores },
+      correo: { configurado, pendientes: correos.pendientes, errores: correos.errores },
     };
   }
 

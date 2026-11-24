@@ -47,9 +47,10 @@ export type { Conexion, Dialecto, ResultadoEscritura } from './conexion.js';
  * (007-tablero-fondos.sql), 8 = cuentas y sesiones de los tableros privados
  * (008-acceso-tableros.sql), 9 = ventanilla de consulta de los fondos
  * (009-consulta-fondos.sql), 10 = CRM de la Oficina de Planeación
- * (010-crm.sql).
+ * (010-crm.sql), 11 = cuenta de correo del CRM guardada por el líder
+ * (011-crm-cuenta-correo.sql).
  */
-export const VERSION_ESQUEMA_REQUERIDA = 10;
+export const VERSION_ESQUEMA_REQUERIDA = 11;
 
 /** Tamaño de cada trozo de archivo en los almacenes (repositorio_ y pai_almacen_archivo_trozos; 1 MiB). */
 export const TAMANO_TROZO = 1024 * 1024;

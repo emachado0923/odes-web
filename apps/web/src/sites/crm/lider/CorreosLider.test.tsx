@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
-import type { CorreoCrm } from '../api-crm'
+import type { CorreoCrm, CuentaCorreoCrm } from '../api-crm'
 import { ErrorCrmHttp, type ApiLider } from '../datos/clienteCrm'
 import ProveedorAvisos from '../ui/ProveedorAvisos'
 import CorreosLider from './CorreosLider'
@@ -25,11 +25,25 @@ function correo(id: number, cambios: Partial<CorreoCrm> = {}): CorreoCrm {
   }
 }
 
+/** La cuenta de envío de arriba (CuentaCorreo): aquí no se prueba, solo se pinta. */
+const CUENTA: CuentaCorreoCrm = {
+  origen: 'base',
+  modo: 'smtp',
+  usuario: 'odes-web@sapiencia.gov.co',
+  host: 'smtp.gmail.com',
+  puerto: 465,
+  seguro: true,
+  nombre: 'Planeación Sapiencia',
+  tieneClave: true,
+  editable: true,
+  actualizadoEn: '2026-11-24T15:30:00Z',
+}
+
 /** Monta la bandeja con una api falsa (solo lo que usa la prueba). */
 function montar(api: Partial<ApiLider>) {
   const contexto: ContextoLider = {
     sesion: { nombre: 'Martha', csrf: 'token-1', expira: '2026-11-25T00:00:00Z' },
-    api: api as ApiLider,
+    api: { correoCuenta: async () => CUENTA, ...api } as ApiLider,
     vencida: vi.fn<() => void>(),
     salir: vi.fn<() => Promise<void>>(async () => {}),
     avisarCambioCorreos: vi.fn<() => void>(),
@@ -117,7 +131,7 @@ describe('CorreosLider', () => {
 
     expect(
       await screen.findByText(
-        'El correo todavía no está configurado en el servidor. Cuando lo configuren, use «Reintentar» para enviar los pendientes.',
+        'Algunos avisos no salieron porque el correo no estaba configurado. La cuenta se configura aquí arriba, en «Cuenta de envío»; después use «Reintentar» para enviarlos.',
       ),
     ).toBeInTheDocument()
     fireEvent.click(screen.getByRole('button', { name: /^Reintentar/ }))
