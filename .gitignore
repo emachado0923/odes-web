@@ -18,3 +18,7 @@ apps/server/datos/odes/cache/
 # MySQL local de desarrollo (datos y credenciales de prueba)
 .mysql-local/
 .vercel
+
+# CRM: el JSON del equipo (nombres y correos) que lee npm run crm:cargar-equipo.
+# Nunca va al repositorio, que es público.
+apps/server/datos/crm/

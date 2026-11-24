@@ -241,6 +241,68 @@ El servidor exige la versión 7; una base en la 7 sigue sirviendo a un servidor
 anterior (exige «al menos» su versión), así que se migra primero y se
 despliega después. Los datos los carga `npm run tableros:cargar-fondos`.
 
+## CRM (versión 10)
+
+La migración 010 (24 de noviembre de 2026) crea las 10 tablas `crm_*` de la
+rama `/crm`, las tareas de la Oficina de Planeación:
+
+| Tabla | Qué guarda |
+| --- | --- |
+| `crm_personas` | El equipo: nombre, correo (único, sin distinguir mayúsculas), foto, orden de las tarjetas, activo y quién es el líder (`es_lider`). |
+| `crm_tareas` | Las tareas: responsable, estado (`pendiente`, `en_proceso`, `terminada`), fecha límite, si exige entregable y la nota de cierre. Borrar una tarea solo la oculta (`eliminada_en`). |
+| `crm_tarea_archivos` | Adjuntos (los sube el líder) y entregables (los sube el responsable) de cada tarea. |
+| `crm_tarea_eventos` | El historial de cada tarea (qué, quién y desde qué IP); también es la base del tope por IP del equipo. |
+| `crm_correos` | Cada aviso por correo, guardado antes de enviarlo, con su estado, intentos y último error. |
+| `crm_almacen_archivos`, `crm_almacen_archivo_trozos` | El almacén de archivos del CRM, con las mismas columnas que el del PAI. |
+| `crm_acceso_usuarios`, `crm_acceso_sesiones`, `crm_acceso_intentos` | La cuenta única del líder (usuario fijo `lider`, solo contraseña), sus sesiones y sus intentos de ingreso, como las `sivu_acceso_*` (008). |
+
+**Primero migrar, después desplegar.** El servidor exige la versión 10. Una
+base más nueva sirve a un servidor anterior (exige «al menos» su versión); al
+revés, un servidor nuevo sobre una base en la 9 responde 503 en toda la API de
+la base (`/api/repositorio`, `/api/sivu/tableros`, `/api/pai` y `/api/crm`).
+Desde un equipo con acceso a la base: `npm run repositorio:migrar -- --usuario <cuenta_admin>`
+(en la VM, `sudo -u sapiencia node dist/repositorio/cli/migrar.js --usuario <cuenta_admin>`).
+A mano: pegue `migraciones/010-crm.sql` (o la de `postgres/migraciones/`)
+completo y registre la versión
+(`INSERT IGNORE INTO sistema_esquema_version (version, descripcion) VALUES (10, 'crm');`).
+
+**Permisos en `planeacionbd`.** La migración solo crea tablas y
+`sapiencia_web` tiene permisos tabla por tabla, así que cada una necesita su
+GRANT (el `SELECT CONCAT('GRANT …')` del README ya incluye el prefijo `crm_`):
+
+```sql
+GRANT SELECT, INSERT, UPDATE, DELETE ON planeacionbd.crm_almacen_archivos TO 'sapiencia_web'@'%';
+GRANT SELECT, INSERT, UPDATE, DELETE ON planeacionbd.crm_almacen_archivo_trozos TO 'sapiencia_web'@'%';
+GRANT SELECT, INSERT, UPDATE, DELETE ON planeacionbd.crm_personas TO 'sapiencia_web'@'%';
+GRANT SELECT, INSERT, UPDATE, DELETE ON planeacionbd.crm_tareas TO 'sapiencia_web'@'%';
+GRANT SELECT, INSERT, UPDATE, DELETE ON planeacionbd.crm_tarea_archivos TO 'sapiencia_web'@'%';
+GRANT SELECT, INSERT, UPDATE, DELETE ON planeacionbd.crm_tarea_eventos TO 'sapiencia_web'@'%';
+GRANT SELECT, INSERT, UPDATE, DELETE ON planeacionbd.crm_correos TO 'sapiencia_web'@'%';
+GRANT SELECT, INSERT, UPDATE, DELETE ON planeacionbd.crm_acceso_usuarios TO 'sapiencia_web'@'%';
+GRANT SELECT, INSERT, UPDATE, DELETE ON planeacionbd.crm_acceso_sesiones TO 'sapiencia_web'@'%';
+GRANT SELECT, INSERT, UPDATE, DELETE ON planeacionbd.crm_acceso_intentos TO 'sapiencia_web'@'%';
+```
+
+**Carga inicial.** La migración no trae datos: el repositorio es público y
+los nombres y correos del equipo y la clave del líder no van en él. Se cargan
+con las dos CLI, primero el equipo (sin `--nombre`, la clave toma el nombre
+del líder del equipo):
+
+```bash
+# El JSON va en apps/server/datos/crm/ (git lo ignora), en el orden de las tarjetas:
+# [{ "nombre": "…", "correo": "…", "lider": true }, { "nombre": "…", "correo": "…" }]
+npm run crm:cargar-equipo -- --archivo apps/server/datos/crm/equipo.json --solo-sql
+npm run crm:clave-lider -- --solo-sql      # pide la contraseña dos veces sin mostrarla
+```
+
+Con `--solo-sql` no se conectan: imprimen el SQL de MySQL (o de Postgres, con
+`--motor postgres`), que se corre completo con la cuenta administradora o con
+`sapiencia_web`. El de la clave lleva el hash scrypt, nunca la contraseña.
+Sin `--solo-sql` escriben directo con la conexión de `apps/server/.env`. Las
+dos se pueden repetir: el equipo se actualiza por correo (el líder del archivo
+queda como único líder; quien no esté en el archivo no se toca), y la clave
+nueva cierra las sesiones del líder y levanta su bloqueo por intentos fallidos.
+
 ## Paso a la versión 4 (nombres por módulo)
 
 Hasta la versión 3 las tablas del repositorio y del tablero no tenían

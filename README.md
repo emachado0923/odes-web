@@ -13,10 +13,11 @@ página principal del Observatorio en HTML puro:
 | `/tableros/matricula-2025` | **Tablero de matrícula en educación superior en Medellín (2025)**: el tablero de Octubre/tablero_educ_sup_2025 (React + ECharts) dentro del aplicativo, con sus datos en la base. Se abre desde los tableros de SIVU y desde el botón 1 de la página principal. Ver [Tableros](#tableros-tableros). |
 | `/tableros/bateria-indicadores` | **Batería de indicadores de educación postsecundaria**: el tablero estático `tablero_bateria_indicadores` (React + ECharts) dentro del aplicativo, con una dirección por vista (`/tableros/bateria-indicadores/<vista>?v=<variante>`) y sus datos en archivos que genera su ETL. Se abre desde la puerta del edificio de SIVU. Ver [Tableros](#tableros-tableros). |
 | `/pai`         | **Plan de Acción Institucional (PAI)**: los responsables de cada proceso o proyecto reportan cada bimestre el avance de sus indicadores (formato F-ES-DE-003) y Planeación hace el seguimiento; con usuarios y roles propios, en la plantilla de Sapiencia. Ver [PAI](#pai-pai). |
+| `/crm`         | **CRM de la Oficina de Planeación**: el líder asigna tareas con adjuntos a las personas del equipo, cada persona mueve las suyas (pendiente, en proceso, terminada) y al terminar le llega un correo al líder. Ver [CRM](#crm-crm). |
 | `/pertinencia` | **Medida de pertinencia**: presenta la medida que relaciona la oferta de educación superior de Medellín con las ocupaciones y los sectores que demanda la ciudad, con el tablero de consulta y los accesos a la normativa. El contenido es un bloque para WordPress (`apps/web/pertinencia/pertinencia-bloque.html`, enlaces en su sección EDITAR ENLACES) que el aplicativo muestra entre la cabecera y el pie oficiales recreados (`apps/web/src/sites/pertinencia/`). |
 | `/principal`   | **Página principal del Observatorio**: el bloque de WordPress de sapiencia.gov.co/observatorio tal cual, en HTML puro (sin React). Todo cambio se hace en el bloque, que luego se pega en WordPress. Ver [Página principal](#página-principal-principal). |
 | `/`            | Inicio con enlaces a la página principal, SIVU, ODES, el repositorio, el PAI y la medida de pertinencia. |
-| `/api/*`       | API de NestJS (`/api/salud`, `/api/sivu`, `/api/sivu/tableros/*`, `/api/odes/*`, `/api/repositorio/*`, `/api/pai/*`). |
+| `/api/*`       | API de NestJS (`/api/salud`, `/api/sivu`, `/api/sivu/tableros/*`, `/api/odes/*`, `/api/repositorio/*`, `/api/pai/*`, `/api/crm/*`). |
 
 Cada rama del front-end se descarga por separado (code splitting). three.js
 (unos 600 kB) solo se descarga al entrar a `/sivu`, la plantilla de
@@ -773,7 +774,7 @@ Lo que cambia frente a la VM:
    -- Genera un GRANT por cada tabla de este sitio; ejecute lo que devuelve.
    SELECT CONCAT('GRANT SELECT, INSERT, UPDATE, DELETE ON planeacionbd.`', table_name, '` TO ''sapiencia_web''@''%'';')
      FROM information_schema.tables
-    WHERE table_schema = 'planeacionbd' AND table_name REGEXP '^(repositorio|sivu|pai|sistema)_';
+    WHERE table_schema = 'planeacionbd' AND table_name REGEXP '^(repositorio|sivu|pai|crm|sistema)_';
    ```
 3. **Datos.** Con `REPOSITORIO_MYSQL_*` en el entorno:
    - `npm run repositorio:importar -- --paquete <carpeta> --miniaturas apps/web/public/odes/portadas`
@@ -1108,6 +1109,49 @@ Contrato completo en `api-pai.ts` (copia idéntica en `apps/server/src/pai/` y
 | `PUT /api/pai/indicadores/:id/bimestres/:b` | Guarda el reporte (responsable; 403 si no es editable, 409 si otra persona lo cambió). |
 | `POST …/bimestres/:b/evidencias/subidas`, `POST …/bimestres/:b/evidencias`, `GET/DELETE /api/pai/evidencias/:id` | Evidencias. |
 | `/api/pai/admin/usuarios[/:id[/asignaciones]]`, `/api/pai/admin/vigencia`, `/api/pai/admin/autorizaciones[/:id]`, `/api/pai/admin/registro`, `/api/pai/admin/exportar.csv` | Administración (403 para un responsable). |
+
+## CRM (`/crm`)
+
+Tareas de la Oficina de Planeación. El líder de la oficina asigna tareas,
+con adjuntos y fecha límite opcional, a una persona del equipo; cada persona
+mueve las suyas entre pendiente, en proceso y terminada, y al terminar una le
+llega un correo al líder, con el entregable adjunto si la tarea lo exigía.
+
+- **Pantallas.** `/crm`: las tarjetas del equipo y el tablero de tareas de
+  cada persona. El equipo no tiene cuentas: se entra con un clic en la propia
+  tarjeta. `/crm/lider`: el panel del líder (resumen, tareas, equipo y bandeja
+  de correos), que pide solo la contraseña.
+- **API.** `/api/crm/*`, con el contrato en `api-crm.ts` (copia idéntica en
+  `apps/server/src/crm/` y `apps/web/src/sites/crm/`; una prueba lo
+  comprueba). Las rutas del equipo nunca devuelven correos; las del líder
+  piden su sesión (cookie `crm_sesion`, `Path=/api/crm`) y `X-CSRF-Token`.
+- **Datos.** Migración 010: 10 tablas `crm_*` en la misma base, con su propio
+  almacén de archivos (ver «CRM (versión 10)» en
+  [`apps/server/db/repositorio/LEEME.md`](apps/server/db/repositorio/LEEME.md)).
+  El servidor exige la versión 10: se migra (y se dan los GRANT) antes de
+  desplegar.
+- **Carga inicial.** El repositorio es público: el equipo y la clave del
+  líder no van en él. Desde la raíz, con la conexión de la aplicación en
+  `apps/server/.env`:
+  ```bash
+  # [{ "nombre": "…", "correo": "…", "lider": true }, { "nombre": "…", "correo": "…" }]
+  npm run crm:cargar-equipo -- --archivo apps/server/datos/crm/equipo.json
+  npm run crm:clave-lider          # pide la contraseña del líder dos veces (o CRM_CLAVE_LIDER)
+  ```
+  `apps/server/datos/crm/` está en `.gitignore`. Con `--solo-sql` las dos
+  no se conectan: imprimen el SQL (MySQL por defecto; `--motor postgres` para
+  Supabase) para correrlo a mano, con el hash de la clave y nunca la clave.
+  `crm:cargar-equipo` se puede repetir (actualiza por correo); `crm:clave-lider`
+  también cambia la contraseña, cierra las sesiones del líder y levanta su
+  bloqueo por intentos fallidos.
+- **Correo.** Los avisos salen por SMTP con la cuenta de `CRM_CORREO_USUARIO`
+  y `CRM_CORREO_CLAVE` (contraseña de aplicación). Sin ellas el CRM funciona
+  igual y los avisos quedan «sin configurar» en la bandeja del líder, que los
+  puede reintentar. Las variables `CRM_CORREO_*` y `CRM_URL_SITIO` están en
+  `apps/server/.env.example` y en [DESPLIEGUE-CLOUD-RUN.md](DESPLIEGUE-CLOUD-RUN.md).
+  Microsoft 365 está retirando la autenticación básica de SMTP, así que con una
+  cuenta @sapiencia.gov.co puede no funcionar; con Gmail y una contraseña de
+  aplicación sí.
 
 ## Asistente ODES
 

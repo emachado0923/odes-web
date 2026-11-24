@@ -46,9 +46,10 @@ export type { Conexion, Dialecto, ResultadoEscritura } from './conexion.js';
  * (006-descripcion.sql), 7 = tablero de los fondos de Sapiencia
  * (007-tablero-fondos.sql), 8 = cuentas y sesiones de los tableros privados
  * (008-acceso-tableros.sql), 9 = ventanilla de consulta de los fondos
- * (009-consulta-fondos.sql).
+ * (009-consulta-fondos.sql), 10 = CRM de la Oficina de Planeación
+ * (010-crm.sql).
  */
-export const VERSION_ESQUEMA_REQUERIDA = 9;
+export const VERSION_ESQUEMA_REQUERIDA = 10;
 
 /** Tamaño de cada trozo de archivo en los almacenes (repositorio_ y pai_almacen_archivo_trozos; 1 MiB). */
 export const TAMANO_TROZO = 1024 * 1024;

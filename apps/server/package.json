@@ -33,7 +33,9 @@
     "tableros:crear-usuario": "nest build && node dist/sivu/acceso/crear-usuario-tableros.js",
     "pai:crear-usuario": "nest build && node dist/pai/cli/crear-usuario.js",
     "pai:cargar-fichas": "nest build && node dist/pai/cli/cargar-fichas.js",
-    "pai:recolectar-evidencias": "nest build && node dist/pai/cli/recolectar-evidencias.js"
+    "pai:recolectar-evidencias": "nest build && node dist/pai/cli/recolectar-evidencias.js",
+    "crm:clave-lider": "nest build && node dist/crm/cli/clave-lider.js",
+    "crm:cargar-equipo": "nest build && node dist/crm/cli/cargar-equipo.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.132.1",
@@ -44,6 +46,7 @@
     "express": "^5.2.1",
     "helmet": "^8.3.0",
     "mysql2": "^3.24.5",
+    "nodemailer": "^10.5.0",
     "pg": "^8.23.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",

@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { CrmModule } from './crm/crm.module.js';
 import { OdesModule } from './odes/odes.module.js';
 import { PaiModule } from './pai/pai.module.js';
 import { RepositorioProductosModule } from './repositorio/repositorio-productos.module.js';
@@ -16,6 +17,7 @@ import { SivuModule } from './sivu/sivu.module.js';
     OdesModule,
     RepositorioProductosModule,
     PaiModule,
+    CrmModule,
   ],
 })
 export class AppModule {}

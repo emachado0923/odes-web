@@ -209,16 +209,26 @@ export interface AppPrueba {
   cerrar(): Promise<void>;
 }
 
-/** App completa (AppModule) con la configuración del repositorio dada. */
+/** Un proveedor de la app que la prueba reemplaza por un valor (p. ej. la configuración del correo del CRM). */
+export interface SobrescrituraProveedor {
+  proveedor: unknown;
+  valor: unknown;
+}
+
+/** App completa (AppModule) con la configuración del repositorio dada (y, si se piden, otros proveedores reemplazados). */
 export async function crearAppRepositorio(
   config: ConfiguracionRepositorio,
   directorioWeb: string,
   entorno: NodeJS.ProcessEnv = {},
+  sobrescrituras: readonly SobrescrituraProveedor[] = [],
 ): Promise<AppPrueba> {
-  const modulo = await Test.createTestingModule({ imports: [AppModule] })
+  let preparacion = Test.createTestingModule({ imports: [AppModule] })
     .overrideProvider(CONFIGURACION_REPOSITORIO)
-    .useValue(config)
-    .compile();
+    .useValue(config);
+  for (const { proveedor, valor } of sobrescrituras) {
+    preparacion = preparacion.overrideProvider(proveedor).useValue(valor);
+  }
+  const modulo = await preparacion.compile();
   const app = modulo.createNestApplication<NestExpressApplication>({ logger: false });
   configurarAplicacion(app, cargarConfiguracion({ ...entorno, WEB_DIST_DIR: directorioWeb }));
   await app.init();

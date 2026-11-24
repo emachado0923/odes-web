@@ -1,0 +1,393 @@
+/*
+ * Vistas del equipo del CRM (equipo/): inicio, tablero de una persona, detalle
+ * en el panel lateral y diálogo de terminar. Clases crm-eq-* bajo .crm, con
+ * los tokens --crm-* de ../crm.css: sin colores nuevos. Las piezas de ui/
+ * (tarjetas, tablero, modales, archivos) traen su propio estilo; aquí solo va
+ * lo que acomoda cada vista.
+ */
+
+/* ───────── Inicio ───────── */
+
+.crm .crm-eq-inicio-cabeza {
+  display: grid;
+  gap: var(--crm-e2);
+  max-width: 46rem;
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.crm .crm-eq-saludo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--crm-e3);
+  font-size: var(--crm-t-l);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--crm-azul-hondo);
+}
+
+/* Las tres marcas de estado (○ ◐ ●) junto al saludo: el avance de una tarea, de un vistazo. */
+.crm .crm-eq-marcas {
+  display: inline-flex;
+  gap: 0.3rem;
+}
+
+.crm .crm-eq-marcas .crm-marca-estado {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.crm .crm-eq-marcas .crm-marca-estado[data-estado='pendiente'] {
+  color: var(--crm-pendiente);
+}
+
+.crm .crm-eq-marcas .crm-marca-estado[data-estado='en_proceso'] {
+  color: var(--crm-proceso);
+}
+
+.crm .crm-eq-marcas .crm-marca-estado[data-estado='terminada'] {
+  color: var(--crm-terminada);
+}
+
+.crm .crm-eq-inicio-cabeza .crm-titulo-pagina {
+  font-size: clamp(1.75rem, 1.25rem + 2vw, 2.5rem);
+}
+
+.crm .crm-eq-inicio-cabeza .crm-bajada {
+  font-size: var(--crm-t-l);
+}
+
+.crm .crm-eq-inicio-nota {
+  margin-top: var(--crm-e5);
+  font-size: var(--crm-t-s);
+  color: var(--crm-tinta-suave);
+}
+
+/* ───────── Tablero de una persona ───────── */
+
+.crm .crm-eq-persona {
+  display: flex;
+  align-items: center;
+  gap: var(--crm-e5);
+  margin: var(--crm-e4) 0 clamp(1.25rem, 3vw, 2rem);
+}
+
+.crm .crm-eq-persona-texto {
+  display: grid;
+  gap: var(--crm-e2);
+  min-width: 0;
+}
+
+.crm .crm-eq-titulo-saludo {
+  display: block;
+  margin-bottom: var(--crm-e1);
+  font-size: var(--crm-t-l);
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0;
+  color: var(--crm-tinta-suave);
+}
+
+.crm .crm-eq-resumen {
+  font-size: 1.0625rem;
+  line-height: 1.45;
+  color: var(--crm-tinta);
+}
+
+.crm .crm-eq-resumen-parte[data-clave='vencidas'] {
+  font-weight: 600;
+  color: var(--crm-rojo);
+}
+
+.crm .crm-eq-cambiar {
+  font-size: var(--crm-t-s);
+  color: var(--crm-tinta-suave);
+}
+
+.crm .crm-eq-actualizar {
+  margin-bottom: var(--crm-e4);
+}
+
+.crm .crm-eq-cargando,
+.crm .crm-eq-no-encontrada {
+  max-width: 44rem;
+  margin-top: var(--crm-e5);
+}
+
+/* Pie de la columna Terminada: qué se ve y el botón para ver todas o solo las recientes. */
+.crm .crm-eq-pie-terminadas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--crm-e1) var(--crm-e2);
+}
+
+.crm .crm-eq-pie-nota {
+  flex-basis: 100%;
+  font-size: var(--crm-t-xs);
+  color: var(--crm-tinta-suave);
+}
+
+@media (max-width: 37.5rem) {
+  .crm .crm-eq-persona {
+    align-items: flex-start;
+    gap: var(--crm-e4);
+  }
+
+  .crm .crm-eq-persona .crm-avatar {
+    --crm-av-tam: 4rem;
+    --crm-av-letra: 1.5rem;
+  }
+
+  .crm .crm-eq-titulo-saludo {
+    font-size: var(--crm-t-m);
+  }
+}
+
+/* ───────── Detalle de una tarea (panel lateral) ───────── */
+
+.crm .crm-eq-detalle {
+  display: grid;
+  gap: var(--crm-e5);
+  min-width: 0;
+}
+
+.crm .crm-eq-detalle-marcas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--crm-e2);
+}
+
+.crm .crm-eq-pide {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.75rem 0.25rem 0.5rem;
+  border-radius: 999px;
+  background: var(--crm-azul-suave);
+  color: var(--crm-azul-hondo);
+  box-shadow: inset 0 0 0 1px var(--crm-borde-fuerte);
+  font-size: var(--crm-t-s);
+  font-weight: 500;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.crm .crm-eq-datos {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: var(--crm-e3) var(--crm-e5);
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+
+.crm .crm-eq-dato {
+  display: contents;
+}
+
+.crm .crm-eq-datos dt {
+  color: var(--crm-tinta-suave);
+}
+
+.crm .crm-eq-datos dd {
+  display: grid;
+  gap: 0.125rem;
+  min-width: 0;
+  margin: 0;
+}
+
+.crm .crm-eq-fecha {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.375rem;
+  font-weight: 500;
+}
+
+.crm .crm-eq-fecha .crm-icono {
+  margin-top: 0.0625rem;
+}
+
+.crm .crm-eq-fecha[data-tono='vencida'] {
+  color: var(--crm-rojo);
+}
+
+.crm .crm-eq-fecha[data-tono='pronto'] .crm-icono {
+  color: var(--crm-azul);
+}
+
+/* Con «Vencida» o «Vence hoy» encima, la fecha completa pasa a segundo plano. */
+.crm .crm-eq-fecha + .crm-eq-fecha-larga {
+  font-size: var(--crm-t-s);
+  color: var(--crm-tinta-suave);
+}
+
+.crm .crm-eq-seccion {
+  display: grid;
+  gap: var(--crm-e2);
+  min-width: 0;
+}
+
+.crm .crm-eq-subtitulo {
+  font-size: var(--crm-t-m);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--crm-azul);
+}
+
+/* Lo que escribieron el líder o la persona: con sus saltos de línea. */
+.crm .crm-eq-texto-libre {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.crm .crm-eq-nota-seccion {
+  font-size: var(--crm-t-s);
+  color: var(--crm-tinta-suave);
+}
+
+.crm .crm-eq-cita {
+  padding: var(--crm-e3) var(--crm-e4);
+  border-left: 3px solid var(--crm-terminada);
+  border-radius: 0 var(--crm-radio-s) var(--crm-radio-s) 0;
+  background: var(--crm-terminada-suave);
+}
+
+/* Historial: una línea de tiempo, del más reciente al más antiguo. */
+.crm .crm-eq-historial {
+  display: grid;
+  gap: var(--crm-e4);
+  margin: 0;
+  padding: 0.125rem 0 0.125rem var(--crm-e4);
+  border-left: 2px solid var(--crm-borde);
+  list-style: none;
+}
+
+.crm .crm-eq-evento {
+  position: relative;
+  display: grid;
+  gap: 0.125rem;
+  min-width: 0;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+
+/* El punto sobre la línea (centrado en el filete de 2 px). */
+.crm .crm-eq-evento::before {
+  content: '';
+  position: absolute;
+  top: 0.35em;
+  left: calc(-1 * var(--crm-e4) - 6px);
+  box-sizing: border-box;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--crm-borde-fuerte);
+  border-radius: 50%;
+  background: var(--crm-papel);
+}
+
+.crm .crm-eq-evento[data-tipo='estado']::before {
+  border-color: var(--crm-azul);
+}
+
+.crm .crm-eq-evento[data-tipo='devuelta']::before {
+  border-color: var(--crm-proceso);
+}
+
+.crm .crm-eq-evento[data-tipo='terminada']::before {
+  border-color: var(--crm-terminada);
+  background: var(--crm-terminada);
+}
+
+.crm .crm-eq-evento-texto {
+  overflow-wrap: anywhere;
+}
+
+.crm .crm-eq-evento-hora {
+  font-size: var(--crm-t-xs);
+  color: var(--crm-tinta-suave);
+}
+
+/* Pie del panel: «Guardando…» o «Terminada el …» a la izquierda, los botones a la derecha. */
+.crm .crm-eq-guardando {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin-right: auto;
+  font-size: var(--crm-t-s);
+  color: var(--crm-tinta-suave);
+}
+
+.crm .crm-eq-pie-fin {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--crm-e2);
+  margin-right: auto;
+  font-weight: 500;
+  color: var(--crm-terminada-texto);
+}
+
+.crm .crm-eq-pie-fin .crm-marca-estado {
+  width: 1.125rem;
+  height: 1.125rem;
+  color: var(--crm-terminada);
+}
+
+/* ───────── Diálogo de terminar ───────── */
+
+.crm .crm-eq-terminar {
+  display: grid;
+  gap: var(--crm-e5);
+  min-width: 0;
+}
+
+.crm .crm-eq-entregables {
+  display: grid;
+  gap: var(--crm-e3);
+  min-width: 0;
+}
+
+.crm .crm-eq-explica {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--crm-e2);
+  padding: var(--crm-e3) var(--crm-e4);
+  border-radius: var(--crm-radio);
+  font-size: 0.9375rem;
+  line-height: 1.45;
+}
+
+.crm .crm-eq-explica .crm-icono {
+  margin-top: 0.0625rem;
+}
+
+.crm .crm-eq-explica[data-tipo='obligatorio'] {
+  background: var(--crm-azul-suave);
+  color: var(--crm-azul-hondo);
+  box-shadow: inset 0 0 0 1px var(--crm-borde-fuerte);
+}
+
+.crm .crm-eq-explica[data-tipo='listo'] {
+  background: var(--crm-terminada-suave);
+  color: var(--crm-terminada-texto);
+}
+
+.crm .crm-eq-explica[data-tipo='opcional'] {
+  padding: 0;
+  color: var(--crm-tinta-suave);
+}
+
+.crm .crm-eq-errores {
+  display: grid;
+  gap: var(--crm-e1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.crm .crm-eq-contador {
+  justify-self: end;
+  font-size: var(--crm-t-xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--crm-tinta-suave);
+}

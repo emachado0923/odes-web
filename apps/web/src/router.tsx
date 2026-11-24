@@ -13,6 +13,8 @@
  *              bimestral de indicadores con sesión, plantilla de Sapiencia.
  *   /pertinencia/*  Medida de pertinencia (chunk diferido): presentación,
  *              espacio del tablero de consulta y accesos a la normativa.
+ *   /crm/*     CRM de la Oficina de Planeación (chunk diferido): tareas del
+ *              equipo por persona y panel del líder con clave.
  *   *          404 global.
  *
  * /principal no está aquí: es una página de HTML puro (el bloque de
@@ -89,6 +91,13 @@ export const rutas: RouteObject[] = [
         HydrateFallback: CargaRama,
         ErrorBoundary: ErrorRama,
         lazy: async () => ({ Component: (await import('./sites/pertinencia/PertinenciaSitio')).default }),
+      },
+      {
+        id: 'crm',
+        path: 'crm/*',
+        HydrateFallback: CargaRama,
+        ErrorBoundary: ErrorRama,
+        lazy: async () => ({ Component: (await import('./sites/crm/CrmSitio')).default }),
       },
       { path: '*', Component: NoEncontrado },
     ],

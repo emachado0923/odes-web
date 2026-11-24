@@ -9,7 +9,7 @@ implementar nueva revisión → Variables y secretos*.
 
 Las marcadas como **secreto** conviene guardarlas en Secret Manager y referenciarlas desde Cloud Run
 
-### Base del sitio: planeacionbd (repositorio, PAI, cuentas de los tableros)
+### Base del sitio: planeacionbd (repositorio, PAI, CRM, cuentas de los tableros)
 
 | Variable | Valor |
 | --- | --- |
@@ -39,6 +39,40 @@ Las marcadas como **secreto** conviene guardarlas en Secret Manager y referencia
 | --- | --- |
 | `ANTHROPIC_API_KEY` | **secreto**: la clave de producción de la API de Claude. Sin ella el chat solo busca documentos, sin IA. |
 | `ODES_URL_DOCUMENTO` | `/api/repositorio/documentos/{id}/ver` |
+
+### CRM (`/crm`): correo de los avisos
+
+Sin `CRM_CORREO_USUARIO` y `CRM_CORREO_CLAVE` el CRM funciona igual, pero no envía correos (los
+avisos quedan «sin configurar» en la bandeja del líder, que los puede reintentar después).
+
+| Variable | Valor |
+| --- | --- |
+| `CRM_CORREO_USUARIO` | La cuenta que envía los avisos; también es el remitente. |
+| `CRM_CORREO_CLAVE` | **secreto**: la contraseña de aplicación de esa cuenta (se le quitan los espacios). |
+| `CRM_CORREO_HOST` | Solo con un dominio que no sea gmail.com ni de Microsoft. Por defecto `smtp.gmail.com` para gmail.com y `smtp.office365.com` para outlook.com, hotmail.com, live.com y onmicrosoft.com. |
+| `CRM_CORREO_PUERTO` | Opcional: por defecto `465` con smtp.gmail.com; si no, `587`. |
+| `CRM_CORREO_SEGURO` | Opcional: `si` (TLS desde el inicio) o `no` (STARTTLS). Por defecto `si` con el 465. |
+| `CRM_CORREO_NOMBRE` | Opcional: nombre visible del remitente. Por defecto «Planeación Sapiencia». |
+| `CRM_CORREO_MODO` | Opcional: `smtp` (por defecto si hay usuario y clave) o `desactivado`. El modo `archivo` no sirve en Cloud Run (el disco se borra). |
+| `CRM_CORREO_DIRECTORIO` | No se pone en Cloud Run: es la carpeta de los `.eml` del modo `archivo`. |
+| `CRM_URL_SITIO` | `https://odes-web-327402776385.us-central1.run.app` (base de los enlaces de los correos; opcional). |
+
+Microsoft 365 está retirando la autenticación básica de SMTP: con una cuenta @sapiencia.gov.co puede
+no funcionar. Con Gmail y una contraseña de aplicación sí.
+
+**Orden para la primera versión con el CRM** (el servidor exige el esquema 10; si la imagen nueva
+llega antes que la migración, toda la API de la base responde 503 hasta migrar):
+
+1. Migrar planeacionbd a la versión 10 desde un equipo con acceso
+   (`npm run repositorio:migrar -- --usuario <cuenta_admin>`, o a mano con `010-crm.sql`) y dar a
+   `sapiencia_web` el GRANT de las 10 tablas `crm_*` (la lista está en
+   `apps/server/db/repositorio/LEEME.md`, «CRM (versión 10)»).
+2. Cargar el equipo y la clave del líder con el SQL que imprimen las CLI, y correrlo en planeacionbd:
+   `npm run crm:cargar-equipo -- --archivo apps/server/datos/crm/equipo.json --solo-sql` y
+   `npm run crm:clave-lider -- --solo-sql` (pide la contraseña; el SQL lleva solo su hash). El JSON
+   del equipo no se sube al repositorio.
+3. Poner las variables `CRM_*` de arriba en Cloud Run (`CRM_CORREO_CLAVE` desde Secret Manager).
+4. Después, el push (Cloud Build construye y despliega la imagen).
 
 ### Detrás de Cloud Run
 

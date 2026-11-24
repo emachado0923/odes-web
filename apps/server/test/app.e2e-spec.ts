@@ -185,7 +185,7 @@ describe('sapiencia-web (e2e)', () => {
     });
 
     describe('fallback de la SPA', () => {
-      it.each(['/', '/sivu', '/sivu/', '/sivu/a/b', '/odes', '/odes/x', '/pai', '/pai/admin/usuarios', '/pertinencia'])(
+      it.each(['/', '/sivu', '/sivu/', '/sivu/a/b', '/odes', '/odes/x', '/pai', '/pai/admin/usuarios', '/pertinencia', '/crm', '/crm/lider'])(
         'GET %s -> index.html sin caché',
         async (ruta) => {
           const res = await request(servidor).get(ruta).expect(200);

@@ -1,0 +1,405 @@
+/*
+ * Correos y Equipo del líder (/crm/lider/correos y /crm/lider/equipo).
+ * Todo bajo .crm, con el prefijo crm-la- y los tokens de crm.css: sin colores
+ * nuevos. Mismas reglas de la casa: blanco = se pulsa (las filas no llevan
+ * caja blanca, solo sus botones), el color de un estado siempre con su texto
+ * y la acción principal (magenta) una sola por vista.
+ */
+
+/* ───────── Barra: filtro segmentado y cuenta ───────── */
+
+:where(.crm) .crm-la-barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--crm-e3) var(--crm-e4);
+  margin-bottom: var(--crm-e5);
+}
+
+:where(.crm) .crm-la-segmentos {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  max-width: 100%;
+  padding: 0.25rem;
+  border: 1px solid var(--crm-borde);
+  border-radius: var(--crm-radio);
+  background: var(--crm-fondo-azul);
+}
+
+:where(.crm) .crm-la-segmento {
+  min-height: 2.25rem;
+  margin: 0;
+  padding: 0.375rem 0.875rem;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--crm-azul);
+  font-size: var(--crm-t-s);
+  font-weight: 500;
+  line-height: 1.2;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--crm-rapido),
+    color var(--crm-rapido);
+}
+
+:where(.crm) .crm-la-segmento:hover:not([aria-pressed='true']) {
+  background: var(--crm-papel);
+}
+
+/* Lo activo, en azul hondo (el magenta queda para la acción principal). */
+:where(.crm) .crm-la-segmento[aria-pressed='true'] {
+  background: var(--crm-azul-hondo);
+  color: var(--crm-papel);
+}
+
+@media (forced-colors: active) {
+  :where(.crm) .crm-la-segmento[aria-pressed='true'] {
+    outline: 2px solid CanvasText;
+    outline-offset: -2px;
+  }
+}
+
+/* Cuántos hay: texto secundario. */
+:where(.crm) .crm-la-cuenta {
+  font-size: var(--crm-t-s);
+  color: var(--crm-tinta-suave);
+}
+
+/* ───────── Nota (correo sin configurar) ───────── */
+
+:where(.crm) .crm-la-nota {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--crm-e3);
+  max-width: 52rem;
+  margin-bottom: var(--crm-e5);
+  padding: var(--crm-e4) var(--crm-e5) var(--crm-e4) var(--crm-e4);
+  border: 1px solid color-mix(in srgb, var(--crm-azul) 22%, white);
+  border-left: 4px solid var(--crm-azul);
+  border-radius: var(--crm-radio);
+  background: var(--crm-cian-suave);
+  color: var(--crm-tinta);
+}
+
+:where(.crm) .crm-la-nota .crm-icono {
+  margin-top: 0.125rem;
+  color: var(--crm-azul);
+}
+
+/* ───────── Estado de un correo ───────── */
+
+:where(.crm) .crm-la-estado {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375em;
+  padding: 0.1875rem 0.625rem 0.1875rem 0.5rem;
+  border-radius: 999px;
+  background: var(--crm-azul-suave);
+  color: var(--crm-azul-hondo);
+  font-size: var(--crm-t-s);
+  font-weight: 500;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+:where(.crm) .crm-la-estado[data-estado='pendiente'] {
+  background: var(--crm-proceso-suave);
+  color: var(--crm-proceso-texto);
+}
+
+:where(.crm) .crm-la-estado[data-estado='enviado'] {
+  background: var(--crm-terminada-suave);
+  color: var(--crm-terminada-texto);
+}
+
+:where(.crm) .crm-la-estado[data-estado='error'] {
+  background: var(--crm-rojo-suave);
+  color: var(--crm-rojo-texto);
+}
+
+/* sin_configurar: el azul suave de la base. */
+
+/* ───────── Tabla de correos (tarjetas en el celular) ───────── */
+
+:where(.crm) .crm-la-tabla tbody {
+  transition: opacity var(--crm-rapido);
+}
+
+/* Mientras llega otro filtro, la lista anterior queda atenuada. */
+:where(.crm) .crm-la-tabla[aria-busy='true'] tbody {
+  opacity: 0.55;
+}
+
+:where(.crm) .crm-la-c-fecha {
+  font-size: var(--crm-t-s);
+  white-space: nowrap;
+  color: var(--crm-tinta-suave);
+}
+
+:where(.crm) .crm-la-c-aviso {
+  min-width: 13rem;
+}
+
+:where(.crm) .crm-la-tipo {
+  display: block;
+  font-size: var(--crm-t-xs);
+  font-weight: 500;
+  color: var(--crm-tinta-suave);
+}
+
+:where(.crm) .crm-la-asunto {
+  display: block;
+  font-weight: 500;
+  color: var(--crm-tinta);
+  overflow-wrap: break-word;
+}
+
+:where(.crm) .crm-la-tarea {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: var(--crm-t-s);
+  color: var(--crm-tinta-suave);
+  overflow-wrap: break-word;
+}
+
+:where(.crm) .crm-la-para {
+  overflow-wrap: anywhere;
+}
+
+/* «Para», solo en las tarjetas (en la tabla lo dice la columna). */
+:where(.crm) .crm-la-rotulo {
+  display: none;
+}
+
+:where(.crm) .crm-la-c-estado {
+  min-width: 10rem;
+}
+
+:where(.crm) .crm-la-cifras {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.75rem;
+  margin-top: 0.375rem;
+  font-size: var(--crm-t-xs);
+  color: var(--crm-tinta-suave);
+}
+
+:where(.crm) .crm-la-error {
+  display: block;
+  max-width: 30ch;
+  margin-top: 0.25rem;
+  font-size: var(--crm-t-xs);
+  line-height: 1.4;
+  color: var(--crm-rojo-texto);
+  overflow-wrap: anywhere;
+}
+
+:where(.crm) .crm-la-c-accion {
+  text-align: right;
+  white-space: nowrap;
+}
+
+@media (max-width: 48rem) {
+  :where(.crm) .crm-la-tabla {
+    display: block;
+  }
+
+  /* Los encabezados siguen ahí para el lector de pantalla. */
+  :where(.crm) .crm-la-tabla thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  :where(.crm) .crm-la-tabla tbody {
+    display: grid;
+    gap: var(--crm-e3);
+  }
+
+  :where(.crm) .crm-la-tabla tbody tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'estado fecha'
+      'aviso aviso'
+      'para para'
+      'accion accion';
+    gap: var(--crm-e3);
+    padding: var(--crm-e4);
+    border: 1px solid var(--crm-borde);
+    border-radius: var(--crm-radio-l);
+  }
+
+  :where(.crm) .crm-la-tabla td {
+    display: block;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  :where(.crm) .crm-la-tabla .crm-la-c-fecha {
+    grid-area: fecha;
+    text-align: right;
+  }
+
+  :where(.crm) .crm-la-tabla .crm-la-c-aviso {
+    grid-area: aviso;
+  }
+
+  :where(.crm) .crm-la-tabla .crm-la-c-para {
+    grid-area: para;
+  }
+
+  :where(.crm) .crm-la-tabla .crm-la-c-estado {
+    grid-area: estado;
+  }
+
+  :where(.crm) .crm-la-tabla .crm-la-c-accion {
+    grid-area: accion;
+    text-align: left;
+  }
+
+  :where(.crm) .crm-la-tabla .crm-la-c-accion:empty {
+    display: none;
+  }
+
+  :where(.crm) .crm-la-c-accion .crm-boton {
+    width: 100%;
+  }
+
+  :where(.crm) .crm-la-rotulo {
+    display: inline;
+    font-weight: 600;
+    color: var(--crm-tinta-suave);
+  }
+
+  :where(.crm) .crm-la-error {
+    max-width: none;
+  }
+}
+
+/* ───────── Equipo: una fila por persona ───────── */
+
+:where(.crm) .crm-la-equipo-cuenta {
+  margin-bottom: var(--crm-e3);
+}
+
+:where(.crm) .crm-la-personas {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--crm-borde);
+}
+
+:where(.crm) .crm-la-persona {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--crm-e3) var(--crm-e4);
+  padding: var(--crm-e4) 0;
+  border-bottom: 1px solid var(--crm-borde);
+}
+
+:where(.crm) .crm-la-persona[data-inactiva] .crm-avatar {
+  opacity: 0.55;
+}
+
+:where(.crm) .crm-la-persona-datos {
+  display: grid;
+  gap: 0.3125rem;
+  min-width: 0;
+}
+
+:where(.crm) .crm-la-persona-cabeza {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.375rem var(--crm-e2);
+}
+
+:where(.crm) .crm-la-persona-nombre {
+  margin-right: 0.125rem;
+  font-size: var(--crm-t-l);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--crm-azul-hondo);
+  overflow-wrap: break-word;
+}
+
+:where(.crm) .crm-la-persona[data-inactiva] .crm-la-persona-nombre {
+  color: var(--crm-tinta-suave);
+}
+
+:where(.crm) .crm-la-persona-correo {
+  font-size: var(--crm-t-s);
+  color: var(--crm-tinta-suave);
+  overflow-wrap: anywhere;
+}
+
+:where(.crm) .crm-la-activa[data-activa='si'] {
+  background: var(--crm-cian-suave);
+}
+
+:where(.crm) .crm-la-activa[data-activa='no'] {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--crm-borde-fuerte);
+  color: var(--crm-tinta-suave);
+}
+
+:where(.crm) .crm-la-persona-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.375rem;
+  max-width: 34rem;
+}
+
+/* Subir y Bajar, juntos y aparte del resto. */
+:where(.crm) .crm-la-orden {
+  display: inline-flex;
+  gap: 0.25rem;
+  margin-left: 0.125rem;
+  padding-left: 0.375rem;
+  border-left: 1px solid var(--crm-borde);
+}
+
+/* Diálogo de la foto: la de ahora con su explicación. */
+:where(.crm) .crm-la-foto-actual {
+  display: flex;
+  align-items: center;
+  gap: var(--crm-e4);
+}
+
+@media (max-width: 48rem) {
+  :where(.crm) .crm-la-persona {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+  }
+
+  :where(.crm) .crm-la-persona .crm-avatar {
+    --crm-av-tam: 3rem;
+    --crm-av-letra: 1.125rem;
+  }
+
+  :where(.crm) .crm-la-persona-acciones {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+    max-width: none;
+  }
+
+  :where(.crm) .crm-la-orden {
+    margin-left: 0;
+    padding-left: 0;
+    border-left: 0;
+  }
+}

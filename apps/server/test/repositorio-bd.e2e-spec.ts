@@ -92,12 +92,13 @@ describe.skipIf(!HAY_BD)(`repositorio con ${MOTOR_PRUEBAS}: esquema, archivos e 
     const resultado = await base.aplicarEsquema();
     // Versión 4: el esquema inicial más las migraciones 002 (tablero de matrícula), 003 (PAI)
     // y 004 (nombres con el prefijo de su módulo).
-    expect(resultado).toMatchObject({ versionAntes: 9, versionDespues: 9, migraciones: [], renombradas: [] });
+    expect(resultado).toMatchObject({ versionAntes: 10, versionDespues: 10, migraciones: [], renombradas: [] });
     // En MySQL el esquema se aplica sentencia por sentencia (15); en Postgres, completo.
     expect(ES_POSTGRES || resultado.sentencias === 15).toBe(true);
-    // 12 del repositorio (repositorio_*, con su almacén, y sistema_esquema_version), 17 de los tableros
-    // (sivu_*: el catálogo, 5 de matrícula, 8 de los fondos y 3 del acceso) y 18 del PAI (pai_*, con su almacén).
-    expect(await base.tablas()).toHaveLength(52);
+    // 14 del repositorio (repositorio_*, con su almacén y las subidas por partes, y sistema_esquema_version),
+    // 19 de los tableros (sivu_*: el catálogo, 5 de matrícula, 8 de los fondos, 3 del acceso y 2 de la consulta),
+    // 19 del PAI (pai_*, con su almacén) y 10 del CRM (crm_*, con su almacén y el acceso del líder).
+    expect(await base.tablas()).toHaveLength(62);
   });
 
   it('migrar aplica una migración que falta aunque haya una posterior registrada (REG-1)', async () => {
@@ -106,8 +107,8 @@ describe.skipIf(!HAY_BD)(`repositorio con ${MOTOR_PRUEBAS}: esquema, archivos e 
     const resultado = await base.aplicarEsquema();
     expect(resultado.migraciones).toEqual(['2-tablero-matricula']);
     const [filas] = await base.admin.query<RowDataPacket[]>('SELECT version FROM sistema_esquema_version ORDER BY version');
-    expect(filas.map((f) => Number(f.version))).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
-    expect(await base.tablas()).toHaveLength(52);
+    expect(filas.map((f) => Number(f.version))).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    expect(await base.tablas()).toHaveLength(62);
   });
 
   it('una base con los nombres anteriores pasa a los nuevos sin duplicar tablas ni perder filas', async () => {
@@ -165,7 +166,7 @@ describe.skipIf(!HAY_BD)(`repositorio con ${MOTOR_PRUEBAS}: esquema, archivos e 
     const [maximo] = await base.admin.query<RowDataPacket[]>('SELECT MAX(id) AS id FROM repositorio_categorias');
 
     // Como estaba una base de la versión 3: nombres anteriores (también los de
-    // las secuencias y los NOT NULL de Postgres) y sin las versiones 4 a 9.
+    // las secuencias y los NOT NULL de Postgres) y sin las versiones 4 a 10.
     if (ES_POSTGRES) {
       for (const [viejo, nuevo] of TABLAS_RENOMBRADAS) {
         await base.admin.query(`ALTER TABLE ${nuevo} RENAME TO ${viejo}`);
@@ -182,7 +183,7 @@ describe.skipIf(!HAY_BD)(`repositorio con ${MOTOR_PRUEBAS}: esquema, archivos e 
     } else {
       await base.admin.query(`RENAME TABLE ${TABLAS_RENOMBRADAS.map(([viejo, nuevo]) => `${nuevo} TO ${viejo}`).join(', ')}`);
     }
-    await base.admin.query('DELETE FROM esquema_version WHERE version IN (4, 5, 6, 7, 8, 9)');
+    await base.admin.query('DELETE FROM esquema_version WHERE version IN (4, 5, 6, 7, 8, 9, 10)');
     expect(await base.tablas()).toContain('documentos');
 
     // Pegar el esquema.sql nuevo (o correr un dist/ viejo) se detiene en la guarda sin crear nada.
@@ -201,12 +202,20 @@ describe.skipIf(!HAY_BD)(`repositorio con ${MOTOR_PRUEBAS}: esquema, archivos e 
     const resultado = await base.aplicarEsquema();
     expect(resultado).toMatchObject({
       versionAntes: 3,
-      versionDespues: 9,
-      migraciones: ['4-nombres-por-modulo', '5-subidas-por-partes', '6-descripcion', '7-tablero-fondos', '8-acceso-tableros', '9-consulta-fondos'],
+      versionDespues: 10,
+      migraciones: [
+        '4-nombres-por-modulo',
+        '5-subidas-por-partes',
+        '6-descripcion',
+        '7-tablero-fondos',
+        '8-acceso-tableros',
+        '9-consulta-fondos',
+        '10-crm',
+      ],
     });
     expect(resultado.renombradas).toHaveLength(TABLAS_RENOMBRADAS.length);
     const tablas = await base.tablas();
-    expect(tablas).toHaveLength(52);
+    expect(tablas).toHaveLength(62);
     expect(TABLAS_RENOMBRADAS.filter(([viejo]) => tablas.includes(viejo))).toEqual([]);
     // La ficha que solo usaba la evidencia (y sus dos trozos) pasó al almacén del PAI.
     const movidas = new Map([
@@ -256,7 +265,7 @@ describe.skipIf(!HAY_BD)(`repositorio con ${MOTOR_PRUEBAS}: esquema, archivos e 
     expect(Number(nuevo.insertId)).toBeGreaterThan(Number(maximo[0].id));
     await bd.ejecutar('DELETE FROM repositorio_categorias WHERE orden IN (90, 91)');
     // Volver a migrar no hace nada.
-    expect(await base.aplicarEsquema()).toMatchObject({ versionAntes: 9, versionDespues: 9, migraciones: [], renombradas: [] });
+    expect(await base.aplicarEsquema()).toMatchObject({ versionAntes: 10, versionDespues: 10, migraciones: [], renombradas: [] });
   });
 
   it.skipIf(!ES_POSTGRES)('en Postgres, las secuencias y los NOT NULL también quedan con el nombre nuevo', async () => {
@@ -264,6 +273,15 @@ describe.skipIf(!HAY_BD)(`repositorio con ${MOTOR_PRUEBAS}: esquema, archivos e 
       "SELECT sequencename AS nombre FROM pg_sequences WHERE schemaname = current_schema() AND sequencename NOT LIKE 'pai\\_%' ORDER BY 1",
     );
     expect(secuencias.map((fila) => String(fila.nombre))).toEqual([
+      'crm_acceso_intentos_id_seq',
+      'crm_acceso_sesiones_id_seq',
+      'crm_acceso_usuarios_id_seq',
+      'crm_almacen_archivos_id_seq',
+      'crm_correos_id_seq',
+      'crm_personas_id_seq',
+      'crm_tarea_archivos_id_seq',
+      'crm_tarea_eventos_id_seq',
+      'crm_tareas_id_seq',
       'repositorio_administradores_id_seq',
       'repositorio_almacen_archivos_id_seq',
       'repositorio_cambios_id_seq',

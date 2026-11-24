@@ -81,6 +81,16 @@ export const TABLAS_CON_ID = new Set([
   'pai_asignaciones',
   'pai_autorizaciones',
   'pai_registro',
+  // CRM (migración 010). crm_almacen_archivo_trozos no tiene id.
+  'crm_almacen_archivos',
+  'crm_personas',
+  'crm_tareas',
+  'crm_tarea_archivos',
+  'crm_tarea_eventos',
+  'crm_correos',
+  'crm_acceso_usuarios',
+  'crm_acceso_sesiones',
+  'crm_acceso_intentos',
 ]);
 
 export interface SentenciaPostgres {
