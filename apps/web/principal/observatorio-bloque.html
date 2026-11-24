@@ -1,11 +1,12 @@
 <meta charset="utf-8"><!-- Solo sirve al abrir este archivo suelto en un navegador (evita tildes rotas). Dentro de WordPress se ignora. -->
 <!--
-  BLOQUE OBSERVATORIO SAPIENCIA (OdeS) · v2.39 · 2026-11-24
+  BLOQUE OBSERVATORIO SAPIENCIA (OdeS) · v2.40 · 2026-11-24
 
   Parte superior reestructurada segun el documento "Reestructuracion parte
   superior del micrositio del Observatorio":
     1. Banner: lo pone la entidad en WordPress; NO va en este bloque
-    2. El Observatorio en cifras (fijas) 3. Explora el Observatorio (botones de acceso rapido)
+    2. El Observatorio en cifras (fijas) 2b. Los tres lados del Observatorio (triangulos)
+    3. Explora el Observatorio (botones de acceso rapido)
     4. Mapa georreferenciado
     5. Botones flotantes: Repositorio y SIVU abajo a la izquierda (OCULTOS POR AHORA: estan comentados, ver
        EDITAR FLOTANTES), y el robot ODES abajo a la derecha (OCULTO POR AHORA: esta comentado, ver EDITAR
@@ -22,6 +23,7 @@
   Que editar (busca estos textos):
     EDITAR CIFRAS       las 5 fichas de "El Observatorio en cifras", en orden: frente (cifra, texto, nota
                         "Dato preliminar" y periodo) y reverso (descripcion, fuente y fecha de corte)
+    EDITAR LADOS        titulos y textos de los 3 triangulos de "Los tres lados del Observatorio"
     EDITAR ACCESOS      enlaces de los 6 botones de acceso rapido
     EDITAR FLOTANTES    enlaces de los botones flotantes (Repositorio, SIVU y, en celular, ODES)
     EDITAR ROBOT        direcciones de los videos y las imagenes del robot ODES, y su enlace a ODES
@@ -81,19 +83,21 @@
 #odes-observatorio .odes-h3{font-size:1.25rem;font-weight:700;line-height:1.2}
 /* Jerarquia por niveles, como una piramide invertida: arriba lo mas importante, lo mas ancho y lo mas fuerte;
    cada nivel siguiente es mas angosto, mas pequeno y mas sobrio.
-     nivel 1  El Observatorio en cifras: todo el ancho de la ventana, el titulo y las cifras mas grandes; el
-              titulo arranca encima de la primera tarjeta
-     nivel 2  Explora el Observatorio: a medio camino entre la ventana y la columna, botones mas compactos; el
-              titulo, a medio camino entre la franja de las cifras y la de los botones
-     nivel 3  Informacion georreferenciada: el ancho de la columna del tema; el titulo, a medio camino entre los
-              botones de Explora y la columna
-     nivel 4  Quienes somos y contacto: mas angosto que la columna (en escritorio), el titulo mas pequeno */
+   Si D es lo que la franja de las cifras le gana a la columna del tema, cada franja mide la columna mas una
+   fraccion de D, y cada titulo va a medio camino entre la franja de arriba y la suya:
+     nivel 1  El Observatorio en cifras: la columna + D (todo el ancho de la ventana menos el aire), el titulo y
+              las cifras mas grandes; el titulo arranca encima de la primera ficha
+     nivel 2  Los tres lados del Observatorio: la columna + 3/4 de D; el titulo, en la columna + 7/8 de D
+     nivel 3  Explora el Observatorio: la columna + 1/2 de D, botones mas compactos; el titulo, + 5/8 de D
+     nivel 4  Informacion georreferenciada: el ancho de la columna del tema; el titulo, igual que el de Explora
+              (+ 5/8 de D y del mismo tamano)
+     nivel 5  Quienes somos y contacto: mas angosto que la columna (en escritorio), el titulo mas pequeno */
 #odes-observatorio .odes-nivel-1 .odes-h2{font-size:min(calc(1.3rem + 1.3vw),2.25rem)}
 #odes-observatorio .odes-nivel-1 .odes-cabecera__texto p{font-size:1.0625rem}
-#odes-observatorio .odes-nivel-3 .odes-h2{font-size:min(calc(1.15rem + .5vw),1.5rem)}
-#odes-observatorio .odes-nivel-4 .odes-h2{font-size:min(calc(1.1rem + .3vw),1.375rem)}
-#odes-observatorio .odes-nivel-4 .odes-cabecera__texto p{font-size:.9375rem}
-#odes-observatorio .odes-nivel-4 .odes-h3{font-size:1.0625rem}
+#odes-observatorio .odes-nivel-2 .odes-h2{font-size:min(calc(1.25rem + 1.05vw),2rem)}
+#odes-observatorio .odes-nivel-5 .odes-h2{font-size:min(calc(1.1rem + .3vw),1.375rem)}
+#odes-observatorio .odes-nivel-5 .odes-cabecera__texto p{font-size:.9375rem}
+#odes-observatorio .odes-nivel-5 .odes-h3{font-size:1.0625rem}
 #odes-observatorio .odes-suave{color:var(--odes-neutro-50)}
 #odes-observatorio .odes-cabecera{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1rem 2rem;margin-bottom:1.25rem}
 #odes-observatorio .odes-cabecera__texto{max-width:46rem}
@@ -114,7 +118,7 @@
    que van en otra fila (tableta y celular).
    La primera fila (la del icono) se estira: ahi va el aire, y crece si el reverso necesita mas alto. */
 #odes-observatorio .odes-seccion--cifras{padding-top:2rem}
-#odes-observatorio .odes-cifras{position:relative;display:grid;grid-template-columns:minmax(0,1fr);grid-auto-rows:1fr auto minmax(1.25rem,auto) auto minmax(1.625rem,auto) auto;column-gap:1rem;row-gap:0;width:var(--odes-ventana,100vw);margin-left:var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2));margin-bottom:-1rem;padding:0 var(--odes-aire)}
+#odes-observatorio .odes-cifras{position:relative;display:grid;grid-template-columns:minmax(0,1fr);grid-auto-rows:1fr auto minmax(1.125rem,auto) auto minmax(1.5rem,auto) auto;column-gap:1rem;row-gap:0;width:var(--odes-ventana,100vw);margin-left:var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2));margin-bottom:-1rem;padding:0 var(--odes-aire)}
 #odes-observatorio .odes-cifra{--odes-cifra-fondo:#163854;position:relative;display:grid;grid-row:span 6;grid-template-rows:subgrid;grid-template-columns:minmax(0,1fr);margin-bottom:1rem;border-radius:var(--odes-esquina);color:#fff;cursor:pointer;-webkit-tap-highlight-color:transparent}
 #odes-observatorio .odes-cifra--marino{--odes-cifra-fondo:#163854}
 #odes-observatorio .odes-cifra--celeste{--odes-cifra-fondo:#51ade5}
@@ -123,8 +127,8 @@
 #odes-observatorio .odes-cifra--naranja{--odes-cifra-fondo:#d94c19}
 #odes-observatorio .odes-cifra:focus-visible{outline-offset:3px}
 #odes-observatorio .odes-cifra__cara{grid-column:1;grid-row:1 / -1;min-width:0;overflow:hidden;border-radius:var(--odes-esquina);background:var(--odes-cifra-fondo);-webkit-backface-visibility:hidden;backface-visibility:hidden;transition:transform .6s cubic-bezier(.45,.05,.25,1)}
-#odes-observatorio .odes-cifra__frente{position:relative;display:grid;grid-template-rows:subgrid;grid-template-columns:minmax(0,1fr);padding:1.25rem;transform:perspective(60rem) rotateY(0deg)}
-#odes-observatorio .odes-cifra__reverso{display:flex;flex-direction:column;padding:1.25rem;transform:perspective(60rem) rotateY(180deg)}
+#odes-observatorio .odes-cifra__frente{position:relative;display:grid;grid-template-rows:subgrid;grid-template-columns:minmax(0,1fr);padding:1rem 1.125rem;transform:perspective(60rem) rotateY(0deg)}
+#odes-observatorio .odes-cifra__reverso{display:flex;flex-direction:column;padding:1rem;transform:perspective(60rem) rotateY(180deg)}
 /* Giro: con el mouse (solo en equipos que tienen mouse), con el teclado o al tocarla (lo pone el script) */
 @media (hover:hover){
   #odes-observatorio .odes-cifra:hover .odes-cifra__frente{transform:perspective(60rem) rotateY(-180deg)}
@@ -135,20 +139,20 @@
 /* Aro decorativo arriba a la derecha del frente */
 #odes-observatorio .odes-cifra__frente::after{content:"";position:absolute;top:0;right:0;width:min(12rem,62%);aspect-ratio:1/1;border:1.125rem solid rgba(255,255,255,.15);border-radius:50%;transform:translate(26%,-26%);pointer-events:none}
 /* Frente: cada parte en su fila (ver arriba) */
-#odes-observatorio .odes-cifra__icono{position:relative;z-index:1;grid-row:1;align-self:start;justify-self:start;display:inline-flex;align-items:center;justify-content:center;width:2.75rem;height:2.75rem;margin-bottom:.5rem;border-radius:var(--odes-radio-lg);background:rgba(255,255,255,.2);line-height:0}
-#odes-observatorio .odes-cifra__icono svg{display:block;width:1.375rem;height:1.375rem;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-#odes-observatorio .odes-cifra__unidad{grid-row:3;align-self:start;margin-top:.125rem;font-size:.9375rem;font-weight:400;line-height:1.2}
-#odes-observatorio .odes-cifra__valor{grid-row:2;align-self:end;font-size:min(calc(1.6rem + 3.1vw),3.125rem);font-weight:900;line-height:1.05;letter-spacing:-.01em;font-variant-numeric:tabular-nums;white-space:nowrap}
+#odes-observatorio .odes-cifra__icono{position:relative;z-index:1;grid-row:1;align-self:start;justify-self:start;display:inline-flex;align-items:center;justify-content:center;width:2.25rem;height:2.25rem;margin-bottom:.375rem;border-radius:var(--odes-radio-lg);background:rgba(255,255,255,.2);line-height:0}
+#odes-observatorio .odes-cifra__icono svg{display:block;width:1.125rem;height:1.125rem;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#odes-observatorio .odes-cifra__unidad{grid-row:3;align-self:start;margin-top:.0625rem;font-size:.875rem;font-weight:400;line-height:1.2}
+#odes-observatorio .odes-cifra__valor{grid-row:2;align-self:end;font-size:min(calc(1.6rem + 3.1vw),2.75rem);font-weight:900;line-height:1.05;letter-spacing:-.01em;font-variant-numeric:tabular-nums;white-space:nowrap}
 #odes-observatorio .odes-cifra__asterisco{margin-left:.04em;font-size:.6em;font-weight:700;vertical-align:.5em}
-#odes-observatorio .odes-cifra__texto{grid-row:4;margin-top:.5rem;font-size:1.0625rem;font-weight:700;line-height:1.3}
+#odes-observatorio .odes-cifra__texto{grid-row:4;margin-top:.375rem;font-size:1.0625rem;font-weight:700;line-height:1.3}
 /* Nota "Dato preliminar": pastilla blanca con el texto del color de la ficha */
-#odes-observatorio .odes-cifra__nota{grid-row:5;justify-self:start;align-self:start;margin-top:.375rem;padding:.0625rem .5rem;border-radius:50rem;background:#fff;color:var(--odes-cifra-fondo);font-size:.75rem;font-weight:700;line-height:1.4}
-#odes-observatorio .odes-cifra__periodo{grid-row:6;margin-top:.25rem;font-size:.9375rem;font-weight:400;line-height:1.3;opacity:.9}
+#odes-observatorio .odes-cifra__nota{grid-row:5;justify-self:start;align-self:start;margin-top:.25rem;padding:.0625rem .5rem;border-radius:50rem;background:#fff;color:var(--odes-cifra-fondo);font-size:.75rem;font-weight:700;line-height:1.4}
+#odes-observatorio .odes-cifra__periodo{grid-row:6;margin-top:.125rem;font-size:.875rem;font-weight:400;line-height:1.3;opacity:.9}
 /* Reverso */
 #odes-observatorio .odes-cifra__titulo{font-size:1.125rem;font-weight:700;line-height:1.3}
-#odes-observatorio .odes-cifra__descripcion{margin-top:.5rem;font-size:.9375rem;font-weight:500;line-height:1.4}
-#odes-observatorio .odes-cifra__datos{display:flex;flex-direction:column;gap:.125rem;margin-top:auto;padding-top:.5rem;border-top:1px solid rgba(255,255,255,.4);font-size:.6875rem;line-height:1.4}
-#odes-observatorio .odes-cifra__reverso>.odes-cifra__descripcion{margin-bottom:.75rem}
+#odes-observatorio .odes-cifra__descripcion{margin-top:.375rem;font-size:.9375rem;font-weight:500;line-height:1.4}
+#odes-observatorio .odes-cifra__datos{display:flex;flex-direction:column;gap:.125rem;margin-top:auto;padding-top:.375rem;border-top:1px solid rgba(255,255,255,.4);font-size:.6875rem;line-height:1.4}
+#odes-observatorio .odes-cifra__reverso>.odes-cifra__descripcion{margin-bottom:.5rem}
 #odes-observatorio .odes-cifra__etiqueta{font-weight:700}
 /* Fuente y fecha de corte en una sola linea: el script pone esta clase y baja la letra de cada ficha lo justo para
    que quepan (sin script, el texto pasa a la linea siguiente) */
@@ -164,7 +168,7 @@
   #odes-observatorio .odes-cifras{grid-template-columns:repeat(6,minmax(0,1fr))}
   #odes-observatorio .odes-cifra:nth-child(4){grid-column:2 / span 2}
   #odes-observatorio .odes-cifra:nth-child(5){grid-column:span 2}
-  #odes-observatorio .odes-cifra__valor{font-size:min(calc(6.2vw - .85rem),3.125rem)}
+  #odes-observatorio .odes-cifra__valor{font-size:min(calc(6.2vw - .85rem),2.75rem)}
 }
 /* Tableta (3 + 2): las fichas son angostas y el reverso es lo que fija el alto; su texto va un poco mas pequeno */
 @media (min-width:768px) and (max-width:1199.98px){
@@ -174,34 +178,71 @@
 @media (min-width:1200px){
   #odes-observatorio .odes-cifras{grid-template-columns:repeat(5,minmax(0,1fr))}
   #odes-observatorio .odes-cifra,#odes-observatorio .odes-cifra:nth-child(4),#odes-observatorio .odes-cifra:nth-child(5){grid-column:auto}
-  #odes-observatorio .odes-cifra__frente{padding:1.125rem}
-  #odes-observatorio .odes-cifra__reverso{padding:1rem}
-  #odes-observatorio .odes-cifra__valor{font-size:min(calc(3.7vw - .75rem),3.125rem)}
+  #odes-observatorio .odes-cifra__frente{padding:1rem}
+  #odes-observatorio .odes-cifra__reverso{padding:.875rem 1rem}
+  #odes-observatorio .odes-cifra__valor{font-size:min(calc(3.4vw - .75rem),2.75rem)}
   #odes-observatorio .odes-cifra__texto{font-size:1rem}
-  #odes-observatorio .odes-cifra__titulo{font-size:1.0625rem}
+  #odes-observatorio .odes-cifra__titulo{font-size:1rem}
   #odes-observatorio .odes-cifra__descripcion{font-size:.8125rem}
 }
 @media (min-width:1440px){
-  #odes-observatorio .odes-cifra__frente{padding:1.25rem 1.375rem}
-  #odes-observatorio .odes-cifra__reverso{padding:1.125rem 1rem}
+  #odes-observatorio .odes-cifra__frente{padding:1.125rem 1.25rem}
+  #odes-observatorio .odes-cifra__reverso{padding:1rem}
+}
+
+/* 2b. Los tres lados del Observatorio: tres triangulos de colores, cada uno con su titulo, un texto corto y un
+   circulo con un icono. Nivel 2: la franja mide la columna + 3/4 de D (ver la jerarquia de niveles). Responde al
+   ancho de su propia franja (container queries): desde 56rem van en fila y escalonados; mas angosta, uno debajo
+   de otro, de hasta 26rem. Colores de la entidad: naranja, celeste y morado; texto azul muy oscuro sobre el
+   naranja y el celeste, blanco sobre el morado (todos con 5,5:1 o mas) */
+#odes-observatorio .odes-lados{position:relative;container:odes-lados / inline-size;width:calc((3 * var(--odes-ventana,100vw) + 100% - 6 * var(--odes-aire)) / 4);margin-left:calc(3 * (var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2)) + var(--odes-aire)) / 4);padding-top:.5rem}
+#odes-observatorio .odes-lados__lista{display:flex;flex-direction:column;align-items:center;gap:2rem}
+#odes-observatorio .odes-lado{--odes-lado-color:#f26623;--odes-lado-texto:#062130;container-type:inline-size;position:relative;width:100%;max-width:26rem;color:var(--odes-lado-texto)}
+#odes-observatorio .odes-lado--investigacion{aspect-ratio:390/330}
+#odes-observatorio .odes-lado--formacion{--odes-lado-color:#51ade5;aspect-ratio:437/332}
+#odes-observatorio .odes-lado--divulgacion{--odes-lado-color:#9f339e;--odes-lado-texto:#fff;aspect-ratio:385/388}
+/* El triangulo: el SVG se estira a la caja; el trazo grueso del mismo color redondea las esquinas */
+#odes-observatorio svg.odes-lado__forma{position:absolute;top:0;left:0;display:block;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 .5rem .75rem rgba(22,56,84,.18))}
+#odes-observatorio .odes-lado__forma polygon{fill:var(--odes-lado-color);stroke:var(--odes-lado-color);stroke-width:18px;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+/* El texto, en la parte ancha del triangulo; la letra crece con el ancho del triangulo (cqi) */
+#odes-observatorio .odes-lado__texto{position:absolute;display:flex;flex-direction:column;align-items:center;gap:.25rem;text-align:center}
+#odes-observatorio .odes-lado--investigacion .odes-lado__texto{top:18%;left:8%;width:60%}
+#odes-observatorio .odes-lado--formacion .odes-lado__texto{top:46%;left:27%;width:46%}
+#odes-observatorio .odes-lado--divulgacion .odes-lado__texto{top:23%;left:24%;width:52%}
+#odes-observatorio .odes-lado__nombre{font-size:clamp(1rem,5.2cqi,1.375rem);font-weight:700;line-height:1.2}
+#odes-observatorio .odes-lado__descripcion{font-size:clamp(.8125rem,4.2cqi,1.125rem);line-height:1.25}
+/* El circulo con el icono (se puede quitar del HTML) */
+#odes-observatorio .odes-lado__medalla{position:absolute;z-index:1;display:flex;align-items:center;justify-content:center;width:36%;aspect-ratio:1/1;border:clamp(3px,1.2cqi,5px) solid var(--odes-lado-color);border-radius:50%;background:#fff;color:var(--odes-lado-color);box-shadow:0 .25rem .625rem rgba(22,56,84,.14);transform:translate(-50%,-50%)}
+#odes-observatorio .odes-lado__medalla svg{display:block;width:40%;height:40%;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+#odes-observatorio .odes-lado--investigacion .odes-lado__medalla{top:78%;left:32%}
+#odes-observatorio .odes-lado--formacion .odes-lado__medalla{top:21%;left:52%;width:33%}
+#odes-observatorio .odes-lado--divulgacion .odes-lado__medalla{top:78%;left:73%}
+/* Franja ancha: los tres en fila y escalonados; la fila guarda la proporcion del diseno y cada triangulo va en
+   su lugar, en porcentajes de la fila */
+@container odes-lados (min-width:56rem){
+  #odes-observatorio .odes-lados__lista{position:relative;display:block;width:100%;aspect-ratio:1105/390}
+  #odes-observatorio .odes-lado{position:absolute;max-width:none}
+  #odes-observatorio .odes-lado--investigacion{top:0;left:0;width:35.3%}
+  #odes-observatorio .odes-lado--formacion{top:8.2%;left:30.3%;width:39.5%}
+  #odes-observatorio .odes-lado--divulgacion{top:.5%;left:65.2%;width:34.8%}
 }
 
 /* 3. Explora el Observatorio: botones numerados en una franja con el ancho de la ventana, como las cifras (usa las
    mismas --odes-ventana y --odes-franja-izquierda). Cada boton: numero grande, una linea, el titulo (y el periodo,
    si lo tiene) y la flecha en un circulo blanco. 3 por fila en escritorio, 2 en tableta y 1 en celular; todos del
    mismo tamano. Texto azul oscuro sobre los colores claros: los titulos van grandes y en negrilla (WCAG AA) */
-/* Nivel 2: la franja va a medio camino entre la de las cifras (borde de la ventana menos --odes-aire) y la columna.
+/* Nivel 3: la franja va a medio camino entre la de las cifras (borde de la ventana menos --odes-aire) y la columna.
    Cuando la columna llena la ventana (celular y tableta) coincide con ella. */
 #odes-observatorio .odes-accesos{position:relative;display:grid;grid-template-columns:minmax(0,1fr);grid-auto-rows:1fr;gap:1rem;width:calc((var(--odes-ventana,100vw) + 100% - 2 * var(--odes-aire)) / 2);margin-left:calc((var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2)) + var(--odes-aire)) / 2);padding:0}
-/* Titulos de los niveles 1 a 3, escalonados como sus franjas (A = --odes-aire). El de las cifras usa la franja
-   de las cifras (arranca encima de la primera tarjeta). El de Explora va a medio camino entre la franja de las
-   cifras (borde de la ventana menos A) y la de los botones: a la izquierda, 3 x (franja-izquierda + A) / 4 desde
-   la columna; de ancho, (3 x ventana + columna - 6 A) / 4. El del mapa, a medio camino entre la franja de los
-   botones de Explora y la columna (donde van el mapa y la tabla): a la izquierda, (franja-izquierda + A) / 4;
-   de ancho, (ventana + 3 x columna - 2 A) / 4. En celular y tableta todo coincide con la columna. */
+/* Titulos de los niveles 1 a 4, escalonados como sus franjas (A = --odes-aire, F = --odes-franja-izquierda,
+   V = --odes-ventana, C = la columna). Una franja en la fraccion k de D (ver la jerarquia de niveles) mide
+   k x V + (1 - k) x C - 2k x A y empieza k x (F + A) a la izquierda de la columna. El de las cifras usa la franja
+   de las cifras (k = 1, arranca encima de la primera ficha); el de los tres lados, k = 7/8; el de Explora,
+   k = 5/8, y el del mapa, igual que el de Explora. En celular y tableta todo coincide con la columna. */
 #odes-observatorio .odes-nivel-1 .odes-cabecera{width:var(--odes-ventana,100vw);margin-left:var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2));padding:0 var(--odes-aire)}
-#odes-observatorio .odes-nivel-2 .odes-cabecera{width:calc((3 * var(--odes-ventana,100vw) + 100% - 6 * var(--odes-aire)) / 4);margin-left:calc(3 * (var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2)) + var(--odes-aire)) / 4)}
-#odes-observatorio .odes-nivel-3>.odes-contenedor>.odes-cabecera{width:calc((var(--odes-ventana,100vw) + 3 * 100% - 2 * var(--odes-aire)) / 4);margin-left:calc((var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2)) + var(--odes-aire)) / 4)}
+#odes-observatorio .odes-nivel-2 .odes-cabecera{width:calc((7 * var(--odes-ventana,100vw) + 100% - 14 * var(--odes-aire)) / 8);margin-left:calc(7 * (var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2)) + var(--odes-aire)) / 8)}
+#odes-observatorio .odes-nivel-3 .odes-cabecera{width:calc((5 * var(--odes-ventana,100vw) + 3 * 100% - 10 * var(--odes-aire)) / 8);margin-left:calc(5 * (var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2)) + var(--odes-aire)) / 8)}
+#odes-observatorio .odes-nivel-4>.odes-contenedor>.odes-cabecera{width:calc((5 * var(--odes-ventana,100vw) + 3 * 100% - 10 * var(--odes-aire)) / 8);margin-left:calc(5 * (var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2)) + var(--odes-aire)) / 8)}
 #odes-observatorio .odes-accesos li{display:flex}
 #odes-observatorio .odes-acceso{--odes-acento:#163854;--odes-acento-texto:#fff}
 #odes-observatorio .odes-acceso--celeste{--odes-acento:#51ade5;--odes-acento-texto:#163854}
@@ -224,7 +265,7 @@
 @media (min-width:768px){#odes-observatorio .odes-accesos{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (min-width:1200px){#odes-observatorio .odes-accesos{grid-template-columns:repeat(3,minmax(0,1fr))}}
 /* Nivel 4 en escritorio: Quienes somos y el contacto, mas angostos que la columna y centrados */
-@media (min-width:1200px){#odes-observatorio .odes-nivel-4 .odes-pilares,#odes-observatorio .odes-nivel-4 .odes-contacto{max-width:56rem;margin-left:auto;margin-right:auto}}
+@media (min-width:1200px){#odes-observatorio .odes-nivel-5 .odes-pilares,#odes-observatorio .odes-nivel-5 .odes-contacto{max-width:56rem;margin-left:auto;margin-right:auto}}
 #odes-observatorio .odes-pronto{display:inline-flex;align-items:center;padding:.125rem .5rem;border-radius:50rem;background:#fff;color:var(--odes-neutro-10);font-size:.75rem;font-weight:700;line-height:1.4;letter-spacing:0;text-transform:none}
 
 /* 5. Botones flotantes: Repositorio (arriba) y SIVU (abajo) van junto al mapa, ver .odes-lateral. A ODES se
@@ -595,8 +636,51 @@
     </div>
   </section>
 
+  <!-- 2b. LOS TRES LADOS DEL OBSERVATORIO -->
+  <section class="odes-seccion odes-seccion--separada odes-nivel-2" aria-labelledby="odes-lados-titulo">
+    <div class="odes-contenedor">
+      <div class="odes-cabecera">
+        <div class="odes-cabecera__texto">
+          <h2 id="odes-lados-titulo" class="odes-h2">Los tres lados del Observatorio</h2>
+          <p class="odes-suave">Investigación, formación y divulgación sobre la educación postsecundaria de Medellín.</p>
+        </div>
+      </div>
+      <!-- EDITAR LADOS: cada triangulo es un li.odes-lado con su titulo (odes-lado__nombre) y su texto
+           (odes-lado__descripcion). Textos cortos: deben caber dentro del triangulo. El circulo con el icono
+           (span.odes-lado__medalla) se puede borrar completo. -->
+      <div class="odes-lados">
+        <ul class="odes-lados__lista">
+          <li class="odes-lado odes-lado--investigacion">
+            <svg class="odes-lado__forma" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false"><polygon points="3,3 97,22 6,97"/></svg>
+            <span class="odes-lado__medalla" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
+            <div class="odes-lado__texto">
+              <h3 class="odes-lado__nombre">Investigación</h3>
+              <p class="odes-lado__descripcion">Estudia la educación postsecundaria de Medellín para entender sus causas y sus efectos.</p>
+            </div>
+          </li>
+          <li class="odes-lado odes-lado--formacion">
+            <svg class="odes-lado__forma" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false"><polygon points="51.5,17 3,74 97,97"/></svg>
+            <span class="odes-lado__medalla" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>
+            <div class="odes-lado__texto">
+              <h3 class="odes-lado__nombre">Formación</h3>
+              <p class="odes-lado__descripcion">Lleva el conocimiento basado en evidencia a colegios, instituciones y equipos de trabajo.</p>
+            </div>
+          </li>
+          <li class="odes-lado odes-lado--divulgacion">
+            <svg class="odes-lado__forma" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false"><polygon points="3,22 97,3 60,97"/></svg>
+            <span class="odes-lado__medalla" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></span>
+            <div class="odes-lado__texto">
+              <h3 class="odes-lado__nombre">Divulgación</h3>
+              <p class="odes-lado__descripcion">Traduce los resultados en conversaciones públicas y accesibles.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
   <!-- 3. EXPLORA EL OBSERVATORIO: BOTONES DE ACCESO RAPIDO -->
-  <section class="odes-seccion odes-seccion--separada odes-nivel-2" aria-labelledby="odes-accesos-titulo">
+  <section class="odes-seccion odes-seccion--separada odes-nivel-3" aria-labelledby="odes-accesos-titulo">
     <div class="odes-contenedor">
       <div class="odes-cabecera">
         <div class="odes-cabecera__texto">
@@ -742,7 +826,7 @@
     </div>
 
   <!-- 4. MAPA: INFORMACION GEORREFERENCIADA -->
-  <section class="odes-seccion odes-seccion--separada odes-nivel-3" aria-labelledby="odes-mapa-titulo" data-odes-mapa>
+  <section class="odes-seccion odes-seccion--separada odes-nivel-4" aria-labelledby="odes-mapa-titulo" data-odes-mapa>
     <div class="odes-contenedor">
       <div class="odes-cabecera">
         <div class="odes-cabecera__texto">
@@ -941,7 +1025,7 @@
   </section>
 
   <!-- 6. QUIENES SOMOS Y CONTACTO -->
-  <section class="odes-seccion odes-seccion--separada odes-nivel-4" aria-labelledby="odes-nosotros-titulo">
+  <section class="odes-seccion odes-seccion--separada odes-nivel-5" aria-labelledby="odes-nosotros-titulo">
     <div class="odes-contenedor">
       <div class="odes-cabecera">
         <div class="odes-cabecera__texto">
