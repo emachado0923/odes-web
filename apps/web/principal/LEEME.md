@@ -41,7 +41,7 @@ inicial):
 
 | Marca               | Qué cambia                                                                                 |
 | ------------------- | ------------------------------------------------------------------------------------------ |
-| `EDITAR CIFRAS`     | Las 5 tarjetas de "El Observatorio en cifras" (cifra, texto y periodo), en orden: en escritorio van en una fila a todo el ancho de la ventana. Antes de publicar, ponga las cifras oficiales. |
+| `EDITAR CIFRAS`     | Las 5 fichas de "El Observatorio en cifras", en orden: en escritorio van en una fila a todo el ancho de la ventana. Cada ficha gira (mouse, teclado o toque) y tiene frente (cifra, texto, nota "Dato preliminar" opcional y periodo) y reverso (descripción, fuente y fecha de corte). Antes de publicar, ponga las cifras oficiales. |
 | `EDITAR ACCESOS`    | Los enlaces de los 6 botones de acceso rápido.                                             |
 | `EDITAR FLOTANTES`  | Los enlaces de los botones flotantes Repositorio, SIVU y ODES.                             |
 | `EDITAR MAPA`       | Los datos del mapa (JSON): cada indicador es una opción de la lista "Indicador".           |
