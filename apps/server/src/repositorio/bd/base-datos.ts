@@ -50,7 +50,7 @@ export type { Conexion, Dialecto, ResultadoEscritura } from './conexion.js';
  * (010-crm.sql), 11 = cuenta de correo del CRM guardada por el líder
  * (011-crm-cuenta-correo.sql).
  */
-export const VERSION_ESQUEMA_REQUERIDA = 11;
+export const VERSION_ESQUEMA_REQUERIDA = 12;
 
 /** Tamaño de cada trozo de archivo en los almacenes (repositorio_ y pai_almacen_archivo_trozos; 1 MiB). */
 export const TAMANO_TROZO = 1024 * 1024;

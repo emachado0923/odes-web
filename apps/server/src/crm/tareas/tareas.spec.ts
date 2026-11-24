@@ -11,6 +11,7 @@ import {
   MENSAJE_CORREO_SIN_CONFIGURAR,
   mensajeAviso,
   mensajeAvisoTerminada,
+  origenConfigurado,
   origenSitio,
   primerNombre,
 } from './avisos-tareas.js';
@@ -49,6 +50,7 @@ import {
   validarDevolver,
   validarEdicionTarea,
   validarNuevaTarea,
+  validarNuevaTareaPropia,
   validarTerminar,
 } from './validacion-tareas.js';
 
@@ -148,6 +150,33 @@ describe('validarNuevaTarea', () => {
       expect(error.getStatus()).toBe(400);
       expect(error.cuerpo.mensaje).toBe('Envíe los datos como un objeto JSON.');
     }
+  });
+});
+
+describe('validarNuevaTareaPropia', () => {
+  it('normaliza como la del líder y no toma responsable ni entregable del cuerpo', () => {
+    expect(
+      validarNuevaTareaPropia({
+        titulo: '  Revisar\t  indicadores ',
+        descripcion: 'Línea 1\r\nLínea 2  ',
+        fechaLimite: '2026-12-15',
+        responsableId: 99,
+        requiereEntregable: true,
+      }),
+    ).toEqual({ titulo: 'Revisar indicadores', descripcion: 'Línea 1\nLínea 2', fechaLimite: '2026-12-15' });
+    expect(validarNuevaTareaPropia({ titulo: 'Solo título' })).toEqual({ titulo: 'Solo título', descripcion: '', fechaLimite: null });
+    expect(validarNuevaTareaPropia({ titulo: 'x', fechaLimite: '' }).fechaLimite).toBeNull();
+    expect(validarNuevaTareaPropia({ titulo: 'x', fechaLimite: null }).fechaLimite).toBeNull();
+  });
+
+  it('título 1–160, descripción hasta 5000 y fecha del calendario, con el campo', () => {
+    expect(validarNuevaTareaPropia({ titulo: 'a'.repeat(160) }).titulo).toHaveLength(160);
+    expect(errorDe(() => validarNuevaTareaPropia({ titulo: 'a'.repeat(161) })).campos).toHaveProperty('titulo');
+    expect(errorDe(() => validarNuevaTareaPropia({ titulo: '  ' })).campos?.['titulo']).toBe('Escriba el título de la tarea.');
+    const error = errorDe(() => validarNuevaTareaPropia({ titulo: 'x', descripcion: 'x'.repeat(5001), fechaLimite: '2026-02-30' }));
+    expect(error.getStatus()).toBe(400);
+    expect(Object.keys(error.campos ?? {}).toSorted()).toEqual(['descripcion', 'fechaLimite']);
+    expect(errorDe(() => validarNuevaTareaPropia([])).cuerpo.mensaje).toBe('Envíe los datos como un objeto JSON.');
   });
 });
 
@@ -605,5 +634,11 @@ describe('avisos por correo', () => {
     expect(origenSitio(null, { protocol: 'http', get: () => undefined })).toBe('http://localhost');
     expect(enlaceLider('https://s.example', 15)).toBe('https://s.example/crm/lider/tareas/15');
     expect(enlaceEquipo('https://s.example', 4, 15)).toBe('https://s.example/crm/equipo/4?tarea=15');
+  });
+
+  it('los correos que dispara el equipo (sin sesión) solo usan CRM_URL_SITIO, nunca el Host de la petición', () => {
+    expect(origenConfigurado('https://sapiencia.example/crm/')).toBe('https://sapiencia.example/crm');
+    expect(origenConfigurado(null)).toBeNull();
+    expect(origenConfigurado('   ')).toBeNull();
   });
 });

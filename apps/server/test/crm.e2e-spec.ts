@@ -28,6 +28,7 @@ import {
 import {
   MENSAJE_AUTH_GMAIL,
   MENSAJE_CLAVE_FALTA,
+  MENSAJE_CLAVE_OTRA_CUENTA,
   MENSAJE_HOST_FALTA,
   MENSAJE_MANDAN_VARIABLES,
   TOPE_PRUEBAS_POR_HORA,
@@ -329,6 +330,7 @@ describe.skipIf(!HAY_BD)(`CRM con ${MOTOR_PRUEBAS} (e2e)`, () => {
         nombre: LIDER.nombre,
         iniciales: 'LV',
         esLider: true,
+        puedeCrearTareas: false,
         foto: null,
         conteo: CONTEO_VACIO,
         correo: LIDER.correo,
@@ -374,7 +376,7 @@ describe.skipIf(!HAY_BD)(`CRM con ${MOTOR_PRUEBAS} (e2e)`, () => {
         [id.carlos, 'CP', false],
       ]);
       for (const persona of personas) {
-        expect(Object.keys(persona).toSorted()).toEqual(['conteo', 'esLider', 'foto', 'id', 'iniciales', 'nombre']);
+        expect(Object.keys(persona).toSorted()).toEqual(['conteo', 'esLider', 'foto', 'id', 'iniciales', 'nombre', 'puedeCrearTareas']);
         expect(persona.conteo).toEqual(CONTEO_VACIO);
       }
       expect(JSON.stringify(res.body)).not.toContain('@');
@@ -753,6 +755,7 @@ describe.skipIf(!HAY_BD)(`CRM con ${MOTOR_PRUEBAS} (e2e)`, () => {
         nombre: JOSE.nombre,
         iniciales: 'JR',
         esLider: false,
+        puedeCrearTareas: false,
         foto: null,
         conteo: { ...CONTEO_VACIO, pendientes: 1 },
       });
@@ -1093,8 +1096,10 @@ describe.skipIf(!HAY_BD)(`CRM con ${MOTOR_PRUEBAS} (e2e)`, () => {
       });
 
       it('terminar deja el correo «sin configurar» (la tarea sí termina) y el resumen del líder lo cuenta', async () => {
+        // Sin CRM_URL_SITIO, el Host lo escribe quien termina (sin sesión): no puede poner el enlace del correo al líder.
         const res = await equipo
           .mutar('post', `/personas/${id.jose}/tareas/${tarea.t1}/terminar`, sinCorreo)
+          .set('Host', 'phishing.example')
           .send({ nota: null })
           .expect(200);
         const resultado = res.body as ResultadoTerminarCrm;
@@ -1110,6 +1115,12 @@ describe.skipIf(!HAY_BD)(`CRM con ${MOTOR_PRUEBAS} (e2e)`, () => {
         ]);
         expect(fila).toMatchObject({ estado: 'sin_configurar', para: LIDER.correo, responder_a: JOSE.correo });
         expect(Number(fila?.intentos)).toBe(0);
+        const [cuerpo] = await consultar('SELECT cuerpo_texto, cuerpo_html FROM crm_correos WHERE id = ?', [correoTerminada]);
+        for (const parte of [String(cuerpo?.cuerpo_texto), String(cuerpo?.cuerpo_html)]) {
+          expect(parte).toContain(TITULO_T1_EDITADO);
+          expect(parte).not.toContain('phishing.example');
+          expect(parte).not.toContain('/crm/lider/tareas/');
+        }
 
         // La sesión vive en la base: la misma cookie sirve en la otra app.
         const resumen = (await lider.get('/lider/resumen', sinCorreo).expect(200)).body as ResumenLiderCrm;
@@ -1455,6 +1466,23 @@ describe.skipIf(!HAY_BD)(`CRM con ${MOTOR_PRUEBAS} (e2e)`, () => {
       });
     });
 
+    it('PUT sin clave no puede cambiar el servidor ni la cuenta (400 en campos.clave): la clave no sale hacia otro lado', async () => {
+      const [antes] = await consultar('SELECT usuario, host, clave_cifrada FROM crm_correo_cuenta');
+      const servidorAjeno = await cuenta
+        .put()
+        .send({ usuario: CUENTA.usuario, host: 'smtp.atacante.example', puerto: 587, seguro: false })
+        .expect(400);
+      expect(servidorAjeno.body).toEqual({
+        codigo: 'solicitud_invalida',
+        mensaje: MENSAJE_CLAVE_OTRA_CUENTA,
+        campos: { clave: MENSAJE_CLAVE_OTRA_CUENTA },
+      });
+      await cuenta.put().send({ usuario: 'otra.cuenta@gmail.com', clave: '' }).expect(400);
+      const [despues] = await consultar('SELECT usuario, host, clave_cifrada FROM crm_correo_cuenta');
+      expect(despues).toEqual(antes);
+      expect(despues).toMatchObject({ usuario: CUENTA.usuario, host: 'smtp.gmail.com' });
+    });
+
     it('POST prueba sale al líder (sin pasar por la bandeja); con un error simulado, el mensaje traducido sin la clave', async () => {
       const correos = await contar('crm_correos');
       const res = await cuenta.prueba().send({}).expect(200);
@@ -1535,6 +1563,86 @@ describe.skipIf(!HAY_BD)(`CRM con ${MOTOR_PRUEBAS} (e2e)`, () => {
     });
   });
 
+  describe('tareas propias (permiso puedeCrearTareas)', () => {
+    const PROPIA = { titulo: '  Preparar   la mesa de trabajo ', descripcion: 'Con la agenda.', fechaLimite: '2026-12-20' };
+
+    it('sin el permiso, crearse una tarea es 403 y no guarda nada', async () => {
+      const antes = await contar('crm_tareas');
+      const res = await equipo.mutar('post', `/personas/${id.carlos}/tareas`).send(PROPIA).expect(403);
+      expect(res.body).toMatchObject({ codigo: 'prohibido', mensaje: expect.stringMatching(/permiso para crearse tareas/) });
+      expect(await contar('crm_tareas')).toBe(antes);
+    });
+
+    it('el líder lo prende con PATCH (sale en PersonaCrm) y la persona se crea la tarea: 201, suya, sin entregable ni correo', async () => {
+      const editada = await lider.mutar('patch', `/lider/personas/${id.carlos}`).send({ puedeCrearTareas: true }).expect(200);
+      expect(editada.body).toMatchObject({ id: id.carlos, puedeCrearTareas: true });
+      const publica = ((await equipo.get('/personas').expect(200)).body as PersonaCrm[]).find((p) => p.id === id.carlos);
+      expect(publica?.puedeCrearTareas).toBe(true);
+      const [fila] = await consultar('SELECT puede_crear_tareas FROM crm_personas WHERE id = ?', [id.carlos]);
+      expect(Number(fila?.puede_crear_tareas)).toBe(1);
+
+      const correosAntes = enMemoria().length;
+      const res = await equipo.mutar('post', `/personas/${id.carlos}/tareas`).send(PROPIA).expect(201);
+      const creada = res.body as TareaDetalleCrm;
+      expect(creada).toMatchObject({
+        titulo: 'Preparar la mesa de trabajo',
+        descripcion: 'Con la agenda.',
+        fechaLimite: '2026-12-20',
+        estado: 'pendiente',
+        requiereEntregable: false,
+        avisada: false,
+        responsable: expect.objectContaining({ id: id.carlos }),
+      });
+      expect(creada).not.toHaveProperty('correos');
+      expect(creada.eventos).toEqual([
+        expect.objectContaining({ tipo: 'creada', actor: 'responsable', personaNombre: CARLOS_RENOMBRADO }),
+      ]);
+      expect(enMemoria()).toHaveLength(correosAntes);
+      expect(await consultar("SELECT id FROM crm_correos WHERE tarea_id = ?", [creada.id])).toHaveLength(0);
+
+      const tablero = (await equipo.get(`/personas/${id.carlos}/tareas`).expect(200)).body as TableroPersonaCrm;
+      expect(tablero.persona.puedeCrearTareas).toBe(true);
+      expect(tablero.tareas.map((t) => t.id)).toContain(creada.id);
+      // El líder también la ve.
+      await lider.get(`/lider/tareas/${creada.id}`).expect(200);
+    });
+
+    it('valida como la creación del líder (400 con campos), exige JSON, el mismo sitio y una persona activa', async () => {
+      const ruta = `/personas/${id.carlos}/tareas`;
+      const invalida = await equipo
+        .mutar('post', ruta)
+        .send({ titulo: '   ', descripcion: 'x'.repeat(5001), fechaLimite: '2026-02-30' })
+        .expect(400);
+      expect(invalida.body).toMatchObject({
+        codigo: 'solicitud_invalida',
+        campos: { titulo: expect.any(String), descripcion: expect.any(String), fechaLimite: expect.any(String) },
+      });
+      await equipo.mutar('post', ruta).set('Content-Type', 'text/plain').send('titulo=Hola').expect(400);
+      await request(prueba.servidor).post(`${RUTA}${ruta}`).set('Origin', OTRO_SITIO).send(PROPIA).expect(403);
+      await equipo.mutar('post', '/personas/999999/tareas').send(PROPIA).expect(404);
+    });
+
+    it('nadie la crea a nombre de otra: la ruta manda, y José sin permiso sigue en 403', async () => {
+      const antes = await contar('crm_tareas');
+      // José no tiene el permiso: con su :personaId es 403 aunque mande otro responsable en el cuerpo.
+      await equipo
+        .mutar('post', `/personas/${id.jose}/tareas`)
+        .send({ ...PROPIA, responsableId: id.carlos })
+        .expect(403);
+      expect(await contar('crm_tareas')).toBe(antes);
+      // Con la ruta de Carlos, el responsable es Carlos aunque el cuerpo diga José.
+      const res = await equipo
+        .mutar('post', `/personas/${id.carlos}/tareas`)
+        .send({ titulo: 'Otra propia', responsableId: id.jose })
+        .expect(201);
+      expect((res.body as TareaDetalleCrm).responsable.id).toBe(id.carlos);
+
+      // Apagado el permiso, vuelve a ser 403.
+      await lider.mutar('patch', `/lider/personas/${id.carlos}`).send({ puedeCrearTareas: false }).expect(200);
+      await equipo.mutar('post', `/personas/${id.carlos}/tareas`).send(PROPIA).expect(403);
+    });
+  });
+
   describe('carpeta temporal', () => {
     it('no quedan en ella los archivos de las subidas (aceptadas o rechazadas)', async () => {
       // Se borran al terminar cada petición, sin esperar: se da un momento.
@@ -1560,6 +1668,7 @@ describe('CRM sin base de datos (e2e)', () => {
     ['get', '/personas/1/foto'],
     ['get', '/personas/1/tareas'],
     ['get', '/personas/1/tareas/1'],
+    ['post', '/personas/1/tareas'],
     ['post', '/personas/1/tareas/1/estado'],
     ['post', '/personas/1/tareas/1/terminar'],
     ['delete', '/personas/1/tareas/1/entregables/1'],

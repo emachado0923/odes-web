@@ -23,6 +23,7 @@ function persona(id: number, nombre: string, conteo: Partial<ConteoTareasCrm> = 
     nombre,
     iniciales: inicialesDe(nombre),
     esLider: false,
+    puedeCrearTareas: false,
     foto: null,
     conteo: { pendientes: 0, enProceso: 0, terminadasRecientes: 0, vencidas: 0, ...conteo },
     ...extra,

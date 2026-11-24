@@ -24,8 +24,8 @@ export interface DatosCorreoTarea {
   observacion?: string | null;
   /** Archivos de la tarea que importan en este correo: `adjunto` = va adjunto; si no, se descarga en el CRM. */
   archivos: { nombre: string; bytes: number; adjunto: boolean }[];
-  /** Enlace absoluto a la tarea en el CRM. */
-  enlace: string;
+  /** Enlace absoluto a la tarea en el CRM, o null (sin botón ni enlace). */
+  enlace: string | null;
 }
 
 export interface CorreoCompuesto {
@@ -128,7 +128,8 @@ function primerNombre(nombre: string): string {
 }
 
 /** El enlace normalizado si es http(s); si no, null (no se pone botón). */
-function enlaceSeguro(enlace: string): string | null {
+function enlaceSeguro(enlace: string | null): string | null {
+  if (!enlace) return null;
   try {
     const url = new URL(enlace.trim());
     return url.protocol === 'http:' || url.protocol === 'https:' ? url.href : null;

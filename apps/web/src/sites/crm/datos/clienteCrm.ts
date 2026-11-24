@@ -30,6 +30,7 @@ import {
   type GuardarCuentaCorreoCrm,
   type NuevaPersonaCrm,
   type NuevaTareaCrm,
+  type NuevaTareaPropiaCrm,
   type PersonaAdminCrm,
   type PersonaCrm,
   type PruebaCorreoCrm,
@@ -331,6 +332,10 @@ export const apiEquipo = {
   },
   tarea(personaId: number, tareaId: number, signal?: AbortSignal): Promise<TareaDetalleCrm> {
     return pedirJson<TareaDetalleCrm>('GET', deTarea(personaId, tareaId), undefined, { signal })
+  },
+  /** La persona se crea una tarea a sí misma (solo con el permiso puedeCrearTareas; si no, 403). */
+  crearTareaPropia(personaId: number, datos: NuevaTareaPropiaCrm): Promise<TareaDetalleCrm> {
+    return pedirJson<TareaDetalleCrm>('POST', `/personas/${personaId}/tareas`, datos)
   },
   cambiarEstado(personaId: number, tareaId: number, estado: 'pendiente' | 'en_proceso'): Promise<TareaDetalleCrm> {
     return pedirJson<TareaDetalleCrm>('POST', `${deTarea(personaId, tareaId)}/estado`, { estado })

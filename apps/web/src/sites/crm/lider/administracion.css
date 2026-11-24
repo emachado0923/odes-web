@@ -345,6 +345,13 @@
   overflow-wrap: anywhere;
 }
 
+/* Permiso de crearse tareas: casilla con su texto, debajo de los conteos. */
+:where(.crm) .crm-la-permiso {
+  justify-self: start;
+  margin-top: 0.25rem;
+  font-size: var(--crm-t-s);
+}
+
 :where(.crm) .crm-la-activa[data-activa='si'] {
   background: var(--crm-cian-suave);
 }

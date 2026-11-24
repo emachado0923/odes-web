@@ -13,6 +13,7 @@ function persona(id: number, cambios: Partial<PersonaAdminCrm> = {}): PersonaAdm
     nombre: `Persona ${id}`,
     iniciales: `P${id}`,
     esLider: false,
+    puedeCrearTareas: false,
     foto: null,
     conteo: { pendientes: 0, enProceso: 0, terminadasRecientes: 0, vencidas: 0 },
     correo: `persona${id}@sapiencia.gov.co`,
@@ -145,6 +146,33 @@ describe('EquipoLider', () => {
     const dialogo = screen.getByRole('dialog', { name: '¿Desactivar a Martha Lucía Gómez?' })
     fireEvent.click(within(dialogo).getByRole('button', { name: 'Desactivar' }))
     expect(await within(dialogo).findByRole('alert')).toHaveTextContent('No se puede desactivar al único líder activo.')
+  })
+
+  it('la casilla «Puede crearse tareas» hace PATCH puedeCrearTareas, avisa y queda marcada (y se desmarca igual)', async () => {
+    const editarPersona = vi.fn<ApiLider['editarPersona']>(async (id, datos) => ({ ...ANA, ...datos, id }))
+    montar({ personas: vi.fn<ApiLider['personas']>(async () => EQUIPO), editarPersona })
+
+    const casilla = await screen.findByRole('checkbox', { name: /^Puede crearse tareas\s*\(Ana María Restrepo\)$/ })
+    expect(casilla).not.toBeChecked()
+    fireEvent.click(casilla)
+    await waitFor(() => expect(editarPersona).toHaveBeenCalledWith(2, { puedeCrearTareas: true }))
+    expect(await screen.findByText('Ana María Restrepo ya puede crearse tareas desde su tablero.')).toBeInTheDocument()
+    await waitFor(() => expect(screen.getByRole('checkbox', { name: /^Puede crearse tareas\s*\(Ana María Restrepo\)$/ })).toBeChecked())
+
+    fireEvent.click(screen.getByRole('checkbox', { name: /^Puede crearse tareas\s*\(Ana María Restrepo\)$/ }))
+    await waitFor(() => expect(editarPersona).toHaveBeenLastCalledWith(2, { puedeCrearTareas: false }))
+    expect(await screen.findByText('Ana María Restrepo ya no puede crearse tareas.')).toBeInTheDocument()
+  })
+
+  it('si falla el cambio del permiso, avisa el error y la casilla queda como estaba', async () => {
+    const editarPersona = vi.fn<ApiLider['editarPersona']>(async () => {
+      throw new ErrorCrmHttp('no_disponible', 'El servicio no está disponible.', { estado: 503 })
+    })
+    montar({ personas: vi.fn<ApiLider['personas']>(async () => EQUIPO), editarPersona })
+    const casilla = await screen.findByRole('checkbox', { name: /^Puede crearse tareas\s*\(José David Ramírez\)$/ })
+    fireEvent.click(casilla)
+    expect(await screen.findByText('El servicio no está disponible.')).toBeInTheDocument()
+    expect(screen.getByRole('checkbox', { name: /^Puede crearse tareas\s*\(José David Ramírez\)$/ })).not.toBeChecked()
   })
 
   it('«Subir» intercambia el orden con la vecina (dos editarPersona) y recarga', async () => {

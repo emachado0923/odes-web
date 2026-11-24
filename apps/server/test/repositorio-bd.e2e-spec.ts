@@ -92,7 +92,7 @@ describe.skipIf(!HAY_BD)(`repositorio con ${MOTOR_PRUEBAS}: esquema, archivos e 
     const resultado = await base.aplicarEsquema();
     // Versión 4: el esquema inicial más las migraciones 002 (tablero de matrícula), 003 (PAI)
     // y 004 (nombres con el prefijo de su módulo).
-    expect(resultado).toMatchObject({ versionAntes: 11, versionDespues: 11, migraciones: [], renombradas: [] });
+    expect(resultado).toMatchObject({ versionAntes: 12, versionDespues: 12, migraciones: [], renombradas: [] });
     // En MySQL el esquema se aplica sentencia por sentencia (15); en Postgres, completo.
     expect(ES_POSTGRES || resultado.sentencias === 15).toBe(true);
     // 14 del repositorio (repositorio_*, con su almacén y las subidas por partes, y sistema_esquema_version),
@@ -108,7 +108,7 @@ describe.skipIf(!HAY_BD)(`repositorio con ${MOTOR_PRUEBAS}: esquema, archivos e 
     const resultado = await base.aplicarEsquema();
     expect(resultado.migraciones).toEqual(['2-tablero-matricula']);
     const [filas] = await base.admin.query<RowDataPacket[]>('SELECT version FROM sistema_esquema_version ORDER BY version');
-    expect(filas.map((f) => Number(f.version))).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+    expect(filas.map((f) => Number(f.version))).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
     expect(await base.tablas()).toHaveLength(63);
   });
 
@@ -167,7 +167,7 @@ describe.skipIf(!HAY_BD)(`repositorio con ${MOTOR_PRUEBAS}: esquema, archivos e 
     const [maximo] = await base.admin.query<RowDataPacket[]>('SELECT MAX(id) AS id FROM repositorio_categorias');
 
     // Como estaba una base de la versión 3: nombres anteriores (también los de
-    // las secuencias y los NOT NULL de Postgres) y sin las versiones 4 a 11.
+    // las secuencias y los NOT NULL de Postgres) y sin las versiones 4 a 12.
     if (ES_POSTGRES) {
       for (const [viejo, nuevo] of TABLAS_RENOMBRADAS) {
         await base.admin.query(`ALTER TABLE ${nuevo} RENAME TO ${viejo}`);
@@ -184,7 +184,7 @@ describe.skipIf(!HAY_BD)(`repositorio con ${MOTOR_PRUEBAS}: esquema, archivos e 
     } else {
       await base.admin.query(`RENAME TABLE ${TABLAS_RENOMBRADAS.map(([viejo, nuevo]) => `${nuevo} TO ${viejo}`).join(', ')}`);
     }
-    await base.admin.query('DELETE FROM esquema_version WHERE version IN (4, 5, 6, 7, 8, 9, 10, 11)');
+    await base.admin.query('DELETE FROM esquema_version WHERE version IN (4, 5, 6, 7, 8, 9, 10, 11, 12)');
     expect(await base.tablas()).toContain('documentos');
 
     // Pegar el esquema.sql nuevo (o correr un dist/ viejo) se detiene en la guarda sin crear nada.
@@ -203,7 +203,7 @@ describe.skipIf(!HAY_BD)(`repositorio con ${MOTOR_PRUEBAS}: esquema, archivos e 
     const resultado = await base.aplicarEsquema();
     expect(resultado).toMatchObject({
       versionAntes: 3,
-      versionDespues: 11,
+      versionDespues: 12,
       migraciones: [
         '4-nombres-por-modulo',
         '5-subidas-por-partes',
@@ -213,6 +213,7 @@ describe.skipIf(!HAY_BD)(`repositorio con ${MOTOR_PRUEBAS}: esquema, archivos e 
         '9-consulta-fondos',
         '10-crm',
         '11-crm-cuenta-correo',
+        '12-crm-tareas-propias',
       ],
     });
     expect(resultado.renombradas).toHaveLength(TABLAS_RENOMBRADAS.length);
@@ -267,7 +268,7 @@ describe.skipIf(!HAY_BD)(`repositorio con ${MOTOR_PRUEBAS}: esquema, archivos e 
     expect(Number(nuevo.insertId)).toBeGreaterThan(Number(maximo[0].id));
     await bd.ejecutar('DELETE FROM repositorio_categorias WHERE orden IN (90, 91)');
     // Volver a migrar no hace nada.
-    expect(await base.aplicarEsquema()).toMatchObject({ versionAntes: 11, versionDespues: 11, migraciones: [], renombradas: [] });
+    expect(await base.aplicarEsquema()).toMatchObject({ versionAntes: 12, versionDespues: 12, migraciones: [], renombradas: [] });
   });
 
   it.skipIf(!ES_POSTGRES)('en Postgres, las secuencias y los NOT NULL también quedan con el nombre nuevo', async () => {

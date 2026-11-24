@@ -167,7 +167,7 @@ describe('seguridad del HTML', () => {
   });
 
   it('solo pone el enlace si es http(s)', () => {
-    for (const enlace of ['javascript:alert(1)', 'data:text/html,<script>x</script>', 'no es una url', '//sin-esquema.test']) {
+    for (const enlace of [null, '', 'javascript:alert(1)', 'data:text/html,<script>x</script>', 'no es una url', '//sin-esquema.test']) {
       const correo = correoTareaAsignada({ ...BASE, enlace });
       expect(correo.html).not.toContain('Ver la tarea en el CRM');
       expect(correo.html).not.toMatch(/href="(?!https?:)/);

@@ -16,7 +16,7 @@ import type { ContactoPersonaCrm } from './servicio-personas-crm.js';
  */
 
 /** Columnas de crm_personas sin el correo (lista del equipo, fotos). */
-export const COLUMNAS_PUBLICAS_PERSONA = 'id, nombre, es_lider, activo, orden, foto_archivo_id, foto_version';
+export const COLUMNAS_PUBLICAS_PERSONA = 'id, nombre, es_lider, activo, puede_crear_tareas, orden, foto_archivo_id, foto_version';
 
 /** Con el correo: pantalla Equipo del líder y avisos. */
 export const COLUMNAS_PERSONA = `${COLUMNAS_PUBLICAS_PERSONA}, correo`;
@@ -31,6 +31,7 @@ export interface FilaPersonaPublica extends RowDataPacket {
   nombre: string;
   es_lider: number;
   activo: number;
+  puede_crear_tareas: number;
   orden: number;
   foto_archivo_id: number | null;
   foto_version: number;
@@ -86,6 +87,7 @@ export function aPersonaCrm(fila: FilaPersonaPublica, conteo: ConteoTareasCrm): 
     nombre: fila.nombre,
     iniciales: inicialesDe(fila.nombre),
     esLider: aBooleano(fila.es_lider),
+    puedeCrearTareas: aBooleano(fila.puede_crear_tareas),
     foto: urlFotoPersona(id, fila.foto_archivo_id, fila.foto_version),
     conteo: { ...conteo },
   };

@@ -124,7 +124,7 @@ sesiones y se levanta su bloqueo por intentos fallidos.
 La contraseña (mínimo ${MIN_LONGITUD_CONTRASENA} caracteres) se pide dos veces sin mostrarla; para
 automatizar, use la variable de entorno ${VARIABLE_CLAVE_LIDER}. Nunca se acepta
 en los argumentos. Sin --solo-sql usa la conexión de la aplicación
-(apps/server/.env) y necesita el esquema versión 11 (npm run repositorio:migrar).`;
+(apps/server/.env) y necesita el esquema versión 12 (npm run repositorio:migrar).`;
 
 export interface OpcionesClaveLider {
   soloSql: boolean;

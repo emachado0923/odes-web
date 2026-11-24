@@ -10,6 +10,7 @@ import {
   CORREO_PRUEBA,
   MENSAJE_AUTH_GMAIL,
   MENSAJE_CLAVE_FALTA,
+  MENSAJE_CLAVE_OTRA_CUENTA,
   MENSAJE_HOST_FALTA,
   MENSAJE_MANDAN_VARIABLES,
   MENSAJE_PRUEBA_SIN_CUENTA,
@@ -96,8 +97,9 @@ class BdCuentaFalsa {
     const sql = sqlOriginal.replace(/\s+/g, ' ').trim();
     this.sentencias.push(sql);
     if (sql.startsWith('SELECT usuario, clave_cifrada')) return [this.fila ? [{ ...this.fila }] : [], null];
-    if (sql.startsWith('SELECT clave_cifrada FROM crm_correo_cuenta WHERE id = 1 FOR UPDATE')) {
-      return [this.fila ? [{ clave_cifrada: this.fila.clave_cifrada }] : [], null];
+    if (sql.startsWith('SELECT clave_cifrada') && sql.endsWith('FROM crm_correo_cuenta WHERE id = 1 FOR UPDATE')) {
+      const { clave_cifrada, usuario, host } = this.fila ?? {};
+      return [this.fila ? [{ clave_cifrada, usuario, host }] : [], null];
     }
     if (sql.startsWith('INSERT INTO crm_correo_cuenta') || sql.startsWith('UPDATE crm_correo_cuenta')) {
       const [usuario, clave_cifrada, host, puerto, seguro, nombre, actualizado_en, actualizado_por] = v;
@@ -356,6 +358,31 @@ describe('ServicioCuentaCorreoCrm: variables o base', () => {
     expect(await cuentas.borrar('Luciana')).toMatchObject({ origen: 'ninguna', tieneClave: false });
     expect(bd.fila).toBeNull();
     expect(await cuentas.guardada({ maxEdadMs: 30_000 })).toBeNull();
+  });
+
+  it('sin clave no se cambia la cuenta ni el servidor: la clave guardada no sale hacia otro lado', async () => {
+    const { bd, cuentas } = servicio(DESACTIVADO);
+    bd.sembrar();
+    const antes = { ...bd.fila };
+    // Quien tenga la sesión del líder no conoce la clave: si pudiera conservarla
+    // y cambiar el servidor, la prueba se la mandaría (AUTH) a su propio SMTP.
+    for (const cambio of [
+      { usuario: 'planeacion.crm@gmail.com', host: 'smtp.atacante.example', puerto: 587, seguro: false },
+      { usuario: 'planeacion.crm@gmail.com', host: 'smtp.atacante.example', clave: '' },
+      { usuario: 'otra.cuenta@gmail.com' },
+    ]) {
+      const error = await errorAsincrono(cuentas.guardar(cambio, 'Luciana'));
+      expect(error.getStatus()).toBe(400);
+      expect(error.campos).toEqual({ clave: MENSAJE_CLAVE_OTRA_CUENTA });
+    }
+    expect(bd.fila).toEqual(antes);
+
+    // La misma cuenta en el mismo servidor (sin importar mayúsculas) conserva la clave aunque cambien puerto y TLS.
+    await cuentas.guardar({ usuario: 'Planeacion.CRM@gmail.com', host: 'SMTP.Gmail.com', puerto: 587, seguro: false }, 'Luciana');
+    expect(await cuentas.guardada()).toMatchObject({ host: 'smtp.gmail.com', puerto: 587, clave: CLAVE });
+    // Con la clave escrita, sí cambia de servidor.
+    await cuentas.guardar({ usuario: 'planeacion.crm@gmail.com', host: 'smtp.otro.example', clave: 'qqqq rrrr' }, 'Luciana');
+    expect(await cuentas.guardada()).toMatchObject({ host: 'smtp.otro.example', clave: 'qqqqrrrr' });
   });
 
   it('sin secreto para la llave, guardar es 409', async () => {

@@ -6,7 +6,8 @@
  * - «Agregar persona» es la acción principal. Cada fila: Editar, Cambiar
  *   foto, Quitar foto (si tiene), Desactivar (con confirmación) o Activar, y
  *   Subir/Bajar entre las activas (intercambia `orden` con la vecina y
- *   recarga).
+ *   recarga). La casilla «Puede crearse tareas» prende o apaga el permiso
+ *   (puedeCrearTareas) con el que la persona se crea tareas desde su tablero.
  * - Errores del servidor: el 409 de correo repetido va junto al campo Correo;
  *   el 409 del único líder activo, en la confirmación de desactivar.
  * - Ante un 401 llama vencida(): SitioLider vuelve al ingreso.
@@ -54,8 +55,8 @@ type DialogoAbierto =
   | { tipo: 'desactivar'; persona: PersonaAdminCrm }
   | { tipo: 'foto'; persona: PersonaAdminCrm }
 
-/** Acción en curso en una fila: activar o quitar la foto. */
-type Ocupacion = 'activo' | 'foto'
+/** Acción en curso en una fila: activar, quitar la foto o cambiar el permiso de crearse tareas. */
+type Ocupacion = 'activo' | 'foto' | 'permiso'
 
 const AYUDA_CORREO = 'A este correo le llegan los avisos de sus tareas.'
 const AYUDA_FOTO = `Use ${formatosLegibles(EXTENSIONES_FOTO_CRM)} de hasta ${tamanoLegible(LIMITES_CRM.maxBytesFoto)}. Mejor si es cuadrada: se recorta en un círculo.`
@@ -145,6 +146,7 @@ function FilaPersona({
   alCambiarFoto,
   alQuitarFoto,
   alCambiarActivo,
+  alCambiarPermiso,
   alMover,
 }: {
   persona: PersonaAdminCrm
@@ -157,6 +159,7 @@ function FilaPersona({
   alCambiarFoto: () => void
   alQuitarFoto: () => void
   alCambiarActivo: () => void
+  alCambiarPermiso: (puede: boolean) => void
   alMover: (paso: -1 | 1) => void
 }) {
   const { id, nombre, activo } = persona
@@ -174,6 +177,19 @@ function FilaPersona({
         </div>
         <p className="crm-la-persona-correo">{persona.correo}</p>
         <ConteosPersona conteo={persona.conteo} />
+        <label className="crm-casilla crm-la-permiso">
+          <input
+            type="checkbox"
+            checked={persona.puedeCrearTareas}
+            disabled={ocupada}
+            data-foco={`${id}-permiso`}
+            onChange={(evento) => alCambiarPermiso(evento.target.checked)}
+          />
+          <span>
+            Puede crearse tareas{' '}
+            <span className="crm-sr">({nombre})</span>
+          </span>
+        </label>
       </div>
       <div className="crm-la-persona-acciones">
         <button type="button" className="crm-boton crm-boton-secundario crm-boton-sm" data-foco={`${id}-editar`} disabled={ocupada} onClick={alEditar}>
@@ -559,7 +575,7 @@ export default function EquipoLider() {
   useEffect(() => {
     const clave = focoPendiente.current
     if (!clave) return
-    const boton = lista.current?.querySelector<HTMLButtonElement>(`[data-foco="${clave}"]`)
+    const boton = lista.current?.querySelector<HTMLButtonElement | HTMLInputElement>(`[data-foco="${clave}"]`)
     if (!boton || boton.disabled) return
     focoPendiente.current = null
     boton.focus()
@@ -605,6 +621,24 @@ export default function EquipoLider() {
       focoPendiente.current = `${nueva.id}-activo`
       reemplazar(nueva)
       avisar(`Se activó a ${nueva.nombre}: vuelve a aparecer en el inicio.`)
+    } catch (error) {
+      fallo(error)
+    } finally {
+      ocupar(persona.id, null)
+    }
+  }
+
+  async function cambiarPermiso(persona: PersonaAdminCrm, puede: boolean) {
+    ocupar(persona.id, 'permiso')
+    try {
+      const nueva = await api.editarPersona(persona.id, { puedeCrearTareas: puede })
+      focoPendiente.current = `${nueva.id}-permiso`
+      reemplazar(nueva)
+      avisar(
+        nueva.puedeCrearTareas
+          ? `${nueva.nombre} ya puede crearse tareas desde su tablero.`
+          : `${nueva.nombre} ya no puede crearse tareas.`,
+      )
     } catch (error) {
       fallo(error)
     } finally {
@@ -683,6 +717,7 @@ export default function EquipoLider() {
                 alCambiarFoto={() => abrir({ tipo: 'foto', persona })}
                 alQuitarFoto={() => void quitarFoto(persona)}
                 alCambiarActivo={() => (persona.activo ? abrir({ tipo: 'desactivar', persona }) : void activar(persona))}
+                alCambiarPermiso={(puede) => void cambiarPermiso(persona, puede)}
                 alMover={(paso) => void mover(persona, paso)}
               />
             )

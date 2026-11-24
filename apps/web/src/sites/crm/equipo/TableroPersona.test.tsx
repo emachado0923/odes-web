@@ -15,6 +15,7 @@ vi.mock('../datos/clienteCrm', async (importarOriginal) => {
     personas: vi.fn<Api['personas']>(),
     tablero: vi.fn<Api['tablero']>(),
     tarea: vi.fn<Api['tarea']>(),
+    crearTareaPropia: vi.fn<Api['crearTareaPropia']>(),
     cambiarEstado: vi.fn<Api['cambiarEstado']>(),
     subirEntregable: vi.fn<Api['subirEntregable']>(),
     quitarEntregable: vi.fn<Api['quitarEntregable']>(),
@@ -134,6 +135,89 @@ describe('Tablero de una persona (/crm/equipo/:personaId)', () => {
     fireEvent.click(await screen.findByRole('button', { name: 'Ver todas las terminadas' }))
     await waitFor(() => expect(apiEquipo.tablero).toHaveBeenLastCalledWith(2, true, expect.anything()))
     expect(await screen.findByRole('button', { name: 'Ver solo las recientes' })).toBeInTheDocument()
+  })
+
+  it('sin el permiso no hay «Nueva tarea»', async () => {
+    montar()
+    await screen.findByRole('heading', { level: 1, name: /Ana María Restrepo Gil$/ })
+    expect(screen.queryByRole('button', { name: 'Nueva tarea' })).toBeNull()
+  })
+
+  describe('con el permiso puedeCrearTareas', () => {
+    const CON_PERMISO: PersonaCrm = { ...ANA, puedeCrearTareas: true }
+    const NUEVA = tareaMuestra({ id: 120, titulo: 'Revisar los indicadores', estado: 'pendiente' })
+
+    beforeEach(() => {
+      vi.mocked(apiEquipo.tablero).mockResolvedValue({ persona: CON_PERMISO, tareas: [INFORME, COMITE] })
+    })
+
+    async function abrirNueva(): Promise<HTMLElement> {
+      montar()
+      fireEvent.click(await screen.findByRole('button', { name: 'Nueva tarea' }))
+      return screen.getByRole('dialog', { name: 'Nueva tarea' })
+    }
+
+    it('«Nueva tarea» crea la tarea con título, descripción y fecha, avisa «Tarea creada.» y recarga el tablero', async () => {
+      vi.mocked(apiEquipo.crearTareaPropia).mockResolvedValue(detalleDe(NUEVA))
+      const dialogo = await abrirNueva()
+      const titulo = within(dialogo).getByLabelText(/Título/)
+      expect(titulo).toHaveAttribute('maxLength', '160')
+      fireEvent.change(titulo, { target: { value: '  Revisar los indicadores ' } })
+      expect(within(dialogo).getByText('26 de 160 caracteres')).toBeInTheDocument()
+      fireEvent.change(within(dialogo).getByLabelText(/Descripción/), { target: { value: ' Los del PAI. ' } })
+      const fecha = within(dialogo).getByLabelText(/Fecha límite/)
+      expect(fecha).toHaveAttribute('type', 'date')
+      expect(fecha.getAttribute('min')).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+      fireEvent.change(fecha, { target: { value: '2099-12-31' } })
+      fireEvent.click(within(dialogo).getByRole('button', { name: 'Crear tarea' }))
+
+      await waitFor(() =>
+        expect(apiEquipo.crearTareaPropia).toHaveBeenCalledWith(2, {
+          titulo: 'Revisar los indicadores',
+          descripcion: 'Los del PAI.',
+          fechaLimite: '2099-12-31',
+        }),
+      )
+      expect(await screen.findByText('Tarea creada.')).toBeInTheDocument()
+      await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull())
+      await waitFor(() => expect(apiEquipo.tablero).toHaveBeenCalledTimes(2))
+    })
+
+    it('sin título no llama al servidor y lo dice junto al campo; una fecha pasada tampoco se acepta', async () => {
+      const dialogo = await abrirNueva()
+      fireEvent.change(within(dialogo).getByLabelText(/Fecha límite/), { target: { value: '2001-01-01' } })
+      fireEvent.click(within(dialogo).getByRole('button', { name: 'Crear tarea' }))
+      expect(await within(dialogo).findByText('Escriba el título de la tarea.')).toBeInTheDocument()
+      expect(within(dialogo).getByText('La fecha límite no puede ser anterior a hoy.')).toBeInTheDocument()
+      expect(within(dialogo).getByLabelText(/Título/)).toHaveFocus()
+      expect(apiEquipo.crearTareaPropia).not.toHaveBeenCalled()
+    })
+
+    it('un 400 con campos pone cada error junto a su campo', async () => {
+      vi.mocked(apiEquipo.crearTareaPropia).mockRejectedValue(
+        new ErrorCrmHttp('solicitud_invalida', 'Revise los datos de la tarea.', {
+          estado: 400,
+          campos: { titulo: 'El título no puede ser solo espacios raros.', fechaLimite: 'Escriba una fecha válida.' },
+        }),
+      )
+      const dialogo = await abrirNueva()
+      fireEvent.change(within(dialogo).getByLabelText(/Título/), { target: { value: 'Algo' } })
+      fireEvent.click(within(dialogo).getByRole('button', { name: 'Crear tarea' }))
+      expect(await within(dialogo).findByText('El título no puede ser solo espacios raros.')).toBeInTheDocument()
+      expect(within(dialogo).getByText('Escriba una fecha válida.')).toBeInTheDocument()
+      expect(within(dialogo).getByLabelText(/Título/)).toHaveAttribute('aria-invalid', 'true')
+      expect(screen.getByRole('dialog', { name: 'Nueva tarea' })).toBeInTheDocument()
+    })
+
+    it('un 403 (el líder quitó el permiso) se explica con un mensaje claro', async () => {
+      vi.mocked(apiEquipo.crearTareaPropia).mockRejectedValue(
+        new ErrorCrmHttp('prohibido', 'El líder no le ha dado permiso para crearse tareas.', { estado: 403 }),
+      )
+      const dialogo = await abrirNueva()
+      fireEvent.change(within(dialogo).getByLabelText(/Título/), { target: { value: 'Algo' } })
+      fireEvent.click(within(dialogo).getByRole('button', { name: 'Crear tarea' }))
+      expect(await within(dialogo).findByRole('alert')).toHaveTextContent('El líder ya no le permite crearse tareas.')
+    })
   })
 
   it('si la persona no existe o está inactiva (404), lo dice y lleva al inicio', async () => {

@@ -59,6 +59,7 @@ interface DatosFila {
   correo?: string;
   es_lider?: number;
   activo?: number;
+  puede_crear_tareas?: number;
   orden?: number;
   foto_archivo_id?: number | null;
   foto_version?: number;
@@ -71,6 +72,7 @@ function fila(datos: DatosFila = {}): FilaPersonaCrm {
     correo: 'luciana@sapiencia.gov.co',
     es_lider: 0,
     activo: 1,
+    puede_crear_tareas: 0,
     orden: 2,
     foto_archivo_id: null,
     foto_version: 0,
@@ -132,6 +134,8 @@ describe('validarCambiosPersona', () => {
   it('devuelve solo los campos que vinieron, normalizados', () => {
     expect(validarCambiosPersona({ orden: 0 })).toEqual({ orden: 0 });
     expect(validarCambiosPersona({ orden: 9999, activo: false })).toEqual({ orden: 9999, activo: false });
+    expect(validarCambiosPersona({ puedeCrearTareas: true })).toEqual({ puedeCrearTareas: true });
+    expect(validarCambiosPersona({ puedeCrearTareas: false })).toEqual({ puedeCrearTareas: false });
     expect(validarCambiosPersona({ nombre: ' Jose  David ', correo: 'X@Y.CO' })).toEqual({
       nombre: 'Jose David',
       correo: 'x@y.co',
@@ -148,6 +152,7 @@ describe('validarCambiosPersona', () => {
       expect(errorDe(() => validarCambiosPersona({ orden })).campos).toHaveProperty('orden');
     }
     expect(errorDe(() => validarCambiosPersona({ activo: 'no' })).campos).toHaveProperty('activo');
+    expect(errorDe(() => validarCambiosPersona({ puedeCrearTareas: 1 })).campos).toHaveProperty('puedeCrearTareas');
     expect(errorDe(() => validarCambiosPersona({ nombre: '' })).campos).toEqual({ nombre: 'Escriba el nombre.' });
     expect(errorDe(() => validarCambiosPersona({ correo: 'sin-arroba' })).campos).toHaveProperty('correo');
   });
@@ -177,6 +182,7 @@ describe('mapeo de filas', () => {
       nombre: 'Luciana Vélez Arenas',
       iniciales: 'LV',
       esLider: true,
+      puedeCrearTareas: false,
       foto: '/api/crm/personas/3/foto?v=3',
       conteo: { pendientes: 0, enProceso: 0, terminadasRecientes: 0, vencidas: 0 },
     });
@@ -188,6 +194,7 @@ describe('mapeo de filas', () => {
     expect(aPersonaCrm(fila(), conteoVacio()).foto).toBeNull();
     expect(urlFotoPersona(8, null, 4)).toBeNull();
     expect(urlFotoPersona(8, 12, null)).toBe('/api/crm/personas/8/foto?v=0');
+    expect(aPersonaCrm(fila({ puede_crear_tareas: 1 }), conteoVacio()).puedeCrearTareas).toBe(true);
     expect([1, '1', true].map(aBooleano)).toEqual([true, true, true]);
     expect([0, '0', false, null, undefined].map(aBooleano)).toEqual([false, false, false, false, false]);
   });

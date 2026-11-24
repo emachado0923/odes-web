@@ -46,6 +46,9 @@
  *                                                       -> TableroPersonaCrm
  *        (por defecto, de las terminadas solo las de los últimos
  *        LIMITES_CRM.diasTerminadasRecientes días)
+ * POST   /api/crm/personas/:personaId/tareas <- NuevaTareaPropiaCrm -> TareaDetalleCrm (201)
+ *        (solo si esa persona tiene `puedeCrearTareas`; si no, 403 `prohibido`.
+ *        El responsable es ella misma; no pide entregable y no manda correo)
  * GET    /api/crm/personas/:personaId/tareas/:tareaId   -> TareaDetalleCrm
  * POST   /api/crm/personas/:personaId/tareas/:tareaId/estado
  *        <- CambioEstadoCrm -> TareaDetalleCrm
@@ -157,6 +160,8 @@ export interface PersonaCrm {
   /** Dos letras, en mayúscula (inicialesDe). */
   iniciales: string;
   esLider: boolean;
+  /** El líder le permitió crearse tareas a sí misma desde su tablero. */
+  puedeCrearTareas: boolean;
   /** URL de la foto (/api/crm/personas/:id/foto?v=…) o null: se muestran las iniciales. */
   foto: string | null;
   conteo: ConteoTareasCrm;
@@ -180,6 +185,7 @@ export interface EdicionPersonaCrm {
   correo?: string;
   activo?: boolean;
   orden?: number;
+  puedeCrearTareas?: boolean;
 }
 
 /** Responsable resumido, para tarjetas y listas. */
@@ -288,6 +294,14 @@ export interface NuevaTareaCrm {
   /** 'AAAA-MM-DD' o null. */
   fechaLimite?: string | null;
   requiereEntregable?: boolean;
+}
+
+/** Tarea que una persona con `puedeCrearTareas` se crea a sí misma. */
+export interface NuevaTareaPropiaCrm {
+  titulo: string;
+  descripcion?: string;
+  /** 'AAAA-MM-DD' o null. */
+  fechaLimite?: string | null;
 }
 
 export interface EdicionTareaCrm {

@@ -224,6 +224,26 @@ describe('guion del esquema', () => {
     });
   });
 
+  describe('migración 012 (tareas propias del CRM)', () => {
+    const mysql = readFileSync(join(DIRECTORIO_MIGRACIONES, '012-crm-tareas-propias.sql'), 'utf8').replace(/--[^\n]*/g, '');
+    const postgres = readFileSync(join(DIRECTORIO_MIGRACIONES_POSTGRES, '012-crm-tareas-propias.sql'), 'utf8').replace(
+      /--[^\n]*/g,
+      '',
+    );
+    it('agrega crm_personas.puede_crear_tareas (0/1, en 0) en los dos motores, se puede repetir y no toca sistema_esquema_version', () => {
+      // MySQL: la guarda por information_schema y el PREPARE (sin ADD COLUMN IF NOT EXISTS), sin #.
+      expect(dividirSentencias(mysql)).toHaveLength(4);
+      expect(mysql).not.toContain('#');
+      expect(mysql).toMatch(/table_name = 'crm_personas' AND column_name = 'puede_crear_tareas'/);
+      expect(mysql).toMatch(/ADD COLUMN puede_crear_tareas TINYINT\(1\) NOT NULL DEFAULT 0/);
+      expect(postgres).toMatch(/ADD COLUMN IF NOT EXISTS puede_crear_tareas smallint NOT NULL DEFAULT 0/);
+      for (const sql of [mysql, postgres]) {
+        expect(sql).toMatch(/CONSTRAINT ck_crm_personas_puede_crear_tareas CHECK \(puede_crear_tareas IN \(0, 1\)\)/);
+        expect(sql).not.toMatch(/INSERT\s+(IGNORE\s+)?INTO/i);
+      }
+    });
+  });
+
   describe('paso a los nombres de la versión 4', () => {
     const ANTERIORES = new Set(TABLAS_RENOMBRADAS.map(([viejo]) => viejo));
 

@@ -71,6 +71,25 @@
   margin: var(--crm-e4) 0 clamp(1.25rem, 3vw, 2rem);
 }
 
+.crm .crm-eq-nueva {
+  flex: none;
+  margin-left: auto;
+  align-self: center;
+}
+
+/* Contador del título en «Nueva tarea». */
+.crm .crm-eq-contador {
+  justify-self: end;
+  font-size: var(--crm-t-xs);
+  line-height: 1.3;
+  color: var(--crm-tinta-suave);
+}
+
+.crm .crm-eq-contador[data-cerca] {
+  font-weight: 600;
+  color: var(--crm-tinta);
+}
+
 .crm .crm-eq-persona-texto {
   display: grid;
   gap: var(--crm-e2);
@@ -129,8 +148,13 @@
 
 @media (max-width: 37.5rem) {
   .crm .crm-eq-persona {
+    flex-wrap: wrap;
     align-items: flex-start;
     gap: var(--crm-e4);
+  }
+
+  .crm .crm-eq-nueva {
+    margin-left: 0;
   }
 
   .crm .crm-eq-persona .crm-avatar {

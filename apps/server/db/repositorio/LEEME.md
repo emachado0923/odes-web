@@ -331,6 +331,23 @@ registre la versión
 GRANT SELECT, INSERT, UPDATE, DELETE ON planeacionbd.crm_correo_cuenta TO 'sapiencia_web'@'%';
 ```
 
+## CRM: tareas propias (versión 12)
+
+La migración 012 (24 de noviembre de 2026) agrega a `crm_personas` la columna
+`puede_crear_tareas` (0/1, nace en 0 para todos, con su CHECK). Con 1, la
+persona puede crearse tareas a sí misma desde su tablero
+(`POST /api/crm/personas/:personaId/tareas`): queda de responsable, sin
+entregable y sin correo. El líder la prende o la apaga en la pantalla Equipo
+(«Puede crearse tareas»).
+
+**Primero migrar, después desplegar**: el servidor exige la versión 12 (con
+una base en la 11, toda la API de la base responde 503). Con
+`npm run repositorio:migrar -- --usuario <cuenta_admin>`, o a mano: pegue
+`migraciones/012-crm-tareas-propias.sql` (o la de `postgres/migraciones/`) y
+registre la versión
+(`INSERT IGNORE INTO sistema_esquema_version (version, descripcion) VALUES (12, 'crm-tareas-propias');`).
+No hace falta un GRANT nuevo: la tabla es la misma.
+
 ## Paso a la versión 4 (nombres por módulo)
 
 Hasta la versión 3 las tablas del repositorio y del tablero no tenían

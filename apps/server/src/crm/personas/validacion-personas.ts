@@ -59,6 +59,8 @@ const esquemaEsLider = z.boolean({ error: 'Indique si es líder (verdadero o fal
 
 const esquemaActivo = z.boolean({ error: 'Indique si está activa (verdadero o falso).' });
 
+const esquemaPuedeCrearTareas = z.boolean({ error: 'Indique si puede crearse tareas (verdadero o falso).' });
+
 const MENSAJE_ORDEN = `El orden debe ser un número entero de 0 a ${MAX_ORDEN_PERSONA}.`;
 
 const esquemaOrden = z
@@ -78,6 +80,7 @@ const esquemaEdicionPersona = z.object({
   correo: esquemaCorreo.optional(),
   activo: esquemaActivo.optional(),
   orden: esquemaOrden.optional(),
+  puedeCrearTareas: esquemaPuedeCrearTareas.optional(),
 });
 
 /** { "ruta.del.campo": "primer mensaje" }; un error del objeto completo queda en "". */
@@ -120,6 +123,7 @@ export interface CambiosPersonaValidos {
   correo?: string;
   activo?: boolean;
   orden?: number;
+  puedeCrearTareas?: boolean;
 }
 
 /** PATCH /api/crm/lider/personas/:id (al menos un campo). */
@@ -130,8 +134,9 @@ export function validarCambiosPersona(cuerpo: unknown): CambiosPersonaValidos {
   if (datos.correo !== undefined) cambios.correo = datos.correo;
   if (datos.activo !== undefined) cambios.activo = datos.activo;
   if (datos.orden !== undefined) cambios.orden = datos.orden;
+  if (datos.puedeCrearTareas !== undefined) cambios.puedeCrearTareas = datos.puedeCrearTareas;
   if (Object.keys(cambios).length === 0) {
-    throw solicitudInvalida('Envíe al menos un cambio: nombre, correo, activo u orden.');
+    throw solicitudInvalida('Envíe al menos un cambio: nombre, correo, activo, orden o puedeCrearTareas.');
   }
   return cambios;
 }

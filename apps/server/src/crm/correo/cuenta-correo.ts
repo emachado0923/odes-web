@@ -47,6 +47,8 @@ export const MENSAJE_SIN_LLAVE =
   '(o una contraseña para la cuenta de la base de datos) y vuelva a intentarlo.';
 export const MENSAJE_HOST_FALTA = `Escriba el servidor SMTP; para Google Workspace es ${HOST_SMTP_GOOGLE}.`;
 export const MENSAJE_CLAVE_FALTA = 'Escriba la contraseña de aplicación de la cuenta.';
+export const MENSAJE_CLAVE_OTRA_CUENTA =
+  'Cambió la cuenta o el servidor de correo: escriba otra vez la contraseña de aplicación.';
 export const MENSAJE_AUTH_GMAIL =
   'Gmail rechazó la cuenta o la contraseña de aplicación: revise que sea la de 16 letras y que la ' +
   'verificación en dos pasos esté activa.';
@@ -227,6 +229,21 @@ interface FilaCuenta extends RowDataPacket {
 
 interface FilaClave extends RowDataPacket {
   clave_cifrada: string;
+  usuario: string;
+  host: string;
+}
+
+/**
+ * ¿La edición es de la misma cuenta en el mismo servidor que la fila
+ * guardada? Solo así se puede conservar la clave sin volver a escribirla: si
+ * no, quien tenga la sesión del líder (sin conocer la clave) podría apuntar
+ * el servidor a uno suyo y la prueba le entregaría la clave en el AUTH.
+ */
+function mismaCuenta(fila: FilaClave, datos: DatosCuentaCorreoValidos): boolean {
+  return (
+    String(fila.usuario).toLowerCase() === datos.usuario.toLowerCase() &&
+    String(fila.host).toLowerCase() === datos.host.toLowerCase()
+  );
 }
 
 const SQL_LEER = `SELECT usuario, clave_cifrada, host, puerto, seguro, nombre, actualizado_en, actualizado_por
@@ -393,7 +410,8 @@ export class ServicioCuentaCorreoCrm {
   /**
    * PUT /lider/correo/cuenta: valida, cifra y guarda la cuenta (409 si mandan
    * las variables o si el servidor no tiene secreto para la llave). Sin clave,
-   * conserva la guardada (400 en `campos.clave` si no hay una legible).
+   * conserva la guardada (400 en `campos.clave` si no hay una legible, o si
+   * cambian la cuenta o el servidor: ver mismaCuenta).
    */
   async guardar(cuerpo: unknown, actualizadoPor: string | null): Promise<CuentaCorreoCrm> {
     if (this.mandanVariables) throw conflicto(MENSAJE_MANDAN_VARIABLES);
@@ -407,8 +425,11 @@ export class ServicioCuentaCorreoCrm {
     let cuenta: CuentaGuardadaCrm;
     try {
       cuenta = await this.bd.transaccion(async (conexion) => {
-        const [filas] = await conexion.query<FilaClave[]>('SELECT clave_cifrada FROM crm_correo_cuenta WHERE id = 1 FOR UPDATE');
-        const anterior = filas[0] ? String(filas[0].clave_cifrada) : null;
+        const [filas] = await conexion.query<FilaClave[]>(
+          'SELECT clave_cifrada, usuario, host FROM crm_correo_cuenta WHERE id = 1 FOR UPDATE',
+        );
+        const fila = filas[0];
+        const anterior = fila ? String(fila.clave_cifrada) : null;
         let clave: string;
         let claveCifrada: string;
         if (datos.clave !== null) {
@@ -416,8 +437,11 @@ export class ServicioCuentaCorreoCrm {
           claveCifrada = cifrarClave(clave, llave);
         } else {
           const legible = anterior === null ? null : descifrarClave(anterior, llave);
-          if (anterior === null || legible === null) {
+          if (!fila || anterior === null || legible === null) {
             throw solicitudInvalida(MENSAJE_CLAVE_FALTA, { clave: MENSAJE_CLAVE_FALTA });
+          }
+          if (!mismaCuenta(fila, datos)) {
+            throw solicitudInvalida(MENSAJE_CLAVE_OTRA_CUENTA, { clave: MENSAJE_CLAVE_OTRA_CUENTA });
           }
           clave = legible;
           claveCifrada = anterior;

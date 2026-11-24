@@ -96,11 +96,19 @@ export interface PeticionConOrigen {
   get(cabecera: string): string | undefined;
 }
 
-/** Base de los enlaces de los correos: CRM_URL_SITIO o, si no está, el origen de la petición. */
+/** CRM_URL_SITIO sin barra final, o null si no está configurada. */
+export function origenConfigurado(urlSitio: string | null): string | null {
+  return urlSitio?.trim().replace(/\/+$/, '') || null;
+}
+
+/**
+ * Base de los enlaces de los correos que pide el líder (con sesión):
+ * CRM_URL_SITIO o, si no está, el origen de su petición. Los que dispara el
+ * equipo (sin sesión) usan solo origenConfigurado: allí el Host lo escribe
+ * cualquiera, y con él el enlace del correo al líder llevaría a otro sitio.
+ */
 export function origenSitio(urlSitio: string | null, req: PeticionConOrigen): string {
-  const configurada = urlSitio?.trim().replace(/\/+$/, '');
-  if (configurada) return configurada;
-  return `${req.protocol}://${req.get('host') ?? 'localhost'}`;
+  return origenConfigurado(urlSitio) ?? `${req.protocol}://${req.get('host') ?? 'localhost'}`;
 }
 
 /** Enlace del líder a una tarea. */

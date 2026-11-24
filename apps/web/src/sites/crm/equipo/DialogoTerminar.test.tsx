@@ -14,6 +14,7 @@ vi.mock('../datos/clienteCrm', async (importarOriginal) => {
     personas: vi.fn<Api['personas']>(),
     tablero: vi.fn<Api['tablero']>(),
     tarea: vi.fn<Api['tarea']>(),
+    crearTareaPropia: vi.fn<Api['crearTareaPropia']>(),
     cambiarEstado: vi.fn<Api['cambiarEstado']>(),
     subirEntregable: vi.fn<Api['subirEntregable']>(),
     quitarEntregable: vi.fn<Api['quitarEntregable']>(),

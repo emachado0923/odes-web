@@ -35,6 +35,8 @@ export const NO_EXISTE_CORREO = 'El correo no existe.';
 export const OTRO_SITIO = 'Solicitud de otro sitio rechazada.';
 export const TAREA_TERMINADA_EQUIPO =
   'La tarea ya está terminada. Si hay que cambiar algo, pídale al líder que la devuelva.';
+export const SIN_PERMISO_TAREAS_PROPIAS =
+  'El líder no le ha dado permiso para crearse tareas. Pídale que lo active en la pantalla Equipo.';
 export const FALTA_ENTREGABLE = 'Adjunte el documento que pidió el líder antes de terminar.';
 
 /** Mayor id de una ruta (INT con signo). */
@@ -205,6 +207,25 @@ export function validarNuevaTarea(cuerpo: unknown): NuevaTareaValida {
     fechaLimite: datos.fechaLimite ?? null,
     requiereEntregable: datos.requiereEntregable ?? false,
   };
+}
+
+const esquemaNuevaTareaPropia = z.object({
+  titulo: esquemaTitulo,
+  descripcion: esquemaDescripcion.optional(),
+  fechaLimite: esquemaFecha.optional(),
+});
+
+/** NuevaTareaPropiaCrm normalizada (la responsable es quien la crea; sin entregable). */
+export interface NuevaTareaPropiaValida {
+  titulo: string;
+  descripcion: string;
+  fechaLimite: string | null;
+}
+
+/** POST /personas/:personaId/tareas (mismas reglas de la creación del líder). */
+export function validarNuevaTareaPropia(cuerpo: unknown): NuevaTareaPropiaValida {
+  const datos = validarCuerpo(esquemaNuevaTareaPropia, cuerpo, MENSAJE_DATOS_TAREA);
+  return { titulo: datos.titulo, descripcion: datos.descripcion ?? '', fechaLimite: datos.fechaLimite ?? null };
 }
 
 const esquemaEdicionTarea = z.object({

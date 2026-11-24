@@ -24,7 +24,7 @@ import { ServicioCorreoCrm } from '../correo/servicio-correo-crm.js';
 import { ServicioPersonasCrm } from '../personas/servicio-personas-crm.js';
 import { BaseDatosRepositorio } from '../../repositorio/bd/base-datos.js';
 import type { Conexion, ResultadoEscritura } from '../../repositorio/bd/conexion.js';
-import { conflicto, noEncontrado, solicitudInvalida } from '../../repositorio/errores-repositorio.js';
+import { conflicto, noEncontrado, prohibido, solicitudInvalida } from '../../repositorio/errores-repositorio.js';
 import {
   AVISO_SIN_LIDER,
   type ArchivoParaCorreo,
@@ -33,6 +33,7 @@ import {
   escogerAdjuntos,
   mensajeAviso,
   mensajeAvisoTerminada,
+  origenConfigurado,
   origenSitio,
   type PeticionConOrigen,
 } from './avisos-tareas.js';
@@ -62,10 +63,13 @@ import {
   type FiltroTerminadas,
   LARGO_DETALLE_EVENTO,
   NO_EXISTE_ARCHIVO,
+  NO_EXISTE_PERSONA,
   NO_EXISTE_TAREA,
+  type NuevaTareaPropiaValida,
   type NuevaTareaValida,
   patronBusqueda,
   revisarTopeIp,
+  SIN_PERMISO_TAREAS_PROPIAS,
   TAREA_TERMINADA_EQUIPO,
   transicionEquipo,
   VENTANA_TOPE_MS,
@@ -343,9 +347,18 @@ export class ServicioTareasCrm {
     @Inject(ServicioCorreoCrm) private readonly correo: ServicioCorreoCrm,
   ) {}
 
-  /** Base de los enlaces de los correos: CRM_URL_SITIO o el origen de la petición. */
+  /** Base de los enlaces de los correos del líder: CRM_URL_SITIO o el origen de la petición. */
   origen(req: PeticionConOrigen): string {
     return origenSitio(this.correo.urlSitio, req);
+  }
+
+  /**
+   * Base de los enlaces de los correos que dispara el equipo (sin sesión):
+   * solo CRM_URL_SITIO, nunca el Host de la petición; sin ella, null (el
+   * correo va sin enlace).
+   */
+  origenConfigurado(): string | null {
+    return origenConfigurado(this.correo.urlSitio);
   }
 
   // ── Equipo ────────────────────────────────────────────────────────────────
@@ -366,6 +379,37 @@ export class ServicioTareasCrm {
     );
     const hoy = hoyBogota();
     return { persona, tareas: ordenarTablero(filas.map((fila) => aTarea(fila, hoy))) };
+  }
+
+  /**
+   * POST /personas/:personaId/tareas -> 201: la persona se crea una tarea a
+   * sí misma. Solo con crm_personas.puede_crear_tareas = 1 (si no, 403); la
+   * persona debe estar activa (404). Sin entregable y sin correo. El permiso
+   * se lee con FOR UPDATE: si el líder lo apaga a la vez, una de las dos
+   * espera a la otra.
+   */
+  async crearPropia(personaId: number, datos: NuevaTareaPropiaValida, ip: string): Promise<TareaDetalleCrm> {
+    await this.verificarTopeIp(ip, false);
+    const tareaId = await this.bd.transaccion(async (conexion) => {
+      const [personas] = await conexion.query<Fila<{ puede_crear_tareas: number | string | boolean }>[]>(
+        'SELECT puede_crear_tareas FROM crm_personas WHERE id = ? AND activo = 1 FOR UPDATE',
+        [personaId],
+      );
+      const persona = personas[0];
+      if (!persona) throw noEncontrado(NO_EXISTE_PERSONA);
+      if (!aBooleano(persona.puede_crear_tareas)) throw prohibido(SIN_PERMISO_TAREAS_PROPIAS);
+      const ahora = new Date();
+      const [resultado] = await conexion.query<ResultadoEscritura>(
+        `INSERT INTO crm_tareas
+           (titulo, descripcion, responsable_id, estado, fecha_limite, requiere_entregable, creado_en, actualizado_en)
+         VALUES (?, ?, ?, 'pendiente', ?, 0, ?, ?)`,
+        [datos.titulo, datos.descripcion, personaId, datos.fechaLimite, ahora, ahora],
+      );
+      const id = idInsertado(resultado, 'crm_tareas');
+      await registrarEvento(conexion, { tareaId: id, tipo: 'creada', actor: 'responsable', personaId, ip, creadoEn: ahora });
+      return id;
+    });
+    return this.detalleEquipo(personaId, tareaId);
   }
 
   /** GET /personas/:personaId/tareas/:tareaId (sin correos). */
@@ -491,14 +535,15 @@ export class ServicioTareasCrm {
   /**
    * POST .../terminar: en una transacción la marca terminada, deja el evento
    * y encola el correo al líder con los entregables; después del commit lo
-   * envía. Sin líder activo no hay correo.
+   * envía. Sin líder activo no hay correo. `origen`: origenConfigurado()
+   * (null = el correo va sin enlace).
    */
   async terminar(
     personaId: number,
     tareaId: number,
     nota: string | null,
     ip: string,
-    origen: string,
+    origen: string | null,
   ): Promise<ResultadoTerminarCrm> {
     await this.verificarTopeIp(ip, false);
     const [lider, responsable] = await Promise.all([this.personas.lider(), this.personas.contacto(personaId)]);
@@ -534,7 +579,7 @@ export class ServicioTareasCrm {
         fechaLimite: actual.fechaLimite,
         nota,
         archivos: seleccion.archivos,
-        enlace: enlaceLider(origen, tareaId),
+        enlace: origen === null ? null : enlaceLider(origen, tareaId),
       });
       return this.correo.encolar(conexion, {
         tipo: 'tarea_terminada',

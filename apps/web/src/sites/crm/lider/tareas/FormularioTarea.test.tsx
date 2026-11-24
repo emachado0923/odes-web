@@ -13,6 +13,7 @@ function persona(id: number, nombre: string, extra: Partial<PersonaAdminCrm> = {
     nombre,
     iniciales: inicialesDe(nombre),
     esLider: false,
+    puedeCrearTareas: false,
     foto: null,
     conteo: { pendientes: 0, enProceso: 0, terminadasRecientes: 0, vencidas: 0 },
     correo: `persona${id}@ejemplo.org`,

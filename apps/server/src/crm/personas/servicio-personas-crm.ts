@@ -213,6 +213,9 @@ export class ServicioPersonasCrm {
       if (cambios.orden !== undefined && cambios.orden !== Number(actual.orden)) {
         columnas.push(['orden', cambios.orden]);
       }
+      if (cambios.puedeCrearTareas !== undefined && cambios.puedeCrearTareas !== aBooleano(actual.puede_crear_tareas)) {
+        columnas.push(['puede_crear_tareas', cambios.puedeCrearTareas ? 1 : 0]);
+      }
       if (columnas.length === 0) return;
 
       try {

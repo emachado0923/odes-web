@@ -15,15 +15,18 @@
  * - El nombre del líder para los textos sale de apiEquipo.personas()
  *   (esLider); si no se puede, se dice «el líder».
  * - Persona inexistente o inactiva (404): aviso con enlace al inicio.
+ * - Con el permiso persona.puedeCrearTareas, «Nueva tarea» en el encabezado
+ *   abre DialogoNuevaTarea; al crearla se recarga el tablero.
  */
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router'
 import { ETIQUETAS_ESTADO, LIMITES_CRM, type EstadoTarea, type TareaCrm, type TareaDetalleCrm } from '../api-crm'
 import { apiEquipo, mensajeDe } from '../datos/clienteCrm'
 import { useCarga } from '../datos/useCarga'
-import { Avatar, Cargando, ErrorCarga, Migas, saludo, Tablero, useAvisar, useTituloCrm, Vacio } from '../ui'
+import { Avatar, Cargando, ErrorCarga, Icono, Migas, saludo, Tablero, useAvisar, useTituloCrm, Vacio } from '../ui'
 import { cambioEnElServidor, esNoEncontrado, partesResumen, resumenDe, textoSinPendientes } from './comun'
 import DetalleTarea from './DetalleTarea'
+import DialogoNuevaTarea from './DialogoNuevaTarea'
 import DialogoTerminar from './DialogoTerminar'
 import './equipo.css'
 
@@ -97,6 +100,7 @@ function TableroDePersona({ personaId }: { personaId: number }) {
   const [ocupadas, setOcupadas] = useState<ReadonlySet<number>>(() => new Set())
   const [porTerminar, setPorTerminar] = useState<TareaCrm | null>(null)
   const [versionDetalle, setVersionDetalle] = useState(0)
+  const [creando, setCreando] = useState(false)
 
   const tablero = useCarga((signal) => apiEquipo.tablero(personaId, todas, signal), [personaId, todas], { conservarAlCambiar: true })
   const equipo = useCarga((signal) => apiEquipo.personas(signal), [])
@@ -181,6 +185,12 @@ function TableroDePersona({ personaId }: { personaId: number }) {
     setVersionDetalle((version) => version + 1)
   }
 
+  // ── Nueva tarea propia ──
+  function alCreada() {
+    setCreando(false)
+    recargar()
+  }
+
   function alCambiarEntregables() {
     recargar()
     setVersionDetalle((version) => version + 1)
@@ -222,6 +232,12 @@ function TableroDePersona({ personaId }: { personaId: number }) {
             ¿No es usted? <Link to="/crm">Volver al inicio</Link>
           </p>
         </div>
+        {titular.puedeCrearTareas ? (
+          <button type="button" className="crm-boton crm-boton-primario crm-eq-nueva" onClick={() => setCreando(true)}>
+            <Icono nombre="mas" />
+            Nueva tarea
+          </button>
+        ) : null}
       </header>
 
       {tablero.estado === 'error' ? (
@@ -272,6 +288,8 @@ function TableroDePersona({ personaId }: { personaId: number }) {
           alTerminar={setPorTerminar}
         />
       ) : null}
+
+      {creando ? <DialogoNuevaTarea personaId={personaId} alCerrar={() => setCreando(false)} alCreada={alCreada} /> : null}
 
       {porTerminar ? (
         <DialogoTerminar

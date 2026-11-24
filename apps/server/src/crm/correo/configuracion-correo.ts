@@ -17,7 +17,9 @@
  *                          puerto 465; con no, STARTTLS es obligatorio.
  *   CRM_CORREO_NOMBRE      nombre visible del remitente ('Planeación Sapiencia').
  *   CRM_CORREO_DIRECTORIO  modo archivo: carpeta de los .eml (<tmp>/crm-correos).
- *   CRM_URL_SITIO          base http(s) de los enlaces de los correos (opcional).
+ *   CRM_URL_SITIO          base http(s) de los enlaces de los correos (opcional; sin
+ *                          ella, el aviso de tarea terminada, que dispara el
+ *                          equipo sin sesión, va sin enlace).
  *
  * Un valor inválido detiene el arranque con ErrorDeConfiguracion. La clave
  * nunca aparece en los mensajes ni en el log (describirConfiguracionCorreoCrm).
@@ -224,7 +226,7 @@ export function cargarConfiguracionCorreoCrm(env: NodeJS.ProcessEnv): Configurac
 export function describirConfiguracionCorreoCrm(config: ConfiguracionCorreoCrm): string {
   const enlaces = config.urlSitio
     ? `enlaces a ${config.urlSitio}`
-    : 'enlaces con el origen de cada petición';
+    : 'sin CRM_URL_SITIO: enlaces con el origen de la petición del líder y avisos de tareas terminadas sin enlace';
   switch (config.modo) {
     case 'smtp': {
       const smtp = config.smtp;

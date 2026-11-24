@@ -93,12 +93,12 @@ describe.skipIf(!HAY_BD)(`PAI con ${MOTOR_PRUEBAS}: migración 003 (e2e)`, () =>
     await base?.borrar();
   });
 
-  it('crea las 19 tablas del PAI y el esquema queda en la versión 11', async () => {
+  it('crea las 19 tablas del PAI y el esquema queda en la versión 12', async () => {
     const tablas = await base.tablas();
     for (const tabla of TABLAS_PAI) expect(tablas).toContain(tabla);
     expect(tablas.filter((t) => t.startsWith('pai_'))).toHaveLength(TABLAS_PAI.length);
     const [filas] = await base.admin.query<RowDataPacket[]>('SELECT MAX(version) AS version FROM sistema_esquema_version');
-    expect(Number(filas[0].version)).toBe(11);
+    expect(Number(filas[0].version)).toBe(12);
     expect(bd.estado).toBe('disponible');
   });
 

@@ -34,6 +34,7 @@ import {
   NO_EXISTE_TAREA,
   terminadasDeConsulta,
   validarCambioEstado,
+  validarNuevaTareaPropia,
   validarTerminar,
 } from './validacion-tareas.js';
 
@@ -48,6 +49,8 @@ function mutacionEquipo(req: Request): string {
  * servicio-tareas-crm.ts):
  *
  *   GET    /api/crm/personas/:personaId/tareas?terminadas=recientes|todas -> TableroPersonaCrm
+ *   POST   /api/crm/personas/:personaId/tareas                            -> 201 TareaDetalleCrm
+ *          (solo con el permiso puedeCrearTareas; si no, 403)
  *   GET    /api/crm/personas/:personaId/tareas/:tareaId                   -> TareaDetalleCrm
  *   POST   /api/crm/personas/:personaId/tareas/:tareaId/estado            -> TareaDetalleCrm
  *   POST   /api/crm/personas/:personaId/tareas/:tareaId/entregables       -> 201 ArchivoCrm
@@ -68,6 +71,16 @@ export class TareasEquipoCrmController {
   @UseInterceptors(SinCacheInterceptor)
   tablero(@Param('personaId') personaId: string, @Query('terminadas') terminadas: unknown): Promise<TableroPersonaCrm> {
     return this.tareas.tablero(idDeRuta(personaId, NO_EXISTE_PERSONA), terminadasDeConsulta(terminadas));
+  }
+
+  @Post()
+  @HttpCode(201)
+  @UseInterceptors(SinCacheInterceptor)
+  crearPropia(@Req() req: Request, @Param('personaId') personaId: string, @Body() cuerpo: unknown): Promise<TareaDetalleCrm> {
+    const persona = idDeRuta(personaId, NO_EXISTE_PERSONA);
+    const ip = mutacionEquipo(req);
+    exigirJson(req);
+    return this.tareas.crearPropia(persona, validarNuevaTareaPropia(cuerpo), ip);
   }
 
   @Get(':tareaId')
@@ -146,7 +159,8 @@ export class TareasEquipoCrmController {
     const ip = mutacionEquipo(req);
     exigirJson(req);
     const { nota } = validarTerminar(cuerpo);
-    return this.tareas.terminar(persona, tarea, nota, ip, this.tareas.origen(req));
+    // Sin sesión, el Host de la petición no sirve para el enlace del correo al líder.
+    return this.tareas.terminar(persona, tarea, nota, ip, this.tareas.origenConfigurado());
   }
 
   @Get(':tareaId/archivos/:archivoId')
