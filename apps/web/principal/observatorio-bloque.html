@@ -1,11 +1,11 @@
 <meta charset="utf-8"><!-- Solo sirve al abrir este archivo suelto en un navegador (evita tildes rotas). Dentro de WordPress se ignora. -->
 <!--
-  BLOQUE OBSERVATORIO SAPIENCIA (OdeS) · v2.40 · 2026-11-24
+  BLOQUE OBSERVATORIO SAPIENCIA (OdeS) · v2.41 · 2026-11-24
 
   Parte superior reestructurada segun el documento "Reestructuracion parte
   superior del micrositio del Observatorio":
     1. Banner: lo pone la entidad en WordPress; NO va en este bloque
-    2. El Observatorio en cifras (fijas) 2b. Los tres lados del Observatorio (triangulos)
+    2. El Observatorio en cifras (fijas) 2b. Formacion en educacion superior en CTi (triangulos)
     3. Explora el Observatorio (botones de acceso rapido)
     4. Mapa georreferenciado
     5. Botones flotantes: Repositorio y SIVU abajo a la izquierda (OCULTOS POR AHORA: estan comentados, ver
@@ -23,7 +23,7 @@
   Que editar (busca estos textos):
     EDITAR CIFRAS       las 5 fichas de "El Observatorio en cifras", en orden: frente (cifra, texto, nota
                         "Dato preliminar" y periodo) y reverso (descripcion, fuente y fecha de corte)
-    EDITAR LADOS        titulos y textos de los 3 triangulos de "Los tres lados del Observatorio"
+    EDITAR LADOS        titulos y textos de los 3 triangulos de "Formacion en educacion superior en CTi"
     EDITAR ACCESOS      enlaces de los 6 botones de acceso rapido
     EDITAR FLOTANTES    enlaces de los botones flotantes (Repositorio, SIVU y, en celular, ODES)
     EDITAR ROBOT        direcciones de los videos y las imagenes del robot ODES, y su enlace a ODES
@@ -87,7 +87,8 @@
    fraccion de D, y cada titulo va a medio camino entre la franja de arriba y la suya:
      nivel 1  El Observatorio en cifras: la columna + D (todo el ancho de la ventana menos el aire), el titulo y
               las cifras mas grandes; el titulo arranca encima de la primera ficha
-     nivel 2  Los tres lados del Observatorio: la columna + 3/4 de D; el titulo, en la columna + 7/8 de D
+     nivel 2  Formacion en educacion superior en CTi (los tres triangulos): la columna + 3/4 de D; el titulo,
+              con el mismo margen que el de las cifras
      nivel 3  Explora el Observatorio: la columna + 1/2 de D, botones mas compactos; el titulo, + 5/8 de D
      nivel 4  Informacion georreferenciada: el ancho de la columna del tema; el titulo, igual que el de Explora
               (+ 5/8 de D y del mismo tamano)
@@ -190,7 +191,7 @@
   #odes-observatorio .odes-cifra__reverso{padding:1rem}
 }
 
-/* 2b. Los tres lados del Observatorio: tres triangulos de colores, cada uno con su titulo, un texto corto y un
+/* 2b. Formacion en educacion superior en CTi: tres triangulos de colores, cada uno con su titulo, un texto corto y un
    circulo con un icono. Nivel 2: la franja mide la columna + 3/4 de D (ver la jerarquia de niveles). Responde al
    ancho de su propia franja (container queries): desde 56rem van en fila y escalonados; mas angosta, uno debajo
    de otro, de hasta 26rem. Colores de la entidad: naranja, celeste y morado; texto azul muy oscuro sobre el
@@ -237,10 +238,10 @@
 /* Titulos de los niveles 1 a 4, escalonados como sus franjas (A = --odes-aire, F = --odes-franja-izquierda,
    V = --odes-ventana, C = la columna). Una franja en la fraccion k de D (ver la jerarquia de niveles) mide
    k x V + (1 - k) x C - 2k x A y empieza k x (F + A) a la izquierda de la columna. El de las cifras usa la franja
-   de las cifras (k = 1, arranca encima de la primera ficha); el de los tres lados, k = 7/8; el de Explora,
+   de las cifras (k = 1, arranca encima de la primera ficha); el de los tres triangulos, igual; el de Explora,
    k = 5/8, y el del mapa, igual que el de Explora. En celular y tableta todo coincide con la columna. */
 #odes-observatorio .odes-nivel-1 .odes-cabecera{width:var(--odes-ventana,100vw);margin-left:var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2));padding:0 var(--odes-aire)}
-#odes-observatorio .odes-nivel-2 .odes-cabecera{width:calc((7 * var(--odes-ventana,100vw) + 100% - 14 * var(--odes-aire)) / 8);margin-left:calc(7 * (var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2)) + var(--odes-aire)) / 8)}
+#odes-observatorio .odes-nivel-2 .odes-cabecera{width:var(--odes-ventana,100vw);margin-left:var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2));padding:0 var(--odes-aire)}
 #odes-observatorio .odes-nivel-3 .odes-cabecera{width:calc((5 * var(--odes-ventana,100vw) + 3 * 100% - 10 * var(--odes-aire)) / 8);margin-left:calc(5 * (var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2)) + var(--odes-aire)) / 8)}
 #odes-observatorio .odes-nivel-4>.odes-contenedor>.odes-cabecera{width:calc((5 * var(--odes-ventana,100vw) + 3 * 100% - 10 * var(--odes-aire)) / 8);margin-left:calc(5 * (var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2)) + var(--odes-aire)) / 8)}
 #odes-observatorio .odes-accesos li{display:flex}
@@ -636,12 +637,12 @@
     </div>
   </section>
 
-  <!-- 2b. LOS TRES LADOS DEL OBSERVATORIO -->
+  <!-- 2b. FORMACION EN EDUCACION SUPERIOR EN CTI: LOS TRES TRIANGULOS -->
   <section class="odes-seccion odes-seccion--separada odes-nivel-2" aria-labelledby="odes-lados-titulo">
     <div class="odes-contenedor">
       <div class="odes-cabecera">
         <div class="odes-cabecera__texto">
-          <h2 id="odes-lados-titulo" class="odes-h2">Los tres lados del Observatorio</h2>
+          <h2 id="odes-lados-titulo" class="odes-h2">Formación en educación superior en CTi</h2>
           <p class="odes-suave">Investigación, formación y divulgación sobre la educación postsecundaria de Medellín.</p>
         </div>
       </div>
