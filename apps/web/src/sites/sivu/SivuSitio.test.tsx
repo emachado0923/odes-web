@@ -111,10 +111,13 @@ describe('SIVU: página', () => {
     // El edificio va antes que los tableros en el documento.
     expect(bloque().compareDocumentPosition(tableros) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
 
-    const matricula = within(tableros).getByRole('heading', { level: 3, name: /Matrícula en educación superior/ })
+    const matricula = within(tableros).getByRole('heading', { level: 3, name: /Matrícula en educación superior en Medellín \(2025\)/ })
     // El tablero de matrícula ya está publicado en /tableros (con recarga completa: otra rama).
     const abrir = within(matricula.closest('li')!).getByRole('link', { name: /Abrir tablero/ })
     expect(abrir).toHaveAttribute('href', '/tableros/matricula-2025')
+    // Y la serie 2000-2025, también en /tableros.
+    const historica = within(tableros).getByRole('heading', { level: 3, name: /Matrícula en educación superior en Medellín \(2000-2025\)/ })
+    expect(within(historica.closest('li')!).getByRole('link', { name: /Abrir tablero/ })).toHaveAttribute('href', '/tableros/matricula-historica')
     // Y el de los beneficiarios de los fondos, también en /tableros.
     const fondos = within(tableros).getByRole('heading', { level: 3, name: /Beneficiarios de los fondos de Sapiencia/ })
     // Los fondos tienen dos entradas con la misma sesión: el tablero y la ventanilla de consulta.

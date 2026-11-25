@@ -23,6 +23,15 @@ vi.mock('./fondos/TableroFondos', () => ({
   ),
 }))
 
+// La matrícula 2000-2025 también recibe los datos por props.
+vi.mock('./historica/TableroMatriculaHistorica', () => ({
+  default: ({ datos }: { datos: { meta: { desde: number; hasta: number }; filas: unknown[] } }) => (
+    <p>
+      Serie simulada: {datos.meta.desde}-{datos.meta.hasta}, {datos.filas.length} filas
+    </p>
+  ),
+}))
+
 afterEach(() => {
   vi.unstubAllGlobals()
   delete (window as Window & { ODES?: unknown }).ODES
@@ -74,6 +83,29 @@ describe('rama /tableros', () => {
     expect(screen.getByRole('banner')).toHaveClass('odes-header')
     expect(screen.getByRole('link', { name: 'Observatorio de Sapiencia: ir al inicio' })).toHaveAttribute('href', '/')
     expect(screen.getByRole('contentinfo')).toHaveClass('odes-footer')
+  })
+
+  it('la matrícula 2000-2025 lee el JSON estático del ETL y monta el tablero con la hoja de matrícula', async () => {
+    const DATOS = {
+      meta: { desde: 2000, hasta: 2025 },
+      anios: [2000, 2025],
+      dim: { programa: [] },
+      filas: [[0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0]],
+      referencia: {},
+    }
+    const pedir = responder(200, DATOS)
+    renderizarEn('/tableros/matricula-historica')
+    expect(await screen.findByText('Serie simulada: 2000-2025, 1 filas')).toBeInTheDocument()
+    expect(pedir).toHaveBeenCalledWith('/tableros/matricula-historica/datos/matricula.json', expect.anything())
+    expect(document.title).toBe('Tablero matrícula en educación superior en Medellín (2000-2025)')
+    expect(screen.getByRole('banner')).toHaveClass('odes-header')
+    expect(document.querySelector('.tableros')).toHaveClass('tablero-matricula', 'tablero-historica')
+  })
+
+  it('la matrícula 2000-2025 avisa si el archivo de datos no está publicado', async () => {
+    responder(404)
+    renderizarEn('/tableros/matricula-historica')
+    expect(await screen.findByText('El tablero todavía no tiene datos publicados.')).toBeInTheDocument()
   })
 
   it('los fondos, con sesión, abren el tablero y el selector cambia a la ventanilla sin volver a pedir los datos', async () => {

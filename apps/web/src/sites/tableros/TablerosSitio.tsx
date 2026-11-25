@@ -1,10 +1,13 @@
 /**
  * Tableros (rama /tableros): tableros de información del Observatorio que se
- * abren desde SIVU. Hoy son tres:
+ * abren desde SIVU. Hoy son cuatro:
  *
  * - /tableros/matricula-2025: matrícula en educación superior en Medellín
  *   (2025), llegado como tablero estático, con los datos en la base (ver
  *   apps/server/src/sivu/tableros).
+ * - /tableros/matricula-historica: la matrícula de Medellín de 2000 a 2025,
+ *   con Antioquia y Colombia como referencia. Comparte la hoja de matrícula y
+ *   sus datos son un JSON estático del ETL (ver historica/).
  * - /tableros/fondos-2026: beneficiarios de los fondos de Sapiencia (2026),
  *   hecho aquí con el mismo aspecto que el de matrícula (comparte su hoja) y
  *   los datos agregados en la base (datos-fondos.ts del servidor), y
@@ -40,7 +43,8 @@ import PieTableros from './componentes/PieTableros'
 import PaginaFondos from './fondos/PaginaFondos'
 import PaginaMatricula from './matricula/PaginaMatricula'
 import NoEncontradoTableros from './paginas/NoEncontradoTableros'
-import { ID_CONTENIDO, RUTA_FONDOS, RUTA_FONDOS_VENTANILLA, RUTA_MATRICULA } from './rutas'
+import PaginaMatriculaHistorica from './historica/PaginaMatriculaHistorica'
+import { ID_CONTENIDO, RUTA_FONDOS, RUTA_FONDOS_VENTANILLA, RUTA_MATRICULA, RUTA_MATRICULA_HISTORICA } from './rutas'
 import './tableros.css'
 
 const TITULO_RAMA = 'Tableros del Observatorio de Sapiencia'
@@ -55,6 +59,12 @@ interface Tablero {
 const MATRICULA: Tablero = {
   clase: 'tablero-matricula',
   titulo: 'Tablero matrícula en educación superior en Medellín (2025)',
+}
+
+/** Comparte la hoja de matrícula (aspecto) y suma la suya. */
+const MATRICULA_HISTORICA: Tablero = {
+  clase: 'tablero-matricula tablero-historica',
+  titulo: 'Tablero matrícula en educación superior en Medellín (2000-2025)',
 }
 
 const FONDOS: Tablero = {
@@ -77,6 +87,7 @@ const BATERIA: Tablero = {
 function tableroDe(pathname: string): Tablero | null {
   const ruta = pathname.replace(/\/+$/, '')
   if (ruta === RUTA_MATRICULA) return MATRICULA
+  if (ruta === RUTA_MATRICULA_HISTORICA) return MATRICULA_HISTORICA
   if (ruta === RUTA_FONDOS) return FONDOS
   if (ruta === RUTA_FONDOS_VENTANILLA) return FONDOS_VENTANILLA
   if (esRutaBateria(pathname)) return BATERIA
@@ -108,6 +119,7 @@ export default function TablerosSitio() {
       <main id={ID_CONTENIDO} className="tb-principal" tabIndex={-1}>
         <Routes>
           <Route path="matricula-2025" element={<PaginaMatricula />} />
+          <Route path="matricula-historica" element={<PaginaMatriculaHistorica />} />
           {/* Una sola ruta para el tablero y la ventanilla: cambiar entre los dos no desmonta la página. */}
           <Route path="fondos-2026/*" element={<PaginaFondos />} />
           <Route path="bateria-indicadores/*" element={<PaginaBateria />} />

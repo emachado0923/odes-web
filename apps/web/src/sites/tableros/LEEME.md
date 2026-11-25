@@ -22,8 +22,14 @@ cabecera y el pie azules de los tableros estáticos, y en el resto de la rama (l
 | `fondos/calculos.ts`, `fondos/tipos.ts` | Filtros y sumas de las filas agregadas (puros, probados en `calculos.test.ts`) y el contrato de datos (copia de `apps/server/src/sivu/tableros/datos-fondos.ts`). |
 | `fondos/tablero-fondos.css` | Lo propio del tablero de los fondos bajo `:where(.tablero-fondos)`: ocho botones de sección, notas de sección y de pie, lista de estados. La raíz lleva `tablero-matricula tablero-fondos`. |
 | `matricula/tablero-matricula.css` | El `<style>` de `index.html` del tablero estático, cabecera y pie incluidos, bajo `:where(.tablero-matricula)`: ver su encabezado. |
+| `historica/PaginaMatriculaHistorica.tsx` | `/tableros/matricula-historica`: pide el JSON estático de la matrícula 2000-2025 (`/tableros/matricula-historica/datos/matricula.json`), espera las fuentes y monta el tablero, con los datos por props. Carga la hoja de matrícula y la suya. |
+| `historica/TableroMatriculaHistorica.tsx` | Matrícula en educación superior en Medellín de 2000 a 2025: arriba la evolución (matriculados, índice 2000 = 100 y participación frente a Antioquia y Colombia) con la tira de años, que elige el año de los indicadores y de las seis secciones. Piezas visuales copiadas y tipadas del de los fondos. |
+| `historica/calculos.ts`, `historica/tipos.ts` | Filtros, series por año, cortes del año elegido y referencia de Antioquia y Colombia con los mismos filtros (puros, probados en `calculos.test.ts`), y el contrato del JSON. |
+| `historica/tablero-historica.css` | Lo propio bajo `:where(.tablero-historica)`: seis botones de sección, los modos de la evolución, la tira de años (como eje del gráfico en pantallas anchas) y las notas. La raíz lleva `tablero-matricula tablero-historica`. |
 | `bateria/` | La batería de indicadores (`/tableros/bateria-indicadores/*`): página, tablero, hoja y rutas de sus vistas. Ver `bateria/LEEME.md`. |
 | `recursos/recursos.ts` | Logos de los tableros: el del Observatorio, con el azul de la cabecera pintado, y la pata de Sapiencia y la Alcaldía. |
+
+Los de la matrícula 2000-2025 son un JSON estático que genera `apps/web/datos-tableros/matricula-historica/etl_matricula_historica.py` con los archivos del MEN (ver su LEEME), en `apps/web/public/tableros/matricula-historica/datos/`; no pasan por la base.
 
 Los datos de matrícula viven en la base (tablas `sivu_tableros` y `sivu_tablero_matricula_2025_*`,
 migración 002) y se cargan con `npm run tableros:cargar-matricula`. Los de los fondos, en

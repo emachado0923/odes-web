@@ -1,0 +1,113 @@
+/*
+ * Lo propio del tablero de matrícula 2000-2025 (/tableros/matricula-historica).
+ * Todo lo demás sale de ../matricula/tablero-matricula.css: la raíz lleva las
+ * dos clases (tablero-matricula tablero-historica), así que cabecera, pie,
+ * botones de sección, filtros, tarjetas, indicadores y tablas se ven igual que
+ * en matrícula 2025. Cada regla va bajo :where(.tablero-historica).
+ */
+
+/* Seis botones de sección: una sola fila en pantallas anchas. */
+@media (min-width: 1280px) {
+  :where(.tablero-historica) .tabs { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+
+/* Selección de texto y cifras tabulares, con la paleta del tablero. */
+:where(.tablero-historica) ::selection { background: rgba(155, 72, 164, .22); color: inherit; }
+:where(.tablero-historica) .tabla-cifras td,
+:where(.tablero-historica) .kpi-valor,
+:where(.tablero-historica) .linea-anios { font-variant-numeric: tabular-nums; }
+:where(.tablero-historica) .tabla-cifras td:not(.izq) { text-align: right; }
+:where(.tablero-historica) .tabla-cifras th:not(.fija) .th-texto { justify-content: flex-end; }
+
+/* ------------------------------------------------ evolución (arriba) */
+
+:where(.tablero-historica) .evolucion .card-title { font-size: 1.125rem; }
+
+/* Formas de ver la evolución: botones de opción unidos, el elegido en el azul de la plantilla. */
+:where(.tablero-historica) .modos {
+  display: inline-flex;
+  padding: 3px;
+  border: 1px solid var(--odes-borde);
+  border-radius: 999px;
+  background: #fff;
+}
+:where(.tablero-historica) .modo {
+  padding: .3rem .9rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--odes-azul);
+  font: inherit;
+  font-size: .8125rem;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color .18s ease-out, color .18s ease-out;
+}
+:where(.tablero-historica) .modo:hover:not(:disabled) { background: #EEF2F5; }
+:where(.tablero-historica) .modo[aria-checked="true"] { background: var(--odes-azul); color: #fff; }
+:where(.tablero-historica) .modo:disabled { color: #9AA3A8; cursor: not-allowed; }
+:where(.tablero-historica) .modo:focus-visible { outline: 2px solid var(--bs-info-70); outline-offset: 2px; }
+
+/* Tira de años: un botón por año, el elegido en el magenta de los botones de sección. Sin espacio para todos, se
+   recorre de lado. */
+:where(.tablero-historica) .linea-anios {
+  display: flex;
+  gap: 4px;
+  margin: .75rem 0;
+  padding-bottom: .25rem;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+}
+:where(.tablero-historica) .anio {
+  flex: 0 0 3.25rem;
+  padding: .35rem 0;
+  border: 1px solid var(--odes-borde);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--odes-negro);
+  font: inherit;
+  font-size: .8125rem;
+  line-height: 1.2;
+  scroll-snap-align: center;
+  cursor: pointer;
+  transition: background-color .15s ease-out, border-color .15s ease-out, color .15s ease-out;
+}
+:where(.tablero-historica) .anio:hover { border-color: var(--odes-magenta); color: var(--odes-magenta); }
+:where(.tablero-historica) .anio[aria-checked="true"] {
+  border-color: var(--odes-magenta);
+  background: var(--odes-magenta);
+  color: #fff;
+  font-weight: 600;
+}
+:where(.tablero-historica) .anio:focus-visible { outline: 2px solid var(--bs-info-70); outline-offset: 2px; }
+
+/* Como eje del gráfico (pantallas anchas): una columna por año, centrada bajo su punto. El gráfico deja --izq y --der
+   a los lados y reparte los n años en n - 1 tramos; la tira, con el mismo ancho, corre medio tramo a cada lado. */
+:where(.tablero-historica) .linea-anios.como-eje {
+  display: grid;
+  grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  gap: 0;
+  margin-top: .25rem;
+  padding-left: calc(var(--izq) - (100% - var(--izq) - var(--der)) / (2 * (var(--n) - 1)));
+  padding-right: calc(var(--der) - (100% - var(--izq) - var(--der)) / (2 * (var(--n) - 1)));
+  overflow: visible;
+}
+:where(.tablero-historica) .linea-anios.como-eje .anio { margin: 0 2px; padding: .3rem 0; font-size: .75rem; }
+
+@media (max-width: 575.98px) {
+  :where(.tablero-historica) .modos { flex-wrap: wrap; border-radius: 14px; }
+}
+
+/* ----------------------------------------------------------- notas */
+
+:where(.tablero-historica) .nota-pie {
+  margin-top: .5rem;
+  padding: 1rem 1.25rem;
+  background: #fff;
+  border: 1px solid var(--odes-borde);
+  border-radius: var(--odes-radio);
+}
+:where(.tablero-historica) .nota-pie p { margin: 0 0 .5rem; font-size: .8125rem; line-height: 1.5; max-width: 110ch; }
+:where(.tablero-historica) .nota-pie p:last-child { margin-bottom: 0; }
+:where(.tablero-historica) .nota-pie b { font-weight: 600; }

@@ -31,6 +31,14 @@ export const TABLEROS: readonly Tablero[] = [
     url: '/tableros/matricula-2025',
   },
   {
+    id: 'matricula-educacion-superior-2000-2025',
+    titulo: 'Matrícula en educación superior en Medellín (2000-2025)',
+    descripcion:
+      'Evolución anual de la matrícula desde el año 2000 por institución, nivel, sector, área y género, frente a Antioquia y Colombia, con datos del SNIES.',
+    tema: 'Educación superior',
+    url: '/tableros/matricula-historica',
+  },
+  {
     id: 'beneficiarios-fondos-2026',
     titulo: 'Beneficiarios de los fondos de Sapiencia (2026)',
     descripcion:
