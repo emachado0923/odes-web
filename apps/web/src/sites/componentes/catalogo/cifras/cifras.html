@@ -1,0 +1,99 @@
+<!--
+  FICHAS DE CIFRAS (OdeS): las fichas de "El Observatorio en cifras" de la pagina principal. Cada ficha tiene dos
+  caras: el frente (icono, cifra, que mide, nota y periodo) y el reverso (descripcion, fuente y fecha de corte).
+  Gira al pasar el mouse, al llegar con el teclado o al tocarla en el celular (esto ultimo lo hace el script).
+
+  Que editar:
+    - El titulo (odes-ci__titulo) y el texto de abajo (odes-ci__bajada).
+    - Cada ficha es un li.odes-cifra y se muestra en este mismo orden:
+        odes-cifra__icono     el icono (un svg; se puede cambiar por otro de 24 x 24 de trazo)
+        odes-cifra__valor     la cifra. Si es un dato preliminar, lleva al lado
+                              <span class="odes-cifra__asterisco" aria-hidden="true">*</span>
+        odes-cifra__unidad    opcional, va despues de la cifra y se ve debajo de ella ("mil millones")
+        odes-cifra__texto     que mide la cifra
+        odes-cifra__nota      opcional, la nota "*Dato preliminar" (quitala cuando el dato sea definitivo,
+                              junto con el asterisco de la cifra)
+        odes-cifra__periodo   el periodo (2005-2026, 2025...), en una pastilla blanca
+      y en el reverso: el titulo (el mismo del frente), la descripcion, la fuente y la fecha de corte.
+    - Si una ficha lleva unidad o nota, las demas dejan el hueco: cifras, titulos y periodos quedan alineados.
+    - Colores: odes-cifra--marino (#163854), --celeste (#51ADE5), --morado (#9F339E), --verde (#2E9E49) y
+      --naranja (#D94C19).
+  Datos: hoja "DATOS HOME", corte 24 de noviembre de 2026 (los mismos de la pagina principal, v2.42).
+-->
+<section id="odes-cifras" class="odes-ci" lang="es" aria-labelledby="odes-cifras-titulo">
+  <div class="odes-ci__cabecera">
+    <h2 id="odes-cifras-titulo" class="odes-ci__titulo">El Observatorio en cifras</h2>
+    <p class="odes-ci__bajada">Conoce los principales resultados de Sapiencia en educación postsecundaria</p>
+  </div>
+  <ul class="odes-ci__lista">
+    <li class="odes-cifra odes-cifra--marino" tabindex="0">
+      <div class="odes-cifra__cara odes-cifra__frente">
+        <span class="odes-cifra__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>
+        <p class="odes-cifra__valor">109.432<span class="odes-cifra__asterisco" aria-hidden="true">*</span></p>
+        <p class="odes-cifra__texto">Beneficiarios históricos de educación superior</p>
+        <p class="odes-cifra__nota"><span aria-hidden="true">*</span>Dato preliminar</p>
+        <p class="odes-cifra__periodo">2005-2026</p>
+      </div>
+      <div class="odes-cifra__cara odes-cifra__reverso">
+        <p class="odes-cifra__titulo" aria-hidden="true">Beneficiarios históricos de educación superior</p>
+        <p class="odes-cifra__descripcion">Personas que han accedido a educación superior con apoyo de Sapiencia entre 2005 y 2026, contadas una sola vez.</p>
+        <p class="odes-cifra__datos"><span><span class="odes-cifra__etiqueta">Fuente:</span> Agencia de Educación Postsecundaria - Sapiencia</span><span><span class="odes-cifra__etiqueta">Fecha de corte:</span> 24 de noviembre de 2026</span></p>
+      </div>
+    </li>
+    <li class="odes-cifra odes-cifra--celeste" tabindex="0">
+      <div class="odes-cifra__cara odes-cifra__frente">
+        <span class="odes-cifra__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        <p class="odes-cifra__valor">41.839<span class="odes-cifra__asterisco" aria-hidden="true">*</span></p>
+        <p class="odes-cifra__texto">Beneficiarios de educación superior</p>
+        <p class="odes-cifra__nota"><span aria-hidden="true">*</span>Dato preliminar</p>
+        <p class="odes-cifra__periodo">2024-2026</p>
+      </div>
+      <div class="odes-cifra__cara odes-cifra__reverso">
+        <p class="odes-cifra__titulo" aria-hidden="true">Beneficiarios de educación superior</p>
+        <p class="odes-cifra__descripcion">Personas que recibieron apoyo de Sapiencia para acceder o permanecer en educación superior entre 2024 y 2026.</p>
+        <p class="odes-cifra__datos"><span><span class="odes-cifra__etiqueta">Fuente:</span> Agencia de Educación Postsecundaria - Sapiencia</span><span><span class="odes-cifra__etiqueta">Fecha de corte:</span> 24 de noviembre de 2026</span></p>
+      </div>
+    </li>
+    <li class="odes-cifra odes-cifra--morado" tabindex="0">
+      <div class="odes-cifra__cara odes-cifra__frente">
+        <span class="odes-cifra__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg></span>
+        <p class="odes-cifra__valor">$596,1</p>
+        <p class="odes-cifra__unidad">mil millones</p>
+        <p class="odes-cifra__texto">Inversión en educación superior</p>
+        <p class="odes-cifra__periodo">2024-2026</p>
+      </div>
+      <div class="odes-cifra__cara odes-cifra__reverso">
+        <p class="odes-cifra__titulo" aria-hidden="true">Inversión en educación superior</p>
+        <p class="odes-cifra__descripcion">Recursos, en miles de millones de pesos, que Sapiencia destinó a educación superior entre 2024 y 2026.</p>
+        <p class="odes-cifra__datos"><span><span class="odes-cifra__etiqueta">Fuente:</span> Agencia de Educación Postsecundaria - Sapiencia</span><span><span class="odes-cifra__etiqueta">Fecha de corte:</span> 24 de noviembre de 2026</span></p>
+      </div>
+    </li>
+    <li class="odes-cifra odes-cifra--verde" tabindex="0">
+      <div class="odes-cifra__cara odes-cifra__frente">
+        <span class="odes-cifra__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg></span>
+        <p class="odes-cifra__valor">50,2%</p>
+        <p class="odes-cifra__texto">Tasa de tránsito inmediato a educación superior</p>
+        <p class="odes-cifra__periodo">2025</p>
+      </div>
+      <div class="odes-cifra__cara odes-cifra__reverso">
+        <p class="odes-cifra__titulo" aria-hidden="true">Tasa de tránsito inmediato a educación superior</p>
+        <p class="odes-cifra__descripcion">Porcentaje de bachilleres de Medellín que ingresan a educación superior en el año siguiente a su graduación de grado 11, con datos de 2025.</p>
+        <p class="odes-cifra__datos"><span><span class="odes-cifra__etiqueta">Fuente:</span> Sistema Nacional de Información de Educación Superior - SNIES</span><span><span class="odes-cifra__etiqueta">Fecha de corte:</span> 24 de noviembre de 2026</span></p>
+      </div>
+    </li>
+    <li class="odes-cifra odes-cifra--naranja" tabindex="0">
+      <div class="odes-cifra__cara odes-cifra__frente">
+        <span class="odes-cifra__icono"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 21h18"/><path d="M7 17v-4"/><path d="M12 17V7"/><path d="M17 17v-7"/></svg></span>
+        <p class="odes-cifra__valor">38,7%</p>
+        <p class="odes-cifra__texto">Tasa de asistencia a educación postsecundaria</p>
+        <p class="odes-cifra__periodo">2025</p>
+      </div>
+      <div class="odes-cifra__cara odes-cifra__reverso">
+        <p class="odes-cifra__titulo" aria-hidden="true">Tasa de asistencia a educación postsecundaria</p>
+        <p class="odes-cifra__descripcion">Porcentaje de jóvenes de 16 a 28 años de Medellín que asisten a educación postsecundaria, con datos de 2025.</p>
+        <p class="odes-cifra__datos"><span><span class="odes-cifra__etiqueta">Fuente:</span> Agencia de Educación Postsecundaria - Sapiencia</span><span><span class="odes-cifra__etiqueta">Fecha de corte:</span> 24 de noviembre de 2026</span></p>
+      </div>
+    </li>
+  </ul>
+  <p class="odes-ci__ayuda">Pasa el cursor sobre una ficha, o tócala en el celular, para ver su reverso.</p>
+</section>

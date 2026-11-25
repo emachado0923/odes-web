@@ -94,6 +94,40 @@ describe('rama /componentes', () => {
     expect(within(ficha).getByRole('button', { name: 'Script no usa script' })).toBeDisabled()
   })
 
+  it('las fichas de cifras: se ven las cinco y su script se descarga aparte y va en el bloque', async () => {
+    const blobs: Blob[] = []
+    Object.defineProperty(URL, 'createObjectURL', {
+      configurable: true,
+      value: vi.fn<(blob: Blob) => string>((blob) => {
+        blobs.push(blob)
+        return `blob:prueba/${blobs.length}`
+      }),
+    })
+    Object.defineProperty(URL, 'revokeObjectURL', { configurable: true, value: vi.fn<(url: string) => void>() })
+    const descargados: string[] = []
+    vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(function (this: HTMLAnchorElement) {
+      descargados.push(this.download)
+    })
+    const cifras = COMPONENTES.find((componente) => componente.slug === 'cifras')
+    if (!cifras?.js) throw new Error('Falta el componente de cifras con su script')
+
+    renderizarEn('/componentes')
+    const ficha = await screen.findByRole('article', { name: 'Fichas de cifras' })
+    const vista = within(ficha).getByRole('region', { name: 'Vista previa Fichas de cifras' })
+    expect(vista.querySelector('#odes-cifras')).not.toBeNull()
+    expect(within(vista).getByRole('heading', { level: 2, name: 'El Observatorio en cifras' })).toBeInTheDocument()
+    expect(vista.querySelectorAll('.odes-cifra')).toHaveLength(5)
+    expect(within(vista).getAllByText('Dato preliminar', { exact: false })).toHaveLength(2)
+
+    fireEvent.click(within(ficha).getByRole('button', { name: /^Script/ }))
+    fireEvent.click(within(ficha).getByRole('button', { name: /^Bloque completo/ }))
+    expect(descargados).toEqual(['cifras.js', 'cifras-bloque.html'])
+    expect(await blobs[0]?.text()).toBe(cifras.js)
+    const bloque = (await blobs[1]?.text()) ?? ''
+    expect(bloque).toContain('Incluye estilos, contenido y script.')
+    expect(bloque.trimEnd().endsWith(`<script>\n${cifras.js.trim()}\n</script>`)).toBe(true)
+  })
+
   it('copia el bloque completo al portapapeles y lo avisa', async () => {
     const escribir = vi.fn<(texto: string) => Promise<void>>(async () => {})
     vi.stubGlobal('navigator', { ...navigator, clipboard: { writeText: escribir } })

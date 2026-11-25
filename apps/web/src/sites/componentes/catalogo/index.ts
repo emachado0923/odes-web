@@ -16,6 +16,9 @@
  * correr scripts en línea): habría que servirlo como módulo, como hace
  * apps/web/pertinencia/plugin-vite.ts con el bloque de /pertinencia.
  */
+import cssCifras from './cifras/cifras.css?raw'
+import htmlCifras from './cifras/cifras.html?raw'
+import jsCifras from './cifras/cifras.js?raw'
 import cssTresLados from './tres-lados/tres-lados.css?raw'
 import htmlTresLados from './tres-lados/tres-lados.html?raw'
 
@@ -38,6 +41,15 @@ export const COMPONENTES: readonly Componente[] = [
       'Tres triángulos de colores con un título, un texto corto y un icono cada uno. En pantallas anchas van en fila y escalonados; en angostas, uno debajo de otro.',
     html: htmlTresLados,
     css: cssTresLados,
+  },
+  {
+    slug: 'cifras',
+    nombre: 'Fichas de cifras',
+    descripcion:
+      'Las cinco fichas de «El Observatorio en cifras» de la página principal: cifra, qué mide, periodo y, al girarlas, su descripción y su fuente. Cinco por fila en pantallas anchas; 3 + 2, 2 + 2 + 1 o una por fila en las más angostas.',
+    html: htmlCifras,
+    css: cssCifras,
+    js: jsCifras,
   },
 ]
 
