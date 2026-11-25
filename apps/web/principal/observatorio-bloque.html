@@ -1,6 +1,6 @@
 <meta charset="utf-8"><!-- Solo sirve al abrir este archivo suelto en un navegador (evita tildes rotas). Dentro de WordPress se ignora. -->
 <!--
-  BLOQUE OBSERVATORIO SAPIENCIA (OdeS) · v2.41 · 2026-11-24
+  BLOQUE OBSERVATORIO SAPIENCIA (OdeS) · v2.42 · 2026-11-25
 
   Parte superior reestructurada segun el documento "Reestructuracion parte
   superior del micrositio del Observatorio":
@@ -146,9 +146,10 @@
 #odes-observatorio .odes-cifra__valor{grid-row:2;align-self:end;font-size:min(calc(1.6rem + 3.1vw),2.75rem);font-weight:900;line-height:1.05;letter-spacing:-.01em;font-variant-numeric:tabular-nums;white-space:nowrap}
 #odes-observatorio .odes-cifra__asterisco{margin-left:.04em;font-size:.6em;font-weight:700;vertical-align:.5em}
 #odes-observatorio .odes-cifra__texto{grid-row:4;margin-top:.375rem;font-size:1.0625rem;font-weight:700;line-height:1.3}
-/* Nota "Dato preliminar": pastilla blanca con el texto del color de la ficha */
-#odes-observatorio .odes-cifra__nota{grid-row:5;justify-self:start;align-self:start;margin-top:.25rem;padding:.0625rem .5rem;border-radius:50rem;background:#fff;color:var(--odes-cifra-fondo);font-size:.75rem;font-weight:700;line-height:1.4}
-#odes-observatorio .odes-cifra__periodo{grid-row:6;margin-top:.125rem;font-size:.875rem;font-weight:400;line-height:1.3;opacity:.9}
+/* Nota "Dato preliminar": sin fondo, en blanco como el resto de la ficha */
+#odes-observatorio .odes-cifra__nota{grid-row:5;justify-self:start;align-self:start;margin-top:.25rem;font-size:.75rem;font-weight:700;line-height:1.4}
+/* Periodo: pastilla blanca con el texto del color de la ficha */
+#odes-observatorio .odes-cifra__periodo{grid-row:6;justify-self:start;align-self:start;margin-top:.125rem;padding:.0625rem .5rem;border-radius:50rem;background:#fff;color:var(--odes-cifra-fondo);font-size:.875rem;font-weight:700;line-height:1.3}
 /* Reverso */
 #odes-observatorio .odes-cifra__titulo{font-size:1.125rem;font-weight:700;line-height:1.3}
 #odes-observatorio .odes-cifra__descripcion{margin-top:.375rem;font-size:.9375rem;font-weight:500;line-height:1.4}
@@ -193,12 +194,14 @@
 
 /* 2b. Formacion en educacion superior en CTi: tres triangulos de colores, cada uno con su titulo, un texto corto y un
    circulo con un icono. Nivel 2: la franja mide la columna + 3/4 de D (ver la jerarquia de niveles). Responde al
-   ancho de su propia franja (container queries): desde 56rem van en fila y escalonados; mas angosta, uno debajo
-   de otro, de hasta 26rem. Colores de la entidad: naranja, celeste y morado; texto azul muy oscuro sobre el
-   naranja y el celeste, blanco sobre el morado (todos con 5,5:1 o mas) */
+   ancho de su propia franja (container queries): desde 56rem van en fila y escalonados, en el 80% de la franja
+   y centrados; mas angosta, uno debajo de otro, cada uno del 80% del ancho y de hasta 20,8rem. Los pisos (49rem
+   la fila, 18,75rem cada uno) son el tamano minimo en el que el texto cabe en los triangulos. Colores de la
+   entidad: naranja, celeste y morado; texto azul muy oscuro sobre el naranja y el celeste, blanco sobre el morado
+   (todos con 5,5:1 o mas) */
 #odes-observatorio .odes-lados{position:relative;container:odes-lados / inline-size;width:calc((3 * var(--odes-ventana,100vw) + 100% - 6 * var(--odes-aire)) / 4);margin-left:calc(3 * (var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2)) + var(--odes-aire)) / 4);padding-top:.5rem}
 #odes-observatorio .odes-lados__lista{display:flex;flex-direction:column;align-items:center;gap:2rem}
-#odes-observatorio .odes-lado{--odes-lado-color:#f26623;--odes-lado-texto:#062130;container-type:inline-size;position:relative;width:100%;max-width:26rem;color:var(--odes-lado-texto)}
+#odes-observatorio .odes-lado{--odes-lado-color:#f26623;--odes-lado-texto:#062130;container-type:inline-size;position:relative;width:max(80%,18.75rem);max-width:min(100%,20.8rem);color:var(--odes-lado-texto)}
 #odes-observatorio .odes-lado--investigacion{aspect-ratio:390/330}
 #odes-observatorio .odes-lado--formacion{--odes-lado-color:#51ade5;aspect-ratio:437/332}
 #odes-observatorio .odes-lado--divulgacion{--odes-lado-color:#9f339e;--odes-lado-texto:#fff;aspect-ratio:385/388}
@@ -221,7 +224,7 @@
 /* Franja ancha: los tres en fila y escalonados; la fila guarda la proporcion del diseno y cada triangulo va en
    su lugar, en porcentajes de la fila */
 @container odes-lados (min-width:56rem){
-  #odes-observatorio .odes-lados__lista{position:relative;display:block;width:100%;aspect-ratio:1105/390}
+  #odes-observatorio .odes-lados__lista{position:relative;display:block;width:max(80%,49rem);margin:0 auto;aspect-ratio:1105/390}
   #odes-observatorio .odes-lado{position:absolute;max-width:none}
   #odes-observatorio .odes-lado--investigacion{top:0;left:0;width:35.3%}
   #odes-observatorio .odes-lado--formacion{top:8.2%;left:30.3%;width:39.5%}
@@ -554,9 +557,9 @@
                                    <span class="odes-cifra__asterisco" aria-hidden="true">*</span>
              odes-cifra__unidad    opcional, va despues de la cifra y se ve debajo de ella ("mil millones")
              odes-cifra__texto     que mide la cifra
-             odes-cifra__nota      opcional, la pastilla blanca "*Dato preliminar" (quitala cuando el dato sea
+             odes-cifra__nota      opcional, la nota "*Dato preliminar" (quitala cuando el dato sea
                                    definitivo, junto con el asterisco de la cifra)
-             odes-cifra__periodo   el periodo (2005-2026, 2025...)
+             odes-cifra__periodo   el periodo (2005-2026, 2025...), en una pastilla blanca
            Reverso (odes-cifra__reverso): el titulo (el mismo del frente), la descripcion, la fuente y la fecha
            de corte.
            Si una ficha lleva unidad o nota, las demas dejan el hueco: cifras, titulos y periodos quedan alineados.
