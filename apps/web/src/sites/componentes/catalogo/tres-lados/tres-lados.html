@@ -1,40 +1,49 @@
 <!--
-  TRES LADOS (OdeS): tres triangulos de colores, cada uno con un titulo, un texto corto y un circulo con
-  un icono. En pantallas anchas van en fila y escalonados; en angostas, uno debajo de otro.
+  FORMACION EN CTI (OdeS): "Medellin potencia la formacion en CTi", tres triangulos azules con una cifra cada uno
+  (la cifra, que mide, un dato de contexto y el año) y un circulo con un icono; debajo, el boton "Conoce más" y la
+  fuente. Es la seccion 2b de la pagina principal. En pantallas anchas van en fila, el del medio mas abajo y
+  montado sobre los otros dos; en angostas, uno debajo de otro.
 
   Que editar:
-    - El titulo: "Los tres lados del" y la palabra en mayusculas (odes-tl__marca).
-    - Cada triangulo es un li.odes-tl-lado: su titulo (odes-tl-lado__nombre) y su texto
-      (odes-tl-lado__descripcion). Textos cortos: deben caber dentro del triangulo.
-    - Los colores, en las variables --odes-tl-* del comienzo del CSS.
-    - El circulo con el icono (span.odes-tl-lado__medalla) se puede borrar completo.
+    - El titulo (h2) y el texto de entrada (odes-cti__intro).
+    - Cada triangulo es un li.odes-cti-pieza: su cifra (odes-cti-pieza__cifra), que mide (odes-cti-pieza__rotulo),
+      un dato de contexto (odes-cti-pieza__contexto) y el año (odes-cti-pieza__anio). Textos cortos: deben caber
+      dentro del triangulo.
+    - El enlace del boton "Conoce más" (href) y la fuente (odes-cti__fuente).
+    - El color de los triangulos y el del boton, en --odes-cti-color y --odes-cti-boton, al comienzo del CSS.
 -->
-<section id="odes-tres-lados" class="odes-tl" aria-labelledby="odes-tres-lados-titulo">
-  <h2 id="odes-tres-lados-titulo" class="odes-tl__titulo">Los tres lados del <span class="odes-tl__marca">Observatorio</span></h2>
-  <ul class="odes-tl__lados">
-    <li class="odes-tl-lado odes-tl-lado--investigacion">
-      <svg class="odes-tl-lado__forma" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false"><polygon points="3,3 97,22 6,97"/></svg>
-      <span class="odes-tl-lado__medalla" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
-      <div class="odes-tl-lado__texto">
-        <h3 class="odes-tl-lado__nombre">Investigación</h3>
-        <p class="odes-tl-lado__descripcion">Estudia la educación postsecundaria de Medellín para entender sus causas y sus efectos.</p>
+<section id="odes-tres-lados" class="odes-cti" aria-labelledby="odes-tres-lados-titulo">
+  <h2 id="odes-tres-lados-titulo" class="odes-cti__titulo">Medellín potencia la formación en CTi</h2>
+  <p class="odes-cti__intro">La formación en ciencia, tecnología e innovación (CTi) reúne programas de ciencias, ingeniería, tecnología, salud y ciencias agropecuarias.<br>En 2025, el 44% de los estudiantes de Medellín estaba en estos programas, frente al 41% en Colombia.</p>
+  <ul class="odes-cti__piezas">
+    <li class="odes-cti-pieza odes-cti-pieza--1">
+      <svg class="odes-cti-pieza__forma" viewBox="0 0 440 400" aria-hidden="true" focusable="false"><path class="odes-cti-pieza__tri" d="M 51.6 24.1 L 403.4 90.9 Q 425.0 95.0 407.5 108.3 L 62.5 371.7 Q 45.0 385.0 44.1 363.0 L 30.9 42.0 Q 30.0 20.0 51.6 24.1 Z"/><circle class="odes-cti-pieza__circulo" cx="128" cy="322" r="56"/><g class="odes-cti-pieza__icono" transform="translate(103 297) scale(2.0833)"><path d="M10 18v-7"/><path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z"/><path d="M14 18v-7"/><path d="M18 18v-7"/><path d="M3 22h18"/><path d="M6 18v-7"/></g></svg>
+      <div class="odes-cti-pieza__texto">
+        <p class="odes-cti-pieza__cifra">36</p>
+        <p class="odes-cti-pieza__rotulo">instituciones con programas de CTi</p>
+        <p class="odes-cti-pieza__contexto">de las 51 con estudiantes en Medellín</p>
+        <span class="odes-cti-pieza__anio">2025</span>
       </div>
     </li>
-    <li class="odes-tl-lado odes-tl-lado--formacion">
-      <svg class="odes-tl-lado__forma" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false"><polygon points="51.5,17 3,74 97,97"/></svg>
-      <span class="odes-tl-lado__medalla" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>
-      <div class="odes-tl-lado__texto">
-        <h3 class="odes-tl-lado__nombre">Formación</h3>
-        <p class="odes-tl-lado__descripcion">Lleva el conocimiento basado en evidencia a colegios, instituciones y equipos de trabajo.</p>
+    <li class="odes-cti-pieza odes-cti-pieza--2">
+      <svg class="odes-cti-pieza__forma" viewBox="0 0 440 400" aria-hidden="true" focusable="false"><path class="odes-cti-pieza__tri" d="M 236.2 66.9 L 413.8 366.1 Q 425.0 385.0 403.2 382.1 L 36.8 332.9 Q 15.0 330.0 28.1 312.4 L 211.9 65.6 Q 225.0 48.0 236.2 66.9 Z"/><circle class="odes-cti-pieza__circulo" cx="225" cy="92" r="58"/><g class="odes-cti-pieza__icono" transform="translate(200 67) scale(2.0833)"><path d="M12 5v16"/><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"/></g></svg>
+      <div class="odes-cti-pieza__texto">
+        <p class="odes-cti-pieza__cifra">757</p>
+        <p class="odes-cti-pieza__rotulo">programas de CTi con estudiantes matriculados</p>
+        <p class="odes-cti-pieza__contexto">44% de los programas de la ciudad</p>
+        <span class="odes-cti-pieza__anio">2025</span>
       </div>
     </li>
-    <li class="odes-tl-lado odes-tl-lado--divulgacion">
-      <svg class="odes-tl-lado__forma" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false"><polygon points="3,22 97,3 60,97"/></svg>
-      <span class="odes-tl-lado__medalla" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></span>
-      <div class="odes-tl-lado__texto">
-        <h3 class="odes-tl-lado__nombre">Divulgación</h3>
-        <p class="odes-tl-lado__descripcion">Traduce los resultados en conversaciones públicas y accesibles.</p>
+    <li class="odes-cti-pieza odes-cti-pieza--3">
+      <svg class="odes-cti-pieza__forma" viewBox="0 0 440 400" aria-hidden="true" focusable="false"><path class="odes-cti-pieza__tri" d="M 41.6 90.7 L 398.4 19.3 Q 420.0 15.0 413.3 36.0 L 306.7 369.0 Q 300.0 390.0 284.9 374.0 L 35.1 111.0 Q 20.0 95.0 41.6 90.7 Z"/><circle class="odes-cti-pieza__circulo" cx="318" cy="338" r="54"/><g class="odes-cti-pieza__icono" transform="translate(293 313) scale(2.0833)"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></g></svg>
+      <div class="odes-cti-pieza__texto">
+        <p class="odes-cti-pieza__cifra">110.092</p>
+        <p class="odes-cti-pieza__rotulo">estudiantes en programas de CTi</p>
+        <p class="odes-cti-pieza__contexto">3% más que en 2024</p>
+        <span class="odes-cti-pieza__anio">2025</span>
       </div>
     </li>
   </ul>
+  <p class="odes-cti__accion"><a class="odes-cti__boton" href="https://sapiencia.gov.co/odes-infografias/"><span class="odes-cti__boton-texto">Conoce más</span><span class="odes-cti__boton-flecha" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></a></p>
+  <p class="odes-cti__fuente">Fuente: Sistema Nacional de Información de Educación Superior - SNIES. Cálculos y agrupación del Observatorio de Sapiencia.</p>
 </section>

@@ -36,9 +36,9 @@ export interface Componente {
 export const COMPONENTES: readonly Componente[] = [
   {
     slug: 'tres-lados',
-    nombre: 'Tres lados',
+    nombre: 'Formación en CTi',
     descripcion:
-      'Tres triángulos de colores con un título, un texto corto y un icono cada uno. En pantallas anchas van en fila y escalonados; en angostas, uno debajo de otro.',
+      'La sección «Medellín potencia la formación en CTi» de la página principal: tres triángulos azules con una cifra, qué mide, un dato de contexto y el año, el botón «Conoce más» y la fuente. En pantallas anchas van en fila, el del medio más abajo; en angostas, uno debajo de otro.',
     html: htmlTresLados,
     css: cssTresLados,
   },

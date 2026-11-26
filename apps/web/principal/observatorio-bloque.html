@@ -1,11 +1,11 @@
 <meta charset="utf-8"><!-- Solo sirve al abrir este archivo suelto en un navegador (evita tildes rotas). Dentro de WordPress se ignora. -->
 <!--
-  BLOQUE OBSERVATORIO SAPIENCIA (OdeS) · v2.42 · 2026-11-25
+  BLOQUE OBSERVATORIO SAPIENCIA (OdeS) · v2.43 · 2026-11-26
 
   Parte superior reestructurada segun el documento "Reestructuracion parte
   superior del micrositio del Observatorio":
     1. Banner: lo pone la entidad en WordPress; NO va en este bloque
-    2. El Observatorio en cifras (fijas) 2b. Formacion en educacion superior en CTi (triangulos)
+    2. El Observatorio en cifras (fijas) 2b. Medellin potencia la formacion en CTi (triangulos)
     3. Explora el Observatorio (botones de acceso rapido)
     4. Mapa georreferenciado
     5. Botones flotantes: Repositorio y SIVU abajo a la izquierda (OCULTOS POR AHORA: estan comentados, ver
@@ -23,7 +23,8 @@
   Que editar (busca estos textos):
     EDITAR CIFRAS       las 5 fichas de "El Observatorio en cifras", en orden: frente (cifra, texto, nota
                         "Dato preliminar" y periodo) y reverso (descripcion, fuente y fecha de corte)
-    EDITAR LADOS        titulos y textos de los 3 triangulos de "Formacion en educacion superior en CTi"
+    EDITAR CTI          cifras y textos de los 3 triangulos de "Medellin potencia la formacion en CTi", el
+                        enlace del boton "Conoce más" y la fuente
     EDITAR ACCESOS      enlaces de los 6 botones de acceso rapido
     EDITAR FLOTANTES    enlaces de los botones flotantes (Repositorio, SIVU y, en celular, ODES)
     EDITAR ROBOT        direcciones de los videos y las imagenes del robot ODES, y su enlace a ODES
@@ -87,7 +88,7 @@
    fraccion de D, y cada titulo va a medio camino entre la franja de arriba y la suya:
      nivel 1  El Observatorio en cifras: la columna + D (todo el ancho de la ventana menos el aire), el titulo y
               las cifras mas grandes; el titulo arranca encima de la primera ficha
-     nivel 2  Formacion en educacion superior en CTi (los tres triangulos): la columna + 3/4 de D; el titulo,
+     nivel 2  Medellin potencia la formacion en CTi (los tres triangulos): la columna + 3/4 de D; el titulo,
               con el mismo margen que el de las cifras
      nivel 3  Explora el Observatorio: la columna + 1/2 de D, botones mas compactos; el titulo, + 5/8 de D
      nivel 4  Informacion georreferenciada: el ancho de la columna del tema; el titulo, igual que el de Explora
@@ -192,43 +193,46 @@
   #odes-observatorio .odes-cifra__reverso{padding:1rem}
 }
 
-/* 2b. Formacion en educacion superior en CTi: tres triangulos de colores, cada uno con su titulo, un texto corto y un
-   circulo con un icono. Nivel 2: la franja mide la columna + 3/4 de D (ver la jerarquia de niveles). Responde al
-   ancho de su propia franja (container queries): desde 56rem van en fila y escalonados, en el 80% de la franja
-   y centrados; mas angosta, uno debajo de otro, cada uno del 80% del ancho y de hasta 20,8rem. Los pisos (49rem
-   la fila, 18,75rem cada uno) son el tamano minimo en el que el texto cabe en los triangulos. Colores de la
-   entidad: naranja, celeste y morado; texto azul muy oscuro sobre el naranja y el celeste, blanco sobre el morado
-   (todos con 5,5:1 o mas) */
-#odes-observatorio .odes-lados{position:relative;container:odes-lados / inline-size;width:calc((3 * var(--odes-ventana,100vw) + 100% - 6 * var(--odes-aire)) / 4);margin-left:calc(3 * (var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2)) + var(--odes-aire)) / 4);padding-top:.5rem}
-#odes-observatorio .odes-lados__lista{display:flex;flex-direction:column;align-items:center;gap:2rem}
-#odes-observatorio .odes-lado{--odes-lado-color:#f26623;--odes-lado-texto:#062130;container-type:inline-size;position:relative;width:max(80%,18.75rem);max-width:min(100%,20.8rem);color:var(--odes-lado-texto)}
-#odes-observatorio .odes-lado--investigacion{aspect-ratio:390/330}
-#odes-observatorio .odes-lado--formacion{--odes-lado-color:#51ade5;aspect-ratio:437/332}
-#odes-observatorio .odes-lado--divulgacion{--odes-lado-color:#9f339e;--odes-lado-texto:#fff;aspect-ratio:385/388}
-/* El triangulo: el SVG se estira a la caja; el trazo grueso del mismo color redondea las esquinas */
-#odes-observatorio svg.odes-lado__forma{position:absolute;top:0;left:0;display:block;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 .5rem .75rem rgba(22,56,84,.18))}
-#odes-observatorio .odes-lado__forma polygon{fill:var(--odes-lado-color);stroke:var(--odes-lado-color);stroke-width:18px;stroke-linejoin:round;vector-effect:non-scaling-stroke}
-/* El texto, en la parte ancha del triangulo; la letra crece con el ancho del triangulo (cqi) */
-#odes-observatorio .odes-lado__texto{position:absolute;display:flex;flex-direction:column;align-items:center;gap:.25rem;text-align:center}
-#odes-observatorio .odes-lado--investigacion .odes-lado__texto{top:18%;left:8%;width:60%}
-#odes-observatorio .odes-lado--formacion .odes-lado__texto{top:46%;left:27%;width:46%}
-#odes-observatorio .odes-lado--divulgacion .odes-lado__texto{top:23%;left:24%;width:52%}
-#odes-observatorio .odes-lado__nombre{font-size:clamp(1rem,5.2cqi,1.375rem);font-weight:700;line-height:1.2}
-#odes-observatorio .odes-lado__descripcion{font-size:clamp(.8125rem,4.2cqi,1.125rem);line-height:1.25}
-/* El circulo con el icono (se puede quitar del HTML) */
-#odes-observatorio .odes-lado__medalla{position:absolute;z-index:1;display:flex;align-items:center;justify-content:center;width:36%;aspect-ratio:1/1;border:clamp(3px,1.2cqi,5px) solid var(--odes-lado-color);border-radius:50%;background:#fff;color:var(--odes-lado-color);box-shadow:0 .25rem .625rem rgba(22,56,84,.14);transform:translate(-50%,-50%)}
-#odes-observatorio .odes-lado__medalla svg{display:block;width:40%;height:40%;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
-#odes-observatorio .odes-lado--investigacion .odes-lado__medalla{top:78%;left:32%}
-#odes-observatorio .odes-lado--formacion .odes-lado__medalla{top:21%;left:52%;width:33%}
-#odes-observatorio .odes-lado--divulgacion .odes-lado__medalla{top:78%;left:73%}
-/* Franja ancha: los tres en fila y escalonados; la fila guarda la proporcion del diseno y cada triangulo va en
-   su lugar, en porcentajes de la fila */
-@container odes-lados (min-width:56rem){
-  #odes-observatorio .odes-lados__lista{position:relative;display:block;width:max(80%,49rem);margin:0 auto;aspect-ratio:1105/390}
-  #odes-observatorio .odes-lado{position:absolute;max-width:none}
-  #odes-observatorio .odes-lado--investigacion{top:0;left:0;width:35.3%}
-  #odes-observatorio .odes-lado--formacion{top:8.2%;left:30.3%;width:39.5%}
-  #odes-observatorio .odes-lado--divulgacion{top:.5%;left:65.2%;width:34.8%}
+/* 2b. Medellin potencia la formacion en CTi: tres triangulos azules, cada uno con una cifra (la cifra, que mide, un
+   dato de contexto y el año en pastilla blanca) y un circulo con un icono; debajo, el boton "Conoce más" y la fuente.
+   Nivel 2: la franja de los triangulos mide la columna + 3/4 de D (ver la jerarquia de niveles); la fuente va con
+   el margen del titulo. Responde al ancho de su propia franja (container queries): desde 56rem van en fila, de
+   hasta 1180 px y centrados, con el del medio mas abajo y montado sobre los otros dos; mas angosta, uno debajo de
+   otro, de hasta 440 px. Cada triangulo es un contenedor: la letra crece con su ancho (cqi), y el piso de 56rem es
+   el ancho en el que la letra mas pequena (el año) no baja de 10 px. Un solo color para los tres triangulos
+   (--odes-cti-color) y otro para el boton (--odes-cti-boton). Texto blanco sobre el azul (12,6:1) */
+#odes-observatorio .odes-cti{--odes-cti-color:#163854;--odes-cti-boton:#d94c19;position:relative;container:odes-cti / inline-size;width:calc((3 * var(--odes-ventana,100vw) + 100% - 6 * var(--odes-aire)) / 4);margin-left:calc(3 * (var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2)) + var(--odes-aire)) / 4);padding-top:.5rem}
+#odes-observatorio .odes-cti__piezas{display:flex;flex-direction:column;align-items:center;gap:6px;max-width:440px;margin:0 auto}
+#odes-observatorio .odes-cti-pieza{position:relative;width:100%;aspect-ratio:440/400;container-type:inline-size}
+#odes-observatorio svg.odes-cti-pieza__forma{position:absolute;top:0;left:0;display:block;width:100%;height:100%;overflow:visible}
+#odes-observatorio .odes-cti-pieza__tri{fill:var(--odes-cti-color)}
+#odes-observatorio .odes-cti-pieza__circulo{fill:#fff;stroke:var(--odes-cti-color);stroke-width:5}
+#odes-observatorio .odes-cti-pieza__icono{fill:none;stroke:var(--odes-cti-color);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* El texto, centrado en la parte ancha de cada triangulo */
+#odes-observatorio .odes-cti-pieza__texto{position:absolute;width:50cqi;transform:translate(-50%,-50%);text-align:center;color:#fff}
+#odes-observatorio .odes-cti-pieza--1 .odes-cti-pieza__texto{left:34.25%;top:36.46%}
+#odes-observatorio .odes-cti-pieza--2 .odes-cti-pieza__texto{left:48.78%;top:63.47%}
+#odes-observatorio .odes-cti-pieza--3 .odes-cti-pieza__texto{left:56.63%;top:37.91%}
+#odes-observatorio .odes-cti-pieza__cifra{font-size:10.5cqi;font-weight:800;line-height:1.05;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+#odes-observatorio .odes-cti-pieza__rotulo{margin-top:1.4cqi;font-size:3.8cqi;font-weight:600;line-height:1.25;text-wrap:balance}
+#odes-observatorio .odes-cti-pieza__contexto{margin-top:1.2cqi;font-size:3.5cqi;line-height:1.3;text-wrap:balance}
+#odes-observatorio .odes-cti-pieza__anio{display:inline-block;margin-top:2.2cqi;padding:.5cqi 2.6cqi;border-radius:999px;background:#fff;color:var(--odes-cti-color);font-size:2.9cqi;font-weight:700;line-height:1.4}
+/* Boton "Conoce más": borde y texto del color del boton, y la flecha en un bloque del mismo color */
+#odes-observatorio .odes-cti__accion{margin-top:14px;text-align:center}
+#odes-observatorio a.odes-cti__boton,#odes-observatorio a.odes-cti__boton:hover,#odes-observatorio a.odes-cti__boton:focus,#odes-observatorio a.odes-cti__boton:active,#odes-observatorio a.odes-cti__boton:visited{display:inline-flex;align-items:stretch;overflow:hidden;border:2px solid var(--odes-cti-boton);border-radius:8px;background:#fff;color:var(--odes-cti-boton);font-size:1rem;font-weight:600;line-height:1.2}
+#odes-observatorio .odes-cti__boton-texto{padding:10px 22px;transition:background-color .2s ease}
+#odes-observatorio a.odes-cti__boton:hover .odes-cti__boton-texto{background:#fbede7}
+#odes-observatorio .odes-cti__boton-flecha{display:inline-flex;align-items:center;padding:0 14px;background:var(--odes-cti-boton);color:#fff}
+#odes-observatorio .odes-cti__boton-flecha svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+#odes-observatorio a.odes-cti__boton:focus-visible{outline:3px solid #163854;outline-offset:3px}
+/* La fuente, con el margen del titulo (la franja de la cabecera de nivel 2) */
+#odes-observatorio .odes-cti-fuente{width:var(--odes-ventana,100vw);margin-top:22px;margin-left:var(--odes-franja-izquierda,calc(50% - var(--odes-ventana,100vw) / 2));padding:0 var(--odes-aire);font-size:.8rem;line-height:1.5;color:#5a5a5a}
+/* El texto de la cabecera de esta seccion es mas largo: dos frases, una por linea en escritorio */
+#odes-observatorio .odes-cabecera__texto.odes-cabecera__texto--ancho{max-width:72rem}
+@container odes-cti (min-width:56rem){
+  #odes-observatorio .odes-cti__piezas{flex-direction:row;justify-content:center;align-items:flex-start;gap:0;max-width:1180px}
+  #odes-observatorio .odes-cti-pieza{flex:0 0 36%;width:auto}
+  #odes-observatorio .odes-cti-pieza--2{margin:30px -8% 0}
 }
 
 /* 3. Explora el Observatorio: botones numerados en una franja con el ancho de la ventana, como las cifras (usa las
@@ -640,46 +644,53 @@
     </div>
   </section>
 
-  <!-- 2b. FORMACION EN EDUCACION SUPERIOR EN CTI: LOS TRES TRIANGULOS -->
-  <section class="odes-seccion odes-seccion--separada odes-nivel-2" aria-labelledby="odes-lados-titulo">
+  <!-- 2b. MEDELLIN POTENCIA LA FORMACION EN CTI: LOS TRES TRIANGULOS -->
+  <section class="odes-seccion odes-seccion--separada odes-nivel-2" aria-labelledby="odes-cti-titulo">
     <div class="odes-contenedor">
       <div class="odes-cabecera">
-        <div class="odes-cabecera__texto">
-          <h2 id="odes-lados-titulo" class="odes-h2">Formación en educación superior en CTi</h2>
-          <p class="odes-suave">Investigación, formación y divulgación sobre la educación postsecundaria de Medellín.</p>
+        <div class="odes-cabecera__texto odes-cabecera__texto--ancho">
+          <h2 id="odes-cti-titulo" class="odes-h2">Medellín potencia la formación en CTi</h2>
+          <p class="odes-suave">La formación en ciencia, tecnología e innovación (CTi) reúne programas de ciencias, ingeniería, tecnología, salud y ciencias agropecuarias.<br>En 2025, el 44% de los estudiantes de Medellín estaba en estos programas, frente al 41% en Colombia.</p>
         </div>
       </div>
-      <!-- EDITAR LADOS: cada triangulo es un li.odes-lado con su titulo (odes-lado__nombre) y su texto
-           (odes-lado__descripcion). Textos cortos: deben caber dentro del triangulo. El circulo con el icono
-           (span.odes-lado__medalla) se puede borrar completo. -->
-      <div class="odes-lados">
-        <ul class="odes-lados__lista">
-          <li class="odes-lado odes-lado--investigacion">
-            <svg class="odes-lado__forma" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false"><polygon points="3,3 97,22 6,97"/></svg>
-            <span class="odes-lado__medalla" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
-            <div class="odes-lado__texto">
-              <h3 class="odes-lado__nombre">Investigación</h3>
-              <p class="odes-lado__descripcion">Estudia la educación postsecundaria de Medellín para entender sus causas y sus efectos.</p>
+      <!-- EDITAR CTI: cada triangulo es un li.odes-cti-pieza con su cifra (odes-cti-pieza__cifra), que mide
+           (odes-cti-pieza__rotulo), un dato de contexto (odes-cti-pieza__contexto) y el año (odes-cti-pieza__anio).
+           Textos cortos: deben caber dentro del triangulo. El enlace del boton "Conoce más" va en su href, y la
+           fuente en p.odes-cti-fuente. El color de los triangulos y el del boton, en --odes-cti-color y
+           --odes-cti-boton (CSS de la seccion 2b). -->
+      <div class="odes-cti">
+        <ul class="odes-cti__piezas">
+          <li class="odes-cti-pieza odes-cti-pieza--1">
+            <svg class="odes-cti-pieza__forma" viewBox="0 0 440 400" aria-hidden="true" focusable="false"><path class="odes-cti-pieza__tri" d="M 51.6 24.1 L 403.4 90.9 Q 425.0 95.0 407.5 108.3 L 62.5 371.7 Q 45.0 385.0 44.1 363.0 L 30.9 42.0 Q 30.0 20.0 51.6 24.1 Z"/><circle class="odes-cti-pieza__circulo" cx="128" cy="322" r="56"/><g class="odes-cti-pieza__icono" transform="translate(103 297) scale(2.0833)"><path d="M10 18v-7"/><path d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z"/><path d="M14 18v-7"/><path d="M18 18v-7"/><path d="M3 22h18"/><path d="M6 18v-7"/></g></svg>
+            <div class="odes-cti-pieza__texto">
+              <p class="odes-cti-pieza__cifra">36</p>
+              <p class="odes-cti-pieza__rotulo">instituciones con programas de CTi</p>
+              <p class="odes-cti-pieza__contexto">de las 51 con estudiantes en Medellín</p>
+              <span class="odes-cti-pieza__anio">2025</span>
             </div>
           </li>
-          <li class="odes-lado odes-lado--formacion">
-            <svg class="odes-lado__forma" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false"><polygon points="51.5,17 3,74 97,97"/></svg>
-            <span class="odes-lado__medalla" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span>
-            <div class="odes-lado__texto">
-              <h3 class="odes-lado__nombre">Formación</h3>
-              <p class="odes-lado__descripcion">Lleva el conocimiento basado en evidencia a colegios, instituciones y equipos de trabajo.</p>
+          <li class="odes-cti-pieza odes-cti-pieza--2">
+            <svg class="odes-cti-pieza__forma" viewBox="0 0 440 400" aria-hidden="true" focusable="false"><path class="odes-cti-pieza__tri" d="M 236.2 66.9 L 413.8 366.1 Q 425.0 385.0 403.2 382.1 L 36.8 332.9 Q 15.0 330.0 28.1 312.4 L 211.9 65.6 Q 225.0 48.0 236.2 66.9 Z"/><circle class="odes-cti-pieza__circulo" cx="225" cy="92" r="58"/><g class="odes-cti-pieza__icono" transform="translate(200 67) scale(2.0833)"><path d="M12 5v16"/><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"/></g></svg>
+            <div class="odes-cti-pieza__texto">
+              <p class="odes-cti-pieza__cifra">757</p>
+              <p class="odes-cti-pieza__rotulo">programas de CTi con estudiantes matriculados</p>
+              <p class="odes-cti-pieza__contexto">44% de los programas de la ciudad</p>
+              <span class="odes-cti-pieza__anio">2025</span>
             </div>
           </li>
-          <li class="odes-lado odes-lado--divulgacion">
-            <svg class="odes-lado__forma" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false"><polygon points="3,22 97,3 60,97"/></svg>
-            <span class="odes-lado__medalla" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></span>
-            <div class="odes-lado__texto">
-              <h3 class="odes-lado__nombre">Divulgación</h3>
-              <p class="odes-lado__descripcion">Traduce los resultados en conversaciones públicas y accesibles.</p>
+          <li class="odes-cti-pieza odes-cti-pieza--3">
+            <svg class="odes-cti-pieza__forma" viewBox="0 0 440 400" aria-hidden="true" focusable="false"><path class="odes-cti-pieza__tri" d="M 41.6 90.7 L 398.4 19.3 Q 420.0 15.0 413.3 36.0 L 306.7 369.0 Q 300.0 390.0 284.9 374.0 L 35.1 111.0 Q 20.0 95.0 41.6 90.7 Z"/><circle class="odes-cti-pieza__circulo" cx="318" cy="338" r="54"/><g class="odes-cti-pieza__icono" transform="translate(293 313) scale(2.0833)"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></g></svg>
+            <div class="odes-cti-pieza__texto">
+              <p class="odes-cti-pieza__cifra">110.092</p>
+              <p class="odes-cti-pieza__rotulo">estudiantes en programas de CTi</p>
+              <p class="odes-cti-pieza__contexto">3% más que en 2024</p>
+              <span class="odes-cti-pieza__anio">2025</span>
             </div>
           </li>
         </ul>
+        <p class="odes-cti__accion"><a class="odes-cti__boton" href="https://sapiencia.gov.co/odes-infografias/"><span class="odes-cti__boton-texto">Conoce más</span><span class="odes-cti__boton-flecha" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></a></p>
       </div>
+      <p class="odes-cti-fuente">Fuente: Sistema Nacional de Información de Educación Superior - SNIES. Cálculos y agrupación del Observatorio de Sapiencia.</p>
     </div>
   </section>
 

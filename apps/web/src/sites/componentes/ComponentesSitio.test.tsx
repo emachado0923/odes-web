@@ -12,7 +12,7 @@ function renderizarEn(ruta: string) {
 }
 
 async function fichaTresLados() {
-  return screen.findByRole('article', { name: 'Tres lados' })
+  return screen.findByRole('article', { name: 'Formación en CTi' })
 }
 
 afterEach(() => {
@@ -32,16 +32,13 @@ describe('rama /componentes', () => {
     expect(screen.getAllByRole('article')).toHaveLength(COMPONENTES.length)
 
     const ficha = await fichaTresLados()
-    const vista = within(ficha).getByRole('region', { name: 'Vista previa Tres lados' })
-    // El componente tal cual: su raíz, su título y sus tres lados.
+    const vista = within(ficha).getByRole('region', { name: 'Vista previa Formación en CTi' })
+    // El componente tal cual: su raíz, su título, las cifras de sus tres triángulos y el botón.
     expect(vista.querySelector('#odes-tres-lados')).not.toBeNull()
     expect(vista.querySelector('style')?.textContent).toContain('#odes-tres-lados')
-    expect(within(vista).getByRole('heading', { level: 2, name: 'Los tres lados del Observatorio' })).toBeInTheDocument()
-    expect(within(vista).getAllByRole('heading', { level: 3 }).map((titulo) => titulo.textContent)).toEqual([
-      'Investigación',
-      'Formación',
-      'Divulgación',
-    ])
+    expect(within(vista).getByRole('heading', { level: 2, name: 'Medellín potencia la formación en CTi' })).toBeInTheDocument()
+    expect([...vista.querySelectorAll('.odes-cti-pieza__cifra')].map((cifra) => cifra.textContent)).toEqual(['36', '757', '110.092'])
+    expect(within(vista).getByRole('link', { name: 'Conoce más' })).toHaveAttribute('href', 'https://sapiencia.gov.co/odes-infografias/')
   })
 
   it('los botones de ancho angostan la vista previa', async () => {

@@ -2,7 +2,8 @@
  * Reglas de WordPress para cada componente del catálogo: lo que se descarga se
  * pega tal cual en un "Raw HTML" de WPBakery en sapiencia.gov.co (WordPress
  * 5.9, tema Jupiter). Son las mismas del bloque de la página principal
- * (apps/web/principal/bloque.test.ts), donde está de dónde sale cada una.
+ * (apps/web/principal/bloque.test.ts), donde está de dónde sale cada una. Como
+ * allí, un enlace (href) a otro sitio sí se permite: no carga nada.
  */
 import { describe, expect, it } from 'vitest'
 import { armarBloque, COMPONENTES, idRaiz, partes, type Componente } from '.'
@@ -76,7 +77,7 @@ describe.each(COMPONENTES.map((componente) => [componente.slug, componente] as c
       expect(
         hallazgos(
           bloque,
-          /<link\b|@import\b|<iframe\b|\b(?:src|srcset|poster|data|href)\s*=\s*["']?(?:https?:)?\/\/|url\(\s*["']?(?:https?:)?\/\//gi,
+          /<link\b|@import\b|<iframe\b|\b(?:src|srcset|poster|data)\s*=\s*["']?(?:https?:)?\/\/|url\(\s*["']?(?:https?:)?\/\//gi,
         ),
       ).toEqual([])
     })
