@@ -15,6 +15,7 @@ import {
   resumenAnio,
   seriePorAnio,
   sexoPorAnio,
+  textoRecorte,
   variacion,
 } from './calculos'
 import type { FilaHistorica, MatriculaHistorica } from './tipos'
@@ -104,6 +105,13 @@ describe('series y cortes', () => {
       [1, 40],
       [2, 11],
     ])
+  })
+
+  it('nombra el recorte de los filtros para títulos y descargas', () => {
+    expect(textoRecorte(c, FILTROS_VACIOS)).toBe('')
+    expect(textoRecorte(c, { ...FILTROS_VACIOS, ies: [0], modalidad: [0] })).toBe('Universidad de Antioquia · Presencial')
+    expect(textoRecorte(c, { ...FILTROS_VACIOS, ies: [0, 1] })).toBe('Universidad de Antioquia y Universidad EAFIT')
+    expect(textoRecorte(c, { ...FILTROS_VACIOS, nivel: [0, 1, 2] })).toBe('3 niveles de formación')
   })
 
   it('solo ofrece opciones con matrícula según los demás filtros', () => {

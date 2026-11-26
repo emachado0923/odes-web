@@ -27,11 +27,13 @@ async function pedirDatos(): Promise<MatriculaHistorica> {
 }
 
 async function cargarTablero(): Promise<ComponentType> {
-  const [datos] = await Promise.all([pedirDatos(), esperarFuentes()])
-  // Las fuentes van antes del import: el tablero mide textos con la letra cargada.
-  const Tablero = (await importarTablero(() => import('./TableroMatriculaHistorica'), CLAVE_RECARGA)) as ComponentType<{
-    datos: MatriculaHistorica
-  }>
+  // Datos, fuentes y el chunk del tablero (con ECharts) se piden a la vez. El tablero mide textos al dibujar, no al
+  // importarse, así que basta con que las fuentes estén antes de montarlo.
+  const [datos, , Tablero] = (await Promise.all([
+    pedirDatos(),
+    esperarFuentes(),
+    importarTablero(() => import('./TableroMatriculaHistorica'), CLAVE_RECARGA),
+  ])) as [MatriculaHistorica, unknown, ComponentType<{ datos: MatriculaHistorica }>]
   return function TableroConDatos() {
     return <Tablero datos={datos} />
   }

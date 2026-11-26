@@ -211,6 +211,30 @@ export function programasDelAnio(filas: readonly FilaHistorica[], anio: number):
   return [...porPrograma.values()].sort((a, b) => b.matriculados - a.matriculados)
 }
 
+/** Cómo se nombra cada filtro cuando hay más de dos valores elegidos («3 instituciones»). */
+const PLURALES: Record<keyof FiltrosHistoricos, string> = {
+  ies: 'instituciones',
+  sector: 'sectores',
+  nivel: 'niveles de formación',
+  modalidad: 'modalidades',
+  area: 'áreas de conocimiento',
+}
+
+/**
+ * El recorte que muestran las cifras, en palabras: «Universidad de Antioquia · Presencial». Va en los títulos,
+ * los indicadores y las descargas, para que una cifra filtrada nunca pase por la de toda la ciudad. Vacío sin filtros.
+ */
+export function textoRecorte(c: MatriculaHistorica, f: FiltrosHistoricos): string {
+  const partes: string[] = []
+  for (const campo of ['ies', 'sector', 'nivel', 'modalidad', 'area'] as const) {
+    const valores = f[campo]
+    if (!valores.length) continue
+    const nombres = valores.map((i) => (campo === 'ies' ? c.dim.ies[i].nombre : c.dim[campo][i]))
+    partes.push(nombres.length === 1 ? nombres[0] : nombres.length === 2 ? nombres.join(' y ') : nombres.length + ' ' + PLURALES[campo])
+  }
+  return partes.join(' · ')
+}
+
 /** Las opciones de un filtro que tienen matrícula con los demás filtros aplicados (las elegidas siempre quedan). */
 export function opcionesDisponibles(c: MatriculaHistorica, f: FiltrosHistoricos, campo: Campo): number[] {
   const sin = { ...f, [campo]: [] }

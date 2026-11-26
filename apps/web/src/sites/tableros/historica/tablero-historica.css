@@ -16,8 +16,13 @@
 :where(.tablero-historica) .tabla-cifras td,
 :where(.tablero-historica) .kpi-valor,
 :where(.tablero-historica) .linea-anios { font-variant-numeric: tabular-nums; }
-:where(.tablero-historica) .tabla-cifras td:not(.izq) { text-align: right; }
+.tablero-historica .tabla-caja .tabla-cifras td:not(.izq),
+.tablero-historica .tabla-caja .tabla-cifras th:not(.fija) { text-align: right !important; }
+.tablero-historica .tabla-caja .tabla-cifras td.izq,
+.tablero-historica .tabla-caja .tabla-cifras th.fija { text-align: left !important; }
 :where(.tablero-historica) .tabla-cifras th:not(.fija) .th-texto { justify-content: flex-end; }
+/* La fila del año elegido en la serie anual. */
+.tablero-historica .tabla-caja tr.table-active td { background-color: #F4EAF4 !important; font-weight: 600; }
 
 /* ------------------------------------------------ evolución (arriba) */
 
@@ -44,18 +49,19 @@
   cursor: pointer;
   transition: background-color .18s ease-out, color .18s ease-out;
 }
-:where(.tablero-historica) .modo:hover:not(:disabled) { background: #EEF2F5; }
+:where(.tablero-historica) .modo:not([aria-checked="true"]):hover:not(:disabled) { background: #EEF2F5; }
 :where(.tablero-historica) .modo[aria-checked="true"] { background: var(--odes-azul); color: #fff; }
 :where(.tablero-historica) .modo:disabled { color: #9AA3A8; cursor: not-allowed; }
-:where(.tablero-historica) .modo:focus-visible { outline: 2px solid var(--bs-info-70); outline-offset: 2px; }
+
 
 /* Tira de años: un botón por año, el elegido en el magenta de los botones de sección. Sin espacio para todos, se
    recorre de lado. */
 :where(.tablero-historica) .linea-anios {
   display: flex;
   gap: 4px;
-  margin: .75rem 0;
-  padding-bottom: .25rem;
+  margin: .5rem 0;
+  /* Aire para que el anillo de foco no se corte cuando la tira se recorre de lado. */
+  padding: 5px 5px 7px;
   overflow-x: auto;
   scroll-snap-type: x proximity;
 }
@@ -80,7 +86,7 @@
   color: #fff;
   font-weight: 600;
 }
-:where(.tablero-historica) .anio:focus-visible { outline: 2px solid var(--bs-info-70); outline-offset: 2px; }
+
 
 /* Como eje del gráfico (pantallas anchas): una columna por año, centrada bajo su punto. El gráfico deja --izq y --der
    a los lados y reparte los n años en n - 1 tramos; la tira, con el mismo ancho, corre medio tramo a cada lado. */
@@ -89,6 +95,8 @@
   grid-template-columns: repeat(var(--n), minmax(0, 1fr));
   gap: 0;
   margin-top: .25rem;
+  padding-top: 0;
+  padding-bottom: 0;
   padding-left: calc(var(--izq) - (100% - var(--izq) - var(--der)) / (2 * (var(--n) - 1)));
   padding-right: calc(var(--der) - (100% - var(--izq) - var(--der)) / (2 * (var(--n) - 1)));
   overflow: visible;
@@ -97,6 +105,107 @@
 
 @media (max-width: 575.98px) {
   :where(.tablero-historica) .modos { flex-wrap: wrap; border-radius: 14px; }
+}
+
+/* ------------------------------------------------- foco visible */
+/* Un anillo azul oscuro (11:1 sobre blanco) en todo lo que se controla con teclado; el de la plantilla es muy claro. */
+.tablero-historica .modo:focus-visible,
+.tablero-historica .anio:focus-visible,
+.tablero-historica .tab:focus-visible,
+.tablero-historica .selector .form-select:focus-visible,
+.tablero-historica .tabla-caja th:focus-visible,
+.tablero-historica .barra-anio-paso:focus-visible,
+.tablero-historica .filtros-alternar:focus-visible,
+.tablero-historica .filtrado-por .tag:focus-visible {
+  outline: 2px solid #0B3A56;
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+/* ------------------------------------------- recorte de los filtros */
+:where(.tablero-historica) .ficha-titulos { min-width: 0; }
+:where(.tablero-historica) .ficha-recorte {
+  margin: .2rem 0 0;
+  font-size: .8125rem;
+  font-weight: 500;
+  color: var(--odes-magenta) !important;
+}
+/* «Filtrado por:» dentro de la tarjeta de barras, con la categoría elegida y su ×. */
+:where(.tablero-historica) .filtrado-por { display: inline-flex; flex-wrap: wrap; align-items: center; gap: .35rem; }
+:where(.tablero-historica) .filtrado-por-tit { font-size: .8125rem; color: #5B646A; }
+
+/* ------------------------------------------ textos chicos legibles */
+/* Las notas, pies y fuentes de la plantilla van en gris claro y 11 px (3,7:1): aquí suben a 12 px y 6:1. */
+.tablero-historica main .kpi-pie,
+.tablero-historica main .ficha-fuente { color: #5B646A !important; font-size: .75rem !important; }
+.tablero-historica .nota-grafico { color: #5B646A; font-size: .75rem; }
+.tablero-historica main .tab-sec { font-size: .75rem !important; }
+.tablero-historica input::placeholder { color: #6B747A; opacity: 1; }
+
+/* Buscador de la tabla de programas. */
+:where(.tablero-historica) .buscador-tabla { max-width: 32rem; margin-bottom: .5rem; }
+:where(.tablero-historica) .buscador-tabla .nota-grafico { text-align: left; }
+
+/* --------------------------------------------------- barra del año */
+/* Aparece arriba, fija, cuando los indicadores salen de la vista: el año y sus cifras acompañan las secciones. */
+:where(.tablero-historica) .barra-anio {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .25rem .75rem;
+  padding: .35rem clamp(1rem, 3vw, 3rem);
+  background: #fff;
+  border-bottom: 1px solid var(--odes-borde);
+  box-shadow: 0 4px 12px rgba(11, 58, 86, .10);
+  font-size: .875rem;
+}
+:where(.tablero-historica) .barra-anio-paso {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--odes-borde);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--odes-azul);
+  cursor: pointer;
+}
+:where(.tablero-historica) .barra-anio-paso:hover:not(:disabled) { border-color: var(--odes-magenta); color: var(--odes-magenta); }
+:where(.tablero-historica) .barra-anio-paso:disabled { color: #9AA3A8; cursor: default; }
+:where(.tablero-historica) .barra-anio-anio { min-width: 3.5rem; text-align: center; font-size: 1.125rem; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--odes-magenta); }
+:where(.tablero-historica) .barra-anio-cifra { font-variant-numeric: tabular-nums; }
+:where(.tablero-historica) .barra-anio-cambio { color: #5B646A; }
+:where(.tablero-historica) .barra-anio-recorte { margin-left: auto; color: #5B646A; font-size: .8125rem; }
+
+/* ------------------------------------------------------- celular */
+/* Los filtros se pliegan en pantallas angostas; en las anchas el botón no aparece y siempre están abiertos. */
+:where(.tablero-historica) .filtros-alternar { display: none; align-items: center; gap: .35rem; }
+@media (max-width: 767.98px) {
+  :where(.tablero-historica) .filtros-alternar { display: inline-flex; min-height: 44px; }
+  .tablero-historica .filtros[data-plegado="si"] #filtros-cuerpo { display: none; }
+  .tablero-historica .filtros[data-plegado="si"] .filtros-subtitulo { display: none; }
+}
+/* Controles de al menos 44 px para el dedo. */
+@media (max-width: 575.98px) {
+  :where(.tablero-historica) .anio { min-height: 44px; }
+  :where(.tablero-historica) .modo { min-height: 44px; }
+  .tablero-historica .acciones-grafico .btn-icon { width: 44px; height: 44px; }
+  .tablero-historica .selector .form-select { min-height: 44px; }
+  :where(.tablero-historica) .barra-anio-recorte { margin-left: 0; width: 100%; }
+}
+
+/* --------------------------------------------- reducir movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .tablero-historica .modo,
+  .tablero-historica .anio,
+  .tablero-historica .tab,
+  .tablero-historica .card { transition: none !important; }
 }
 
 /* ----------------------------------------------------------- notas */
