@@ -13,9 +13,8 @@
 /*  (definiciones, convocatoria y comunas, los archivos del ETL, en       */
 /*  apps/web/public/tableros/convocatoria-pregrado/datos) ANTES de        */
 /*  importar este módulo, porque aquí arriba se calculan constantes con   */
-/*  ellos y se registra el mapa. Además lleva la ruta de navegación del   */
-/*  sitio, que pasa por SIVU, desde donde se abre el tablero, como el de  */
-/*  matrícula.                                                            */
+/*  ellos y se registra el mapa. A diferencia de los demás tableros, no   */
+/*  lleva la ruta de navegación (migas de pan): así lo pidió el área.     */
 /* ====================================================================== */
 
 import * as echarts from 'echarts';
@@ -2519,18 +2518,6 @@ function App() {
   return (
     <Fragment>
       <div className="body container-fluid p-4 p-xl-8">
-        <nav aria-label="Ruta de navegación">
-          <ol className="breadcrumb">
-            <li className="breadcrumb-item">
-              <a href="https://sapiencia.gov.co/observatorio/">Observatorio</a>
-            </li>
-            <li className="breadcrumb-item">
-              <a href="/sivu#tableros">SIVU</a>
-            </li>
-            <li className="breadcrumb-item">Caracterización inscritos convocatorias</li>
-            <li className="breadcrumb-item active" aria-current="page">{sec.rotulo}</li>
-          </ol>
-        </nav>
         <h2 className="visually-hidden">{sec.rotulo}</h2>
 
         {/* Botones de sección, los originales del tablero. */}

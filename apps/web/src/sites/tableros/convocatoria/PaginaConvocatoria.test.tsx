@@ -60,7 +60,7 @@ function abrir() {
 }
 
 describe('/tableros/convocatoria-pregrado', () => {
-  it('carga los tres archivos de datos antes del tablero y lo monta con la cabecera azul y la ruta por SIVU', async () => {
+  it('carga los tres archivos de datos antes del tablero y lo monta con la cabecera azul, sin migas de pan', async () => {
     abrir()
     expect(await screen.findByRole('heading', { level: 1, name: 'Tablero caracterización inscritos convocatorias' })).toBeInTheDocument()
     const secciones = await screen.findByRole('tablist', { name: 'Secciones del tablero' }, { timeout: 5000 })
@@ -73,8 +73,8 @@ describe('/tableros/convocatoria-pregrado', () => {
     expect(document.title).toBe('Tablero caracterización inscritos convocatorias')
     expect(document.querySelector('.tableros')).toHaveClass('tablero-matricula', 'tablero-convocatoria')
     expect(screen.getByRole('banner')).toHaveClass('odes-header')
-    const ruta = screen.getByRole('navigation', { name: 'Ruta de navegación' })
-    expect(within(ruta).getByRole('link', { name: 'SIVU' })).toHaveAttribute('href', '/sivu#tableros')
+    // Solo este tablero va sin la ruta de navegación (migas de pan).
+    expect(screen.queryByRole('navigation', { name: 'Ruta de navegación' })).not.toBeInTheDocument()
 
     // Siete secciones; la primera abierta y los indicadores con la cifra de inscritos.
     const pestanas = within(secciones).getAllByRole('tab')
