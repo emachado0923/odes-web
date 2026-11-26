@@ -59,7 +59,7 @@ function abrir() {
 }
 
 describe('/tableros/matricula-cti', () => {
-  it('carga los datos antes del tablero y lo monta con la cabecera azul y la ruta por SIVU', async () => {
+  it('carga los datos antes del tablero y lo monta con la cabecera azul, sin migas de pan', async () => {
     abrir()
     expect(
       await screen.findByRole('heading', { level: 1, name: 'Tablero matrícula en ciencia, tecnología e innovación' }),
@@ -69,8 +69,8 @@ describe('/tableros/matricula-cti', () => {
     expect(document.title).toBe('Tablero matrícula en ciencia, tecnología e innovación')
     expect(document.querySelector('.tableros')).toHaveClass('tablero-matricula', 'tablero-convocatoria', 'tablero-cti')
     expect(screen.getByRole('banner')).toHaveClass('odes-header')
-    const ruta = screen.getByRole('navigation', { name: 'Ruta de navegación' })
-    expect(within(ruta).getByRole('link', { name: 'SIVU' })).toHaveAttribute('href', '/sivu#tableros')
+    // Como el de convocatorias, va sin la ruta de navegación (migas de pan).
+    expect(screen.queryByRole('navigation', { name: 'Ruta de navegación' })).not.toBeInTheDocument()
 
     // Tres secciones; la primera abierta y los indicadores con los estudiantes en CTi.
     const pestanas = within(secciones).getAllByRole('tab')

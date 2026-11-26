@@ -13,9 +13,9 @@
 /*  datos/cti.js (los archivos del ETL, en                                */
 /*  apps/web/public/tableros/matricula-cti/datos) ANTES de importar este  */
 /*  módulo, porque aquí arriba se calculan constantes con ellos. Además:  */
-/*  lleva la ruta de navegación del sitio (pasa por SIVU), se quitó lo    */
-/*  que no se usaba, para el lint, y Escape devuelve el foco al botón del */
-/*  selector.                                                             */
+/*  se quitó lo que no se usaba, para el lint, y Escape devuelve el foco  */
+/*  al botón del selector. Como el de convocatorias, no lleva la ruta de  */
+/*  navegación (migas de pan): así lo pidió el área.                      */
 /* ====================================================================== */
 
 import * as echarts from 'echarts';
@@ -1956,18 +1956,6 @@ function App() {
   return (
     <Fragment>
       <div className="body container-fluid p-4 p-xl-8">
-        <nav aria-label="Ruta de navegación">
-          <ol className="breadcrumb">
-            <li className="breadcrumb-item">
-              <a href="https://sapiencia.gov.co/observatorio/">Observatorio</a>
-            </li>
-            <li className="breadcrumb-item">
-              <a href="/sivu#tableros">SIVU</a>
-            </li>
-            <li className="breadcrumb-item">Matrícula en CTi</li>
-            <li className="breadcrumb-item active" aria-current="page">{sec.rotulo}</li>
-          </ol>
-        </nav>
         <h2 className="visually-hidden">{sec.rotulo}</h2>
 
         {/* Botones de sección, los mismos del tablero de convocatorias. */}

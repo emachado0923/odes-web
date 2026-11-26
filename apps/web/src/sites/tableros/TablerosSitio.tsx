@@ -16,6 +16,7 @@
  *   en Medellín (2019-2025) frente a Colombia, llegado como tablero estático
  *   con el esqueleto del de convocatorias (comparte sus hojas) y los datos en
  *   archivos estáticos de su ETL (ver cti/ y apps/web/datos-tableros/matricula-cti).
+ *   Este y el de convocatorias van sin migas de pan.
  * - /tableros/fondos-2026: beneficiarios de los fondos de Sapiencia (2026),
  *   hecho aquí con el mismo aspecto que el de matrícula (comparte su hoja) y
  *   los datos agregados en la base (datos-fondos.ts del servidor), y
