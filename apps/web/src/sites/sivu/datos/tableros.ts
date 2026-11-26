@@ -39,6 +39,14 @@ export const TABLEROS: readonly Tablero[] = [
     url: '/tableros/matricula-historica',
   },
   {
+    id: 'caracterizacion-inscritos-convocatorias',
+    titulo: 'Caracterización de inscritos en las convocatorias de pregrado',
+    descripcion:
+      'Quiénes se inscriben a la convocatoria de pregrado de Sapiencia: inscripción, perfil, formación previa, comuna, institución y programa, con los datos de la convocatoria 2027-1.',
+    tema: 'Fondos y becas',
+    url: '/tableros/convocatoria-pregrado',
+  },
+  {
     id: 'beneficiarios-fondos-2026',
     titulo: 'Beneficiarios de los fondos de Sapiencia (2026)',
     descripcion:

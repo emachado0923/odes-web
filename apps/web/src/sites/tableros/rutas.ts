@@ -3,6 +3,8 @@ export const RUTA_TABLEROS = '/tableros'
 export const RUTA_MATRICULA = '/tableros/matricula-2025'
 /** Matrícula en educación superior en Medellín de 2000 a 2025 (datos estáticos del ETL). */
 export const RUTA_MATRICULA_HISTORICA = '/tableros/matricula-historica'
+/** Caracterización de los inscritos en las convocatorias de pregrado (datos estáticos del ETL). */
+export const RUTA_CONVOCATORIA = '/tableros/convocatoria-pregrado'
 /** Beneficiarios de los fondos de Sapiencia (2026): el tablero agregado. Privado (sesión de tableros). */
 export const RUTA_FONDOS = '/tableros/fondos-2026'
 /** La ventanilla de consulta por documento de los mismos fondos; misma sesión que el tablero. */
@@ -18,6 +20,13 @@ export const URL_DATOS_MATRICULA = '/api/sivu/tableros/matricula-2025'
  * servido tal cual desde apps/web/public (no pasa por la base).
  */
 export const URL_DATOS_MATRICULA_HISTORICA = '/tableros/matricula-historica/datos/matricula.json'
+/**
+ * Datos de la caracterización de inscritos: los scripts que genera
+ * apps/web/datos-tableros/convocatoria-pregrado/etl_convocatoria.py
+ * (definiciones.js, convocatoria.js y comunas.js), servidos tal cual desde
+ * apps/web/public/tableros/convocatoria-pregrado/datos/.
+ */
+export const URL_DATOS_CONVOCATORIA = '/tableros/convocatoria-pregrado/datos'
 /** Datos del tablero de los fondos, desde la base (apps/server/src/sivu/tableros/datos-fondos.ts). */
 export const URL_DATOS_FONDOS = '/api/sivu/tableros/fondos-2026'
 

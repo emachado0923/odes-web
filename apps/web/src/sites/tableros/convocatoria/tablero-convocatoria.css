@@ -1,0 +1,23 @@
+/*
+ * Estilos propios del tablero de caracterización de los inscritos en las
+ * convocatorias. Su index.html es el del tablero de matrícula con otro título:
+ * la raíz lleva 'tablero-matricula tablero-convocatoria', así que toma la hoja
+ * de matrícula (cabecera y pie azules, secciones, tarjetas, selector, tablas)
+ * y aquí solo va lo que el de matrícula no trae: la nota de las cifras
+ * marcadas con asterisco. Mismo ámbito que la hoja de matrícula
+ * (:where(.tablero-convocatoria)).
+ */
+:where(.tablero-convocatoria) .nota-total {
+  margin: .75rem 0 0;
+  font-size: .75rem;
+  line-height: 1.45;
+  color: #5B646A !important;
+}
+
+:where(.tablero-convocatoria) .marca-nota {
+  margin-left: .1rem;
+  font-weight: 600;
+  color: var(--odes-magenta) !important;
+}
+
+:where(.tablero-convocatoria) .nota-total .marca-nota { margin-left: 0; }

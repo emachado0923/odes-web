@@ -26,8 +26,12 @@ cabecera y el pie azules de los tableros estáticos, y en el resto de la rama (l
 | `historica/TableroMatriculaHistorica.tsx` | Matrícula en educación superior en Medellín de 2000 a 2025: arriba la evolución (matriculados, índice 2000 = 100 y participación frente a Antioquia y Colombia) con la tira de años, que elige el año de los indicadores y de las seis secciones. Piezas visuales copiadas y tipadas del de los fondos. |
 | `historica/calculos.ts`, `historica/tipos.ts` | Filtros, series por año, cortes del año elegido y referencia de Antioquia y Colombia con los mismos filtros (puros, probados en `calculos.test.ts`), y el contrato del JSON. |
 | `historica/tablero-historica.css` | Lo propio bajo `:where(.tablero-historica)`: seis botones de sección, los modos de la evolución, la tira de años (como eje del gráfico en pantallas anchas) y las notas. La raíz lleva `tablero-matricula tablero-historica`. |
+| `convocatoria/PaginaConvocatoria.tsx` | `/tableros/convocatoria-pregrado`: carga los scripts de datos del ETL (`/tableros/convocatoria-pregrado/datos/`: definiciones, convocatoria y comunas) en `window.ODES`, espera las fuentes y monta el tablero. Carga la hoja de matrícula y la suya. |
+| `convocatoria/TableroConvocatoria.tsx` | Caracterización de los inscritos en las convocatorias de pregrado: `js/dashboard.jsx` del tablero estático (`tablero_convocatoria_pregrado`, 26 de noviembre de 2026) con cambios de integración: ver su encabezado. La raíz lleva `tablero-matricula tablero-convocatoria` (`tablero-convocatoria.css`, solo la nota de las cifras marcadas). |
 | `bateria/` | La batería de indicadores (`/tableros/bateria-indicadores/*`): página, tablero, hoja y rutas de sus vistas. Ver `bateria/LEEME.md`. |
 | `recursos/recursos.ts` | Logos de los tableros: el del Observatorio, con el azul de la cabecera pintado, y la pata de Sapiencia y la Alcaldía. |
+
+Los de la caracterización de inscritos son los scripts que genera `apps/web/datos-tableros/convocatoria-pregrado/etl_convocatoria.py` con la base de inscritos (ver su LEEME), en `apps/web/public/tableros/convocatoria-pregrado/datos/`; tampoco pasan por la base.
 
 Los de la matrícula 2000-2025 son un JSON estático que genera `apps/web/datos-tableros/matricula-historica/etl_matricula_historica.py` con los archivos del MEN (ver su LEEME), en `apps/web/public/tableros/matricula-historica/datos/`; no pasan por la base.
 

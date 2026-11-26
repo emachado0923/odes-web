@@ -1,6 +1,6 @@
 /**
  * Tableros (rama /tableros): tableros de información del Observatorio que se
- * abren desde SIVU. Hoy son cuatro:
+ * abren desde SIVU. Hoy son cinco:
  *
  * - /tableros/matricula-2025: matrícula en educación superior en Medellín
  *   (2025), llegado como tablero estático, con los datos en la base (ver
@@ -8,6 +8,10 @@
  * - /tableros/matricula-historica: la matrícula de Medellín de 2000 a 2025,
  *   con Antioquia y Colombia como referencia. Comparte la hoja de matrícula y
  *   sus datos son un JSON estático del ETL (ver historica/).
+ * - /tableros/convocatoria-pregrado: caracterización de los inscritos en las
+ *   convocatorias de pregrado de Sapiencia, llegado como tablero estático
+ *   (comparte la hoja de matrícula), con los datos en archivos estáticos de
+ *   su ETL (ver convocatoria/ y apps/web/datos-tableros/convocatoria-pregrado).
  * - /tableros/fondos-2026: beneficiarios de los fondos de Sapiencia (2026),
  *   hecho aquí con el mismo aspecto que el de matrícula (comparte su hoja) y
  *   los datos agregados en la base (datos-fondos.ts del servidor), y
@@ -34,6 +38,7 @@
 import { useEffect } from 'react'
 import { Route, Routes, useLocation } from 'react-router'
 import PaginaBateria from './bateria/PaginaBateria'
+import PaginaConvocatoria from './convocatoria/PaginaConvocatoria'
 import { esRutaBateria } from './bateria/rutas-bateria'
 import CabeceraAzul from './componentes/CabeceraAzul'
 import CabeceraTableros from './componentes/CabeceraTableros'
@@ -44,7 +49,7 @@ import PaginaFondos from './fondos/PaginaFondos'
 import PaginaMatricula from './matricula/PaginaMatricula'
 import NoEncontradoTableros from './paginas/NoEncontradoTableros'
 import PaginaMatriculaHistorica from './historica/PaginaMatriculaHistorica'
-import { ID_CONTENIDO, RUTA_FONDOS, RUTA_FONDOS_VENTANILLA, RUTA_MATRICULA, RUTA_MATRICULA_HISTORICA } from './rutas'
+import { ID_CONTENIDO, RUTA_CONVOCATORIA, RUTA_FONDOS, RUTA_FONDOS_VENTANILLA, RUTA_MATRICULA, RUTA_MATRICULA_HISTORICA } from './rutas'
 import './tableros.css'
 
 const TITULO_RAMA = 'Tableros del Observatorio de Sapiencia'
@@ -65,6 +70,12 @@ const MATRICULA: Tablero = {
 const MATRICULA_HISTORICA: Tablero = {
   clase: 'tablero-matricula tablero-historica',
   titulo: 'Tablero matrícula en educación superior en Medellín (2000-2025)',
+}
+
+/** Llegó con el index.html del de matrícula: comparte su hoja y suma la suya. */
+const CONVOCATORIA: Tablero = {
+  clase: 'tablero-matricula tablero-convocatoria',
+  titulo: 'Tablero caracterización inscritos convocatorias',
 }
 
 const FONDOS: Tablero = {
@@ -88,6 +99,7 @@ function tableroDe(pathname: string): Tablero | null {
   const ruta = pathname.replace(/\/+$/, '')
   if (ruta === RUTA_MATRICULA) return MATRICULA
   if (ruta === RUTA_MATRICULA_HISTORICA) return MATRICULA_HISTORICA
+  if (ruta === RUTA_CONVOCATORIA) return CONVOCATORIA
   if (ruta === RUTA_FONDOS) return FONDOS
   if (ruta === RUTA_FONDOS_VENTANILLA) return FONDOS_VENTANILLA
   if (esRutaBateria(pathname)) return BATERIA
@@ -120,6 +132,7 @@ export default function TablerosSitio() {
         <Routes>
           <Route path="matricula-2025" element={<PaginaMatricula />} />
           <Route path="matricula-historica" element={<PaginaMatriculaHistorica />} />
+          <Route path="convocatoria-pregrado" element={<PaginaConvocatoria />} />
           {/* Una sola ruta para el tablero y la ventanilla: cambiar entre los dos no desmonta la página. */}
           <Route path="fondos-2026/*" element={<PaginaFondos />} />
           <Route path="bateria-indicadores/*" element={<PaginaBateria />} />
