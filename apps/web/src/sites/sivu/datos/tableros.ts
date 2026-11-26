@@ -39,6 +39,14 @@ export const TABLEROS: readonly Tablero[] = [
     url: '/tableros/matricula-historica',
   },
   {
+    id: 'matricula-cti-2019-2025',
+    titulo: 'Matrícula en ciencia, tecnología e innovación (2019-2025)',
+    descripcion:
+      'Estudiantes de Medellín en programas de CTi frente al total y a Colombia, por área de conocimiento, institución, programa, nivel y modalidad, con datos del SNIES.',
+    tema: 'Educación superior',
+    url: '/tableros/matricula-cti',
+  },
+  {
     id: 'caracterizacion-inscritos-convocatorias',
     titulo: 'Caracterización de inscritos en las convocatorias de pregrado',
     descripcion:

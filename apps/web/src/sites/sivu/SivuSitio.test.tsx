@@ -118,6 +118,9 @@ describe('SIVU: página', () => {
     // Y la serie 2000-2025, también en /tableros.
     const historica = within(tableros).getByRole('heading', { level: 3, name: /Matrícula en educación superior en Medellín \(2000-2025\)/ })
     expect(within(historica.closest('li')!).getByRole('link', { name: /Abrir tablero/ })).toHaveAttribute('href', '/tableros/matricula-historica')
+    // Y la matrícula en CTi.
+    const cti = within(tableros).getByRole('heading', { level: 3, name: /Matrícula en ciencia, tecnología e innovación/ })
+    expect(within(cti.closest('li')!).getByRole('link', { name: /Abrir tablero/ })).toHaveAttribute('href', '/tableros/matricula-cti')
     // Y la caracterización de los inscritos en la convocatoria de pregrado.
     const convocatoria = within(tableros).getByRole('heading', { level: 3, name: /Caracterización de inscritos en las convocatorias de pregrado/ })
     expect(within(convocatoria.closest('li')!).getByRole('link', { name: /Abrir tablero/ })).toHaveAttribute('href', '/tableros/convocatoria-pregrado')

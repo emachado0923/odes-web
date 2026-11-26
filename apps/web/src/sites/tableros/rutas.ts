@@ -5,6 +5,8 @@ export const RUTA_MATRICULA = '/tableros/matricula-2025'
 export const RUTA_MATRICULA_HISTORICA = '/tableros/matricula-historica'
 /** Caracterización de los inscritos en las convocatorias de pregrado (datos estáticos del ETL). */
 export const RUTA_CONVOCATORIA = '/tableros/convocatoria-pregrado'
+/** Matrícula en ciencia, tecnología e innovación (2019-2025), datos estáticos del ETL. */
+export const RUTA_CTI = '/tableros/matricula-cti'
 /** Beneficiarios de los fondos de Sapiencia (2026): el tablero agregado. Privado (sesión de tableros). */
 export const RUTA_FONDOS = '/tableros/fondos-2026'
 /** La ventanilla de consulta por documento de los mismos fondos; misma sesión que el tablero. */
@@ -27,6 +29,12 @@ export const URL_DATOS_MATRICULA_HISTORICA = '/tableros/matricula-historica/dato
  * apps/web/public/tableros/convocatoria-pregrado/datos/.
  */
 export const URL_DATOS_CONVOCATORIA = '/tableros/convocatoria-pregrado/datos'
+/**
+ * Datos de la matrícula en CTi: los scripts que genera
+ * apps/web/datos-tableros/matricula-cti/etl_cti.py (definiciones.js y
+ * cti.js), servidos tal cual desde apps/web/public/tableros/matricula-cti/datos/.
+ */
+export const URL_DATOS_CTI = '/tableros/matricula-cti/datos'
 /** Datos del tablero de los fondos, desde la base (apps/server/src/sivu/tableros/datos-fondos.ts). */
 export const URL_DATOS_FONDOS = '/api/sivu/tableros/fondos-2026'
 

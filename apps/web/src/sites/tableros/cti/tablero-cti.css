@@ -1,0 +1,17 @@
+/*
+ * Estilos propios del tablero de matrícula en CTi. Su index.html es el del
+ * tablero de inscritos en las convocatorias con tres secciones en vez de
+ * siete: la raíz lleva 'tablero-matricula tablero-convocatoria tablero-cti'
+ * (la hoja de matrícula, la nota de las cifras marcadas de la de
+ * convocatorias) y aquí solo va lo distinto: los tres botones de sección en
+ * una fila (uno por fila en celular).
+ *
+ * Sin :where, a propósito: la hoja de matrícula pone 7, 4 y 2 columnas con
+ * la misma especificidad y, según el orden en que se carguen los chunks,
+ * podría ganar.
+ */
+.tablero-cti .tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+@media (max-width: 479.98px) {
+  .tablero-cti .tabs { grid-template-columns: 1fr; }
+}
