@@ -9,17 +9,18 @@ import type { FilaHistorica, MatriculaHistorica, Territorio } from './tipos'
 export const COL = { anio: 0, programa: 1, nivel: 2, modalidad: 3, area: 4, nbc: 5, sector: 6, sexo: 7 } as const
 
 /** Dimensiones por las que se puede filtrar y agrupar (la institución sale del programa). */
-export type Campo = 'ies' | 'nivel' | 'modalidad' | 'area' | 'nbc' | 'sector'
+export type Campo = 'ies' | 'programa' | 'nivel' | 'modalidad' | 'area' | 'nbc' | 'sector'
 
 export interface FiltrosHistoricos {
   ies: number[]
+  programa: number[]
   sector: number[]
   nivel: number[]
   modalidad: number[]
   area: number[]
 }
 
-export const FILTROS_VACIOS: FiltrosHistoricos = { ies: [], sector: [], nivel: [], modalidad: [], area: [] }
+export const FILTROS_VACIOS: FiltrosHistoricos = { ies: [], programa: [], sector: [], nivel: [], modalidad: [], area: [] }
 
 export const suma = (valores: readonly number[]): number => valores.reduce((s, v) => s + v, 0)
 
@@ -29,6 +30,18 @@ export const totalFila = (f: FilaHistorica): number => f[7] + f[8] + f[9] + f[10
 /** La posición de la fila en la dimensión del campo. */
 export function valorDe(c: MatriculaHistorica, f: FilaHistorica, campo: Campo): number {
   return campo === 'ies' ? c.dim.programa[f[COL.programa]].ies : f[COL[campo]]
+}
+
+/** El nombre de una categoría de cualquier dimensión. */
+export function nombreDe(c: MatriculaHistorica, campo: Campo, i: number): string {
+  if (campo === 'ies') return c.dim.ies[i].nombre
+  if (campo === 'programa') return c.dim.programa[i].nombre
+  return c.dim[campo][i]
+}
+
+/** Los nombres de todas las categorías de una dimensión, en su orden. */
+export function nombresDe(c: MatriculaHistorica, campo: Campo): string[] {
+  return c.dim[campo].map((_: unknown, i: number) => nombreDe(c, campo, i))
 }
 
 export function alternar<T>(lista: readonly T[], valor: T): T[] {
@@ -149,11 +162,14 @@ export function participacion(parte: readonly number[], todo: readonly number[])
 
 /**
  * La referencia (Antioquia o Colombia) con los mismos filtros de nivel y
- * sector: el cubo trae esos cortes. Con filtros de institución, modalidad o
- * área no hay referencia comparable: devuelve null.
+ * sector: el cubo trae esos cortes. Con filtros de institución, programa,
+ * modalidad o área no hay referencia comparable: devuelve null.
  */
+/** Con filtros de institución, programa, modalidad o área no hay cifra comparable de Antioquia y Colombia. */
+const sinReferencia = (f: FiltrosHistoricos): boolean => Boolean(f.ies.length || f.programa.length || f.modalidad.length || f.area.length)
+
 export function referenciaFiltrada(c: MatriculaHistorica, territorio: Territorio, f: FiltrosHistoricos): number[] | null {
-  if (f.ies.length || f.modalidad.length || f.area.length) return null
+  if (sinReferencia(f)) return null
   const ref = c.referencia[territorio]
   if (!f.nivel.length && !f.sector.length) return ref.total.slice()
   const niveles = f.nivel.length ? f.nivel : c.dim.nivel.map((_, i) => i)
@@ -165,7 +181,7 @@ export function referenciaFiltrada(c: MatriculaHistorica, territorio: Territorio
 
 /** La referencia por sexo y año, con los filtros de nivel y sector (null como arriba). */
 export function referenciaSexo(c: MatriculaHistorica, territorio: Territorio, f: FiltrosHistoricos): number[][] | null {
-  if (f.ies.length || f.modalidad.length || f.area.length) return null
+  if (sinReferencia(f)) return null
   const ref = c.referencia[territorio]
   const niveles = f.nivel.length ? f.nivel : c.dim.nivel.map((_, i) => i)
   const sectores = f.sector.length ? f.sector : c.dim.sector.map((_, i) => i)
@@ -214,6 +230,7 @@ export function programasDelAnio(filas: readonly FilaHistorica[], anio: number):
 /** Cómo se nombra cada filtro cuando hay más de dos valores elegidos («3 instituciones»). */
 const PLURALES: Record<keyof FiltrosHistoricos, string> = {
   ies: 'instituciones',
+  programa: 'programas',
   sector: 'sectores',
   nivel: 'niveles de formación',
   modalidad: 'modalidades',
@@ -226,10 +243,11 @@ const PLURALES: Record<keyof FiltrosHistoricos, string> = {
  */
 export function textoRecorte(c: MatriculaHistorica, f: FiltrosHistoricos): string {
   const partes: string[] = []
-  for (const campo of ['ies', 'sector', 'nivel', 'modalidad', 'area'] as const) {
+  for (const campo of ['ies', 'programa', 'sector', 'nivel', 'modalidad', 'area'] as const) {
     const valores = f[campo]
     if (!valores.length) continue
-    const nombres = valores.map((i) => (campo === 'ies' ? c.dim.ies[i].nombre : c.dim[campo][i]))
+    /* Un programa va con su institución: hay muchos con el mismo nombre. */
+    const nombres = valores.map((i) => (campo === 'programa' ? c.dim.programa[i].nombre + ' (' + c.dim.ies[c.dim.programa[i].ies].nombre + ')' : nombreDe(c, campo, i)))
     partes.push(nombres.length === 1 ? nombres[0] : nombres.length === 2 ? nombres.join(' y ') : nombres.length + ' ' + PLURALES[campo])
   }
   return partes.join(' · ')

@@ -36,12 +36,15 @@ import {
 import {
   alternar,
   type Campo,
+  COL,
   delAnio,
   FILTROS_VACIOS,
   type FiltrosHistoricos,
   filtrar,
   indice,
   matrizPorAnio,
+  nombreDe,
+  nombresDe,
   opcionesDisponibles,
   ordenPorValor,
   participacion,
@@ -55,6 +58,7 @@ import {
   sexoPorAnio,
   suma,
   textoRecorte,
+  totalFila,
   variacion,
 } from './calculos'
 import { escribirEstado, leerEstado } from './estado-url'
@@ -358,12 +362,12 @@ function useDesplegable() {
 }
 
 /** Opciones visibles con el buscador (hasta 400, como en matrícula). */
-function useBuscar(opciones: readonly number[], texto: string, rotulo: (v: number) => string): number[] {
+function useBuscar(opciones: readonly number[], texto: string, rotulo: (v: number) => string, secundario?: (v: number) => string): number[] {
   return useMemo(() => {
     if (!texto) return opciones.slice(0, 400)
     const t = sinTilde(texto)
-    return opciones.filter((o) => sinTilde(rotulo(o)).includes(t)).slice(0, 400)
-  }, [opciones, texto, rotulo])
+    return opciones.filter((o) => sinTilde(rotulo(o) + ' ' + (secundario ? secundario(o) : '')).includes(t)).slice(0, 400)
+  }, [opciones, texto, rotulo, secundario])
 }
 
 /**
@@ -377,6 +381,7 @@ function SelectorMultiple({
   valores,
   onCambio,
   rotulo,
+  secundario,
   resumenVacio,
 }: {
   etiqueta: string
@@ -384,22 +389,31 @@ function SelectorMultiple({
   valores: readonly number[]
   onCambio: (valores: number[]) => void
   rotulo: (v: number) => string
+  /** Segunda línea de cada opción (la institución de un programa); también se busca en ella. */
+  secundario?: (v: number) => string
   resumenVacio: string
 }) {
   const { abierto, setAbierto, caja } = useDesplegable()
   const boton = useRef<HTMLButtonElement>(null)
   const [texto, setTexto] = useState('')
   const id = 'sel-' + clave(etiqueta)
-  const visibles = useBuscar(opciones, texto, rotulo)
-  /* Las teclas dentro de la lista no siguen hasta el documento: el kit (Bootstrap) maneja ahí las de sus .dropdown-menu
-     y falla con esta, que no abrió él. Escape cierra la lista y devuelve el foco al botón. */
-  const teclasLista = (e: KeyboardEvent<HTMLDivElement>) => {
-    e.stopPropagation()
-    if (e.key !== 'Escape') return
-    e.preventDefault()
-    setAbierto(false)
-    boton.current?.focus()
-  }
+  const visibles = useBuscar(opciones, texto, rotulo, secundario)
+  /* El kit (Bootstrap) escucha en el documento, en fase de captura, las teclas de todo .dropdown-menu, y falla con esta
+     lista porque no la abrió él. Mientras está abierta, las teclas que nacen dentro de ella se detienen antes, en la
+     captura de window (que va primero). Escape cierra la lista y devuelve el foco al botón. */
+  useEffect(() => {
+    if (!abierto) return undefined
+    const teclas = (e: globalThis.KeyboardEvent) => {
+      if (!caja.current?.contains(e.target as Node) || e.target === boton.current) return
+      e.stopPropagation()
+      if (e.key !== 'Escape') return
+      e.preventDefault()
+      setAbierto(false)
+      boton.current?.focus()
+    }
+    window.addEventListener('keydown', teclas, true)
+    return () => window.removeEventListener('keydown', teclas, true)
+  }, [abierto, caja, setAbierto])
   const resumen = valores.length === 0 ? resumenVacio : valores.length === 1 ? rotulo(valores[0]) : valores.length + ' seleccionados'
 
   return (
@@ -420,7 +434,7 @@ function SelectorMultiple({
         {resumen}
       </button>
       {abierto ? (
-        <div className="dropdown-menu show" id={id + '-lista'} role="group" aria-label={etiqueta} onKeyDown={teclasLista}>
+        <div className="dropdown-menu show" id={id + '-lista'} role="group" aria-label={etiqueta}>
           {opciones.length > 10 ? (
             <input
               className="form-control form-control-sm mb-2"
@@ -447,6 +461,7 @@ function SelectorMultiple({
                   />
                   <label className="form-check-label" htmlFor={id + '-' + i}>
                     {rotulo(o)}
+                    {secundario ? <span className="secundario">{secundario(o)}</span> : null}
                   </label>
                 </div>
               ))
@@ -981,6 +996,12 @@ function barrasH(categorias: string[], valores: number[], o: OpcionesBarras = {}
   }
 }
 
+/**
+ * Curvas suaves en las líneas y las áreas. Monótonas en el eje de los años: la curva no inventa picos ni valles
+ * entre dos años (entre dos puntos nunca pasa por encima del mayor ni por debajo del menor).
+ */
+const SUAVE = { smooth: 0.35, smoothMonotone: 'x' } as const
+
 /** Una serie en el tiempo. */
 interface SerieTiempo {
   nombre: string
@@ -1092,19 +1113,23 @@ function lineasTiempo(
           ? {
               value: v,
               symbolSize: 11,
-              itemStyle: { color: s.color, borderColor: '#fff', borderWidth: 2 },
+              itemStyle: { color: s.color, borderColor: '#fff', borderWidth: 2, opacity: 1 },
               label: k === 0 || o.rotularTodas ? { show: !vacio(v), position: 'top', distance: 10, formatter: () => o.formato(v as number), color: TINTA, fontSize: TAM_CIFRA, fontWeight: 600, fontFamily: TIPO } : undefined,
             }
           : v,
       ),
       color: s.color,
+      ...SUAVE,
       symbol: 'circle',
-      symbolSize: 5,
+      /* Solo se ve el punto del año elegido; los demás quedan transparentes (siguen recibiendo el clic que elige el
+         año) y aparecen al pasar el cursor por la serie. */
+      symbolSize: 7,
       showSymbol: true,
+      itemStyle: { opacity: 0 },
       connectNulls: false,
       lineStyle: { width: k === 0 ? 2.75 : 2, type: s.discontinua ? 'dashed' : 'solid' },
       areaStyle: s.area ? { color: aclarar(s.color, 0.88) } : undefined,
-      emphasis: { focus: 'series' },
+      emphasis: { focus: 'series', itemStyle: { opacity: 1 } },
       markLine:
         k === 0
           ? o.paridad
@@ -1169,6 +1194,7 @@ function areasApiladas(anios: string[], series: SerieTiempo[], o: { seleccion: n
       stack: 'total',
       data: datos[k],
       color: s.color,
+      ...SUAVE,
       symbol: 'none',
       lineStyle: { width: 1, color: '#fff' },
       areaStyle: { color: s.color, opacity: 0.92 },
@@ -1313,7 +1339,7 @@ function puestoDe(c: MatriculaHistorica, campo: Campo): number[] {
 
 /** Series por año de una dimensión: solo las categorías con matrícula, de la más grande a la más chica (el nivel, en su orden). */
 function seriesDe(c: MatriculaHistorica, matriz: number[][], campo: Campo): SerieTiempo[] {
-  const nombres = campo === 'ies' ? c.dim.ies.map((i) => i.nombre) : c.dim[campo]
+  const nombres = nombresDe(c, campo)
   const puesto = puestoDe(c, campo)
   /* «Sin clasificar» no es una categoría: un vacío de clasificación del SNIES. Va en gris y al final. */
   return nombres
@@ -1397,8 +1423,8 @@ function FichaBarras({
     const o = campo === 'nivel' ? valores.map((_, i) => i).filter((i) => valores[i] > 0) : ordenPorValor(valores)
     return limite ? o.slice(0, limite) : o
   }, [valores, limite, campo])
-  const nombreDe = (i: number) => (campo === 'ies' ? c.dim.ies[i].nombre : c.dim[campo][i])
-  const nombres = orden.map(nombreDe)
+  const nombreCategoria = (i: number) => nombreDe(c, campo, i)
+  const nombres = orden.map(nombreCategoria)
   const datos = orden.map((i) => valores[i])
   const elegidas = filtro ? orden.map((i) => elegidosAqui.includes(i)) : undefined
   const total = suma(valores)
@@ -1411,10 +1437,10 @@ function FichaBarras({
           type="button"
           className="tag tag-light-primary"
           onClick={() => p.alternarFiltro(filtro, i)}
-          aria-label={'Quitar el filtro ' + nombreDe(i)}
-          title={'Quitar el filtro ' + nombreDe(i)}
+          aria-label={'Quitar el filtro ' + nombreCategoria(i)}
+          title={'Quitar el filtro ' + nombreCategoria(i)}
         >
-          <span>{recortar(nombreDe(i), 32)}</span>
+          <span>{recortar(nombreCategoria(i), 32)}</span>
           <span className="btn-close" aria-hidden="true" />
         </button>
       ))}
@@ -1947,7 +1973,7 @@ function Evolucion({
         </div>
         <p className="nota-grafico mb-0" id="evolucion-nota">
           {nota}
-          {!comparable ? ' La participación no está disponible con filtros de institución, modalidad o área: no hay cifra comparable de Antioquia y Colombia.' : ''}
+          {!comparable ? ' La participación no está disponible con filtros de institución, programa, modalidad o área: no hay cifra comparable de Antioquia y Colombia.' : ''}
         </p>
       </div>
     </section>
@@ -2016,29 +2042,69 @@ function BarraAnio({
 
 const CAMPOS_FILTRO: Array<{ campo: keyof FiltrosHistoricos; etiqueta: string; vacio: string }> = [
   { campo: 'ies', etiqueta: 'Institución', vacio: 'Todas' },
+  { campo: 'programa', etiqueta: 'Programa académico', vacio: 'Todos los programas' },
   { campo: 'sector', etiqueta: 'Sector', vacio: 'Todos' },
   { campo: 'nivel', etiqueta: 'Nivel de formación', vacio: 'Todos' },
   { campo: 'modalidad', etiqueta: 'Modalidad', vacio: 'Todas' },
   { campo: 'area', etiqueta: 'Área de conocimiento', vacio: 'Todas' },
 ]
 
-function Filtros({ c, f, cambiar }: { c: MatriculaHistorica; f: FiltrosHistoricos; cambiar: (parcial: Partial<FiltrosHistoricos>) => void }) {
+function Filtros({
+  c,
+  f,
+  cambiar,
+  anios,
+  anio,
+  elegirAnio,
+}: {
+  c: MatriculaHistorica
+  f: FiltrosHistoricos
+  cambiar: (parcial: Partial<FiltrosHistoricos>) => void
+  anios: string[]
+  anio: number
+  elegirAnio: (i: number) => void
+}) {
   const rotulos = useMemo(
-    () =>
-      Object.fromEntries(
-        CAMPOS_FILTRO.map(({ campo }) => [campo, (i: number) => (campo === 'ies' ? c.dim.ies[i].nombre : c.dim[campo][i])]),
-      ) as Record<keyof FiltrosHistoricos, (i: number) => string>,
+    () => Object.fromEntries(CAMPOS_FILTRO.map(({ campo }) => [campo, (i: number) => nombreDe(c, campo, i)])) as Record<keyof FiltrosHistoricos, (i: number) => string>,
     [c],
+  )
+  /* Debajo del nombre de cada programa, su institución y los años en que tuvo matrícula: muchos se llaman igual, y un
+     mismo programa puede tener un código viejo y uno nuevo. */
+  const aniosPrograma = useMemo(() => {
+    const conDatos = c.dim.programa.map(() => new Set<number>())
+    for (const fila of c.filas) if (totalFila(fila)) conDatos[fila[COL.programa]].add(fila[COL.anio])
+    /* Tramos de años seguidos: «2000-2010, 2017-2025» (un rango solo escondería los huecos). */
+    return conDatos.map((s) => {
+      const lista = [...s].sort((a, b) => a - b)
+      const tramos: string[] = []
+      for (let k = 0; k < lista.length; ) {
+        let fin = k
+        while (fin + 1 < lista.length && lista[fin + 1] === lista[fin] + 1) fin++
+        tramos.push(fin === k ? String(c.anios[lista[k]]) : c.anios[lista[k]] + '-' + c.anios[lista[fin]])
+        k = fin + 1
+      }
+      return tramos.join(', ')
+    })
+  }, [c])
+  const iesDelPrograma = useCallback(
+    (i: number) => c.dim.ies[c.dim.programa[i].ies].nombre + (aniosPrograma[i] ? ' · ' + aniosPrograma[i] : ''),
+    [c, aniosPrograma],
   )
   const opciones = useMemo(
     () =>
       Object.fromEntries(
         CAMPOS_FILTRO.map(({ campo }) => {
           const lista = opcionesDisponibles(c, f, campo)
-          return [campo, campo === 'ies' ? lista.sort((a, b) => rotulos.ies(a).localeCompare(rotulos.ies(b), 'es')) : lista.sort((a, b) => a - b)]
+          const porNombre = campo === 'ies' || campo === 'programa'
+          return [
+            campo,
+            porNombre
+              ? lista.sort((a, b) => rotulos[campo](a).localeCompare(rotulos[campo](b), 'es') || (campo === 'programa' ? iesDelPrograma(a).localeCompare(iesDelPrograma(b), 'es') : 0))
+              : lista.sort((a, b) => a - b),
+          ]
         }),
       ) as Record<keyof FiltrosHistoricos, number[]>,
-    [c, f, rotulos],
+    [c, f, rotulos, iesDelPrograma],
   )
   /* En celulares los filtros empiezan plegados: lo primero que se ve es la evolución. En pantallas anchas el botón no
      se muestra y los filtros siempre están abiertos (ver tablero-historica.css). */
@@ -2060,7 +2126,22 @@ function Filtros({ c, f, cambiar }: { c: MatriculaHistorica; f: FiltrosHistorico
       </div>
       <div className="card-body" id="filtros-cuerpo">
         <div className="filtros-filas">
-          <div className="filtros-rejilla" style={{ '--cols': CAMPOS_FILTRO.length } as CSSProperties}>
+          <div className="filtros-rejilla" style={{ '--cols': 4 } as CSSProperties}>
+            {/* El año es el mismo de la tira bajo la evolución: elegirlo aquí o allá es lo mismo. */}
+            <div>
+              <label className="form-label" htmlFor="sel-anio">
+                Año
+              </label>
+              <select id="sel-anio" className="form-select selector-anio" value={anio} onChange={(e) => elegirAnio(Number(e.target.value))}>
+                {anios
+                  .map((a, i) => (
+                    <option key={a} value={i}>
+                      {a}
+                    </option>
+                  ))
+                  .reverse()}
+              </select>
+            </div>
             {CAMPOS_FILTRO.map(({ campo, etiqueta, vacio: resumenVacio }) => (
               <div key={campo}>
                 <label className="form-label" htmlFor={'sel-' + clave(etiqueta)}>
@@ -2072,6 +2153,7 @@ function Filtros({ c, f, cambiar }: { c: MatriculaHistorica; f: FiltrosHistorico
                   valores={f[campo]}
                   onCambio={(v) => cambiar({ [campo]: v })}
                   rotulo={rotulos[campo]}
+                  secundario={campo === 'programa' ? iesDelPrograma : undefined}
                   resumenVacio={resumenVacio}
                 />
               </div>
@@ -2088,7 +2170,7 @@ function FichasActivas({ c, f, cambiar, limpiar }: { c: MatriculaHistorica; f: F
   const fichas = CAMPOS_FILTRO.flatMap(({ campo, etiqueta }) =>
     f[campo].map((i) => ({
       etiqueta,
-      texto: campo === 'ies' ? c.dim.ies[i].nombre : c.dim[campo][i],
+      texto: campo === 'programa' ? c.dim.programa[i].nombre + ' (' + c.dim.ies[c.dim.programa[i].ies].corto + ')' : nombreDe(c, campo, i),
       quitar: () => cambiar({ [campo]: f[campo].filter((x) => x !== i) }),
     })),
   )
@@ -2175,6 +2257,18 @@ export default function TableroMatriculaHistorica({ datos: c }: { datos: Matricu
   }, [])
   const alternarFiltro = useCallback((campo: keyof FiltrosHistoricos, i: number) => setFiltros((f) => ({ ...f, [campo]: alternar(f[campo], i) })), [])
 
+  /* Las secciones van arriba del todo y su contenido, debajo de la evolución y los indicadores: al elegir una con un
+     clic, si su contenido no está a la vista, la página baja hasta él (sin animación si se pidió menos movimiento). */
+  const elegirSeccion = (i: number) => {
+    setTab(i)
+    requestAnimationFrame(() => {
+      const panel = document.getElementById('panel-' + SECCIONES[i].id)
+      if (panel && panel.getBoundingClientRect().top > window.innerHeight * 0.6) {
+        panel.scrollIntoView({ behavior: MOVIMIENTO_REDUCIDO ? 'auto' : 'smooth', block: 'start' })
+      }
+    })
+  }
+
   /* Las flechas, Inicio y Fin recorren los botones de sección. */
   const teclas = (e: KeyboardEvent<HTMLButtonElement>, i: number) => {
     if (e.key === 'ArrowUp' || e.key === 'ArrowDown') return
@@ -2208,7 +2302,33 @@ export default function TableroMatriculaHistorica({ datos: c }: { datos: Matricu
             </ol>
           </nav>
 
-          <Filtros c={c} f={filtros} cambiar={cambiar} />
+          <section className="secciones">
+            <h2 className="visually-hidden">Secciones del tablero</h2>
+            <div className="tabs" role="tablist" aria-label="Secciones del tablero">
+              {SECCIONES.map((s, i) => (
+                <button
+                  key={s.id}
+                  ref={(el) => {
+                    refsTab.current[i] = el
+                  }}
+                  type="button"
+                  className="tab"
+                  role="tab"
+                  id={'tab-' + s.id}
+                  aria-controls={i === tab ? 'panel-' + s.id : undefined}
+                  aria-selected={i === tab}
+                  tabIndex={i === tab ? 0 : -1}
+                  onClick={() => elegirSeccion(i)}
+                  onKeyDown={(e) => teclas(e, i)}
+                >
+                  <span className="tab-sec">Sección {i + 1}</span>
+                  <span className="tab-tit">{s.rotulo}</span>
+                </button>
+              ))}
+            </div>
+          </section>
+
+          <Filtros c={c} f={filtros} cambiar={cambiar} anios={anios} anio={anio} elegirAnio={elegirAnio} />
           <FichasActivas c={c} f={filtros} cambiar={cambiar} limpiar={limpiar} />
 
           <Evolucion anios={anios} serie={serie} antioquia={antioquia} colombia={colombia} anio={anio} elegirAnio={elegirAnio} modo={modo} setModo={setModo} />
@@ -2258,32 +2378,6 @@ export default function TableroMatriculaHistorica({ datos: c }: { datos: Matricu
             </div>
             <div className="col">
               <Kpi icono="female" familia="warning" etiqueta="Mujeres" valor={pct(res.pctMujeres)} pie={num(res.mujeres) + ' matriculadas'} />
-            </div>
-          </section>
-
-          <section className="secciones">
-            <h2 className="visually-hidden">Secciones del tablero</h2>
-            <div className="tabs" role="tablist" aria-label="Secciones del tablero">
-              {SECCIONES.map((s, i) => (
-                <button
-                  key={s.id}
-                  ref={(el) => {
-                    refsTab.current[i] = el
-                  }}
-                  type="button"
-                  className="tab"
-                  role="tab"
-                  id={'tab-' + s.id}
-                  aria-controls={i === tab ? 'panel-' + s.id : undefined}
-                  aria-selected={i === tab}
-                  tabIndex={i === tab ? 0 : -1}
-                  onClick={() => setTab(i)}
-                  onKeyDown={(e) => teclas(e, i)}
-                >
-                  <span className="tab-sec">Sección {i + 1}</span>
-                  <span className="tab-tit">{s.rotulo}</span>
-                </button>
-              ))}
             </div>
           </section>
 

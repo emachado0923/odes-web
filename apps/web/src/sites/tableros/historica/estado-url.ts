@@ -1,7 +1,8 @@
 /**
  * El estado del tablero en la dirección (?anio=2018&seccion=instituciones&modo=indice&ies=universidad-de-antioquia):
  * así un enlace guarda lo que se está viendo y recargar no lo pierde. Los filtros van por nombre (en minúsculas, sin
- * tildes ni espacios), no por posición: las posiciones cambian cuando el ETL regenera los datos.
+ * tildes ni espacios) y los programas por su código SNIES, no por posición: las posiciones cambian cuando el ETL
+ * regenera los datos.
  */
 import { FILTROS_VACIOS, type FiltrosHistoricos } from './calculos'
 import type { MatriculaHistorica } from './tipos'
@@ -14,7 +15,7 @@ export interface EstadoTablero {
   filtros: FiltrosHistoricos
 }
 
-const CAMPOS = ['ies', 'sector', 'nivel', 'modalidad', 'area'] as const
+const CAMPOS = ['ies', 'programa', 'sector', 'nivel', 'modalidad', 'area'] as const
 
 /** «Universidad de Antioquia» -> «universidad-de-antioquia». */
 export const slug = (t: string): string =>
@@ -25,8 +26,10 @@ export const slug = (t: string): string =>
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '')
 
-function nombres(c: MatriculaHistorica, campo: (typeof CAMPOS)[number]): string[] {
-  return campo === 'ies' ? c.dim.ies.map((i) => i.nombre) : c.dim[campo]
+/** Cómo va cada categoría en la dirección: el código SNIES del programa; el nombre de las demás. */
+function claves(c: MatriculaHistorica, campo: (typeof CAMPOS)[number]): string[] {
+  if (campo === 'programa') return c.dim.programa.map((p) => p.codigo)
+  return (campo === 'ies' ? c.dim.ies.map((i) => i.nombre) : c.dim[campo]).map(slug)
 }
 
 /** Lee el estado de la dirección; lo que no se reconoce queda en su valor por defecto. */
@@ -37,7 +40,7 @@ export function leerEstado(c: MatriculaHistorica, busqueda: string, porDefecto: 
   for (const campo of CAMPOS) {
     const pedidos = (q.get(campo) ?? '').split(',').filter(Boolean)
     if (!pedidos.length) continue
-    const lista = nombres(c, campo).map(slug)
+    const lista = claves(c, campo)
     filtros[campo] = pedidos.map((p) => lista.indexOf(p)).filter((i) => i >= 0)
   }
   return {
@@ -56,8 +59,8 @@ export function escribirEstado(c: MatriculaHistorica, e: EstadoTablero, porDefec
   if (e.modo !== porDefecto.modo) q.set('modo', e.modo)
   for (const campo of CAMPOS) {
     if (!e.filtros[campo].length) continue
-    const lista = nombres(c, campo)
-    q.set(campo, e.filtros[campo].map((i) => slug(lista[i])).join(','))
+    const lista = claves(c, campo)
+    q.set(campo, e.filtros[campo].map((i) => lista[i]).join(','))
   }
   const texto = q.toString()
   return texto ? '?' + texto : ''

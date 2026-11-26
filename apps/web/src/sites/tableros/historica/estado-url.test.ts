@@ -10,6 +10,10 @@ const c = {
       { nombre: 'Universidad de Antioquia', corto: 'UdeA', caracter: 'Universidad', codigos: ['1201'] },
       { nombre: 'Instituto Tecnológico Metropolitano', corto: 'ITM', caracter: 'Universidad', codigos: ['3302'] },
     ],
+    programa: [
+      { codigo: '101', nombre: 'Medicina', ies: 0 },
+      { codigo: 'SENA-1', nombre: 'Tecnología en Sistemas', ies: 1 },
+    ],
     sector: ['Oficial', 'Privado'],
     nivel: ['Tecnológico', 'Universitario'],
     modalidad: ['Presencial', 'A distancia'],
@@ -29,6 +33,13 @@ describe('estado en la dirección', () => {
     const estado = { anio: 0, seccion: 'instituciones', modo: 'indice', filtros: { ...FILTROS_VACIOS, ies: [1, 0], modalidad: [1] } }
     const texto = escribirEstado(c, estado, POR_DEFECTO)
     expect(texto).toBe('?anio=2000&seccion=instituciones&modo=indice&ies=instituto-tecnologico-metropolitano%2Cuniversidad-de-antioquia&modalidad=a-distancia')
+    expect(leerEstado(c, texto, POR_DEFECTO)).toEqual(estado)
+  })
+
+  it('los programas van por su código SNIES', () => {
+    const estado = { ...POR_DEFECTO, filtros: { ...FILTROS_VACIOS, programa: [1] } }
+    const texto = escribirEstado(c, estado, POR_DEFECTO)
+    expect(texto).toBe('?programa=SENA-1')
     expect(leerEstado(c, texto, POR_DEFECTO)).toEqual(estado)
   })
 

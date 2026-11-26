@@ -113,6 +113,7 @@
 .tablero-historica .anio:focus-visible,
 .tablero-historica .tab:focus-visible,
 .tablero-historica .selector .form-select:focus-visible,
+.tablero-historica .selector-anio:focus-visible,
 .tablero-historica .tabla-caja th:focus-visible,
 .tablero-historica .barra-anio-paso:focus-visible,
 .tablero-historica .filtros-alternar:focus-visible,
@@ -196,7 +197,8 @@
   :where(.tablero-historica) .anio { min-height: 44px; }
   :where(.tablero-historica) .modo { min-height: 44px; }
   .tablero-historica .acciones-grafico .btn-icon { width: 44px; height: 44px; }
-  .tablero-historica .selector .form-select { min-height: 44px; }
+  .tablero-historica .selector .form-select,
+  .tablero-historica .selector-anio { min-height: 44px; }
   :where(.tablero-historica) .barra-anio-recorte { margin-left: 0; width: 100%; }
 }
 
@@ -220,3 +222,15 @@
 :where(.tablero-historica) .nota-pie p { margin: 0 0 .5rem; font-size: .8125rem; line-height: 1.5; max-width: 110ch; }
 :where(.tablero-historica) .nota-pie p:last-child { margin-bottom: 0; }
 :where(.tablero-historica) .nota-pie b { font-weight: 600; }
+
+/* El año en los filtros es un selector nativo con el aspecto de los demás; la línea secundaria de un programa es su
+   institución. */
+.tablero-historica .filtros .selector-anio {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  font-size: 13px;
+  line-height: 16.9px;
+  cursor: pointer;
+  font-variant-numeric: tabular-nums;
+}
+:where(.tablero-historica) .selector-lista .secundario { display: block; font-size: .75rem; color: #5B646A; }

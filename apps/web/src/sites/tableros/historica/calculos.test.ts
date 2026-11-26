@@ -107,6 +107,12 @@ describe('series y cortes', () => {
     ])
   })
 
+  it('filtra por programa', () => {
+    expect(seriePorAnio(c, filtrar(c, { ...FILTROS_VACIOS, programa: [2] }))).toEqual([0, 11])
+    expect(textoRecorte(c, { ...FILTROS_VACIOS, programa: [2] })).toBe('Maestría en Finanzas (Universidad EAFIT)')
+    expect(referenciaFiltrada(c, 'Colombia', { ...FILTROS_VACIOS, programa: [2] })).toBeNull()
+  })
+
   it('nombra el recorte de los filtros para títulos y descargas', () => {
     expect(textoRecorte(c, FILTROS_VACIOS)).toBe('')
     expect(textoRecorte(c, { ...FILTROS_VACIOS, ies: [0], modalidad: [0] })).toBe('Universidad de Antioquia · Presencial')
