@@ -160,6 +160,23 @@ function agrupar(filas: readonly Fila[], clave: (f: Fila) => string): Fila[][] {
 const porPeriodo = (filas: readonly Fila[], leer: Leer, columna: string): Fila[] =>
   filas.toSorted((a, b) => periodo(leer(a, columna)).localeCompare(periodo(leer(b, columna))));
 
+const PERIODO_COMPLETO = /^\d{4}-\d$/;
+
+/**
+ * Quita los periodos anteriores a la convocatoria del beneficio: no pueden ser suyos. En analitica_fondos hay
+ * (revisado el 25-nov-2026) un beneficio de Extendiendo Fronteras con el historial de una beca anterior de la
+ * misma persona copiado bajo su clave, y la ventanilla lo mostraba dos veces. Si quitarlos dejara el beneficio
+ * sin periodos, se conservan todos.
+ */
+function desdeLaConvocatoria(filas: readonly Fila[], leer: Leer, columnaPeriodo: string, columnaConvocatoria: string): Fila[] {
+  const propias = filas.filter((f) => {
+    const p = periodo(leer(f, columnaPeriodo));
+    const c = periodo(leer(f, columnaConvocatoria));
+    return !(PERIODO_COMPLETO.test(p) && PERIODO_COMPLETO.test(c) && p < c);
+  });
+  return propias.length > 0 ? propias : [...filas];
+}
+
 function ficha(p: string, c: unknown, n: unknown, e: unknown, s: (Seccion | null)[], t: (Tabla | null)[]): FichaFondos {
   return { p, c: texto(c), n: texto(n), e: texto(e), s: s.filter((x): x is Seccion => x !== null), t: t.filter((x): x is Tabla => x !== null) };
 }
@@ -448,7 +465,7 @@ function mejoresDeportistas(filas: readonly Fila[]): FichaFondos[] {
 function posgrado(filas: readonly Fila[]): FichaFondos[] {
   const leer = lectorDe(filas);
   return agrupar(filas, (f) => texto(leer(f, ['docconvfondo', 'docconv']))).flatMap((grupo) => {
-    const g = porPeriodo(grupo, leer, 'periodo_renovado');
+    const g = porPeriodo(desdeLaConvocatoria(grupo, leer, 'periodo_renovado', 'convocatoria'), leer, 'periodo_renovado');
     const u = g.at(-1);
     const p = programaPosgrado(leer(u, 'id_fondo'), leer(u, 'fuente_de_financiacion'));
     if (!p) return [];

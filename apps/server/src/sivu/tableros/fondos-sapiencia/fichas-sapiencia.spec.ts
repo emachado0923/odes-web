@@ -130,6 +130,35 @@ describe('fichas en vivo', () => {
     expect(ficha.t[0][2][0].at(-1)).toBe('$ 20.000.000');
   });
 
+  it('en posgrado no muestra en un beneficio los periodos anteriores a su convocatoria (historial de otra beca copiado)', async () => {
+    // oxlint-disable-next-line unicorn/consistent-function-scoping -- fila de prueba de este caso, al lado de donde se usa
+    const fila = (clave: string, convocatoria: string, p: string, estado: string): Fila => ({
+      id: `${clave}-${p}`,
+      docconvfondo: `999000555${convocatoria}EFE RO`,
+      documento: '999000555',
+      convocatoria,
+      id_fondo: 4,
+      fuente_de_financiacion: 'EXTENDIENDO FRONTERAS EDUCATIVAS RO',
+      periodo_renovado: p,
+      estado_periodo_renovado: estado,
+    });
+    const { consultar } = baseFalsa({
+      posgrado_beneficio_periodo: [
+        // Como en analitica_fondos: los periodos de la beca de 2015-2, repetidos bajo la clave de la de 2023-2.
+        fila('copia', '2023-2', '2016-1', 'ACTIVO'),
+        fila('copia', '2023-2', '2021-1', 'DESERTOR'),
+        fila('nueva', '2023-2', '2023-2', 'ACTIVO'),
+        fila('nueva', '2023-2', '2024-1', 'SUSPENSION TEMPORAL'),
+        fila('vieja', '2015-2', '2016-1', 'ACTIVO'),
+        fila('vieja', '2015-2', '2021-1', 'DESERTOR'),
+      ],
+    });
+    const fichas = await fichasSapiencia(consultar, '999000555');
+    const periodos = (c: string) => fichas.find((f) => f.c === c)?.t[0][2].map((f) => f[0]);
+    expect(periodos('2023-2')).toEqual(['2023-2', '2024-1']);
+    expect(periodos('2015-2')).toEqual(['2016-1', '2021-1']);
+  });
+
   it('Mejores Deportistas: periodo «2020 2» ordenado con los demás y columnas con tildes mal guardadas', async () => {
     // oxlint-disable-next-line unicorn/consistent-function-scoping -- fila de prueba de este caso, al lado de donde se usa
     const fila = (p: string): Fila => ({ id: p, CONVOCATORIA: '2020-2', 'DOCUMENTO BENEFICIARIO': '999000333', 'PER�ODO RENOVADO': p, ESTADO: 'ACTIVO' });
