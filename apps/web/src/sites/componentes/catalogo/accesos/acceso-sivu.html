@@ -1,16 +1,16 @@
 <!--
-  ACCESO A SIVU (OdeS) · version {{n}}: {{nombre}}
-  Un circulo fijo abajo a la izquierda, con el edificio de SIVU, que se abre en una barra con "Ir a SIVU".
-  Arriba de la pagina esta abierto; se encoge en circulo al bajar y se vuelve a abrir al subir, al pasar el cursor o
-  al llegar con el teclado. Todo es un solo enlace: un toque lleva a SIVU, abierto o cerrado.
+  ACCESO A SIVU (OdeS): un circulo fijo abajo a la izquierda, con el edificio de SIVU, que se abre en una barra azul
+  con "Ir a SIVU". Arriba de la pagina es solo el circulo; al bajar se abre, al subir se vuelve a encoger. Tambien se
+  abre al pasar el cursor o al llegar con el teclado. Todo es un solo enlace: un toque lleva a SIVU, abierto o
+  cerrado.
 
   Que editar:
     - El enlace (href) y los textos de la barra: odes-ac__nombre y odes-ac__detalle. Lo que leen los lectores de
       pantalla va en odes-ac__oculto.
-    - El color, el tamano del circulo y el alto de la barra, en las variables --odes-ac-* del comienzo del CSS.
+    - El color, los tamanos, la letra y la sombra, en las variables --odes-ac-* del comienzo del CSS.
     - La imagen del circulo va dentro del CSS (--odes-ac-foto, en formato data:): no hay que subir nada a Medios.
 -->
-<a id="odes-accesos-{{n}}" class="odes-ac{{clases}}" href="https://odes-web.sapiencia.gov.co/sivu" data-odes-accesos data-odes-ac-modo="pagina">
+<a id="odes-acceso-sivu" class="odes-ac odes-ac--uno odes-ac--foto odes-ac--grande" href="https://odes-web.sapiencia.gov.co/sivu" data-odes-accesos data-odes-ac-modo="bajar">
   <span class="odes-ac__boton" aria-hidden="true"><span class="odes-ac__circulo"></span></span>
   <span class="odes-ac__lista" aria-hidden="true">
     <span class="odes-ac__enlace">

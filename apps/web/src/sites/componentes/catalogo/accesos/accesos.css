@@ -31,8 +31,9 @@
 #odes-ac-raiz.odes-ac--anillo .odes-ac__circulo{width:calc(100% - 10px);height:calc(100% - 10px);border:2px solid currentColor}
 #odes-ac-raiz.odes-ac--anillo .odes-ac__circulo svg{width:50%;height:50%}
 /* Con foto: la imagen (--odes-ac-foto, en el CSS para que ningun plugin de imagenes de WordPress la cambie) llena
-   el circulo, enmarcada por el color de la barra; al pasar el cursor se acerca un poco */
-#odes-ac-raiz.odes-ac--foto .odes-ac__circulo{width:calc(100% - 10px);height:calc(100% - 10px);background:var(--odes-ac-foto) center/100% no-repeat;transition:background-size .4s var(--odes-ac-curva)}
+   el circulo, enmarcada por el color de la barra (--odes-ac-marco, lo que el circulo es mas ancho que la foto) y,
+   si se pide, por un filete blanco (--odes-ac-filete) entre la foto y ese color; al pasar el cursor se acerca */
+#odes-ac-raiz.odes-ac--foto .odes-ac__circulo{width:calc(100% - var(--odes-ac-marco,10px));height:calc(100% - var(--odes-ac-marco,10px));box-shadow:0 0 0 var(--odes-ac-filete,0px) #fff;background:var(--odes-ac-foto) center/100% no-repeat;transition:background-size .4s var(--odes-ac-curva)}
 #odes-ac-raiz.odes-ac--foto .odes-ac__boton:hover .odes-ac__circulo{background:var(--odes-ac-foto) center/112% no-repeat}
 /* Circulo grande: mas alto que la barra, con su propio fondo y su sombra, como una medalla de la que sale la barra */
 #odes-ac-raiz.odes-ac--grande .odes-ac__boton,#odes-ac-raiz.odes-ac--grande .odes-ac__boton:hover,#odes-ac-raiz.odes-ac--grande .odes-ac__boton:focus,#odes-ac-raiz.odes-ac--grande .odes-ac__boton:active{background:var(--odes-ac-fondo);box-shadow:var(--odes-ac-sombra)}
@@ -61,11 +62,11 @@
 #odes-ac-raiz.odes-ac--uno,#odes-ac-raiz.odes-ac--uno:hover,#odes-ac-raiz.odes-ac--uno:focus,#odes-ac-raiz.odes-ac--uno:active,#odes-ac-raiz.odes-ac--uno:visited{color:var(--odes-ac-tinta);background:var(--odes-ac-fondo);box-shadow:var(--odes-ac-sombra);text-decoration:none;transform:none;border:0;cursor:pointer}
 #odes-ac-raiz.odes-ac--uno:focus-visible{outline:3px solid #151717;outline-offset:3px}
 #odes-ac-raiz.odes-ac--uno .odes-ac__lista::before{display:none}
-#odes-ac-raiz.odes-ac--uno .odes-ac__enlace{display:flex;align-items:center;gap:14px;padding:0 10px 0 6px;white-space:nowrap}
+#odes-ac-raiz.odes-ac--uno .odes-ac__enlace{display:flex;align-items:center;gap:16px;padding:0 14px 0 8px;white-space:nowrap}
 #odes-ac-raiz .odes-ac__textos{display:flex;flex-direction:column;gap:2px}
-#odes-ac-raiz .odes-ac__nombre{font-size:1rem;font-weight:700;line-height:1.15;letter-spacing:.01em}
-#odes-ac-raiz .odes-ac__detalle{font-size:.75rem;font-weight:400;line-height:1.2;opacity:.88}
-#odes-ac-raiz.odes-ac--uno .odes-ac__enlace svg{width:18px;height:18px;transition:transform .3s var(--odes-ac-curva)}
+#odes-ac-raiz .odes-ac__nombre{font-size:var(--odes-ac-letra,1rem);font-weight:700;line-height:1.15;letter-spacing:.01em}
+#odes-ac-raiz .odes-ac__detalle{font-size:var(--odes-ac-letra-detalle,.75rem);font-weight:400;line-height:1.2;opacity:.88}
+#odes-ac-raiz.odes-ac--uno .odes-ac__enlace svg{width:calc(var(--odes-ac-letra,1rem) * 1.15);height:calc(var(--odes-ac-letra,1rem) * 1.15);transition:transform .3s var(--odes-ac-curva)}
 #odes-ac-raiz.odes-ac--uno:hover .odes-ac__enlace svg{transform:translateX(3px)}
 #odes-ac-raiz.odes-ac--uno:focus-visible{grid-template-columns:var(--odes-ac-tam) 1fr}
 #odes-ac-raiz.odes-ac--uno:focus-visible .odes-ac__lista{visibility:visible}
@@ -117,6 +118,15 @@
 @container odes-pagina (max-width:30rem){
   #odes-ac-raiz a.odes-ac__enlace,#odes-ac-raiz a.odes-ac__enlace:hover,#odes-ac-raiz a.odes-ac__enlace:focus,#odes-ac-raiz a.odes-ac__enlace:active,#odes-ac-raiz a.odes-ac__enlace:visited{flex-direction:column;justify-content:center;gap:2px;height:calc(var(--odes-ac-alto) - 8px);padding:0 9px;font-size:.6875rem;letter-spacing:.02em}
   #odes-ac-raiz .odes-ac__lista::before{margin-right:2px}
+}
+
+/* Un solo acceso en pantallas angostas (menos de 432 px): sin la linea de abajo, para que "Ir a SIVU" quepa sin
+   llegar al chat */
+@media (max-width:27rem){
+  #odes-ac-raiz.odes-ac--uno .odes-ac__detalle{display:none}
+}
+@container odes-pagina (max-width:27rem){
+  #odes-ac-raiz.odes-ac--uno .odes-ac__detalle{display:none}
 }
 
 /* Sin movimiento si el sistema lo pide: abre y cierra en el acto */

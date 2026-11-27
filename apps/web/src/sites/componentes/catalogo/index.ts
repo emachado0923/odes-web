@@ -27,7 +27,7 @@ import htmlCifras from './cifras/cifras.html?raw'
 import jsCifras from './cifras/cifras.js?raw'
 import cssTresLados from './tres-lados/tres-lados.css?raw'
 import htmlTresLados from './tres-lados/tres-lados.html?raw'
-import { VERSIONES_ACCESOS } from './accesos/versiones'
+import { ACCESO_SIVU } from './accesos/acceso-sivu'
 
 export interface Componente {
   /** Nombre de los archivos y del id raíz (odes-<slug>). */
@@ -77,13 +77,7 @@ export const FICHAS: readonly Ficha[] = [
     css: cssCifras,
     js: jsCifras,
   },
-  {
-    id: 'accesos',
-    nombre: 'Botón de acceso a SIVU',
-    descripcion:
-      'Un círculo con el edificio de SIVU, fijo abajo a la izquierda, que arriba de la página se ve abierto con «Ir a SIVU», se encoge al bajar y se abre al subir. Todo el botón es un enlace a SIVU. Cinco versiones para comparar: cambian el recorte de la imagen, el color de la barra y el tamaño del círculo. Desplázate dentro del marco para verlo encogerse y abrirse.',
-    versiones: VERSIONES_ACCESOS,
-  },
+  ACCESO_SIVU,
 ]
 
 /** Todos los componentes, con cada versión de los grupos por separado (las reglas de WordPress valen para todos). */

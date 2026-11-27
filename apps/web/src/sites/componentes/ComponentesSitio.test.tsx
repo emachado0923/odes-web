@@ -151,7 +151,7 @@ describe('rama /componentes', () => {
     expect(within(ficha).getByRole('status')).toHaveTextContent('No se pudo copiar. Descarga el bloque completo.')
   })
 
-  it('el botón de acceso a SIVU: cinco versiones en una ficha; la elegida se ve en un marco de página y es la que se descarga', async () => {
+  it('el botón de acceso a SIVU: un solo enlace, con la foto en el CSS, en un marco de página; se descarga con su nombre', async () => {
     const descargados: string[] = []
     Object.defineProperty(URL, 'createObjectURL', { configurable: true, value: vi.fn<(blob: Blob) => string>(() => 'blob:prueba') })
     Object.defineProperty(URL, 'revokeObjectURL', { configurable: true, value: vi.fn<(url: string) => void>() })
@@ -161,31 +161,24 @@ describe('rama /componentes', () => {
 
     renderizarEn('/componentes')
     const ficha = await screen.findByRole('article', { name: 'Botón de acceso a SIVU' })
-    const versiones = within(ficha).getByRole('group', { name: 'Versión' })
-    const botones = within(versiones).getAllByRole('button')
-    expect(botones).toHaveLength(5)
-    expect(botones[0]).toHaveAttribute('aria-pressed', 'true')
-
-    // Todo el botón es un solo enlace a SIVU, con la foto del edificio en el CSS (data:, nada de otro sitio).
+    expect(within(ficha).queryByRole('group', { name: 'Versión' })).toBeNull()
     const vista = within(ficha).getByRole('region', { name: 'Vista previa Botón de acceso a SIVU' })
-    expect(vista.querySelector('.co-vista__marco--pagina #odes-accesos-1')).not.toBeNull()
+    expect(vista.querySelector('.co-vista__marco--pagina #odes-acceso-sivu')).not.toBeNull()
     const enlace = within(vista).getByRole('link', { name: 'Ir a SIVU: tableros del Observatorio de Sapiencia' })
     expect(enlace).toHaveAttribute('href', 'https://odes-web.sapiencia.gov.co/sivu')
     expect(within(vista).getAllByRole('link')).toHaveLength(1)
-    expect(vista.querySelector('style')?.textContent).toContain('--odes-ac-foto:url("data:image/webp;base64,')
-
-    fireEvent.click(botones[3]!)
-    expect(botones[3]).toHaveAttribute('aria-pressed', 'true')
-    expect(vista.querySelector('#odes-accesos-1')).toBeNull()
-    expect(vista.querySelector('#odes-accesos-4')).not.toBeNull()
-    expect(within(ficha).getByText(/Un círculo de 80 px con la entrada del edificio/)).toBeInTheDocument()
+    // La foto del edificio va en el CSS (data:, nada de otro sitio), con su filete blanco.
+    const estilos = vista.querySelector('style')?.textContent ?? ''
+    expect(estilos).toContain('--odes-ac-foto:url("data:image/webp;base64,')
+    expect(estilos).toContain('--odes-ac-tam:92px;--odes-ac-alto:64px')
+    expect(estilos).toContain('--odes-ac-filete:2px')
 
     fireEvent.click(within(ficha).getByRole('button', { name: /^Bloque completo/ }))
     fireEvent.click(within(ficha).getByRole('button', { name: /^Script/ }))
-    expect(descargados).toEqual(['accesos-4-bloque.html', 'accesos-4.js'])
+    expect(descargados).toEqual(['acceso-sivu-bloque.html', 'acceso-sivu.js'])
   })
 
-  it('la vista previa corre el script: abierto arriba de la página, se encoge al bajar y se abre al subir', async () => {
+  it('la vista previa corre el script: arriba es el círculo, se abre al bajar y se encoge al subir', async () => {
     const posicion = (valor: number) => Object.defineProperty(window, 'pageYOffset', { configurable: true, value: valor })
     posicion(0)
     renderizarEn('/componentes')
@@ -193,19 +186,26 @@ describe('rama /componentes', () => {
     const enlace = within(ficha).getByRole('link', { name: /^Ir a SIVU/ })
 
     await waitFor(() => expect(enlace).toHaveAttribute('data-odes-listo', 'si'))
-    expect(enlace).toHaveAttribute('data-abierto')
-    // Es un enlace: no lleva aria-expanded, y tocarlo no lo abre ni lo cierra (lleva a SIVU).
+    expect(enlace).not.toHaveAttribute('data-abierto')
+    // Es un enlace: no lleva aria-expanded (tocarlo lleva a SIVU).
     expect(enlace).not.toHaveAttribute('aria-expanded')
-    expect(within(enlace).queryByRole('button')).toBeNull()
 
     posicion(600)
     fireEvent.scroll(window)
-    await waitFor(() => expect(enlace).not.toHaveAttribute('data-abierto'))
+    expect(enlace).toHaveAttribute('data-abierto')
 
     posicion(400)
     fireEvent.scroll(window)
-    await waitFor(() => expect(enlace).toHaveAttribute('data-abierto'))
+    expect(enlace).not.toHaveAttribute('data-abierto')
+
+    posicion(700)
+    fireEvent.scroll(window)
+    expect(enlace).toHaveAttribute('data-abierto')
+
+    // De vuelta arriba de la página, solo el círculo.
     posicion(0)
+    fireEvent.scroll(window)
+    expect(enlace).not.toHaveAttribute('data-abierto')
   })
 
   it('"/componentes/x" muestra el 404 propio de la rama', async () => {
