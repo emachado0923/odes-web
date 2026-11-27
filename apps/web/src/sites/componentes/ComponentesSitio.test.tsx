@@ -38,7 +38,7 @@ describe('rama /componentes', () => {
     expect(vista.querySelector('style')?.textContent).toContain('#odes-tres-lados')
     expect(within(vista).getByRole('heading', { level: 2, name: 'Medellín potencia la formación en CTi' })).toBeInTheDocument()
     expect([...vista.querySelectorAll('.odes-cti-pieza__cifra')].map((cifra) => cifra.textContent)).toEqual(['36', '757', '110.092'])
-    expect(within(vista).getByRole('link', { name: 'Conoce más' })).toHaveAttribute('href', 'https://odes-web-327402776385.us-central1.run.app/tableros/matricula-cti')
+    expect(within(vista).getByRole('link', { name: 'Conoce más' })).toHaveAttribute('href', 'https://odes-web.sapiencia.gov.co/tableros/matricula-cti')
   })
 
   it('los botones de ancho angostan la vista previa', async () => {
