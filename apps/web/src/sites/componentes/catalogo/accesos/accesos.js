@@ -37,6 +37,7 @@
 
     function abierto() { return nav.hasAttribute('data-abierto'); }
     function poner(valor) {
+      if (valor === abierto() && (enlace || boton.hasAttribute('aria-expanded'))) { return; }
       if (valor) { nav.setAttribute('data-abierto', ''); } else { nav.removeAttribute('data-abierto'); }
       if (!enlace) { boton.setAttribute('aria-expanded', valor ? 'true' : 'false'); }
     }
@@ -69,11 +70,12 @@
       }
       poner(false);
     } else {
+      /* Se revisa en cada desplazamiento, sin esperar al siguiente cuadro: es poco trabajo (solo escribe cuando
+         cambia el estado) y no depende de requestAnimationFrame, que el navegador frena en pestanas de fondo o con
+         ahorro de energia. */
       var contenedor = contenedorDe(nav);
       var ultima = posicion(contenedor);
-      var pendiente = false;
       var revisar = function () {
-        pendiente = false;
         var actual = posicion(contenedor);
         var cambio = actual - ultima;
         if (actual < ARRIBA) {
@@ -89,9 +91,7 @@
       };
       var alDesplazar = function () {
         if (!nav.isConnected) { contenedor.removeEventListener('scroll', alDesplazar); return; }
-        if (pendiente) { return; }
-        pendiente = true;
-        window.requestAnimationFrame(revisar);
+        revisar();
       };
       contenedor.addEventListener('scroll', alDesplazar, { passive: true });
       poner(ultima < ARRIBA);
