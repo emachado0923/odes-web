@@ -11,16 +11,23 @@
  * juntando las tres partes. Las reglas de WordPress las vigila
  * catalogo.test.ts para cada componente de la lista.
  *
- * Para agregar uno: crear su carpeta con sus partes y sumarlo a COMPONENTES.
- * Si trae script, la vista previa no lo corre todavía (la CSP del sitio no deja
- * correr scripts en línea): habría que servirlo como módulo, como hace
- * apps/web/pertinencia/plugin-vite.ts con el bloque de /pertinencia.
+ * Para agregar uno: crear su carpeta con sus partes y sumarlo a FICHAS.
+ *
+ * Script en la vista previa: la CSP del sitio no deja correr scripts en línea.
+ * Si el componente necesita su script para verse bien (como el botón de
+ * accesos), se importa también con ?ejecutar (plugin scriptsDelCatalogo de
+ * vite.config.ts) y se pasa en `ejecutar`: la ficha lo corre después de poner
+ * el contenido. Sin `ejecutar`, la vista previa muestra solo HTML y CSS.
+ *
+ * Varias versiones de un mismo componente (para comparar) van en un Grupo: una
+ * sola ficha con un selector de versión; cada versión es un componente completo.
  */
 import cssCifras from './cifras/cifras.css?raw'
 import htmlCifras from './cifras/cifras.html?raw'
 import jsCifras from './cifras/cifras.js?raw'
 import cssTresLados from './tres-lados/tres-lados.css?raw'
 import htmlTresLados from './tres-lados/tres-lados.html?raw'
+import { VERSIONES_ACCESOS } from './accesos/versiones'
 
 export interface Componente {
   /** Nombre de los archivos y del id raíz (odes-<slug>). */
@@ -31,9 +38,28 @@ export interface Componente {
   css: string
   /** El script, si el componente lo necesita. */
   js?: string
+  /** El mismo script como función, para que la vista previa lo corra (ver arriba). */
+  ejecutar?: () => void
+  /**
+   * 'pagina': un componente fijo en la ventana (un botón flotante). La vista
+   * previa lo muestra en un marco con una página de muestra que se desplaza.
+   */
+  vista?: 'pagina'
 }
 
-export const COMPONENTES: readonly Componente[] = [
+/** Varias versiones de un componente en una sola ficha, con un selector. */
+export interface Grupo {
+  id: string
+  nombre: string
+  descripcion: string
+  versiones: readonly Componente[]
+}
+
+export type Ficha = Componente | Grupo
+
+export const esGrupo = (ficha: Ficha): ficha is Grupo => 'versiones' in ficha
+
+export const FICHAS: readonly Ficha[] = [
   {
     slug: 'tres-lados',
     nombre: 'Formación en CTi',
@@ -51,7 +77,17 @@ export const COMPONENTES: readonly Componente[] = [
     css: cssCifras,
     js: jsCifras,
   },
+  {
+    id: 'accesos',
+    nombre: 'Botón de accesos del Observatorio',
+    descripcion:
+      'Un círculo fijo abajo a la izquierda que se abre en una barra con SIVU, Repositorio y ODES. Seis versiones para comparar: cambian el icono, el color, el tamaño y si se abre con el cursor o al desplazar la página. Desplázate dentro del marco para verlo encogerse y abrirse.',
+    versiones: VERSIONES_ACCESOS,
+  },
 ]
+
+/** Todos los componentes, con cada versión de los grupos por separado (las reglas de WordPress valen para todos). */
+export const COMPONENTES: readonly Componente[] = FICHAS.flatMap((ficha) => (esGrupo(ficha) ? ficha.versiones : [ficha]))
 
 /** Id del elemento raíz del componente: todos sus estilos van bajo él. */
 export function idRaiz(componente: Pick<Componente, 'slug'>): string {

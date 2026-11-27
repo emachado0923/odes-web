@@ -1,8 +1,8 @@
 import { Link } from 'react-router'
-import { COMPONENTES } from '../catalogo'
+import { esGrupo, FICHAS } from '../catalogo'
 import FichaComponente from '../FichaComponente'
 
-/** /componentes: una ficha por componente del catálogo. */
+/** /componentes: una ficha por componente del catálogo (o por grupo de versiones). */
 export default function Catalogo() {
   return (
     <main className="co-pagina">
@@ -17,9 +17,9 @@ export default function Catalogo() {
           bloque completo.
         </p>
         <ul className="co-lista">
-          {COMPONENTES.map((componente) => (
-            <li key={componente.slug}>
-              <FichaComponente componente={componente} />
+          {FICHAS.map((ficha) => (
+            <li key={esGrupo(ficha) ? ficha.id : ficha.slug}>
+              <FichaComponente ficha={ficha} />
             </li>
           ))}
         </ul>

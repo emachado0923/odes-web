@@ -1,0 +1,37 @@
+<!--
+  ACCESOS DEL OBSERVATORIO (OdeS) · version {{n}}: {{nombre}}
+  Un boton redondo fijo abajo a la izquierda que se abre en una barra con tres accesos: SIVU, Repositorio y ODES.
+  {{como}}
+
+  Que editar:
+    - Cada acceso es un li con su enlace (href) y su nombre (odes-ac__nombre).
+    - El color, el tamano y la sombra, en las variables --odes-ac-* del comienzo del CSS.
+    - El nombre que leen los lectores de pantalla y el que aparece sobre el boton: "Accesos del Observatorio".
+-->
+<nav id="odes-accesos-{{n}}" class="odes-ac{{clases}}" aria-label="Accesos del Observatorio" data-odes-accesos data-odes-ac-modo="{{modo}}">
+  <button type="button" class="odes-ac__boton" aria-expanded="false" aria-controls="odes-accesos-{{n}}-lista">
+    <span class="odes-ac__circulo">{{icono}}</span>
+    <span class="odes-ac__oculto">Accesos del Observatorio</span>
+  </button>
+  <span class="odes-ac__pista" aria-hidden="true">Accesos del Observatorio</span>
+  <ul id="odes-accesos-{{n}}-lista" class="odes-ac__lista">
+    <li>
+      <a class="odes-ac__enlace" href="https://odes-web.sapiencia.gov.co/sivu">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+        <span class="odes-ac__nombre">SIVU</span>
+      </a>
+    </li>
+    <li>
+      <a class="odes-ac__enlace" href="https://odes-web.sapiencia.gov.co/repositorio">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        <span class="odes-ac__nombre">Repositorio</span>
+      </a>
+    </li>
+    <li>
+      <a class="odes-ac__enlace" href="https://odes-web.sapiencia.gov.co/odes">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/></svg>
+        <span class="odes-ac__nombre">ODES</span>
+      </a>
+    </li>
+  </ul>
+</nav>

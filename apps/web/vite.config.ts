@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 import { existsSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { parseEnv } from 'node:util'
-import { defineConfig } from 'vite'
+import { defineConfig, normalizePath, type Plugin } from 'vite'
 import { ENTRADA_PRINCIPAL, paginaPrincipal } from './principal/plugin-vite.ts'
 import { scriptBloquePertinencia } from './pertinencia/plugin-vite.ts'
 
@@ -27,12 +27,39 @@ function urlApiDesarrollo(): string {
 
 const API_DESARROLLO = urlApiDesarrollo()
 
+/**
+ * Scripts de los componentes de /componentes como módulos: `import ejecutar
+ * from './accesos/accesos.js?ejecutar'` exporta una función que corre el
+ * script (pensado para WordPress, encerrado en su propia función). La vista
+ * previa del catálogo lo corre después de poner el contenido: la CSP del
+ * sitio (script-src 'self') no deja correr scripts en línea ni eval(), y así
+ * llega empaquetado desde el propio sitio. Lo que se descarga sigue siendo el
+ * archivo tal cual (?raw). Ver src/sites/componentes/catalogo/index.ts.
+ */
+function scriptsDelCatalogo(): Plugin {
+  const SUFIJO = '?ejecutar'
+  const CARPETA = '/src/sites/componentes/catalogo/'
+  return {
+    name: 'sapiencia:componentes-script',
+    enforce: 'pre',
+    load(id) {
+      if (!id.endsWith(SUFIJO)) return null
+      const archivo = id.slice(0, -SUFIJO.length)
+      if (!normalizePath(archivo).includes(CARPETA) || !archivo.endsWith('.js')) return null
+      this.addWatchFile(archivo)
+      const codigo = readFileSync(archivo, 'utf8')
+      return { code: `export default function ejecutar() {\n${codigo}\n}\n`, map: null }
+    },
+  }
+}
+
 // https://vite.dev/config/
 export default defineConfig({
   base: '/',
   // paginaPrincipal: /principal, página de HTML puro con el bloque de WordPress (ver principal/LEEME.md).
   // scriptBloquePertinencia: el script del bloque de WordPress de /pertinencia como módulo (ver pertinencia/LEEME.md).
-  plugins: [react(), paginaPrincipal(), scriptBloquePertinencia()],
+  // scriptsDelCatalogo: los scripts de los componentes de /componentes como módulos (?ejecutar, ver arriba).
+  plugins: [react(), paginaPrincipal(), scriptBloquePertinencia(), scriptsDelCatalogo()],
   server: {
     port: 5173,
     strictPort: true,

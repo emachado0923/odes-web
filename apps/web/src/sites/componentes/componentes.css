@@ -207,6 +207,210 @@
   transition: max-width 0.25s ease;
 }
 
+/* Selector de versiones (fichas con varias versiones de un componente) */
+.co-versiones {
+  padding: 0 1.5rem 1.25rem;
+}
+
+.co-versiones__lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13.5rem, 1fr));
+  gap: 0.5rem;
+  margin-top: 0.625rem;
+}
+
+.co-version {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  min-height: 3rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--co-borde);
+  border-radius: 0.5rem;
+  background: var(--co-superficie);
+  color: var(--co-texto);
+  font: inherit;
+  font-size: 0.875rem;
+  line-height: 1.3;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.co-version:hover {
+  border-color: var(--co-acento);
+}
+
+.co-version:focus-visible {
+  outline: 3px solid var(--co-foco);
+  outline-offset: 2px;
+}
+
+.co-version__numero {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--co-fondo);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.co-version[aria-pressed='true'] {
+  border-color: var(--co-acento);
+  background: var(--co-acento);
+  color: #fff;
+}
+
+.co-version[aria-pressed='true'] .co-version__numero {
+  background: #fff;
+  color: var(--co-acento);
+}
+
+.co-versiones__detalle {
+  max-width: 52rem;
+  margin: 0.75rem 0 0;
+  color: var(--co-tenue);
+  font-size: 0.9375rem;
+}
+
+.co-versiones__detalle strong {
+  color: var(--co-texto);
+}
+
+/*
+ * Vista de página (componentes fijos en la ventana, como un botón flotante).
+ * El marco es el contenedor de lo fijo (transform) y del tamaño (odes-pagina,
+ * que el componente consulta para su versión angosta). Adentro, la página de
+ * muestra se desplaza y el componente queda fijo en la esquina del marco; abajo
+ * a la derecha, el chat y "Ir al inicio" de sapiencia.gov.co.
+ */
+.co-vista__marco--pagina {
+  position: relative;
+  height: 30rem;
+  container: odes-pagina / inline-size;
+  transform: translateZ(0);
+}
+
+.co-vista__pagina {
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.co-vista__pagina:focus-visible {
+  outline: 3px solid var(--co-foco);
+  outline-offset: -3px;
+}
+
+.co-muestra {
+  display: grid;
+  gap: 2.5rem;
+  padding-bottom: 0;
+}
+
+.co-muestra span,
+.co-muestra__tarjetas span {
+  display: block;
+  border-radius: 0.375rem;
+  background: #e4e8ed;
+}
+
+.co-muestra__cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem clamp(1rem, 4%, 3rem);
+  border-bottom: 1px solid #edf0f3;
+}
+
+.co-muestra .co-muestra__logo {
+  width: 7rem;
+  height: 2rem;
+}
+
+.co-muestra .co-muestra__menu {
+  width: min(22rem, 45%);
+  height: 0.75rem;
+}
+
+.co-muestra__banner {
+  height: 11rem;
+  margin: 0 clamp(1rem, 4%, 3rem);
+  border-radius: 0.75rem;
+  background: linear-gradient(120deg, #d9dfe6, #eef1f4);
+}
+
+.co-muestra__seccion {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0 clamp(1rem, 4%, 3rem);
+}
+
+.co-muestra .co-muestra__titulo {
+  width: min(18rem, 60%);
+  height: 1.5rem;
+  margin-bottom: 0.25rem;
+  background: #d5dbe2;
+}
+
+.co-muestra .co-muestra__linea {
+  width: min(40rem, 100%);
+  height: 0.75rem;
+}
+
+.co-muestra .co-muestra__linea--corta {
+  width: min(28rem, 75%);
+}
+
+.co-muestra__tarjetas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.co-muestra__tarjetas span {
+  height: 7rem;
+  background: #eef1f4;
+}
+
+.co-muestra__pie {
+  height: 9rem;
+  background: #2c3e8c;
+}
+
+.co-vista__chat,
+.co-vista__arriba {
+  position: absolute;
+  z-index: 300;
+  pointer-events: none;
+}
+
+.co-vista__chat {
+  right: 16px;
+  bottom: 70px;
+  padding: 0.5rem 0.75rem;
+  border-radius: 1rem 1rem 0.25rem;
+  background: #7fb7e8;
+  color: #0b2236;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.co-vista__arriba {
+  right: 16px;
+  bottom: 16px;
+  width: 45px;
+  height: 45px;
+  border-radius: 0.25rem;
+  background: #9aa5b1;
+}
+
 /* Descargas */
 .co-ficha__descargas {
   padding-top: 1.25rem;
@@ -303,6 +507,14 @@
     padding: 1rem 0.5rem;
   }
 
+  .co-versiones {
+    padding-inline: 1rem;
+  }
+
+  .co-vista__marco--pagina {
+    height: 26rem;
+  }
+
   .co-boton {
     flex: 1 1 calc(50% - 0.625rem);
     min-width: 0;
@@ -311,7 +523,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .co-vista__marco,
-  .co-boton {
+  .co-boton,
+  .co-version {
     transition: none;
   }
 }
