@@ -15,7 +15,7 @@
  *
  * Script en la vista previa: la CSP del sitio no deja correr scripts en línea.
  * Si el componente necesita su script para verse bien (como el botón de
- * accesos), se importa también con ?ejecutar (plugin scriptsDelCatalogo de
+ * acceso a SIVU), se importa también con ?ejecutar (plugin scriptsDelCatalogo de
  * vite.config.ts) y se pasa en `ejecutar`: la ficha lo corre después de poner
  * el contenido. Sin `ejecutar`, la vista previa muestra solo HTML y CSS.
  *
@@ -79,9 +79,9 @@ export const FICHAS: readonly Ficha[] = [
   },
   {
     id: 'accesos',
-    nombre: 'Botón de accesos del Observatorio',
+    nombre: 'Botón de acceso a SIVU',
     descripcion:
-      'Un círculo fijo abajo a la izquierda que se abre en una barra con SIVU, Repositorio y ODES. Seis versiones para comparar: cambian el icono, el color, el tamaño y si se abre con el cursor o al desplazar la página. Desplázate dentro del marco para verlo encogerse y abrirse.',
+      'Un círculo con el edificio de SIVU, fijo abajo a la izquierda, que arriba de la página se ve abierto con «Ir a SIVU», se encoge al bajar y se abre al subir. Todo el botón es un enlace a SIVU. Cinco versiones para comparar: cambian el recorte de la imagen, el color de la barra y el tamaño del círculo. Desplázate dentro del marco para verlo encogerse y abrirse.',
     versiones: VERSIONES_ACCESOS,
   },
 ]

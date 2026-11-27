@@ -151,7 +151,7 @@ describe('rama /componentes', () => {
     expect(within(ficha).getByRole('status')).toHaveTextContent('No se pudo copiar. Descarga el bloque completo.')
   })
 
-  it('el botón de accesos: seis versiones en una ficha; la elegida se ve en un marco de página y es la que se descarga', async () => {
+  it('el botón de acceso a SIVU: cinco versiones en una ficha; la elegida se ve en un marco de página y es la que se descarga', async () => {
     const descargados: string[] = []
     Object.defineProperty(URL, 'createObjectURL', { configurable: true, value: vi.fn<(blob: Blob) => string>(() => 'blob:prueba') })
     Object.defineProperty(URL, 'revokeObjectURL', { configurable: true, value: vi.fn<(url: string) => void>() })
@@ -160,76 +160,51 @@ describe('rama /componentes', () => {
     })
 
     renderizarEn('/componentes')
-    const ficha = await screen.findByRole('article', { name: 'Botón de accesos del Observatorio' })
+    const ficha = await screen.findByRole('article', { name: 'Botón de acceso a SIVU' })
     const versiones = within(ficha).getByRole('group', { name: 'Versión' })
     const botones = within(versiones).getAllByRole('button')
-    expect(botones).toHaveLength(6)
+    expect(botones).toHaveLength(5)
     expect(botones[0]).toHaveAttribute('aria-pressed', 'true')
 
-    const vista = within(ficha).getByRole('region', { name: 'Vista previa Botón de accesos del Observatorio' })
+    // Todo el botón es un solo enlace a SIVU, con la foto del edificio en el CSS (data:, nada de otro sitio).
+    const vista = within(ficha).getByRole('region', { name: 'Vista previa Botón de acceso a SIVU' })
     expect(vista.querySelector('.co-vista__marco--pagina #odes-accesos-1')).not.toBeNull()
-    expect(within(vista).getByRole('navigation', { name: 'Accesos del Observatorio' })).toBeInTheDocument()
-    // Con la barra cerrada, los accesos están ocultos (también para los lectores de pantalla).
-    expect(within(vista).queryAllByRole('link')).toEqual([])
-    expect(within(vista).getAllByRole('link', { hidden: true }).map((enlace) => enlace.getAttribute('href'))).toEqual([
-      'https://odes-web.sapiencia.gov.co/sivu',
-      'https://odes-web.sapiencia.gov.co/repositorio',
-      'https://odes-web.sapiencia.gov.co/odes',
-    ])
+    const enlace = within(vista).getByRole('link', { name: 'Ir a SIVU: tableros del Observatorio de Sapiencia' })
+    expect(enlace).toHaveAttribute('href', 'https://odes-web.sapiencia.gov.co/sivu')
+    expect(within(vista).getAllByRole('link')).toHaveLength(1)
+    expect(vista.querySelector('style')?.textContent).toContain('--odes-ac-foto:url("data:image/webp;base64,')
 
     fireEvent.click(botones[3]!)
     expect(botones[3]).toHaveAttribute('aria-pressed', 'true')
     expect(vista.querySelector('#odes-accesos-1')).toBeNull()
     expect(vista.querySelector('#odes-accesos-4')).not.toBeNull()
-    expect(within(ficha).getByText(/Cuadrícula de accesos en un círculo naranja/)).toBeInTheDocument()
+    expect(within(ficha).getByText(/Un círculo de 80 px con la entrada del edificio/)).toBeInTheDocument()
 
     fireEvent.click(within(ficha).getByRole('button', { name: /^Bloque completo/ }))
     fireEvent.click(within(ficha).getByRole('button', { name: /^Script/ }))
     expect(descargados).toEqual(['accesos-4-bloque.html', 'accesos-4.js'])
   })
 
-  it('la vista previa corre el script del botón: el círculo abre y cierra la barra, y Escape la cierra', async () => {
-    renderizarEn('/componentes')
-    const ficha = await screen.findByRole('article', { name: 'Botón de accesos del Observatorio' })
-    const nav = within(ficha).getByRole('navigation', { name: 'Accesos del Observatorio' })
-    const circulo = within(nav).getByRole('button', { name: 'Accesos del Observatorio' })
-
-    await waitFor(() => expect(nav).toHaveAttribute('data-odes-listo', 'si'))
-    expect(circulo).toHaveAttribute('aria-expanded', 'false')
-    fireEvent.click(circulo)
-    expect(circulo).toHaveAttribute('aria-expanded', 'true')
-    expect(nav).toHaveAttribute('data-abierto')
-
-    within(nav).getAllByRole('link')[0]!.focus()
-    fireEvent.keyDown(document, { key: 'Escape' })
-    expect(circulo).toHaveAttribute('aria-expanded', 'false')
-    expect(circulo).toHaveFocus()
-
-    // Un toque fuera de la barra la cierra.
-    fireEvent.click(circulo)
-    fireEvent.click(document.body)
-    expect(circulo).toHaveAttribute('aria-expanded', 'false')
-  })
-
-  it('las versiones que se abren con la página: abiertas arriba, se encogen al bajar y se abren al subir', async () => {
+  it('la vista previa corre el script: abierto arriba de la página, se encoge al bajar y se abre al subir', async () => {
     const posicion = (valor: number) => Object.defineProperty(window, 'pageYOffset', { configurable: true, value: valor })
     posicion(0)
     renderizarEn('/componentes')
-    const ficha = await screen.findByRole('article', { name: 'Botón de accesos del Observatorio' })
-    fireEvent.click(within(within(ficha).getByRole('group', { name: 'Versión' })).getAllByRole('button')[1]!)
-    const nav = within(ficha).getByRole('navigation', { name: 'Accesos del Observatorio' })
-    const circulo = within(nav).getByRole('button', { name: 'Accesos del Observatorio' })
+    const ficha = await screen.findByRole('article', { name: 'Botón de acceso a SIVU' })
+    const enlace = within(ficha).getByRole('link', { name: /^Ir a SIVU/ })
 
-    await waitFor(() => expect(nav).toHaveAttribute('data-odes-listo', 'si'))
-    expect(circulo).toHaveAttribute('aria-expanded', 'true')
+    await waitFor(() => expect(enlace).toHaveAttribute('data-odes-listo', 'si'))
+    expect(enlace).toHaveAttribute('data-abierto')
+    // Es un enlace: no lleva aria-expanded, y tocarlo no lo abre ni lo cierra (lleva a SIVU).
+    expect(enlace).not.toHaveAttribute('aria-expanded')
+    expect(within(enlace).queryByRole('button')).toBeNull()
 
     posicion(600)
     fireEvent.scroll(window)
-    await waitFor(() => expect(circulo).toHaveAttribute('aria-expanded', 'false'))
+    await waitFor(() => expect(enlace).not.toHaveAttribute('data-abierto'))
 
     posicion(400)
     fireEvent.scroll(window)
-    await waitFor(() => expect(circulo).toHaveAttribute('aria-expanded', 'true'))
+    await waitFor(() => expect(enlace).toHaveAttribute('data-abierto'))
     posicion(0)
   })
 
